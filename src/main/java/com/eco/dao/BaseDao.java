@@ -28,9 +28,13 @@ public interface BaseDao<T> {
 	 * */
 	T queryForObject(String sql, Object... params);
 	
+	<V> V queryForObjectEx(String sql, Class<V> clazz, Object... params);
+	
 	/*
 	 * 返回对象列表
 	 * */
 	List<T> queryForList(String sql, Object... params);
+	
+	<V> List<V> queryForListEx(String sql, Class<V> clazz, Object... params);
 	
 }
