@@ -33,6 +33,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="F:/大三下/框架编程/workspace of eclipse ee/EnglishCourseOnline/src/main/webapp/WEB-INF/lib/JdbcUtils.jar"/>
+	<classpathentry kind="lib" path="E:/eclipse/work2/BooksManagementSystem/WebContent/WEB-INF/lib/JdbcUtils.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
