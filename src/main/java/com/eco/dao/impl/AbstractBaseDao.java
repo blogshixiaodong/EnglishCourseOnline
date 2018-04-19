@@ -153,6 +153,38 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		close();
 	}
 	
+	@Override
+	public <V> V queryForObjectEx(String sql, Class<V> clazz, Object... params) {
+		String convertSql = initQueryForObjectEx(sql);
+		V bean =  doQueryForObjectEx(convertSql, clazz, params);
+		afterQueryForObjectEx();
+		return bean;
+	}
+
+	private String initQueryForObjectEx(String sql) {
+		init();
+		return beforeQueryForObjectEx(sql);
+	}
+	
+	protected String beforeQueryForObjectEx(String sql) {
+		return sql;
+	}
+	
+	
+	private <V> V doQueryForObjectEx(String sql, Class<V> clazz, Object[] params) {
+		V bean = null;
+		try {
+			bean = (V) query.query(connection, sql, new BeanHandler<>(clazz), params);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bean;
+	}
+
+	protected void afterQueryForObjectEx() {
+		close();
+	}
+
 	public List<T> queryForList(String sql, Object... params) {
 		String convertSql = initQueryForList(sql);
 		List<T> beanList = doQueryForList(convertSql, params);
@@ -168,11 +200,10 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		return sql;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private List<T> doQueryForList(String sql, Object... params) {
 		List<T> beanList = null;
 		try {
-			beanList = (List<T>) query.query(connection, sql, new BeanListHandler<>(getClass()), params);
+			beanList = (List<T>) query.query(connection, sql, new BeanListHandler<>(getBeanClass()), params);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -180,6 +211,36 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	}
 	
 	protected void afterQueryForList() {
+		close();
+	}
+	
+	@Override
+	public <V> List<V> queryForListEx(String sql, Class<V> clazz, Object... params) {
+		String convertSql = initQueryForListEx(sql);
+		List<V> beanList = doQueryForListEx(convertSql, clazz, params);
+		afterQueryForListEx();
+		return beanList;
+	}
+	
+	private String initQueryForListEx(String sql) {
+		init();
+		return beforeQueryForList(sql);
+	}
+	protected String beforeQueryForListEx(String sql) {
+		return sql;
+	}
+	
+	private <V> List<V> doQueryForListEx(String sql, Class<V> clazz, Object... params) {
+		List<V> beanList = null;
+		try {
+			beanList = (List<V>) query.query(connection, sql, new BeanListHandler<>(clazz), params);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return beanList;
+	}
+	
+	protected void afterQueryForListEx() {
 		close();
 	}
 	
@@ -214,12 +275,12 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		this.autoCommit = isAutoCommit;
 	}
 		
-	public Class<?> getBeanClass() {
-		Type genType = getClass().getGenericSuperclass();  
-        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();  
-        return (Class<?>) params[0];
+	@SuppressWarnings("unchecked")
+	public Class<T> getBeanClass() {
+		Type type = getClass().getGenericSuperclass();  
+        Type[] params = ((ParameterizedType) type).getActualTypeArguments();  
+        return (Class<T>) params[0];
 	}
-	
-	 
+ 
 	
 }
