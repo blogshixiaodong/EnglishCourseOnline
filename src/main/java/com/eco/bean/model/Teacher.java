@@ -14,7 +14,7 @@ public class Teacher implements Serializable {
 	
 	private String idCard;
 	
-	private String name;
+	private String teacherName;
 	
 	private String sex;
 	
@@ -42,12 +42,12 @@ public class Teacher implements Serializable {
 		this.idCard = idCard;
 	}
 
-	public String getName() {
-		return name;
+	public String getTeacherName() {
+		return teacherName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 
 	public String getSex() {

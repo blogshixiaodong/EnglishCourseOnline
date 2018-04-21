@@ -55,6 +55,18 @@ CREATE TABLE `course` (
 
 ALTER TABLE `course` AUTO_INCREMENT = 20000; 
 
+
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E0', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E1', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E2', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E3', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E4', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E5', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E6', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E7', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E8', 'TEST E1', 'English', 1000, 'F://');
+INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E9', 'TEST E1', 'English', 1000, 'F://');
+
 -- ----------------------------
 -- Table structure for course_record
 -- ----------------------------
@@ -71,6 +83,15 @@ CREATE TABLE `course_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `course_record` AUTO_INCREMENT = 30000; 
+
+INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20000, '2018-4-1', '2018-6-1', '2018-3-1', 30);
+INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20003, '2018-1-1', '2018-6-1', '2017-11-1', 50);
+INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20005, '2018-2-1', '2018-5-1', '2018-1-1', 60);
+INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20007, '2018-5-1', '2018-3-1', '2018-3-1', 100);
+INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20009, '2018-9-1', '2018-10-1', '2018-3-1', 50);
+
+
+
 
 -- ----------------------------
 -- Table structure for user
@@ -89,6 +110,13 @@ CREATE TABLE `user` (
 
 ALTER TABLE `user` AUTO_INCREMENT = 40000; 
 
+INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('zs', 22, '3151911', '男', 'C:');
+INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('ls', 23, '3151912', '男', 'F:');
+INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('lb', 24, '3151913', '女', 'F:');
+INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('ts', 25, '3151914', '女', 'D:');
+INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('kn', 26, '3151915', '男', 'E:');
+
+
 
 -- ----------------------------
 -- Table structure for teacher
@@ -97,7 +125,7 @@ DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher` (
   `teacherid` int(11) AUTO_INCREMENT NOT NULL,
   `idcard` varchar(18) NOT NULL,
-  `name` varchar(10) NOT NULL,
+  `teachername` varchar(10) NOT NULL,
   `sex` varchar(5) default NULL,
   `age` int(11) default NULL,
   `phone` varchar(13) NOT NULL,
@@ -107,6 +135,14 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `teacher` AUTO_INCREMENT = 50000; 
+
+INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151911', 'T1', '男', 30, '10086', '福建省', 'C://');
+INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151912', 'T2', '男', 37, '10086', '福建省', 'C://');
+INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151913', 'T3', '女', 28, '10086', '福建省', 'C://');
+INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151914', 'T4', '男', 26, '10086', '福建省', 'C://');
+INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151915', 'T5', '女', 35, '10086', '福建省', 'C://');
+
+
 
 -- ----------------------------
 -- Table structure for class
@@ -125,6 +161,12 @@ CREATE TABLE `engclass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `engclass` AUTO_INCREMENT = 60000; 
+INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30000, '初级', 35, '教1');
+INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30001, '中级', 50, '教2');
+INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30002, '高级', 60, '教3');
+
+
+
 -- ----------------------------
 -- Table structure for user_class
 -- ----------------------------
@@ -137,6 +179,14 @@ CREATE TABLE `user_class` (
   CONSTRAINT `fk_user_id` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
   CONSTRAINT `fk_class_id` FOREIGN KEY (`classid`) REFERENCES `engclass` (`classid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60000, 1);
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40001, 60000, 0);
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40002, 60000, 1);
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40003, 60000, 0);
+
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60001, 1);
+INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60002, 1);
 
 -- ----------------------------
 -- Table structure for teacher_back_info
@@ -192,33 +242,16 @@ CREATE TABLE `time_sheet` (
 
 ALTER TABLE `time_sheet` AUTO_INCREMENT = 90000; 
 
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E0', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E1', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E2', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E3', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E4', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E5', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E6', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E7', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E8', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E9', 'TEST E1', 'English', 1000, 'F://');
 
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20000, '2018-4-1', '2018-6-1', '2018-3-1', 30);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20003, '2018-1-1', '2018-6-1', '2017-11-1', 50);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20005, '2018-2-1', '2018-5-1', '2018-1-1', 60);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20007, '2018-5-1', '2018-3-1', '2018-3-1', 100);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20009, '2018-9-1', '2018-10-1', '2018-3-1', 50);
-
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151911', 'T1', '男', 30, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151912', 'T2', '男', 37, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151913', 'T3', '女', 28, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151914', 'T4', '男', 26, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151915', 'T5', '女', 35, '10086', '福建省', 'C://');
+INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-18', '正常');
+INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-19', '缺席');
+INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-20', '请假');
 
 
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30000, '初级', 35, '教1');
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30001, '中级', 50, '教2');
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30002, '高级', 60, '教3');
+DROP DATABASE englishcourseonline;
+CREATE DATABASE englishcourseonline;
+USE englishcourseonline;
+
 
 
 SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount
@@ -234,10 +267,11 @@ SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, st
 FROM course c, course_record cr, engclass e
 WHERE e.teacherid = 50000 AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND NOW() between starttime AND endtime;
 
-DROP DATABASE englishcourseonline;
-CREATE DATABASE englishcourseonline;
-USE englishcourseonline;
 
+SELECT u.userid, username, e.classid, classname, t.teacherid, t.name, classroom, recordtime, sheetinfo
+FROM user u, teacher t, engclass e, user_class uc, time_sheet ts
+WHERE uc.classid = 60001 AND uc.classid = e.classid AND e.teacherid = t.teacherid
 
-
-
+SELECT u.userid, username, age, idcard, sex, imgurl
+FROM  user u, user_class uc
+WHERE classid = 60002 AND u.userid = uc.userid
