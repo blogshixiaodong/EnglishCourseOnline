@@ -1,5 +1,6 @@
 package com.eco.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.eco.bean.dto.TimeSheetDetail;
@@ -11,7 +12,7 @@ import com.eco.bean.model.TimeSheet;
  */
 public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	
-	public abstract List<TimeSheetDetail> getTimeSheetDetail(Integer engclass);
+	public abstract List<TimeSheetDetail> getTimeSheetDetailByEnclass(Integer engclass, Date date);
 	
 	
 	/** 

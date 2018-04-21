@@ -17,9 +17,9 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	 * */
 	@Override
 	public List<CourseDetail> getNowCourseDetailList(Integer teacherId) {
-		String sql = "SELECT courseid, coursename, info, types, price, imgurl, courserecordid, starttime, endtime, closetime, signcount " + 
-				 "FROM course c, course_record cr, engclass e" + 
-				 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND NOW between starttime AND endtime";
+		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
+				 "FROM course c, course_record cr, engclass e " + 
+				 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND NOW() between starttime AND endtime ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
@@ -28,9 +28,9 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	 * */
 	@Override
 	public List<CourseDetail> getHistoryCourseDetailList(Integer teacherId) {
-		String sql = "SELECT courseid, coursename, info, types, price, imgurl, courserecordid, starttime, endtime, closetime, signcount " + 
-				 	 "FROM course c, course_record cr, engclass e" + 
-				 	 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND endtime < NOW()";
+		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
+				 	 "FROM course c, course_record cr, engclass e " + 
+				 	 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND endtime < NOW() ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
@@ -39,9 +39,9 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	 * */
 	@Override
 	public List<CourseDetail> getAllCourseDetailList(Integer teacherId) {
-		String sql = "SELECT courseid, coursename, info, types, price, imgurl, courserecordid, starttime, endtime, closetime, signcount " + 
-					 "FROM course c, course_record cr, engclass e" + 
-					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid ADN cr.courseid = c.courseid";
+		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
+					 "FROM course c, course_record cr, engclass e " + 
+					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid ADN cr.courseid = c.courseid ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
