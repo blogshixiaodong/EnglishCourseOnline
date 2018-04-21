@@ -14,7 +14,11 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 		int num = this.insert(sql,record.getCourseId(),record.getStartTime(),record.getEndTime(),record.getCloseTime(),record.getSignCount());
 		return num ==1;
 	}
-
+	
+	
+	/*
+	 *获取正在等待报名的课程记录
+	 */
 	@Override
 	public List<CourseDetail> queryNowCoureseRecord(Integer courseid) {
 		String sql = "SELECT t1.*,t2.coursename,t2.info,TYPES,price,imgurl FROM Course_record t1 LEFT JOIN course t2 ON t1.courseid = t2.courseid " + 

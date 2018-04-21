@@ -22,7 +22,7 @@ import com.sxd.util.jdbc.JdbcUtils;
 public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	
 	private Connection connection;
-	private QueryRunner query;
+	private QueryRunner query = new QueryRunner();
 	protected Boolean autoCommit = true;
 
 	

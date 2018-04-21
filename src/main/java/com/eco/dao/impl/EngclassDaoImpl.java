@@ -2,8 +2,8 @@ package com.eco.dao.impl;
 
 import java.util.List;
 
+import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
-import com.eco.bean.model.User;
 import com.eco.dao.EngclassDao;
 
 /*
@@ -17,9 +17,23 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
 		this.insert(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
 					engclass.getUserCount(),engclass.getClassRoom() );
-		
 	}
-
+	
+	@Override
+	public List<EngclassDetail> getEngclassList(Integer teacherId) {
+		String sql = "SELECT e.classid, classname, usercount, classroom, t.teacherid, t.teachername, c.courseid, coursename, cr.courserecordid " +
+					 "FROM course c LEFT JOIN  course_record cr ON c.courseid = cr.courseid LEFT JOIN engclass e ON cr.courserecordid = e.courserecordid LEFT JOIN teacher t ON e.teacherid = t.teacherid " +
+					 "WHERE t.teacherid = ?";
+		return this.queryForListEx(sql, EngclassDetail.class, teacherId);
+	}
+	
+	@Override
+	public List<EngclassDetail> queryUserEngclassList(Integer userid){
+		String sql = "SELECT t2.*,courseName,teacherName,t5.courseid FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
+					 "LEFT JOIN teacher t3 ON t2.teacherid = t3.teacherid LEFT JOIN  course_record t4 ON t2.courserecordid = t4.courserecordid " + 
+					 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ?";
+		return this.queryForListEx(sql, EngclassDetail.class, userid);
+	}
 	
 	
 	

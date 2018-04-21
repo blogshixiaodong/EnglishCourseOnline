@@ -29,6 +29,13 @@ public class UserBackInfoImpl extends AbstractBaseDao<UserBackInfo> implements U
 		int record = insert(sql, backInfo.getTeacherId(),backInfo.getUserId(),backInfo.getClassId(),backInfo.getBackTime(),backInfo.getBackInfo());
 		return record == 1;
 	}
+
+
+	@Override
+	public List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

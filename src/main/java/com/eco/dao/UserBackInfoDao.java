@@ -24,4 +24,9 @@ public interface UserBackInfoDao {
 	
 	
 	boolean createUserBackInfo(UserBackInfo backInfo);
+	
+	
+	public abstract List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId);
+	
+	
 }
