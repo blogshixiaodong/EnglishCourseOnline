@@ -12,6 +12,14 @@ import com.eco.dao.EngclassDao;
  */
 public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements EngclassDao {
 
+	@Override
+	public void createEngClass(Engclass engclass) {
+		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
+		this.insert(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
+					engclass.getUserCount(),engclass.getClassRoom() );
+		
+	}
+
 	
 	
 	

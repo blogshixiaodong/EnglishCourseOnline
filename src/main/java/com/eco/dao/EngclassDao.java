@@ -11,7 +11,11 @@ import com.eco.bean.model.User;
  */
 public interface EngclassDao extends BaseDao<Engclass> {
 
-	
+	/** 
+	* @Description: 开设班级 
+	* @param engclass void
+	*/ 
+	public abstract void createEngClass(Engclass engclass);
 	
 	
 	
