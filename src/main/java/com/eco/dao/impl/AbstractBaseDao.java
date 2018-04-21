@@ -16,7 +16,7 @@ import com.eco.dao.BaseDao;
 import com.sxd.util.jdbc.JdbcUtils;
 
 /*
- * date:   2018年4月10日 下午2:41:47
+ * date:   2018/4/10 2:41:47
  * author: Shixiaodong
  */
 public abstract class AbstractBaseDao<T> implements BaseDao<T> {
