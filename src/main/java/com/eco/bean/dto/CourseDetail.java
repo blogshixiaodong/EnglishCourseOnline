@@ -1,20 +1,23 @@
 package com.eco.bean.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /*
  * date:   2018年4月19日 下午3:43:49
  * author: Shixiaodong
  */
-public class CourseDetail {
+public class CourseDetail implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	private Integer courseId;
 	
 	private String courseName;
 	
 	private String info;
 	
-	private String type;
+	private String types;
 	
 	private Float price;
 
@@ -54,12 +57,12 @@ public class CourseDetail {
 		this.info = info;
 	}
 
-	public String getType() {
-		return type;
+	public String getTypes() {
+		return types;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTypes(String types) {
+		this.types = types;
 	}
 
 	public Float getPrice() {
