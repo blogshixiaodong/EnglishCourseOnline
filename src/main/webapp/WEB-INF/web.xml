@@ -5,11 +5,23 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
   
+ 	<filter>
+		<filter-name>struts</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+    
+    <filter-mapping>
+        <filter-name>struts</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  
  	<servlet>
 	  <servlet-name>InitDataBase</servlet-name>
 	  <servlet-class>com.sxd.servlet.InitDataBase</servlet-class>
 	  <load-on-startup>1</load-on-startup>
 	</servlet>
+  	
+  	
   
   
 </web-app>
