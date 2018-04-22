@@ -33,8 +33,11 @@ public class UserBackInfoImpl extends AbstractBaseDao<UserBackInfo> implements U
 
 	@Override
 	public List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT t.teacherid, u.userid, e.classid, backtime, backinfo, username, teachername, classname " +
+					 "FROM user u LEFT JOIN user_back_info ubi ON u.userid = ubi.userid  " +
+					 "LEFT JOIN engclass e ON ubi.classid = e.classid LEFT JOIN teacher t ON e.teacherid = t.teacherid " +
+					 "WHERE ubi.classid = ?;"; 
+		return this.queryForListEx(sql, BackInfoDetail.class, engclassId);
 	}
 	
 	

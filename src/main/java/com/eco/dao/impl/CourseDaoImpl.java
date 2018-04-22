@@ -41,7 +41,7 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	public List<CourseDetail> getAllCourseDetailList(Integer teacherId) {
 		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
 					 "FROM course c, course_record cr, engclass e " + 
-					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid ADN cr.courseid = c.courseid ORDER BY starttime DESC;";
+					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 

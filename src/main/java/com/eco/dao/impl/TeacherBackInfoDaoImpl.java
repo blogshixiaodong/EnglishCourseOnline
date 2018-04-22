@@ -19,4 +19,22 @@ public class TeacherBackInfoDaoImpl extends AbstractBaseDao<TeacherBackInfo> imp
 		return backInfoDetailList;
 	}
 
+	@Override
+	public List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
+		String sql = "SELECT t.teacherid, u.userid, e.classid, backtime, backinfo, username, teachername " + 
+					 "FROM teacher t LEFT JOIN teacher_back_info tbi ON t.teacherid = tbi.teacherid " +
+					 "LEFT JOIN engclass e ON tbi.classid = e.classid LEFT JOIN user u ON tbi.userid = u.userid " + 
+					 "WHERE t.teacherid = ? AND e.classid = ?;";
+		return this.queryForListEx(sql, BackInfoDetail.class, teacherId, engclassId);
+	}
+
+	@Override
+	public Boolean insertBackInfo(TeacherBackInfo teacherBackInfo) {
+		String sql = "INSERT INTO teacher_back_info(teacherId, userid, classid, backtime, backinfo) VALUES(?, ?, ?, ?, ?);";
+		return 1 == this.update(sql, teacherBackInfo.getTeacherId(), teacherBackInfo.getUserId(), teacherBackInfo.getClassId(), teacherBackInfo.getBackTime(), teacherBackInfo.getBackInfo());
+	}
+	
+	
+
+
 }
