@@ -7,7 +7,7 @@
 <title>首页</title>
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>商家后台管理</title>
+    <title>用户管理</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 </head>
 <body class="nav-md">
 	<s:if test="#request.courseDetailList == null">
-		<s:action name="nowCourses" namespace="/teacher"></s:action>
+		<s:action name="nowCourses" namespace="/user"></s:action>
 	</s:if>
 	<div class="container body">
 		<div class="main_container">

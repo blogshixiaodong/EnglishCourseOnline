@@ -36,13 +36,13 @@ public class UserAction extends ActionSupport {
 	private UserClass userClass;
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
+	UserServer userServer = new UserServerImpl();
 	
 	
 	//获取当前正在进行的课程信息
-	public String queryNowCourseDetailAction() {
+	public String showNowCourses() {
 		Integer userid = this.getLoginUserId();
 		
-		UserServer userServer = new UserServerImpl();
 		List<CourseDetail> courseDetailList = userServer.queryNowCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
@@ -50,10 +50,9 @@ public class UserAction extends ActionSupport {
 	}
 
 	//获取所有的课程信息
-	public String queryAllCourseDetailAction() {
+	public String showAllCourses() {
 		Integer userid = this.getLoginUserId();
-		
-		UserServer userServer = new UserServerImpl();
+
 		List<CourseDetail> courseDetailList = userServer.queryAllCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
@@ -61,10 +60,9 @@ public class UserAction extends ActionSupport {
 	}
 
 	//获取所有的课程信息
-	public String queryHistoryCourseDetailAction() {
+	public String showHistoryCourses() {
 		Integer userid = this.getLoginUserId();
-		
-		UserServer userServer = new UserServerImpl();
+
 		List<CourseDetail> courseDetailList = userServer.queryHistoryCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
@@ -72,10 +70,9 @@ public class UserAction extends ActionSupport {
 	}
 	
 	//查询所有班级
-	public String queryEngclassDetailAction() {
+	public String showAllEngclasses() {
 		Integer userid = this.getLoginUserId();
 		
-		UserServer userServer = new UserServerImpl();
 		List<EngclassDetail> engclassDetailList = userServer.queryEngclassDetail(userid);
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
@@ -84,10 +81,9 @@ public class UserAction extends ActionSupport {
 	
 	
 	//查询某门课程的考勤记录
-	public String queryTimeSheetDetailAction() {
+	public String showTimeSheets() {
 		Integer userid = this.getLoginUserId();
-		
-		UserServer userServer = new UserServerImpl();
+
 		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, classid);
 		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
 		
@@ -95,10 +91,9 @@ public class UserAction extends ActionSupport {
 	}
 	
 	//查询教师给的反馈信息
-	public String queryTeacherBackInfoAction() {
+	public String showTeacherBackInfos() {
 		Integer userid = this.getLoginUserId();
-		
-		UserServer userServer = new UserServerImpl();
+
 		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfo(classid, userid);
 		request.setAttribute("backInfoDetailList", backInfoDetailList);
 		
@@ -110,7 +105,6 @@ public class UserAction extends ActionSupport {
 		Integer userid = this.getLoginUserId();
 		
 		//检查userBackInfo中信息是否完整！！！！
-		UserServer userServer = new UserServerImpl();
 		userServer.createUserBackInfo(userBackInfo);
 		
 		return SUCCESS;
@@ -124,7 +118,6 @@ public class UserAction extends ActionSupport {
 		//考勤记录手动添加 用户id 和classid -->待定
 		timeSheet.setUserId(userid);
 		
-		UserServer userServer = new UserServerImpl();
 		userServer.createTimeSheet(timeSheet);
 		
 		return SUCCESS;
@@ -134,7 +127,6 @@ public class UserAction extends ActionSupport {
 	public String enrolmentClassAction() {
 		Integer userid = this.getLoginUserId();
 		
-		UserServer userServer = new UserServerImpl();
 		userServer.enrolmentClass(userClass, courseRecordId);
 		
 		return SUCCESS;

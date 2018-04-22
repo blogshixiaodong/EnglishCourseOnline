@@ -21,8 +21,8 @@
 				<img src="../build/images/img.jpg" alt="..." class="img-circle profile_img">
 			</div>
 			<div class="profile_info">
-				<span>欢迎教师,</span>
-				<h2>管理员名称</h2>
+				<span>欢迎用户,</span>
+				<h2>用户名称</h2>
 			</div>
 		</div>
 		<!-- /menu profile quick info -->
@@ -38,7 +38,7 @@
 						<a><i class="fa fa-home"></i>课程查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="nowCourses.action" target="main">进行课程信息</a></li>
+							<li><a href="nowCourses.action" target="main" >进行课程信息</a></li>
 							<li><a href="historyCourses.action" target="main">历史课程记录</a></li>
 							<li><a href="allCourses.action" target="main">所有课程记录</a></li>
 						</ul>
@@ -47,17 +47,17 @@
 						<a><i class="fa fa-edit"></i>班级查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="searchEngclass.jsp">班级查询</a></li>
+							<!-- <li><a href="searchEngclass.jsp">班级查询</a></li> -->
 							<li><a href="allEngclasses.action">所有班级</a></li>
 						</ul>
 					</li>
-					<li>
+					<!-- <li>
 						<a><i class="fa fa-desktop"></i>学生查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="general_elements.html">学生查询</a></li>
 						</ul>
-					</li>
+					</li> -->
 					<li>
 						<a>
 							<i class="fa fa-table"></i>考勤信息
@@ -65,7 +65,7 @@
 						</a>
 						<ul class="nav child_menu">
 							<li><a href="tables.html">考勤记录</a></li>
-							<li><a href="tables_dynamic.html">考勤登记</a></li>
+							<li><a href="tables_dynamic.html">请假</a></li>
 						</ul>
 					</li>
 					<li>

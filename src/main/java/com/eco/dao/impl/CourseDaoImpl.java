@@ -41,28 +41,28 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	public List<CourseDetail> getAllCourseDetailList(Integer teacherId) {
 		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
 					 "FROM course c, course_record cr, engclass e " + 
-					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid ADN cr.courseid = c.courseid ORDER BY starttime DESC;";
+					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
 	@Override
 	public List<CourseDetail> getUserNowCourseDetailList(Integer userid) {
 		String sql  = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-					  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000 AND NOW() BETWEEN starttime AND endtime";
+					  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND NOW() BETWEEN starttime AND endtime";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
 	public List<CourseDetail> getUserHistoryCourseDetailList(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-				  	 "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000";
+				  	 "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND endtime < NOW()";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
 	public List<CourseDetail> getUserAllCourseDetailList(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-				  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000 AND endtime < NUW()";
+				  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? ";
 		return this.queryForListEx(sql,CourseDetail.class,userid);
 	}
 	
