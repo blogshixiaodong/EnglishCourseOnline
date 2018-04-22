@@ -15,7 +15,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	@Override
 	public void createEngClass(Engclass engclass) {
 		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
-		this.insert(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
+		this.update(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
 					engclass.getUserCount(),engclass.getClassRoom() );
 	}
 	

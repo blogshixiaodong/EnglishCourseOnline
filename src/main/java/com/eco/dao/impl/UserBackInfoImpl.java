@@ -26,7 +26,7 @@ public class UserBackInfoImpl extends AbstractBaseDao<UserBackInfo> implements U
 	@Override
 	public boolean createUserBackInfo(UserBackInfo backInfo) {
 		String sql = "INSERT INTO user_back_info(teacherid,userid,classid,backtime,backinfo) VALUES(?,?,?,?,?)";
-		int record = insert(sql, backInfo.getTeacherId(),backInfo.getUserId(),backInfo.getClassId(),backInfo.getBackTime(),backInfo.getBackInfo());
+		int record = update(sql, backInfo.getTeacherId(),backInfo.getUserId(),backInfo.getClassId(),backInfo.getBackTime(),backInfo.getBackInfo());
 		return record == 1;
 	}
 

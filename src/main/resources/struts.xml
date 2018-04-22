@@ -15,7 +15,9 @@
     <constant name="struts.devMode" value="false"/>
 	<constant name="struts.i18n.encoding" value="utf-8" />
    
-
+	
+	<include file="user_struts.xml"></include>
+	
 	
    
 </struts>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    
+   
+	<package name="default" namespace="/" extends = "struts-default">
+		<action name="queryNowCourseDetailAction" class="com.eco.action" method = "queryNowCourseDetailAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="queryEngclassDetailAction" class="com.eco.action" method = "queryEngclassDetailAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="queryTimeSheetDetailAction" class="com.eco.action" method = "queryTimeSheetDetailAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="queryTeacherBackInfoAction" class="com.eco.action" method = "queryTeacherBackInfoAction" >
+			<result name = "success">/</result>
+		</action>
+	
+		<action name="createUserBackInfoAction" class="com.eco.action" method = "createUserBackInfoAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="createTimeSheetAction" class="com.eco.action" method = "createTimeSheetAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="enrolmentClassAction" class="com.eco.action" method = "enrolmentClassAction" >
+			<result name = "success">/</result>
+		</action>
+		
+	</package>
+	
+   
+</struts>
