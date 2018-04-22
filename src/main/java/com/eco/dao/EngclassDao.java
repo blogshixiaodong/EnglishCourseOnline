@@ -12,7 +12,24 @@ import com.eco.bean.model.Engclass;
  */
 public interface EngclassDao extends BaseDao<Engclass> {
 
+
+	/** 
+	* @Description: 开设班级 
+	* @param engclass void
+	*/ 
+	public abstract void createEngClass(Engclass engclass);
+
 	public abstract List<EngclassDetail> getEngclassList(Integer teacherId);
+	
+	
+	
+	/** 
+	* @Description: 查询用户班级信息
+	* @param userid
+	* @return List<EngclassDetail>
+	*/ 
+	public List<EngclassDetail> queryUserEngclassList(Integer userid);
+
 	
 	
 	
