@@ -48,21 +48,21 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	@Override
 	public List<CourseDetail> getUserNowCourseDetailList(Integer userid) {
 		String sql  = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-					  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000 AND NOW() BETWEEN starttime AND endtime";
+					  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND NOW() BETWEEN starttime AND endtime";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
 	public List<CourseDetail> getUserHistoryCourseDetailList(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-				  	 "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000";
+				  	 "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND endtime < NOW()";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
 	public List<CourseDetail> getUserAllCourseDetailList(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
-				  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = 40000 AND endtime < NUW()";
+				  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? ";
 		return this.queryForListEx(sql,CourseDetail.class,userid);
 	}
 	

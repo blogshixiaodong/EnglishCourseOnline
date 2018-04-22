@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    
+   
+	<package name="user_action" namespace="/user" extends="struts-default">
+		 <action name="nowCourses" class="com.eco.action.UserAction" method = "showNowCourses" >
+			<result name="success" type="dispatcher">
+    			<param name="location">/user/index.jsp</param>
+    		</result>
+		</action>
+		
+		<action name="historyCourses" class="com.eco.action.UserAction" method = "showHistoryCourses" >
+			<result name="success" type="dispatcher">
+    			<param name="location">/user/historyCourses.jsp</param>
+    		</result>
+		</action>
+		
+		<action name="allCourses" class="com.eco.action.UserAction" method = "showAllCourses" >
+			<result name="success" type="dispatcher">
+    			<param name="location">/user/allCourses.jsp</param>
+    		</result>
+		</action>
+		
+		
+		  <action name="allEngclasses" class="com.eco.action.UserAction" method = "showAllEngclasses" >
+			<result name="success" type="dispatcher">
+    			<param name="location">/user/allEngclasses.jsp</param>
+    		</result>
+		</action>
+		
+		<!--
+		<action name="queryTimeSheetDetailAction" class="com.eco.action.UserAction" method = "queryTimeSheetDetailAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="queryTeacherBackInfoAction" class="com.eco.action.UserAction" method = "queryTeacherBackInfoAction" >
+			<result name = "success">/</result>
+		</action>
+	
+		<action name="createUserBackInfoAction" class="com.eco.action.UserAction" method = "createUserBackInfoAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="createTimeSheetAction" class="com.eco.action.UserAction" method = "createTimeSheetAction" >
+			<result name = "success">/</result>
+		</action>
+		
+		<action name="enrolmentClassAction" class="com.eco.action" method = "enrolmentClassAction" >
+			<result name = "success">/</result>
+		</action> --> 
+		
+	</package>
+	
+   
+</struts>
