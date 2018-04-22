@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.eco.bean.dto.CourseDetail;
+import com.eco.bean.dto.EngclassDetail;
 import com.eco.server.TeacherServer;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
@@ -20,30 +21,48 @@ public class TeacherAction extends ActionSupport {
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
 	
-	
-	
-	
-	
-	public String showNowCourse() {
+	public String showNowCourses() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
 		
 		List<CourseDetail> courseDetailList = teacherServer.getNowCourseDetailList(teacherId);
-		Map<String, Object> session = (Map<String, Object>) ActionContext.getContext().getSession();
-		session.put("courseDetailList", courseDetailList);
+		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
+		request.put("courseDetailList", courseDetailList);
 		return Action.SUCCESS;
 	}
 	
-	public String showHistoryCourse() {
+	public String showHistoryCourses() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
 		List<CourseDetail> courseDetailList = teacherServer.getHistoryCourseDetailList(teacherId);
-		Map<String, Object> session = (Map<String, Object>) ActionContext.getContext().getSession();
-		session.put("courseDetailList", courseDetailList);
+		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
+		request.put("courseDetailList", courseDetailList);
+		return Action.SUCCESS;
+	}
+	
+	public String showAllCourses() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return Action.ERROR;
+		}
+		List<CourseDetail> courseDetailList = teacherServer.getAllCourseDetailList(teacherId);
+		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
+		request.put("courseDetailList", courseDetailList);
+		return Action.SUCCESS;
+	}
+	
+	public String showEngclasses() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return Action.ERROR;
+		}
+		List<EngclassDetail> engclassDetailList = teacherServer.getEngclassList(teacherId);
+		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
+		request.put("engclassDetailList", engclassDetailList);
 		return Action.SUCCESS;
 	}
 	
