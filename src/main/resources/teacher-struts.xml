@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <package name="teacher_action" namespace="/teacher" extends="struts-default">
+    	
+    	<action name="nowCourses" class="com.eco.action.TeacherAction" method="showNowCourses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/index.jsp</param>
+    		</result>
+    	</action>
+
+    	<action name="historyCourses" class="com.eco.action.TeacherAction" method="showHistoryCourses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/historyCourses.jsp</param>
+    		</result>
+    	</action>
+    	
+    	<action name="allCourses" class="com.eco.action.TeacherAction" method="showAllCourses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/allCourses.jsp</param>
+    		</result>
+    	</action>
+    	
+    	<action name="allEngclasses" class="com.eco.action.TeacherAction" method="showEngclasses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/allEngclasses.jsp</param>
+    		</result>
+    	</action>
+    	
+    	<action name="searchEngclass" class="com.eco.action.TeacherAction" method="showEngclasses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/allCourses.jsp</param>
+    		</result>
+    	</action>
+    
+    </package>
+
+	
+   
+</struts>
