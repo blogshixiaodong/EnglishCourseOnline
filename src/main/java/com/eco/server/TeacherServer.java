@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Engclass;
 
 /*
  * date:   2018年4月21日 上午11:05:51
@@ -19,4 +20,6 @@ public interface TeacherServer {
 	
 	public abstract List<EngclassDetail> getEngclassList(Integer teacherId);
 
+	public Engclass getEngclassByClassIdAndName(Integer classId, String className);
+	
 }
