@@ -142,7 +142,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	private T doQueryForObject(String sql, Object... params) {
 		T bean = null;
 		try {
-			bean = (T) query.query(connection, sql, new BeanHandler<>(getClass()), params);
+			bean = (T) query.query(connection, sql, new BeanHandler<>(getBeanClass()), params);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

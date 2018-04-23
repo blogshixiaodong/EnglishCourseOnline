@@ -34,6 +34,20 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 					 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ?";
 		return this.queryForListEx(sql, EngclassDetail.class, userid);
 	}
+
+	@Override
+	public Engclass getEngclassByClassId(Integer classId) {
+		String sql = "SELECT * FROM engclass WHERE classid = ?";
+		return this.queryForObject(sql, classId);
+	}
+
+	@Override
+	public List<Engclass> getEngclassListByName(String className) {
+		String sql = "SELECT * FROM engclass WHERE classname = ?";
+		return this.queryForList(sql, className);
+	}
+	
+	
 	
 	
 	

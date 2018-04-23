@@ -31,6 +31,8 @@ public interface EngclassDao extends BaseDao<Engclass> {
 	public List<EngclassDetail> queryUserEngclassList(Integer userid);
 
 	
-	
+	public Engclass getEngclassByClassId(Integer classId);
+	 
+	public List<Engclass> getEngclassListByName(String className);
 	
 }
