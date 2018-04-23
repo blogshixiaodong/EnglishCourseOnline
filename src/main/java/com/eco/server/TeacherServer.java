@@ -20,6 +20,8 @@ public interface TeacherServer {
 	
 	public abstract List<EngclassDetail> getEngclassList(Integer teacherId);
 
-	public Engclass getEngclassByClassIdAndName(Integer classId, String className);
+	public List<Engclass> getEngclassByClassIdAndName(Integer teacherId, Integer classId, String className);
+	
+	public EngclassDetail getEngclassDetail(Integer classId);
 	
 }

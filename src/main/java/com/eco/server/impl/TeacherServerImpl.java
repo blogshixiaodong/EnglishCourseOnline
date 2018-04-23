@@ -1,5 +1,6 @@
 package com.eco.server.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
@@ -40,21 +41,26 @@ public class TeacherServerImpl implements TeacherServer {
 	}
 
 	@Override
-	public Engclass getEngclassByClassIdAndName(Integer classId, String className) {
+	public List<Engclass> getEngclassByClassIdAndName(Integer teacherId, Integer classId, String className) {
+		List<Engclass> engclassList = null;
 		if(classId == null) {
 			if(className == null || "".equals(className)) {
 				return null;
 			} else {
-				List<Engclass> engclassList = engclassDao.getEngclassListByName(className);
-				if(engclassList.size() != 0) {
-					return engclassList.get(0);
-				} else {
-					return null;
-				}
+				engclassList = engclassDao.getEngclassListByName(teacherId, className);
 			}
 		} else {
-			return engclassDao.getEngclassByClassId(classId);
+			engclassList = new ArrayList<>();
+			engclassList.add(engclassDao.getEngclassByClassId(teacherId, classId));
 		}
+		return engclassList;
 	}
+
+	@Override
+	public EngclassDetail getEngclassDetail(Integer classId) {
+		return engclassDao.getEngclassDetail(classId);
+	}
+	
+	
 	
 }
