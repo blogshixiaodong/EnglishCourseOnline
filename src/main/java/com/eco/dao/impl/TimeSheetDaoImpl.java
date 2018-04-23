@@ -37,7 +37,7 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 	@Override
 	public boolean createTimeSheet(TimeSheet timeSheet) {
 		String sql = "INSERT INTO time_sheet(userid,classid,recordtime,sheetinfo) VALUES(?,?,?,?)";
-		int record = insert(sql,timeSheet.getUserId(),timeSheet.getClassId(),timeSheet.getRecordTime(),timeSheet.getSheetInfo());
+		int record = update(sql,timeSheet.getUserId(),timeSheet.getClassId(),timeSheet.getRecordTime(),timeSheet.getSheetInfo());
 		return record == 1;
 	}
 	

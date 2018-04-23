@@ -10,7 +10,7 @@ public interface TeacherBackInfoDao {
 	
 	
 	
-	public List<BackInfoDetail> queryBackInfoByUserClass(UserClass userClass);
+	public List<BackInfoDetail> queryBackInfoByUserClass(Integer classid,Integer userid);
 	
 	public abstract List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
 	

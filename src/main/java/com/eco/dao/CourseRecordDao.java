@@ -24,4 +24,12 @@ public interface CourseRecordDao {
 	*/ 
 	public abstract List<CourseDetail> queryNowCoureseRecord(Integer courseid);
 	
+	
+	/** 
+	* @Description:报名成功，修改报名人数字段
+	* @param crId
+	* @return boolean
+	*/ 
+	public abstract boolean updateSignCount(Integer crId);
+	
 }

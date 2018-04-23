@@ -11,8 +11,8 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	@Override
 	public boolean createCourseRecord(CourseRecord record) {
 		String sql = "INSERT INTO course_record(courseid,starttime,endtime,closetime,signcount) VALUES(?,?,?,?,?)";
-		int num = this.insert(sql,record.getCourseId(),record.getStartTime(),record.getEndTime(),record.getCloseTime(),record.getSignCount());
-		return num ==1;
+		int num = this.update(sql,record.getCourseId(),record.getStartTime(),record.getEndTime(),record.getCloseTime(),record.getSignCount());
+		return num == 1;
 	}
 	
 	
@@ -25,6 +25,13 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 					 "LEFT JOIN engclass t3 ON t1.courserecordid = t3.courserecordid " + 
 					 "WHERE closetime < NOW()";
 		return this.queryForListEx(sql, CourseDetail.class);
+	}
+
+
+	@Override
+	public boolean updateSignCount(Integer crid) {
+		String sql = "UPDATE course_record SET signcount = signcount - 1 WHERE courserecordid = ? ";
+		return this.update(sql,crid) == 1;
 	}
 	
 	
