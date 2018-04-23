@@ -6,7 +6,7 @@
 
 <struts>
 
-    <package name="teacher_action" namespace="/teacher" extends="struts-default">
+    <package name="teacher_action" namespace="/teacher" extends="struts-default,json-default">
     	
     	<action name="nowCourses" class="com.eco.action.TeacherAction" method="showNowCourses">
     		<result name="success" type="dispatcher">
@@ -32,9 +32,9 @@
     		</result>
     	</action>
     	
-    	<action name="searchEngclass" class="com.eco.action.TeacherAction" method="showEngclasses">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/allCourses.jsp</param>
+    	<action name="searchEngclass" class="com.eco.action.TeacherAction" method="searchEngclasses">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     	</action>
     
