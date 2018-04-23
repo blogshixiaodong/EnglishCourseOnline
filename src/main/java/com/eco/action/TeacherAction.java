@@ -2,14 +2,18 @@ package com.eco.action;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Engclass;
 import com.eco.server.TeacherServer;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import net.sf.json.JSONObject;
 
 /*
  * date:   2018年4月19日 上午9:43:15
@@ -20,6 +24,10 @@ public class TeacherAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
+
+	private Engclass engclass;
+
+	private String jsonResult = "";
 	
 	public String showNowCourses() {
 		Integer teacherId = getLoginTeacherId();
@@ -67,6 +75,17 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	
+	public String searchEngclasses() {
+		Engclass result = teacherServer.getEngclassByClassIdAndName(engclass.getClassId(), engclass.getClassName());
+		if(result == null) {
+			return Action.ERROR;
+		}
+		jsonResult = JSONObject.fromObject(result).toString();
+		return Action.SUCCESS;
+	}
+	
+	
+	
 	public Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
 		Object id = map.get("teacherId");
@@ -76,7 +95,22 @@ public class TeacherAction extends ActionSupport {
 		//未登录测试
 		return new Integer(id.toString());
 	}
-	
-	
 
+	public Engclass getEngclass() {
+		return engclass;
+	}
+
+	public void setEngclass(Engclass engclass) {
+		this.engclass = engclass;
+	}
+
+	public String getJsonResult() {
+		return jsonResult;
+	}
+
+	public void setJsonResult(String jsonResult) {
+		this.jsonResult = jsonResult;
+	}
+	
+	
 }
