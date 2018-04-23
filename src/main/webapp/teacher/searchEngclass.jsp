@@ -72,12 +72,12 @@
 								<form class="form-horizontal form-label-left input_mask">
 
 									<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-										<input type="text" class="form-control has-feedback-left" id="courseId" placeholder="班级编号" /> 
+										<input type="text" class="form-control has-feedback-left" id="inClassId" placeholder="班级编号" /> 
 										<span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
 									</div>
 
 									<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-										<input type="text" class="form-control has-feedback-left" id="courseName" placeholder="班级名称" /> 
+										<input type="text" class="form-control has-feedback-left" id="inClassName" placeholder="班级名称" /> 
 										<span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
 									</div>
 								</form>
@@ -118,7 +118,7 @@
 	                        	<span class="required">*</span>
 	                        </label>
 	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          	<input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
+	                          	<input type="text" id="classId" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
 	                        </div>
 	                      </div>
 	                      <div class="form-group">
@@ -127,7 +127,7 @@
 	                      		<span class="required">*</span>
 	                        </label>
 	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
+	                          <input type="text" id="className" name="className" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
 	                        </div>
 	                      </div>
 	                      <div class="form-group">
@@ -136,7 +136,7 @@
 	                      		<span class="required">*</span>
 	                        </label>
 	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
+	                          <input type="text" id="userCount" name="userCount" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
 	                        </div>
 	                      </div>
 	                      <div class="form-group">
@@ -145,7 +145,7 @@
 	                      		<span class="required">*</span>
 	                        </label>
 	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
+	                          <input type="text" id="classRoom" name="classRoom" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
 	                        </div>
 	                      </div>
 	                     
@@ -153,7 +153,7 @@
 	                      <div class="form-group">
 	                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 	                        	<button type="submit" class="btn btn-success">详细信息</button>
-								<button class="btn btn-primary" type="reset">重置查询</button>
+								<button class="btn btn-primary" id="reset">重置查询</button>
 	                        </div>
 	                      </div>
 	
@@ -216,40 +216,45 @@
     
     
     <script type="text/javascript">
+    	function reset() {
+			$("#inClassId").val("");
+			$("#inClassName").val("");
+			$("#classId").val("");
+			$("#className").val("");
+			$("#userCount").val("");
+			$("#classRoom").val("");
+    	}
+    
     	function sendCondition(e) {
-    		var courseId = $("#courseId").val();
-    		var courseName = $("#courseName").val();
+    		var classId = $("#inClassId").val();
+    		var className = $("#inClassName").val();
+    		if(classId === "" && className === "") {
+    			return;
+    		}
     		$.ajax({
-    			url: "BookListController",
-    			//dataType: "json",
+    			url: "searchEngclass.action",
+    			type : "post",
+    			dataType: "json",
+    			data:{"engclass.classId" : classId, "engclass.className" : className},
     			success: function(responseText) {
-    				var domList = $('#bookList');
-    				$("#bookList").html("");
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					//获取节点模板，定义在index.jsp
-    					var tr = $("#fileListTrTemp").html();
-    					domList.append(tr);
-    					var index = 0;
-    					//通过父节点修改DOM
-    					tr = $("#bookList").children("tr")[i];
-    					for(var field in json[i]) {
-    						$(tr).children("td")[index].innerText = json[i][field];
-    						index++;
-    					}	
-    				}
+    				$("#classId").val(json["classId"]);
+    				$("#className").val(json["className"]);
+    				$("#userCount").val(json["userCount"]);
+    				$("#classRoom").val(json["classRoom"]);
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
-    				alert(XMLHttpRequest.status);
-    				alert(XMLHttpRequest.readyState);
-    				alert(textStatus);
+    				alert("查询失败，请重新输入!");
+    				reset();
     			}
     		});
     	}
-		$("#courseId").on("input", sendCondition);
-		$("#courseName").on("input", sendCondition);
-	
+		$("#inClassId").change("input", sendCondition);
+		$("#inClassName").change("input", sendCondition);
+		$("#reset").click(function() {
+			reset();
+		});
 	
 	</script>
 </body>
