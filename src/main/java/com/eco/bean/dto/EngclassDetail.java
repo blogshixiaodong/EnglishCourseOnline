@@ -14,6 +14,8 @@ public class EngclassDetail implements Serializable {
 	
 	private String className;
 	
+	private String imgUrl;
+	
 	private Integer userCount;
 	
 	private String classRoom;
@@ -42,6 +44,14 @@ public class EngclassDetail implements Serializable {
 
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public Integer getUserCount() {
@@ -99,5 +109,7 @@ public class EngclassDetail implements Serializable {
 	public void setCourseRecordId(Integer courseRecordId) {
 		this.courseRecordId = courseRecordId;
 	}
+
+	
 	
 }
