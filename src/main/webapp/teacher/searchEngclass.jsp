@@ -69,100 +69,73 @@
 							</div>
 							<div class="x_content">
 								<br />
-								<form class="form-horizontal form-label-left input_mask">
+								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
-									<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+									<div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
 										<input type="text" class="form-control has-feedback-left" id="inClassId" placeholder="班级编号" /> 
-										<span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
+										<span class="fa fa-hand-o-right form-control-feedback left" aria-hidden="true"></span>
 									</div>
 
-									<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+									<div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
 										<input type="text" class="form-control has-feedback-left" id="inClassName" placeholder="班级名称" /> 
 										<span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
 									</div>
+									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
+										<button class="btn btn-primary" id="reset">重置查询</button>
+		                     		</div>
 								</form>
 							</div>
 						</div>
 					</div>	
 				</div>
-				
+					
 				<div class="row">
-	              <div class="col-md-12 col-sm-12 col-xs-12">
-	                <div class="x_panel">
-	                  <div class="x_title">
-	                    <h2>班级简略信息</h2>
-	                    <ul class="nav navbar-right panel_toolbox">
-	                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      </li>
-	                      <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-	                        <ul class="dropdown-menu" role="menu">
-	                          <li><a href="#">Settings 1</a>
-	                          </li>
-	                          <li><a href="#">Settings 2</a>
-	                          </li>
-	                        </ul>
-	                      </li>
-	                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-	                      </li>
-	                    </ul>
-	                    <div class="clearfix"></div>
-	                  </div>
-	                  <div class="x_content">
-	                    <br />
-	                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-	
-	                      <div class="form-group">
-	                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-	                        	班级编号
-	                        	<span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          	<input type="text" id="classId" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
-	                        </div>
-	                      </div>
-	                      <div class="form-group">
-	                      	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-	                      		班级名称
-	                      		<span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="className" name="className" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
-	                        </div>
-	                      </div>
-	                      <div class="form-group">
-	                      	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-	                      		班级人数
-	                      		<span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="userCount" name="userCount" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
-	                        </div>
-	                      </div>
-	                      <div class="form-group">
-	                      	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-	                      		教室
-	                      		<span class="required">*</span>
-	                        </label>
-	                        <div class="col-md-6 col-sm-6 col-xs-12">
-	                          <input type="text" id="classRoom" name="classRoom" required="required" class="form-control col-md-7 col-xs-12" disabled="disabled" />
-	                        </div>
-	                      </div>
-	                     
-	                      <div class="ln_solid"></div>
-	                      <div class="form-group">
-	                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-	                        	<button type="submit" class="btn btn-success">详细信息</button>
-								<button class="btn btn-primary" id="reset">重置查询</button>
-	                        </div>
-	                      </div>
-	
-	                    </form>
-	                  </div>
-	                </div>
-	              </div>
-	            </div>
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>
+									班级简略信息
+								</h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i
+											class="fa fa-chevron-up"></i></a></li>
+									<li class="dropdown"><a href="#" class="dropdown-toggle"
+										data-toggle="dropdown" role="button" aria-expanded="false"><i
+											class="fa fa-wrench"></i></a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a href="#">Settings 1</a></li>
+											<li><a href="#">Settings 2</a></li>
+										</ul></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
 
+								<table id="engclassList" class="table table-striped">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>班级编号</th>
+											<th>班级名称</th>
+											<th>班级人数</th>
+											<th>教室</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- get data and create dom by ajax -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+				
 			</div>
 			<!-- /page content -->
 
@@ -223,6 +196,7 @@
 			$("#className").val("");
 			$("#userCount").val("");
 			$("#classRoom").val("");
+			$("#engclassList tbody").html("");
     	}
     
     	function sendCondition(e) {
@@ -239,10 +213,22 @@
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				$("#classId").val(json["classId"]);
-    				$("#className").val(json["className"]);
-    				$("#userCount").val(json["userCount"]);
-    				$("#classRoom").val(json["classRoom"]);
+    				$("#classId").val(json[0]["classId"]);
+    				$("#className").val(json[0]["className"]);
+    				$("#userCount").val(json[0]["userCount"]);
+    				$("#classRoom").val(json[0]["classRoom"]);
+    				
+    				for(var i = 0; i < json.length; i++) {
+    					var tr = $("<tr></tr>");
+    					var record = json[i];
+    					tr.append($("<td></td>").text(i));
+    					tr.append($("<td></td>").text(record["classId"]));
+    					tr.append($("<td></td>").text(record["className"]));
+    					tr.append($("<td></td>").text(record["userCount"]));
+    					tr.append($("<td></td>").text(record["classRoom"]));
+    					tr.append($("<button type='submit' class='btn btn-success btn-sm'>详细信息</button>"))
+    					$($("#engclassList")[0]).append(tr);
+    				}
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
@@ -254,6 +240,10 @@
 		$("#inClassName").change("input", sendCondition);
 		$("#reset").click(function() {
 			reset();
+		});
+		$("#engclassList").on('click', "button[type='submit']", function() {
+			var classId = $(this).parent().children().eq(1).text();
+			window.location.href = "engclassDetail.action?engclassId=" +  classId;
 		});
 	
 	</script>

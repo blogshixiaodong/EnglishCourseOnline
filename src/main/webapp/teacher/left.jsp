@@ -38,16 +38,16 @@
 						<a><i class="fa fa-home"></i>课程查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="nowCourses.action" target="main">进行课程信息</a></li>
-							<li><a href="historyCourses.action" target="main">历史课程记录</a></li>
-							<li><a href="allCourses.action" target="main">所有课程记录</a></li>
+							<li><a href="nowCourses.action">进行课程信息</a></li>
+							<li><a href="historyCourses.action">历史课程记录</a></li>
+							<li><a href="allCourses.action">所有课程记录</a></li>
 						</ul>
 					</li>
 					<li>
 						<a><i class="fa fa-edit"></i>班级查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="searchEngclass.action">班级查询</a></li>
+							<li><a href="searchEngclass.jsp">班级查询</a></li>
 							<li><a href="allEngclasses.action">所有班级</a></li>
 						</ul>
 					</li>
