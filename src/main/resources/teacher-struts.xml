@@ -37,6 +37,15 @@
     			<param name="root">jsonResult</param>
     		</result>
     	</action>
+    	
+    	<action name="engclassDetail" class="com.eco.action.TeacherAction" method="engclassDetail">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/engclassDetail.jsp</param>
+    		</result>
+    		<result name="error" type="dispatcher">
+    			<param name="location">/teacher/engclassDetail.jsp</param>
+    		</result>
+    	</action>
     
     </package>
 
