@@ -2,7 +2,6 @@ package com.eco.action;
 
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
@@ -13,7 +12,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 /*
  * date:   2018年4月19日 上午9:43:15
@@ -76,14 +75,27 @@ public class TeacherAction extends ActionSupport {
 	
 	
 	public String searchEngclasses() {
-		Engclass result = teacherServer.getEngclassByClassIdAndName(engclass.getClassId(), engclass.getClassName());
-		if(result == null) {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		jsonResult = JSONObject.fromObject(result).toString();
+		List<Engclass> engclassList = teacherServer.getEngclassByClassIdAndName(teacherId, engclass.getClassId(), engclass.getClassName());
+		if(engclassList == null) {
+			return Action.ERROR;
+		}
+		jsonResult = JSONArray.fromObject(engclassList).toString();
 		return Action.SUCCESS;
 	}
 	
+	public String engclassDetail() {
+		Integer engclassId = getEngclassId();
+		if(engclassId == null) {
+			return Action.ERROR;
+		}
+		Map<String, Object> request = (Map<String, Object>)ActionContext.getContext().get("request");
+		request.put("engclassDetail", teacherServer.getEngclassDetail(engclassId));
+		return Action.SUCCESS;
+	}
 	
 	
 	public Integer getLoginTeacherId() {
@@ -95,6 +107,15 @@ public class TeacherAction extends ActionSupport {
 		//未登录测试
 		return new Integer(id.toString());
 	}
+	
+	public Integer getEngclassId() {
+		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
+		if(id != null) {
+			return new Integer(id.toString());
+		}
+		return null;
+	}
+	
 
 	public Engclass getEngclass() {
 		return engclass;
