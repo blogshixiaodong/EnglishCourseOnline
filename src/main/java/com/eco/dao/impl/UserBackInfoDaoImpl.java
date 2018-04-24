@@ -10,7 +10,7 @@ import com.eco.dao.UserBackInfoDao;
  * @author lenovo
  *
  */
-public class UserBackInfoImpl extends AbstractBaseDao<UserBackInfo> implements UserBackInfoDao {
+public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implements UserBackInfoDao {
 
 	@Override
 	public List<BackInfoDetail> queryBackInfoByUserClass(UserClass userClass) {
