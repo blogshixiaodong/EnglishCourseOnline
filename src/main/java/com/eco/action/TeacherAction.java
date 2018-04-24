@@ -6,8 +6,10 @@ import java.util.Map;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
@@ -26,7 +28,8 @@ public class TeacherAction extends ActionSupport {
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
 	private EngclassServer engclassServer = new EngclassServerImpl();
-
+	private BackInfoServer backInfoServer = new BackInfoServerImpl();
+	
 	private Engclass engclass;
 
 	private String jsonResult = "";
@@ -109,6 +112,16 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	
+	public String teacherBackInfoHistory() {
+		Integer teacherId = getLoginTeacherId();
+		Integer engclassId = engclass.getClassId();
+		if(teacherId == null || engclassId == null) {
+			return Action.ERROR;
+		}
+		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
+		return Action.SUCCESS;
+	}
 	
 	public Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
