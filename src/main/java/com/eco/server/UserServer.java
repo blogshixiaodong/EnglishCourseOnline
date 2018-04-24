@@ -6,6 +6,7 @@ import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.TimeSheet;
+import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.bean.model.UserClass;
 
@@ -48,11 +49,20 @@ public interface UserServer {
 	
 	
 	/** 
-	* @Description: 查询所在班级 
+	* @Description: 查询所有班级 
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> queryEngclassDetail(Integer userid);
+	public abstract List<EngclassDetail> queryAllEngclassDetail(Integer userid);
+	
+	
+	/** 
+	* @Description: 根据班级id 查询该班所有学生 
+	* @param classid
+	* @return List<User>
+	*/ 
+	public abstract List<User> queryUserListByClassid(Integer classid);
+	
 	
 	
 	/** 
@@ -78,7 +88,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid);
+	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid,String engclassName);
 	
 	
 	/** 

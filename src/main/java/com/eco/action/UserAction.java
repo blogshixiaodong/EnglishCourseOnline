@@ -11,12 +11,18 @@ import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.CourseRecord;
+import com.eco.bean.model.Engclass;
 import com.eco.bean.model.TimeSheet;
+import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.bean.model.UserClass;
+import com.eco.dao.UserDao;
 import com.eco.server.UserServer;
 import com.eco.server.impl.UserServerImpl;
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+
+import net.sf.json.JSONArray;
 
 public class UserAction extends ActionSupport {
 
@@ -34,6 +40,10 @@ public class UserAction extends ActionSupport {
 	private Integer courseRecordId;
 	
 	private UserClass userClass;
+	
+	private Engclass engclass;
+	
+	private String jsonResult = "";
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
@@ -73,18 +83,36 @@ public class UserAction extends ActionSupport {
 	public String showAllEngclasses() {
 		Integer userid = this.getLoginUserId();
 		
-		List<EngclassDetail> engclassDetailList = userServer.queryEngclassDetail(userid);
+		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userid);
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
 		return SUCCESS;
 	}
 	
 	
+	public String queryUserByClassid() {
+		
+		if(classid == null) {
+			return Action.ERROR;
+		}
+		
+		List<User> userList = userServer.queryUserListByClassid(classid);
+		if(userList == null) {
+			return ERROR;
+		}
+		
+		jsonResult = JSONArray.fromObject(userList).toString();
+		
+		return SUCCESS;
+	}
+	
+	
+	
 	//查询某门课程的考勤记录
 	public String showTimeSheets() {
 		Integer userid = this.getLoginUserId();
 
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, classid);
+		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),engclass.getClassName());
 		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
 		
 		return SUCCESS;
@@ -185,4 +213,13 @@ public class UserAction extends ActionSupport {
 		this.userClass = userClass;
 	}
 
+	public Engclass getEngclass() {
+		return engclass;
+	}
+
+	public void setEngclass(Engclass engclass) {
+		this.engclass = engclass;
+	}
+	
+	
 }
