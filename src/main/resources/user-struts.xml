@@ -7,7 +7,7 @@
 <struts>
     
    
-	<package name="user_action" namespace="/user" extends="struts-default">
+	<package name="user_action" namespace="/user" extends="struts-default,json-default">
 		 <action name="nowCourses" class="com.eco.action.UserAction" method = "showNowCourses" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/index.jsp</param>
@@ -33,9 +33,23 @@
     		</result>
 		</action>
 		
+		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "queryUserByClassid" >
+			<result name="success" type="json">
+    			<param name="location">jsonResult</param>
+    		</result>
+		</action>
+		
+		
+		
+		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
+			<result name="success" type="dispatcher">
+    			<param name="location">/user/search_engclass.jsp</param>
+    		</result>
+		</action> -->
+		
 		<!--
-		<action name="queryTimeSheetDetailAction" class="com.eco.action.UserAction" method = "queryTimeSheetDetailAction" >
-			<result name = "success">/</result>
+		<action name="showtimeSheets" class="com.eco.action.UserAction" method = "showTimeSheets" >
+			<result name = "success">/user/search_timesheet.jsp</result>
 		</action>
 		
 		<action name="queryTeacherBackInfoAction" class="com.eco.action.UserAction" method = "queryTeacherBackInfoAction" >

@@ -28,7 +28,9 @@ public interface EngclassDao extends BaseDao<Engclass> {
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public List<EngclassDetail> queryUserEngclassList(Integer userid);
+	public List<EngclassDetail> queryUserAllEngclassList(Integer userid);
+	
+	
 
 	
 	public Engclass getEngclassByClassId(Integer teacherId, Integer classId);
