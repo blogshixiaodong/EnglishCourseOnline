@@ -20,7 +20,7 @@ import com.eco.dao.impl.CourseRecordDaoImpl;
 import com.eco.dao.impl.EngclassDaoImpl;
 import com.eco.dao.impl.TeacherBackInfoDaoImpl;
 import com.eco.dao.impl.TimeSheetDaoImpl;
-import com.eco.dao.impl.UserBackInfoImpl;
+import com.eco.dao.impl.UserBackInfoDaoImpl;
 import com.eco.dao.impl.UserClassDaoImpl;
 
 import com.eco.server.UserServer;
@@ -74,7 +74,7 @@ public class UserServerImpl implements UserServer{
 
 	@Override
 	public void createUserBackInfo(UserBackInfo backInfo) {
-		UserBackInfoDao ubiDao = new UserBackInfoImpl();
+		UserBackInfoDao ubiDao = new UserBackInfoDaoImpl();
 		
 		ubiDao.createUserBackInfo(backInfo);
 		
