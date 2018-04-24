@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class BackInfoDetail {
 	
+	private Integer teacherBackId;
 	
 	private Integer teacherId;
 	
@@ -20,6 +21,14 @@ public class BackInfoDetail {
 	private String teacherName;
 	
 	private String className;
+
+	public Integer getTeacherBackId() {
+		return teacherBackId;
+	}
+
+	public void setTeacherBackId(Integer teacherBackId) {
+		this.teacherBackId = teacherBackId;
+	}
 
 	public Integer getTeacherId() {
 		return teacherId;
@@ -84,6 +93,8 @@ public class BackInfoDetail {
 	public void setClassName(String className) {
 		this.className = className;
 	}
+
+	
 	
 	
 }
