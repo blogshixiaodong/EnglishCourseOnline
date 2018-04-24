@@ -92,49 +92,95 @@
 					
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
+						<div class=" x_panel">
 							<div class="x_title">
-								<h2>
-									学生列表
-								</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
-								</ul>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content">
-
-								<table id="userList" class="table table-striped">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>学号</th>
-											<th>姓名</th>
-											<th>年龄</th>
-											<th>身份证</th>
-											<th>性别</th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- get data and create dom by ajax -->
-									</tbody>
-								</table>
-							</div>
+			                  <h2>班级成员列表</h2>
+			                  <ul class="nav navbar-right panel_toolbox">
+			                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+			                    </li>
+			                    <li class="dropdown">
+			                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			                      <ul class="dropdown-menu" role="menu">
+			                        <li><a href="#">Settings 1</a>
+			                        </li>
+			                        <li><a href="#">Settings 2</a>
+			                        </li>
+			                      </ul>
+			                    </li>
+			                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+			                    </li>
+			                  </ul>
+			                  <div class="clearfix"></div>
+			                </div>
+			               
+			                <!-- content begin-->
+			                <div class="x_content">
+				                <div class="row">
+				                	<div class="col-md-5 col-sm-5 col-xs-12">
+										<div class="table-responsive">
+											<table id="userList" class="table table-striped jambo_table bulk_action">
+				                        		<thead>
+				                          			<tr class="headings">
+							                            <th>
+							                              <input type="checkbox" id="check-all" class="flat">
+							                            </th>
+							                            <th class="column-title">用户编号</th>
+							                            <th class="column-title">用户名称</th>
+							                            <th class="bulk-actions" colspan="7">
+							                              <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+							                            </th>
+						                          	</tr>
+						                        </thead>
+				
+				                        		<tbody>
+							                       	<tr class="even pointer">
+							                         	<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+							                         	<td class=" ">121000040</td>
+							                         	<td class=" ">121000040</td>
+							                         	
+							                       	</tr>
+						                        	<tr class="odd pointer">
+							                            <td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+							                            <td class=" ">121000039</td>
+							                            <td class=" ">121000040</td>
+							                            
+							                        </tr>
+							                        <tr class="even pointer">
+							                         	<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+							                         	<td class=" ">121000040</td>
+							                         	<td class=" ">121000040</td>
+							                         	
+							                       	</tr>
+						                        	<tr class="odd pointer">
+							                            <td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
+							                            <td class=" ">121000039</td>
+							                            <td class=" ">121000040</td>
+							                            
+							                        </tr>
+				                        		 </tbody>
+				                       		</table>
+				                       		
+				                       	</div>
+				                	</div>
+			                	
+				                	<div class="col-md-7 col-sm-7 col-xs-12">
+				                		<div>
+											<div class="form-group">
+							                    <label class="control-label col-md-1 col-sm-1 col-xs-12">反馈内容</label>
+							                    <div class="col-md-11 col-sm-11 col-xs-12">
+							                    	<textarea rows="15" class="resizable_textarea form-control" placeholder="This text area automatically resizes its height as you fill in more text courtesy of autosize-master it out..."></textarea>
+							                    	<br />
+							                    	<button type='submit' class='btn btn-success btn-sm'>详细信息</button>
+				                       				<button type='button' class='btn btn-success btn-sm'>重置</button>
+							                    </div>
+						                  	</div>
+										</div>
+				                	</div>
+				                </div>
+			                </div>
+			                <!-- content over!  -->
 						</div>
 					</div>
-
-
-
 				</div>
 				
 			</div>
@@ -192,11 +238,11 @@
     <script type="text/javascript">
     
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
+    		document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
-    
+    	
     	function sendCondition(e) {
     		$("#userList tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
@@ -204,7 +250,7 @@
     			return;
     		}
     		$.ajax({
-    			url: "searchUser.action",
+    			url: "/user/queryUserByClassid.action",
     			type : "post",
     			dataType: "json",
     			data:{"engclass.classId" : classId},
@@ -212,15 +258,17 @@
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
     				for(var i = 0; i < json.length; i++) {
-    					var tr = $("<tr></tr>");
+    					var tr;
+    					if(i % 2 == 0) {
+    						tr = $("<tr class='odd pointer'></td>");
+    					} else {
+    						tr = $("<tr class='even pointer'></td>");
+    					}
     					var record = json[i];
-    					tr.append($("<td></td>").text(i));
+    					tr.append($("<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>"));
     					tr.append($("<td></td>").text(record["userId"]));
     					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td></td>").text(record["age"]));
-    					tr.append($("<td></td>").text(record["idCard"]));
-    					tr.append($("<td></td>").text(record["sex"]));
-    					$("#userList tbody").append(tr);
+    					$("#userList tbody").append(tr);		
     				}
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -233,7 +281,6 @@
 		$("#reset").click(function() {
 			reset();
 		});
-	
 	</script>
 </body>
 </html>

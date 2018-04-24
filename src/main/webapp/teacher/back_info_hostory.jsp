@@ -117,12 +117,15 @@
 								<table id="userList" class="table table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>学号</th>
-											<th>姓名</th>
-											<th>年龄</th>
-											<th>身份证</th>
-											<th>性别</th>
+											<th>记录编号</th>
+											<th>教师编号</th>
+											<th>教师姓名</th>
+											<th>反馈对象编号</th>
+											<th>反馈对象名称</th>
+											<th>所在班级编号</th>
+											<th>所在班级名称</th>
+											<th>反馈时间</th>
+											<th>反馈内容</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -193,10 +196,31 @@
     
     	function reset() {
 			document.getElementById("engclassList").options.selectedIndex = 0;
+			$("#engclassList").attr("index", 0);
 			$("#engclassList").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
-    
+    	
+    	function AppendZero(number) {
+    		if(number < 10) {
+    			return "0" + number;
+    		}
+    		return number;
+    	}
+    	
+    	function JsonDateToString(dateObject) {
+    		var year = 1900 + dateObject.year;
+    		var month = 1 + dateObject.month;
+    		var day = dateObject.date;
+    		var hours = dateObject.hours;
+    		
+    		var minutes = dateObject.minutes;
+    		
+    		var seconds = dateObject.seconds;
+    		
+    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
+    	}
+    	
     	function sendCondition(e) {
     		$("#userList tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
@@ -204,7 +228,7 @@
     			return;
     		}
     		$.ajax({
-    			url: "searchUser.action",
+    			url: "teacherBackInfoHistory.action",
     			type : "post",
     			dataType: "json",
     			data:{"engclass.classId" : classId},
@@ -214,13 +238,23 @@
     				for(var i = 0; i < json.length; i++) {
     					var tr = $("<tr></tr>");
     					var record = json[i];
-    					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td></td>").text(record["age"]));
-    					tr.append($("<td></td>").text(record["idCard"]));
-    					tr.append($("<td></td>").text(record["sex"]));
-    					$("#userList tbody").append(tr);
+    					tr.append($("<td></td>").text(record["teacherBackId"]));
+    					tr.append($("<td></td>").text(record["teacherId"]));
+    					tr.append($("<td></td>").text(record["teacherName"]));
+    					var to = record["userId"];
+    					if(to == 0) {
+    						tr.append($("<td></td>").text("全体成员"));
+        					tr.append($("<td></td>").text("全体成员"));
+    					} else {
+    						tr.append($("<td></td>").text(record["userId"]));
+        					tr.append($("<td></td>").text(record["userName"]));
+    					}
+    					
+    					tr.append($("<td></td>").text(record["classId"]));
+    					tr.append($("<td></td>").text(record["className"]));
+    					tr.append($("<td></td>").text(JsonDateToString(record["backTime"])));
+    					tr.append($("<td></td>").text(record["backInfo"]));
+    					$("#userList tbody").append(tr);		
     				}
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -229,10 +263,14 @@
     			}
     		});
     	}
+		$("#inClassId").change("input", sendCondition);
+		$("#inClassName").change("input", sendCondition);
 		$("#engclassList").change(sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});
+		
+		
 	
 	</script>
 </body>
