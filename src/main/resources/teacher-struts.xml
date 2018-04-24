@@ -32,6 +32,12 @@
     		</result>
     	</action>
     	
+    	<action name="engclassList" class="com.eco.action.TeacherAction" method="showEngclasses">
+    		<result name="success" type="dispatcher">
+    			<param name="location">/teacher/search_user.jsp</param>
+    		</result>
+    	</action>
+    	
     	<action name="searchEngclass" class="com.eco.action.TeacherAction" method="searchEngclasses">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -46,7 +52,13 @@
     			<param name="location">/teacher/engclassDetail.jsp</param>
     		</result>
     	</action>
-    
+    	
+    	<action name="searchUser" class="com.eco.action.TeacherAction" method="searchUser">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     </package>
 
 	

@@ -55,7 +55,7 @@
 						<a><i class="fa fa-desktop"></i>学生查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="general_elements.html">学生查询</a></li>
+							<li><a href="search_user.jsp">学生查询</a></li>
 						</ul>
 					</li>
 					<li>

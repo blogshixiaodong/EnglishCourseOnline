@@ -6,7 +6,9 @@ import java.util.Map;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -23,6 +25,7 @@ public class TeacherAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
+	private EngclassServer engclassServer = new EngclassServerImpl();
 
 	private Engclass engclass;
 
@@ -97,6 +100,15 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String searchUser() {
+		Integer engclassId = engclass.getClassId();
+		if(engclassId == null) {
+			return Action.ERROR;
+		}
+		jsonResult = JSONArray.fromObject(engclassServer.getUserList(engclassId)).toString();
+		return Action.SUCCESS;
+	}
+	
 	
 	public Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
@@ -108,6 +120,7 @@ public class TeacherAction extends ActionSupport {
 		return new Integer(id.toString());
 	}
 	
+	//parameter内的参数
 	public Integer getEngclassId() {
 		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
 		if(id != null) {
