@@ -300,12 +300,10 @@
 		});
 		
 		$("#backInfoReset").click(function() {
-			alert("reset");	
+			$("#backInfo").val("");
 		});
 		
 
-
-		
 		$("#reset").click(function() {
 			reset();
 		});
