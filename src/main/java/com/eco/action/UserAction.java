@@ -163,10 +163,6 @@ public class UserAction extends ActionSupport {
 	}
 	
 	
-	public String 
-	
-	
-	
 	//用户添加反馈信息
 	public String createUserBackInfoAction() {
 		Integer userid = this.getLoginUserId();
