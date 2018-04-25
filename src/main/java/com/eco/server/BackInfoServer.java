@@ -11,5 +11,7 @@ import com.eco.bean.dto.BackInfoDetail;
 public interface BackInfoServer {
 		
 	public abstract List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
+	
+	public abstract int insertTeacherBackInfo(Integer teacherId, Integer engclassId, Integer[] userIdList, String backInfo);
 
 }	

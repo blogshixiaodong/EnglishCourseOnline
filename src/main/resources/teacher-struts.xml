@@ -65,7 +65,11 @@
     		</result>
     	</action>
     	
-    	
+    	<action name="insertBackInfo" class="com.eco.action.TeacherAction" method="insertBackInfo">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
     	
     	
     </package>

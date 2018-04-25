@@ -35,7 +35,7 @@
 		
 		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "queryUserByClassid" >
 			<result name="success" type="json">
-    			<param name="location">jsonResult</param>
+    			<param name="root">jsonResult</param>
     		</result>
 		</action>
 		

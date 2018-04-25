@@ -220,6 +220,14 @@ public class UserAction extends ActionSupport {
 	public void setEngclass(Engclass engclass) {
 		this.engclass = engclass;
 	}
+
+	public String getJsonResult() {
+		return jsonResult;
+	}
+
+	public void setJsonResult(String jsonResult) {
+		this.jsonResult = jsonResult;
+	}
 	
 	
 }
