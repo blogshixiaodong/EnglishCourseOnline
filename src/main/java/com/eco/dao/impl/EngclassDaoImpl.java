@@ -2,6 +2,8 @@ package com.eco.dao.impl;
 
 import java.util.List;
 
+import org.omg.CORBA.StringHolder;
+
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.dao.EngclassDao;
@@ -35,8 +37,6 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return this.queryForListEx(sql, EngclassDetail.class, userid);
 	}
 	
-	
-
 	@Override
 	public Engclass getEngclassByClassId(Integer teacherId, Integer classId) {
 		String sql = "SELECT * FROM engclass WHERE classid = ?";
@@ -56,6 +56,8 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 					 "WHERE e.classid = ?;";
 		return this.queryForObjectEx(sql, EngclassDetail.class, classId);
 	}
+
+	
 
 	
 	

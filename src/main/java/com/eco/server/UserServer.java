@@ -5,6 +5,7 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
+import com.eco.bean.model.Engclass;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
@@ -54,6 +55,7 @@ public interface UserServer {
 	* @return List<EngclassDetail>
 	*/ 
 	public abstract List<EngclassDetail> queryAllEngclassDetail(Integer userid);
+	
 	
 	
 	/** 

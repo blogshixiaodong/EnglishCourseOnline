@@ -11,5 +11,14 @@ import com.eco.bean.dto.BackInfoDetail;
 public interface BackInfoServer {
 		
 	public abstract List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
+	
+	
+	/** 
+	* @Description: 根据用户id 和班级id查询反馈信息 
+	* @param userId
+	* @param engclassId
+	* @return List<BackInfoDetail>
+	*/ 
+	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId);
 
 }	
