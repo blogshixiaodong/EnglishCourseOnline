@@ -3,6 +3,8 @@ package com.eco.action;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
@@ -31,7 +33,8 @@ public class TeacherAction extends ActionSupport {
 	private BackInfoServer backInfoServer = new BackInfoServerImpl();
 	
 	private Engclass engclass;
-
+	
+	
 	private String jsonResult = "";
 	
 	public String showNowCourses() {
@@ -123,6 +126,16 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	
+	public String insertBackInfo() {
+		Integer teacherId = getLoginTeacherId();
+		String[] userIdList = (String[])ServletActionContext.getRequest().getParameterMap().get("userIdList[]");
+		String backInfo = (String)ServletActionContext.getRequest().getParameter("backInfo");
+		backInfoServer.insertTeacherBackInfo(teacherId, getEngclassId(), formatToIntger(userIdList), backInfo);
+		this.setJsonResult("success");
+		return Action.SUCCESS;
+	}
+	
 	public Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
 		Object id = map.get("teacherId");
@@ -140,6 +153,14 @@ public class TeacherAction extends ActionSupport {
 			return new Integer(id.toString());
 		}
 		return null;
+	}
+	
+	private Integer[] formatToIntger(String[] stringArray) {
+		Integer[] intgerArray = new Integer[stringArray.length];
+		for(int i = 0; i < stringArray.length; i++) {
+			intgerArray[i] = new Integer(stringArray[i]);
+		}
+		return intgerArray;
 	}
 	
 

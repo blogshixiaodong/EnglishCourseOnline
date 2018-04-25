@@ -74,7 +74,7 @@
 							<span class="fa fa-chevron-down"></span>
 						</a>
 						<ul class="nav child_menu">
-							<li><a href="back_info_hostory.jsp">反馈历史</a></li>
+							<li><a href="back_info_history.jsp">反馈历史</a></li>
 							<li><a href="submit_back_info.jsp">教师反馈</a></li>
 							<li><a href="chartjs2.html">学生反馈</a></li>
 						</ul>

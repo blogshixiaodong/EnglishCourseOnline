@@ -35,7 +35,7 @@
 		
 		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "queryUserByClassid" >
 			<result name="success" type="json">
-    			<param name="location">jsonResult</param>
+    			<param name="root">jsonResult</param>
     		</result>
 		</action>
 		
@@ -51,6 +51,13 @@
     		</result>
 		</action>
 		
+		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
+		
 		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/search_engclass.jsp</param>
@@ -62,9 +69,7 @@
 			<result name = "success">/user/search_timesheet.jsp</result>
 		</action>
 		
-		<action name="queryTeacherBackInfoAction" class="com.eco.action.UserAction" method = "queryTeacherBackInfoAction" >
-			<result name = "success">/</result>
-		</action>
+		
 	
 		<action name="createUserBackInfoAction" class="com.eco.action.UserAction" method = "createUserBackInfoAction" >
 			<result name = "success">/</result>

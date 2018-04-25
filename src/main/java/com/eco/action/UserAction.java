@@ -125,8 +125,9 @@ public class UserAction extends ActionSupport {
 		Integer userid = this.getLoginUserId();
 
 		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfo(classid, userid);
-		request.setAttribute("backInfoDetailList", backInfoDetailList);
+		//request.setAttribute("backInfoDetailList", backInfoDetailList);
 		
+		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		return SUCCESS;
 	}
 	
@@ -160,6 +161,9 @@ public class UserAction extends ActionSupport {
 		
 		return Action.SUCCESS;
 	}
+	
+	
+	public String 
 	
 	
 	

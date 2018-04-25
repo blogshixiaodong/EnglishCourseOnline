@@ -133,30 +133,7 @@
 						                        </thead>
 				
 				                        		<tbody>
-							                       	<tr class="even pointer">
-							                         	<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
-							                         	<td class=" ">121000040</td>
-							                         	<td class=" ">121000040</td>
-							                         	
-							                       	</tr>
-						                        	<tr class="odd pointer">
-							                            <td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
-							                            <td class=" ">121000039</td>
-							                            <td class=" ">121000040</td>
-							                            
-							                        </tr>
-							                        <tr class="even pointer">
-							                         	<td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
-							                         	<td class=" ">121000040</td>
-							                         	<td class=" ">121000040</td>
-							                         	
-							                       	</tr>
-						                        	<tr class="odd pointer">
-							                            <td class="a-center "><input type="checkbox" class="flat" name="table_records"></td>
-							                            <td class=" ">121000039</td>
-							                            <td class=" ">121000040</td>
-							                            
-							                        </tr>
+							                       	<!-- get data by ajax -->
 				                        		 </tbody>
 				                       		</table>
 				                       		
@@ -168,10 +145,10 @@
 											<div class="form-group">
 							                    <label class="control-label col-md-1 col-sm-1 col-xs-12">反馈内容</label>
 							                    <div class="col-md-11 col-sm-11 col-xs-12">
-							                    	<textarea rows="15" class="resizable_textarea form-control" placeholder="This text area automatically resizes its height as you fill in more text courtesy of autosize-master it out..."></textarea>
+							                    	<textarea id="backInfo" rows="15" class="resizable_textarea form-control" placeholder="信息反馈..."></textarea>
 							                    	<br />
-							                    	<button type='submit' class='btn btn-success btn-sm'>详细信息</button>
-				                       				<button type='button' class='btn btn-success btn-sm'>重置</button>
+							                    	<button id="backInfoSubmit" type='button' class='btn btn-success btn-sm'>提交反馈</button>
+				                       				<button id="backInfoReset" type='button' class='btn btn-success btn-sm'>重置</button>
 							                    </div>
 						                  	</div>
 										</div>
@@ -250,10 +227,10 @@
     			return;
     		}
     		$.ajax({
-    			url: "/user/queryUserByClassid.action",
+    			url: "../user/queryUserByClassid.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
+    			data:{"classid" : classId},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
@@ -265,7 +242,7 @@
     						tr = $("<tr class='even pointer'></td>");
     					}
     					var record = json[i];
-    					tr.append($("<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>"));
+    					tr.append($("<td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>"));
     					tr.append($("<td></td>").text(record["userId"]));
     					tr.append($("<td></td>").text(record["username"]));
     					$("#userList tbody").append(tr);		
@@ -278,6 +255,55 @@
     		});
     	}
 		$("#engclassList").change(sendCondition);
+		
+		$("#backInfoSubmit").click(function() {
+			var userIdList = new Array();
+			var backInfo = $("#backInfo").val();
+			if($("#check-all").is(':checked')) {
+				//全体成员
+				userIdList.push(-1);
+			} else {
+				//个别对象
+				var children = $("#userList tbody").children();
+				for(var i = 0; i < children.length; i++) {
+					var userId = $(children[i]).children().eq(1).html();
+					var checkbox = $(children[i]).find("input");
+					if($(checkbox).is(":checked")) {
+						userIdList.push(userId);
+					}
+				}
+			}
+			if(userIdList.length == 0 || backInfo === "") {
+				alert("信息不完整,无法提交!");
+				return ;
+			}
+			var classId = $("#engclassList").val().split(" : ")[0];
+			$.ajax({
+				url: "insertBackInfo.action",
+				type: "post",
+				data: {
+					"engclassId" : classId,
+					"userIdList" : userIdList,
+					"backInfo": backInfo
+				},
+				dataType: "text",
+				success : function(msg) {
+					alert("提交成功!");
+					window.location.href="back_info_history.jsp";
+				},
+				error : function(data){
+		     		alert(data);
+			   	}
+				
+			});
+			
+		});
+		
+		$("#backInfoReset").click(function() {
+			$("#backInfo").val("");
+		});
+		
+
 		$("#reset").click(function() {
 			reset();
 		});
