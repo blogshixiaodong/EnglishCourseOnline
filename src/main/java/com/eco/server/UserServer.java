@@ -71,8 +71,8 @@ public interface UserServer {
 	* @Description: 用户添加反馈信息 
 	* @param info
 	* @return 
-	*/ 
-	public abstract void createUserBackInfo(UserBackInfo backInfo);
+	*//* 
+	public abstract void createUserBackInfo(UserBackInfo backInfo);*/
 	
 	
 	/** 
