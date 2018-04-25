@@ -22,7 +22,12 @@ public interface BackInfoServer {
 	*/ 
 	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId);
 
+	
+	public abstract List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId);
+	
+	
+	
 	public abstract int insertTeacherBackInfo(Integer teacherId, Integer engclassId, Integer[] userIdList, String backInfo);
-
+	
 
 }	

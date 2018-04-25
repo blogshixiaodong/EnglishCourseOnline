@@ -26,6 +26,7 @@ public interface UserBackInfoDao {
 	boolean createUserBackInfo(UserBackInfo backInfo);
 	
 	
+
 	public abstract List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId);
 	
 	
@@ -36,6 +37,14 @@ public interface UserBackInfoDao {
 	* @return List<BackInfoDetail>
 	*/ 
 	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId,Integer engclassId);
+	
+	
+	/** 
+	* @Description: 根据classid 查询该班级用户的所有反馈记录 
+	* @param engclassId
+	* @return List<BackInfoDetail>
+	*/ 
+	public abstract List<BackInfoDetail> queryAllUserBackInfoByEngclass(Integer engclassId);
 	
 	
 }

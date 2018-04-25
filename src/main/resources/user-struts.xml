@@ -39,11 +39,18 @@
     		</result>
 		</action>
 		
-		<action name="userBackInfoHistory" class="com.eco.action.UserAction" method = "userBackInfoHistory" >
+		<action name="queryUserBackInfoByClassId" class="com.eco.action.UserAction" method = "queryUserBackInfoByClassId" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
+		
+		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
 		
 		 <action name="searchEngclasses" class="com.eco.action.UserAction" method = "searchEngclasses" >
 			<result name="success" type="json">

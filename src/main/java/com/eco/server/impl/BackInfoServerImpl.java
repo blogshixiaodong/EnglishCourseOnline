@@ -56,5 +56,12 @@ public class BackInfoServerImpl implements BackInfoServer {
 			return updateCount;
 		}
 	}
+
+
+
+	@Override
+	public List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId) {
+		return userBackInfoDao.queryAllUserBackInfoByEngclass(engclassId);
+	}
 	
 }
