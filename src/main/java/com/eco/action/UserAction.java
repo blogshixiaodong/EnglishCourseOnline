@@ -144,6 +144,22 @@ public class UserAction extends ActionSupport {
 		return Action.SUCCESS;
 	} 
 	
+	
+	public String queryUserBackInfoByClassId() {
+		
+		//Integer userId = this.getLoginUserId();
+		
+		Integer engclassId = engclass.getClassId();
+		BackInfoServer backInfoServer = new BackInfoServerImpl();
+		List<BackInfoDetail> backInfoDetailList = backInfoServer.getAllUserBackInfobyClassId(engclassId);
+		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
+		
+		return SUCCESS;
+		
+		
+	}
+	
+	
 	//查询用户所在班级
 	public String searchEngclasses() {
 		Integer userId = this.getLoginUserId();
@@ -161,10 +177,6 @@ public class UserAction extends ActionSupport {
 		
 		return Action.SUCCESS;
 	}
-	
-	
-	public String 
-	
 	
 	
 	//用户添加反馈信息
