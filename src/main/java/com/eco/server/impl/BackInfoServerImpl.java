@@ -26,7 +26,14 @@ public class BackInfoServerImpl implements BackInfoServer {
 	public List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
 		return teacherBackInfoDao.getBackInfoByTeacherIdAndClassId(teacherId, engclassId);
 	}
-	
+
+
+
+	@Override
+	public List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId) {
+		return userBackInfoDao.getBackInfoByUserIdAndClassId(userId, engclassId);
+	}
+
 	public int insertTeacherBackInfo(Integer teacherId, Integer engclassId, Integer[] userIdList, String backInfo) {
 		TeacherBackInfo teacherBackInfo = new TeacherBackInfo();
 		teacherBackInfo.setTeacherId(teacherId);

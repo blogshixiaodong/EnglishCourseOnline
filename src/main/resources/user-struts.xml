@@ -39,6 +39,23 @@
     		</result>
 		</action>
 		
+		<action name="userBackInfoHistory" class="com.eco.action.UserAction" method = "userBackInfoHistory" >
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
+		
+		 <action name="searchEngclasses" class="com.eco.action.UserAction" method = "searchEngclasses" >
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
+		
+		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
 		
 		
 		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
@@ -52,9 +69,7 @@
 			<result name = "success">/user/search_timesheet.jsp</result>
 		</action>
 		
-		<action name="queryTeacherBackInfoAction" class="com.eco.action.UserAction" method = "queryTeacherBackInfoAction" >
-			<result name = "success">/</result>
-		</action>
+		
 	
 		<action name="createUserBackInfoAction" class="com.eco.action.UserAction" method = "createUserBackInfoAction" >
 			<result name = "success">/</result>

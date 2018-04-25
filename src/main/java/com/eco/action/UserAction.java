@@ -17,7 +17,9 @@ import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.bean.model.UserClass;
 import com.eco.dao.UserDao;
+import com.eco.server.BackInfoServer;
 import com.eco.server.UserServer;
+import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -123,10 +125,47 @@ public class UserAction extends ActionSupport {
 		Integer userid = this.getLoginUserId();
 
 		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfo(classid, userid);
-		request.setAttribute("backInfoDetailList", backInfoDetailList);
+		//request.setAttribute("backInfoDetailList", backInfoDetailList);
 		
+		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		return SUCCESS;
 	}
+	
+	//获取用户历史反馈信息
+	public String userBackInfoHistory() {
+		Integer userId = this.getLoginUserId();
+		Integer engclassId = engclass.getClassId();
+		if(userId == null || engclassId == null) {
+			return Action.ERROR;
+		}
+		
+		BackInfoServer backInfoServer = new BackInfoServerImpl();
+		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByUserIdAndClassId(userId, engclassId)).toString();
+		return Action.SUCCESS;
+	} 
+	
+	//查询用户所在班级
+	public String searchEngclasses() {
+		Integer userId = this.getLoginUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		
+		UserServer userServer = new UserServerImpl();
+		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userId);
+		if(engclassDetailList == null) {
+			return Action.ERROR;
+		}
+		//jsonResult = JSONArray.fromObject(engclassDetailList).toString();
+		request.setAttribute("engclassDetailList", engclassDetailList);
+		
+		return Action.SUCCESS;
+	}
+	
+	
+	public String 
+	
+	
 	
 	//用户添加反馈信息
 	public String createUserBackInfoAction() {
