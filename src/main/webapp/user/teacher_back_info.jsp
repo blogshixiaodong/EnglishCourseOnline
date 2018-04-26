@@ -138,6 +138,9 @@
 							</div>
 						</div>
 					</div>
+
+
+
 				</div>
 				
 			</div>
@@ -228,10 +231,10 @@
     			return;
     		}
     		$.ajax({
-    			url: "userBackInfoHistory.action",
+    			url: "showTeacherBackInfos.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
+    			data:{"classid" : classId},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
@@ -270,6 +273,8 @@
 			reset();
 		});
 		
+		
+	
 	</script>
 </body>
 </html>

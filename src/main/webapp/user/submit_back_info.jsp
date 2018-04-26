@@ -92,50 +92,70 @@
 					
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div class="x_panel">
-							<div class="x_title">
-								<h2>
-									反馈列表
-								</h2>
-								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
-								</ul>
-								<div class="clearfix"></div>
-							</div>
-							<div class="x_content">
-
-								<table id="userList" class="table table-striped">
-									<thead>
-										<tr>
-											<th>记录编号</th>
-											
-											<th>用户编号</th>
-											<th>用户姓名</th>
-											
-											<th>反馈对象编号</th>
-											<th>反馈对象名称</th>
-											
-											<th>所在班级编号</th>
-											<th>所在班级名称</th>
-											<th>反馈时间</th>
-											<th>反馈内容</th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- get data and create dom by ajax -->
-									</tbody>
-								</table>
-							</div>
+						<div class=" x_panel">
+							<!-- <div class="x_title">
+			                  <h2>班级成员列表</h2>
+			                  <ul class="nav navbar-right panel_toolbox">
+			                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+			                    </li>
+			                    <li class="dropdown">
+			                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+			                      <ul class="dropdown-menu" role="menu">
+			                        <li><a href="#">Settings 1</a>
+			                        </li>
+			                        <li><a href="#">Settings 2</a>
+			                        </li>
+			                      </ul>
+			                    </li>
+			                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+			                    </li>
+			                  </ul>
+			                  <div class="clearfix"></div>
+			                </div> -->
+			               
+			                <!-- content begin-->
+			                <div class="x_content">
+				                <div class="row">
+				                	<%-- <div class="col-md-5 col-sm-5 col-xs-12">
+										<div class="table-responsive">
+											<table id="userList" class="table table-striped jambo_table bulk_action">
+				                        		<thead>
+				                          			<tr class="headings">
+							                            <th>
+							                              <input type="checkbox" id="check-all" class="flat">
+							                            </th>
+							                            <th class="column-title">用户编号</th>
+							                            <th class="column-title">用户名称</th>
+							                            <th class="bulk-actions" colspan="7">
+							                              <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+							                            </th>
+						                          	</tr>
+						                        </thead>
+				
+				                        		<tbody>
+							                       	<!-- get data by ajax -->
+				                        		 </tbody>
+				                       		</table>
+				                       		
+				                       	</div>
+				                	</div> --%>
+			                	
+				                	<div class="col-md-7 col-sm-7 col-xs-12">
+				                		<div>
+											<div class="form-group">
+							                    <label class="control-label col-md-1 col-sm-1 col-xs-12">反馈内容</label>
+							                    <div class="col-md-11 col-sm-11 col-xs-12">
+							                    	<textarea id="backInfo" rows="15" class="resizable_textarea form-control" placeholder="信息反馈..."></textarea>
+							                    	<br />
+							                    	<button id="backInfoSubmit" type='button' class='btn btn-success btn-sm'>提交反馈</button>
+				                       				<button id="backInfoReset" type='button' class='btn btn-success btn-sm'>重置</button>
+							                    </div>
+						                  	</div>
+										</div>
+				                	</div>
+				                </div>
+			                </div>
+			                <!-- content over!  -->
 						</div>
 					</div>
 				</div>
@@ -195,65 +215,36 @@
     <script type="text/javascript">
     
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
+    		document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
     	
-    	function AppendZero(number) {
-    		if(number < 10) {
-    			return "0" + number;
-    		}
-    		return number;
-    	}
-    	
-    	function JsonDateToString(dateObject) {
-    		var year = 1900 + dateObject.year;
-    		var month = 1 + dateObject.month;
-    		var day = dateObject.date;
-    		var hours = dateObject.hours;
-    		
-    		var minutes = dateObject.minutes;
-    		
-    		var seconds = dateObject.seconds;
-    		
-    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
-    	}
-    	
-    	function sendCondition(e) {
+    	/* function sendCondition(e) {
     		$("#userList tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
     		if(classId === "") {
     			return;
     		}
     		$.ajax({
-    			url: "userBackInfoHistory.action",
+    			url: "../user/queryUserByClassid.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
+    			data:{"classid" : classId},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
     				for(var i = 0; i < json.length; i++) {
-    					var tr = $("<tr></tr>");
-    					var record = json[i];
-    					tr.append($("<td></td>").text('#'+(i+1000)));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["userName"]));
-    					var to = record["userId"];
-    					if(to == 0) {
-    						tr.append($("<td></td>").text("全体成员"));
-        					tr.append($("<td></td>").text("全体成员"));
+    					var tr;
+    					if(i % 2 == 0) {
+    						tr = $("<tr class='odd pointer'></td>");
     					} else {
-    						tr.append($("<td></td>").text(record["teacherId"]));
-        					tr.append($("<td></td>").text(record["teacherName"]));
+    						tr = $("<tr class='even pointer'></td>");
     					}
-    					
-    					tr.append($("<td></td>").text(record["classId"]));
-    					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(JsonDateToString(record["backTime"])));
-    					tr.append($("<td></td>").text(record["backInfo"]));
+    					var record = json[i];
+    					tr.append($("<td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>"));
+    					tr.append($("<td></td>").text(record["userId"]));
+    					tr.append($("<td></td>").text(record["username"]));
     					$("#userList tbody").append(tr);		
     				}
     			},
@@ -262,14 +253,50 @@
     				reset();
     			}
     		});
-    	}
-		$("#inClassId").change("input", sendCondition);
-		$("#inClassName").change("input", sendCondition);
-		$("#engclassList").change(sendCondition);
+    	} */
+    	
+		/* $("#engclassList").change(sendCondition); */
+		
+		
+		$("#backInfoSubmit").click(function(){
+			
+			var backInfo = $("#backInfo").val();
+			console.log(backInfo);
+			if(backInfo == ""){
+				alert("信息不完整，无法提交");
+				return;
+			}
+			
+			var classId = $("#engclassList").val().split(" : ")[0];
+			$.ajax({
+				url:"createUserBackInfo.action",
+				type:"post",
+				data:{
+					"classid" : classId,
+					"backInfo": backInfo
+				},
+				dataType: "text",
+				success : function(msg) {
+					alert("提交成功!");
+					window.location.href="back_info_history.jsp";
+				},
+				error : function(data){
+					alert(data);
+			   	}
+			});
+			
+			
+		});
+		
+		
+		$("#backInfoReset").click(function() {
+			$("#backInfo").val("");
+		});
+		
+
 		$("#reset").click(function() {
 			reset();
 		});
-		
 	</script>
 </body>
 </html>
