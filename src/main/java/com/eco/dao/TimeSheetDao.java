@@ -25,6 +25,17 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	
 	
 	/** 
+	* @Description: 查询用户的某班某天的考勤记录
+	* @param userId
+	* @param engclassId
+	* @param queryDate
+	* @return List<TimeSheetDetail>
+	*/ 
+	public List<TimeSheetDetail> getTimeSheetByUserAndTime(Integer userId,Integer engclassId,Date queryDate);
+	
+	
+	
+	/** 
 	* @Description: 根据classid和日期查询该班级的考勤记录 
 	* @param classId
 	* @param date

@@ -17,7 +17,7 @@ public class TimeSheetDetail implements Serializable {
 	
 	private Integer classId;
 	
-	private Integer className;
+	private String className;
 	
 	private Integer teacherId;
 	
@@ -53,11 +53,11 @@ public class TimeSheetDetail implements Serializable {
 		this.classId = classId;
 	}
 
-	public Integer getClassName() {
+	public String getClassName() {
 		return className;
 	}
 
-	public void setClassName(Integer className) {
+	public void setClassName(String className) {
 		this.className = className;
 	}
 

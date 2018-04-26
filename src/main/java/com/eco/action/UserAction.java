@@ -94,6 +94,7 @@ public class UserAction extends ActionSupport {
 	}
 	
 	
+	//通过班级编号查询所有学生信息
 	public String queryUserByClassid() {
 		
 		if(classid == null) {
@@ -115,9 +116,13 @@ public class UserAction extends ActionSupport {
 	//查询某门课程的考勤记录
 	public String showTimeSheets() {
 		Integer userid = this.getLoginUserId();
-
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId());
-		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
+		
+		String queryDate = (String)request.getParameter("queryDate");
+		
+		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),queryDate);
+		//request.setAttribute("timeSheetDetailList", timeSheetDetailList);
+		
+		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
 		
 		return SUCCESS;
 	}

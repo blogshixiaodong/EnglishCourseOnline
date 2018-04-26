@@ -78,6 +78,12 @@
 			</result>
 		</action>
 		
+		<action name="showtimeSheets" class="com.eco.action.UserAction" method = "showTimeSheets" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
 		
 		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
 			<result name="success" type="dispatcher">
@@ -86,9 +92,7 @@
 		</action> -->
 		
 		<!--
-		<action name="showtimeSheets" class="com.eco.action.UserAction" method = "showTimeSheets" >
-			<result name = "success">/user/search_timesheet.jsp</result>
-		</action>
+		
 		
 		
 	

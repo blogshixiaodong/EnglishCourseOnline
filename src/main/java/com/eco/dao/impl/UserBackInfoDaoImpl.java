@@ -54,7 +54,7 @@ public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implement
 
 	@Override
 	public List<BackInfoDetail> queryAllUserBackInfoByEngclass(Integer engclassId) {
-		String sql = "SELECT t1.*,username,classname FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
+		String sql = "SELECT t1.*,username,classname, teachername FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
 					 "LEFT JOIN USER t3 ON t3.userid = t1.userid LEFT JOIN teacher t4 ON t4.teacherid = t1.teacherid \r\n" + 
 					 "WHERE t1.classid = ? ORDER BY backInfo  DESC";
 		

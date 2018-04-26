@@ -1,6 +1,8 @@
 package com.eco.server.impl;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import com.eco.bean.dto.BackInfoDetail;
@@ -85,11 +87,28 @@ public class UserServerImpl implements UserServer{
 	}
 
 	@Override
-	public List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid, Integer engclassid) {
-		//List<TimeSheetDetail> timeSheetDetailList = null;
+	public List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userId, Integer engclassId,String queryDate) {
+		List<TimeSheetDetail> timeSheetDetailList = null;
 		TimeSheetDao tsDao = new TimeSheetDaoImpl();
+		if("".equals(queryDate)) {
+			//按classid查出该用户在该班级的所有考勤记录
+			timeSheetDetailList = tsDao.getTimeSheetByUser(userId, engclassId);
+		}else {
 			
-		return tsDao.getTimeSheetByUser(userid, engclassid);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date formateDate = null;
+			try {
+				formateDate = sdf.parse(queryDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			timeSheetDetailList = tsDao.getTimeSheetByUserAndTime(userId, engclassId, formateDate);
+		}
+		
+		
+			
+		return timeSheetDetailList;
 		
 	}
 

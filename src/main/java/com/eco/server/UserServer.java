@@ -91,7 +91,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid);
+	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid,String queryDate);
 	
 	
 	
