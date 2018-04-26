@@ -1,6 +1,7 @@
 package com.eco.server.impl;
 
 
+import java.util.Date;
 import java.util.List;
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
@@ -84,8 +85,8 @@ public class UserServerImpl implements UserServer{
 	}
 
 	@Override
-	public List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid, Integer engclassid,String engclassName) {
-		List<TimeSheetDetail> timeSheetDetailList = null;
+	public List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid, Integer engclassid) {
+		//List<TimeSheetDetail> timeSheetDetailList = null;
 		TimeSheetDao tsDao = new TimeSheetDaoImpl();
 			
 		return tsDao.getTimeSheetByUser(userid, engclassid);
@@ -104,6 +105,14 @@ public class UserServerImpl implements UserServer{
 	public List<User> queryUserListByClassid(Integer classid) {
 		UserDao userDao = new UserDaoImpl();
 		return userDao.queryAllUserByClassid(classid);
+	}
+
+	@Override
+	public List<TimeSheetDetail> queryUserTimeSheetDetailByClassId(Integer classId, Date date) {
+		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
+		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.queryUserTimeSheetByClassIdAndTime(classId, date);
+		
+		return timeSheetDetailList;
 	}
 
 	

@@ -116,7 +116,7 @@ public class UserAction extends ActionSupport {
 	public String showTimeSheets() {
 		Integer userid = this.getLoginUserId();
 
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),engclass.getClassName());
+		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId());
 		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
 		
 		return SUCCESS;

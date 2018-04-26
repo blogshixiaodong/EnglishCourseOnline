@@ -1,5 +1,6 @@
 package com.eco.server;
 
+import java.util.Date;
 import java.util.List;
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
@@ -90,7 +91,18 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid,String engclassName);
+	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid);
+	
+	
+	
+	/** 
+	* @Description: 根据classid和日期查询该班级的考勤记录
+	* @param classid
+	* @param date
+	* @return List<TimeSheetDetail>
+	*/ 
+	public abstract List<TimeSheetDetail> queryUserTimeSheetDetailByClassId(Integer classId,Date date);
+	
 	
 	
 	/** 
