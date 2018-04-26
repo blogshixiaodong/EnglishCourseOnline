@@ -71,6 +71,12 @@
     		</result>
     	</action>
     	
+    	<action name="getUserTimeSheetDetail" class="com.eco.action.TeacherAction" method="getUserTimeSheetDetail">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     	
     </package>
 

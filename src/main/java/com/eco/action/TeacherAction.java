@@ -1,5 +1,8 @@
 package com.eco.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +14,11 @@ import com.eco.bean.model.Engclass;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.UserServer;
 import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
+import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -31,6 +36,7 @@ public class TeacherAction extends ActionSupport {
 	private TeacherServer teacherServer = new TeacherServerImpl();
 	private EngclassServer engclassServer = new EngclassServerImpl();
 	private BackInfoServer backInfoServer = new BackInfoServerImpl();
+	private UserServer userServer = new UserServerImpl();
 	
 	private Engclass engclass;
 	
@@ -135,6 +141,21 @@ public class TeacherAction extends ActionSupport {
 		this.setJsonResult("success");
 		return Action.SUCCESS;
 	}
+	
+	public String getUserTimeSheetDetail() {
+		Integer engclassId = engclass.getClassId();
+		String queryDate = ((String [])ServletActionContext.getRequest().getParameterMap().get("queryDate"))[0].toString();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return Action.SUCCESS;
+		
+	}
+	
 	
 	public Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();

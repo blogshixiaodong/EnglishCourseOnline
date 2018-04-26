@@ -64,8 +64,8 @@
 							<span class="fa fa-chevron-down"></span>
 						</a>
 						<ul class="nav child_menu">
-							<li><a href="tables.html">考勤记录</a></li>
-							<li><a href="tables_dynamic.html">考勤登记</a></li>
+							<li><a href="time_sheet_histoty.jsp">考勤记录</a></li>
+							<li><a href="register_time_sheet.jsp">考勤登记</a></li>
 						</ul>
 					</li>
 					<li>
@@ -76,7 +76,7 @@
 						<ul class="nav child_menu">
 							<li><a href="back_info_history.jsp">反馈历史</a></li>
 							<li><a href="submit_back_info.jsp">教师反馈</a></li>
-							<li><a href="chartjs2.html">学生反馈</a></li>
+							<li><a href="user_back_info_history.jsp">学生反馈</a></li>
 						</ul>
 					</li>
 				</ul>
