@@ -1,5 +1,8 @@
 package com.eco.action;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +51,8 @@ public class UserAction extends ActionSupport {
 	private String jsonResult = "";
 	
 	private String backInfo = "";
+	
+	private String leaveInfo = "";
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
@@ -197,14 +202,13 @@ public class UserAction extends ActionSupport {
 	
 	
 	//创建一条考勤记录（请假）
-	public String createTimeSheetAction() {
-		Integer userid = this.getLoginUserId();
+	public String createTimeSheet() {
+		Integer userId = this.getLoginUserId();
 		
-		//考勤记录手动添加 用户id 和classid -->待定
-		timeSheet.setUserId(userid);
+		String queryDate = (String)request.getParameter("queryDate");
 		
-		userServer.createTimeSheet(timeSheet);
-		
+		jsonResult = userServer.createTimeSheet(userId,classid,queryDate,this.getLeaveInfo());
+	
 		return SUCCESS;
 	}
 	
@@ -216,6 +220,9 @@ public class UserAction extends ActionSupport {
 		
 		return SUCCESS;
 	}
+	
+	
+	
 	
 	
 	private Integer getLoginUserId() {
@@ -292,6 +299,14 @@ public class UserAction extends ActionSupport {
 
 	public void setBackInfo(String backInfo) {
 		this.backInfo = backInfo;
+	}
+
+	public String getLeaveInfo() {
+		return leaveInfo;
+	}
+
+	public void setLeaveInfo(String leaveInfo) {
+		this.leaveInfo = leaveInfo;
 	}
 	
 	

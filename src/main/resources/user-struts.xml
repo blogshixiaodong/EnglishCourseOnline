@@ -84,6 +84,12 @@
 			</result>
 		</action>
 		
+		<action name="createTimeSheet" class="com.eco.action.UserAction" method = "createTimeSheet" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+			
+		</action>
 		
 		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
 			<result name="success" type="dispatcher">

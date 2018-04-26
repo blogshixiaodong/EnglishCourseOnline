@@ -1,5 +1,6 @@
 package com.eco.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
@@ -31,5 +32,15 @@ public interface CourseRecordDao {
 	* @return boolean
 	*/ 
 	public abstract boolean updateSignCount(Integer crId);
+	
+	
+	/** 
+	* @Description: 查看 date 是否超出某班级的结课时间
+	* @param classId
+	* @param date
+	* @return boolean
+	*/ 
+	public abstract boolean isOverEndTime(Integer classId,Date date);
+	
 	
 }

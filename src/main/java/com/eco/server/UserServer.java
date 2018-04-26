@@ -67,15 +67,6 @@ public interface UserServer {
 	public abstract List<User> queryUserListByClassid(Integer classid);
 	
 	
-	
-	/** 
-	* @Description: 用户添加反馈信息 
-	* @param info
-	* @return 
-	*//* 
-	public abstract void createUserBackInfo(UserBackInfo backInfo);*/
-	
-	
 	/** 
 	* @Description: 用户查询教师反馈信息 
 	* @param classid
@@ -105,12 +96,20 @@ public interface UserServer {
 	
 	
 	
+	
 	/** 
-	* @Description: 用户请假
-	* @param timeSheet
-	* @return void
+	* @Description: 请假 
+	* @param userId
+	* @param classId
+	* @param queryDate
+	* @param leaveInfo
+	* @return String
 	*/ 
-	public abstract boolean createTimeSheet(TimeSheet timeSheet);
+	public abstract String createTimeSheet(Integer userId,Integer classId,String queryDate,String leaveInfo);
+	
+	
+	
+	
 	
 	
 	

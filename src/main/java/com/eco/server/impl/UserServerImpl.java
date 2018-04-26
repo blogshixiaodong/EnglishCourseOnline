@@ -95,29 +95,54 @@ public class UserServerImpl implements UserServer{
 			timeSheetDetailList = tsDao.getTimeSheetByUser(userId, engclassId);
 		}else {
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date formateDate = null;
-			try {
+			//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date formateDate = stringFormateToDate(queryDate);
+			/*try {
 				formateDate = sdf.parse(queryDate);
 			} catch (ParseException e) {
 				e.printStackTrace();
-			}
+			}*/
 			
 			timeSheetDetailList = tsDao.getTimeSheetByUserAndTime(userId, engclassId, formateDate);
-		}
-		
-		
-			
+		}			
 		return timeSheetDetailList;
-		
+	}
+	
+	protected Date stringFormateToDate(String stringDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return sdf.parse(stringDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	
 	@Override
-	public boolean createTimeSheet(TimeSheet timeSheet) {
+	public String createTimeSheet(Integer userId,Integer classId,String queryDate,String leaveInfo) {
 		TimeSheetDao tsDao = new TimeSheetDaoImpl();
-		tsDao.createTimeSheet(timeSheet);
-		return true;
+		CourseRecordDao crDao = new CourseRecordDaoImpl();
+		
+		Date formateDate = stringFormateToDate(queryDate);
+		
+		if((tsDao.queryUserTimeSheetByClassIdAndTime(classId, formateDate)).size() != 0 ) {
+			return "不允许重复对当天请假";
+		}else if(crDao.isOverEndTime(classId,formateDate)) {
+			return "超出课程结课时间";
+		}
+		else {
+			TimeSheet timeSheet = new TimeSheet();
+			
+			timeSheet.setUserId(userId);
+			timeSheet.setClassId(classId);
+			timeSheet.setRecordTime(formateDate);
+			timeSheet.setSheetInfo("0:"+leaveInfo);
+			
+			tsDao.createTimeSheet(timeSheet);
+			return "提交成功";
+		}
 	}
 
 	@Override
