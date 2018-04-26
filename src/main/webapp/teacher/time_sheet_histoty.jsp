@@ -232,7 +232,7 @@
 			document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").attr("index", 0);
 			$("#engclassList").selectpicker('refresh');
-			$("#myDatepicker2").datepicker("clearDates");
+			$("#myDatepicker").datepicker("clearDates");
 			$("#userList tbody").html("");
     	}
     	
