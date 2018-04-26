@@ -45,6 +45,13 @@
     		</result>
 		</action>
 		
+		<action name="userBackInfoHistory" class="com.eco.action.UserAction" method = "userBackInfoHistory" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
+		
 		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
@@ -59,6 +66,13 @@
 		</action>
 		
 		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
+		
+		<action name="createUserBackInfo" class="com.eco.action.UserAction" method = "createUserBackInfo" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>

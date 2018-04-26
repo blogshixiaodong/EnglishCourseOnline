@@ -57,6 +57,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return this.queryForObjectEx(sql, EngclassDetail.class, classId);
 	}
 
+	@Override
+	public Integer queryTeacherIdByEngclassId(Integer classId) {
+		String sql = "SELECT teacherid FROM engclass WHERE classid = ?";
+		return (Integer)this.queryForValue(sql, classId);
+	}
+
 	
 
 	

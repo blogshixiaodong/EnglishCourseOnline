@@ -5,8 +5,11 @@ import java.util.List;
 
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.model.TeacherBackInfo;
+import com.eco.bean.model.UserBackInfo;
+import com.eco.dao.EngclassDao;
 import com.eco.dao.TeacherBackInfoDao;
 import com.eco.dao.UserBackInfoDao;
+import com.eco.dao.impl.EngclassDaoImpl;
 import com.eco.dao.impl.TeacherBackInfoDaoImpl;
 import com.eco.dao.impl.UserBackInfoDaoImpl;
 import com.eco.server.BackInfoServer;
@@ -63,5 +66,34 @@ public class BackInfoServerImpl implements BackInfoServer {
 	public List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId) {
 		return userBackInfoDao.queryAllUserBackInfoByEngclass(engclassId);
 	}
+
+
+
+	@Override
+	public int createUserBackInfo( Integer classId, Integer userId, String backInfo) {
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		
+		Integer teacherId = engclassDao.queryTeacherIdByEngclassId(classId);
+		
+		
+		UserBackInfo userBackInfo = new UserBackInfo();
+		userBackInfo.setTeacherId(teacherId);
+		userBackInfo.setUserId(userId);
+		userBackInfo.setClassId(classId);
+		userBackInfo.setBackTime(new Date());
+		userBackInfo.setBackInfo(backInfo);
+		
+		UserBackInfoDao userBackInfoDao = new UserBackInfoDaoImpl();
+		if(userBackInfoDao.createUserBackInfo(userBackInfo)) {
+			return 1;
+		}
+		return 0;
+		
+		
+	}
+	
+	
+	
+	
 	
 }

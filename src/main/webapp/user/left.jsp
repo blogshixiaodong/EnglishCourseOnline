@@ -75,8 +75,9 @@
 						</a>
 						<ul class="nav child_menu">
 							<li><a href="back_info_history.jsp">反馈历史</a></li>
-							<li><a href="chartjs.html">用户反馈</a></li>
-							<li><a href="chartjs2.html">教师反馈</a></li>
+							<li><a href="teacher_back_info.jsp">教师反馈</a></li>
+							<li><a href="submit_back_info.jsp">用户反馈</a></li>
+							
 						</ul>
 					</li>
 				</ul>

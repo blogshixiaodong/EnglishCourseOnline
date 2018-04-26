@@ -21,13 +21,27 @@ public interface BackInfoServer {
 	* @return List<BackInfoDetail>
 	*/ 
 	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId);
-
+	
+	
+	/** 
+	* @Description: 添加用户反馈信息 
+	* @param engclassId
+	* @param userId
+	* @param backInfo
+	* @return int
+	*/ 
+	public abstract int createUserBackInfo(Integer engclassId,Integer userId,String backInfo);
+	
+	
 	
 	public abstract List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId);
 	
 	
 	
 	public abstract int insertTeacherBackInfo(Integer teacherId, Integer engclassId, Integer[] userIdList, String backInfo);
+	
+	
+	
 	
 
 }	

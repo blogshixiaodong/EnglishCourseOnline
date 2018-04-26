@@ -47,6 +47,8 @@ public class UserAction extends ActionSupport {
 	
 	private String jsonResult = "";
 	
+	private String backInfo = "";
+	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
 	
@@ -114,7 +116,7 @@ public class UserAction extends ActionSupport {
 	public String showTimeSheets() {
 		Integer userid = this.getLoginUserId();
 
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),engclass.getClassName());
+		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId());
 		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
 		
 		return SUCCESS;
@@ -144,10 +146,8 @@ public class UserAction extends ActionSupport {
 		return Action.SUCCESS;
 	} 
 	
-	
+	//根据classid 查询某班级的所有用户反馈信息
 	public String queryUserBackInfoByClassId() {
-		
-		//Integer userId = this.getLoginUserId();
 		
 		Integer engclassId = engclass.getClassId();
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
@@ -180,12 +180,13 @@ public class UserAction extends ActionSupport {
 	
 	
 	//用户添加反馈信息
-	public String createUserBackInfoAction() {
-		Integer userid = this.getLoginUserId();
+	public String createUserBackInfo() {
+		Integer userId = this.getLoginUserId();
 		
-		//检查userBackInfo中信息是否完整！！！！
-		userServer.createUserBackInfo(userBackInfo);
+		BackInfoServer backInfoServer = new BackInfoServerImpl();
+		backInfoServer.createUserBackInfo(classid, userId, backInfo);
 		
+		this.setJsonResult("success");
 		return SUCCESS;
 	}
 	
@@ -279,6 +280,16 @@ public class UserAction extends ActionSupport {
 	public void setJsonResult(String jsonResult) {
 		this.jsonResult = jsonResult;
 	}
+
+	public String getBackInfo() {
+		return backInfo;
+	}
+
+	public void setBackInfo(String backInfo) {
+		this.backInfo = backInfo;
+	}
+	
+	
 	
 	
 }
