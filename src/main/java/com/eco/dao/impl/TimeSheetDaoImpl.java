@@ -48,8 +48,10 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 				     "LEFT JOIN  engclass t3 ON t1.classid = t3.classid LEFT JOIN  Teacher t4 ON t3.teacherid = t4.teacherid " + 
 				     "LEFT JOIN USER t5 ON t5.userid = t1.userid " + 
 				     "WHERE t1.classid = ? AND STR_TO_DATE(recordtime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d')";
-	
-		return queryForListEx(sql, TimeSheetDetail.class, classId,date);
+		
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		return queryForListEx(sql, TimeSheetDetail.class, classId,sqlDate);
 	}
 	
 	
