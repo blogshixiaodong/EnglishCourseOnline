@@ -4,16 +4,30 @@ import java.util.List;
 
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.model.TeacherBackInfo;
-import com.eco.bean.model.UserClass;
 
 public interface TeacherBackInfoDao {
 	
+	/**
+	 * 根据班级id和用户id查询反馈详细信息
+	 * @param classid
+	 * @param userid
+	 * @return
+	 */
+	public List<BackInfoDetail> selectBackInfoDetailByEngclassIdAndUserId(Integer engclassId,Integer userId);
 	
+	/**
+	 * 根据班级id和教师id查询反馈详细信息
+	 * @param teacherId
+	 * @param engclassId
+	 * @return
+	 */
+	public abstract List<BackInfoDetail> selectBackInfoDetailByEngclassIdAndTeacherId(Integer teacherId, Integer engclassId);
 	
-	public List<BackInfoDetail> queryBackInfoByUserClass(Integer classid,Integer userid);
-	
-	public abstract List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
-	
-	public abstract Boolean insertBackInfo(TeacherBackInfo teacherBackInfo);
+	/**
+	 * 插入一条反馈信息到教师反馈信息表
+	 * @param teacherBackInfo
+	 * @return
+	 */
+	public abstract Boolean insert(TeacherBackInfo teacherBackInfo);
 	
 }

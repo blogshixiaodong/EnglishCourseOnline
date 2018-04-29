@@ -39,7 +39,7 @@ public class UserServerImpl implements UserServer{
 		ucDao.createUserClass(uc);
 		
 		//2.修改课程记录表中报名人数
-		rcDao.updateSignCount(crId);
+		rcDao.updateCourseRecordSignCount(crId);
 		
 		return true;
 	}
@@ -80,7 +80,7 @@ public class UserServerImpl implements UserServer{
 	public List<BackInfoDetail> queryTeacherBackInfo(Integer classid, Integer userid) {
 		
 		TeacherBackInfoDao tbiDao = new TeacherBackInfoDaoImpl();
-		return tbiDao.queryBackInfoByUserClass(classid, userid);
+		return tbiDao.selectBackInfoDetailByEngclassIdAndUserId(classid, userid);
 
 	}
 

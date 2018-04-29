@@ -27,7 +27,7 @@ public class BackInfoServerImpl implements BackInfoServer {
 	
 	
 	public List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
-		return teacherBackInfoDao.getBackInfoByTeacherIdAndClassId(teacherId, engclassId);
+		return teacherBackInfoDao.selectBackInfoDetailByEngclassIdAndTeacherId(teacherId, engclassId);
 	}
 
 
@@ -46,12 +46,12 @@ public class BackInfoServerImpl implements BackInfoServer {
 		if(userIdList.length == 1 && userIdList[0] == -1) {
 			//全体对象
 			teacherBackInfo.setUserId(null);
-			return teacherBackInfoDao.insertBackInfo(teacherBackInfo) ? 1 : 0;
+			return teacherBackInfoDao.insert(teacherBackInfo) ? 1 : 0;
 		} else {
 			int updateCount = 0;
 			for(int i = 0; i < userIdList.length; i++) {
 				teacherBackInfo.setUserId(userIdList[i]);
-				boolean status = teacherBackInfoDao.insertBackInfo(teacherBackInfo);
+				boolean status = teacherBackInfoDao.insert(teacherBackInfo);
 				if(status) {
 					updateCount++;
 				}
