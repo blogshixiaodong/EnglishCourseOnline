@@ -30,6 +30,13 @@ public interface EngclassDao extends BaseDao<Engclass> {
 	*/ 
 	public List<EngclassDetail> queryUserAllEngclassList(Integer userid);
 	
+	/** 
+	* @Description: 查询用户当前正在进行的班级信息 
+	* @param userId
+	* @return List<EngclassDetail>
+	*/ 
+	public abstract List<EngclassDetail> queryNowUserEngclassList(Integer userId);
+	
 	
 	/** 
 	* @Description: 根据班级查询教师id 

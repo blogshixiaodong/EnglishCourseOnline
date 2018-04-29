@@ -15,7 +15,7 @@
     <constant name="struts.devMode" value="false"/>
 	<constant name="struts.i18n.encoding" value="utf-8" />
    
-
+	<!-- main/resources/  -->
 	<include file="user-struts.xml"></include>
 	<include file="teacher-struts.xml"></include>
 

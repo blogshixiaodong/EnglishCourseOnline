@@ -1,32 +1,26 @@
 package com.eco.action;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.ServletActionContext;
-
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.CourseRecord;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.bean.model.UserClass;
-import com.eco.dao.UserDao;
+import com.eco.dao.AccountDao;
+import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.server.BackInfoServer;
 import com.eco.server.UserServer;
 import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-
 import net.sf.json.JSONArray;
 
 public class UserAction extends ActionSupport {
@@ -53,6 +47,8 @@ public class UserAction extends ActionSupport {
 	private String backInfo = "";
 	
 	private String leaveInfo = "";
+	
+	private Account account;
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
@@ -165,8 +161,6 @@ public class UserAction extends ActionSupport {
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		
 		return SUCCESS;
-		
-		
 	}
 	
 	
@@ -177,16 +171,32 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		UserServer userServer = new UserServerImpl();
 		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userId);
 		if(engclassDetailList == null) {
 			return Action.ERROR;
 		}
-		//jsonResult = JSONArray.fromObject(engclassDetailList).toString();
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
 		return Action.SUCCESS;
 	}
+	
+	//查询用户当前正在进行的  班级
+	public String searchNowEngclasses() {
+		Integer userId = this.getLoginUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		
+		List<EngclassDetail> engclassDetailList = userServer.queryNowEngclassDetail(userId);
+		if(engclassDetailList == null) {
+			return Action.ERROR;
+		}
+		request.setAttribute("engclassDetailList", engclassDetailList);
+		
+		return Action.SUCCESS;
+	}
+	
+	
 	
 	
 	//用户添加反馈信息
@@ -212,6 +222,19 @@ public class UserAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	//登录判断
+	public String userLogin() {
+		
+		AccountDao aDao = new AccountDaoImpl();
+		if(aDao.checkLoginAccount(account.getId(), account.getPassword())) {
+			return SUCCESS;
+		}
+		
+		return ERROR;
+	}
+	
+	
+	
 	//报名课程
 	public String enrolmentClassAction() {
 		Integer userid = this.getLoginUserId();
@@ -220,9 +243,6 @@ public class UserAction extends ActionSupport {
 		
 		return SUCCESS;
 	}
-	
-	
-	
 	
 	
 	private Integer getLoginUserId() {

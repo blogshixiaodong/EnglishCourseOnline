@@ -77,6 +77,15 @@ public class UserServerImpl implements UserServer{
 	}
 	
 	
+	@Override
+	public List<EngclassDetail> queryNowEngclassDetail(Integer userId) {
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		
+		return engclassDao.queryNowUserEngclassList(userId);
+	}
+	
+	
+	
 
 	@Override
 	public List<BackInfoDetail> queryTeacherBackInfo(Integer classid, Integer userid) {
@@ -158,6 +167,8 @@ public class UserServerImpl implements UserServer{
 		
 		return timeSheetDetailList;
 	}
+
+	
 
 	
 

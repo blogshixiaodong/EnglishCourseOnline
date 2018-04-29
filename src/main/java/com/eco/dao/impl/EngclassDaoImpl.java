@@ -38,6 +38,16 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
+	public List<EngclassDetail> queryNowUserEngclassList(Integer userId) {
+		String sql = "SELECT t2.*,courseName,teacherName,t5.courseid, t5.imgurl FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
+				 	 "LEFT JOIN teacher t3 ON t2.teacherid = t3.teacherid LEFT JOIN  course_record t4 ON t2.courserecordid = t4.courserecordid " + 
+				 	 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ? AND t4.endtime > NOW()";
+		return this.queryForListEx(sql, EngclassDetail.class, userId);
+	}
+	
+	
+	
+	@Override
 	public Engclass getEngclassByClassId(Integer teacherId, Integer classId) {
 		String sql = "SELECT * FROM engclass WHERE classid = ?";
 		return this.queryForObject(sql, classId);
@@ -62,6 +72,8 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String sql = "SELECT teacherid FROM engclass WHERE classid = ?";
 		return (Integer)this.queryForValue(sql, classId);
 	}
+
+	
 
 	
 

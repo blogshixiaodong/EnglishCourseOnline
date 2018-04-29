@@ -58,6 +58,13 @@ public interface UserServer {
 	public abstract List<EngclassDetail> queryAllEngclassDetail(Integer userid);
 	
 	
+	/** 
+	* @Description: 查询当前正在进行的班级
+	* @param userId
+	* @return String
+	*/ 
+	public abstract List<EngclassDetail> queryNowEngclassDetail(Integer userId);
+	
 	
 	/** 
 	* @Description: 根据班级id 查询该班所有学生 
@@ -106,6 +113,9 @@ public interface UserServer {
 	* @return String
 	*/ 
 	public abstract String createTimeSheet(Integer userId,Integer classId,String queryDate,String leaveInfo);
+	
+	
+	
 	
 	
 	

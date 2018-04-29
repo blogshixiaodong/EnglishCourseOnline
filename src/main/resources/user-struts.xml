@@ -65,6 +65,12 @@
     		</result>
 		</action>
 		
+		<action name="searchNowEngclasses" class="com.eco.action.UserAction" method = "searchNowEngclasses" >
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
+		
 		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
@@ -88,8 +94,16 @@
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
-			
 		</action>
+		
+		<!-- 用户登录 -->
+		<action name="userLogin" class="com.eco.action.UserAction" method = "userLogin" >
+			<result name = "success">
+				<param name="location">/user/index.jsp</param>
+			</result>
+			<!--添加失败情况  -->
+		</action>
+		
 		
 		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
 			<result name="success" type="dispatcher">

@@ -30,7 +30,7 @@
 </head>
 <body class="nav-md">
 	<s:if test="#request.engclassDetailList == null">
-		<s:action name="searchEngclasses" namespace="/user"></s:action>
+		<s:action name="searchNowEngclasses" namespace="/user"></s:action>
 	</s:if>
 	<div class="container body">
 		<div class="main_container">
