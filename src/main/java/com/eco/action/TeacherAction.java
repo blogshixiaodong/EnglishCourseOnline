@@ -10,7 +10,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.TimeSheet;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
@@ -117,7 +119,10 @@ public class TeacherAction extends ActionSupport {
 		if(engclassId == null) {
 			return Action.ERROR;
 		}
-		jsonResult = JSONArray.fromObject(engclassServer.getUserList(engclassId)).toString();
+		
+		
+		//jsonResult = JSONArray.fromObject(engclassServer.getUserList(engclassId)).toString();
+		jsonResult = JSONArray.fromObject(engclassServer.queryUserListByEngclassId(engclassId)).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -128,7 +133,8 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null || engclassId == null) {
 			return Action.ERROR;
 		}
-		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
+		//jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
+		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -148,12 +154,30 @@ public class TeacherAction extends ActionSupport {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
+			//jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
+			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclassId, sdf.parse(queryDate))).toString();
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return Action.SUCCESS;
 		
+	}
+	
+	public String insertTimeSheet() {
+		Integer teacherId = getLoginTeacherId();
+		
+		JSONArray array = JSONArray.fromObject(ServletActionContext.getRequest().getParameterMap().get("list"));
+		List<TimeSheet> timeSheetList = null;
+		if(array != null && array.size() > 0) {
+			timeSheetList = (List<TimeSheet>)((List<TimeSheet>)array.toCollection(array, TimeSheet.class)).get(0);
+		}
+		for(int i = 0; i < timeSheetList.size(); i++) {
+			//存在冲突
+			//userServer.createTimeSheet(timeSheetList.get(i));
+		}
+		this.setJsonResult("success");
+		return Action.SUCCESS;
 	}
 	
 	

@@ -9,16 +9,16 @@ import com.eco.bean.model.User;
  * date:   2018年4月20日 下午10:18:27
  * author: Shixiaodong, lenovo
  */
-public interface UserDao extends BaseDao<User> {
+public interface UserDao {
 	
-	public abstract List<User> getUserListByEngclassId(Integer engclassId);
+	public abstract List<User> selectUserByEngclassId(Integer engclassId);
 	
 	/** 
 	* @Description: 根据用户id获取用户信息 
 	* @param userid
 	* @return User
 	*/ 
-	User queryUserById(int userid) ;
+	public abstract User selectUserByUserId(int userId);
 	
 	
 	/** 
@@ -26,7 +26,7 @@ public interface UserDao extends BaseDao<User> {
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	List<CourseDetail> queryCourseInfoList(int userid);
+	List<CourseDetail> selectCoursebyUserId(int userId);
 	
 	
 	
@@ -43,7 +43,7 @@ public interface UserDao extends BaseDao<User> {
 	* @param classid
 	* @return List<User>
 	*/ 
-	List<User> queryAllUserByClassid(int classid);
+	List<User> selectUserListByClassId(int classId);
 	
 	
 }

@@ -22,19 +22,18 @@ public class BackInfoServerImpl implements BackInfoServer {
 	
 	private TeacherBackInfoDao teacherBackInfoDao = new TeacherBackInfoDaoImpl();
 	
-	
 	private UserBackInfoDao userBackInfoDao = new UserBackInfoDaoImpl();
 	
 	
-	public List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
+	public List<BackInfoDetail> queryBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
 		return teacherBackInfoDao.getBackInfoByTeacherIdAndClassId(teacherId, engclassId);
 	}
-
-
+	
 
 	@Override
-	public List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId) {
-		return userBackInfoDao.getBackInfoByUserIdAndClassId(userId, engclassId);
+	public List<BackInfoDetail> queryBackInfoByUserIdAndClassId(Integer userId, Integer engclassId) {
+		//return userBackInfoDao.getBackInfoByUserIdAndClassId(userId, engclassId);
+		return userBackInfoDao.selectBackInfoByUserIdAndClassId(userId, engclassId);
 	}
 
 	public int insertTeacherBackInfo(Integer teacherId, Integer engclassId, Integer[] userIdList, String backInfo) {
@@ -61,19 +60,19 @@ public class BackInfoServerImpl implements BackInfoServer {
 	}
 
 
-
 	@Override
-	public List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId) {
-		return userBackInfoDao.queryAllUserBackInfoByEngclass(engclassId);
+	public List<BackInfoDetail> queryUserBackInfobyClassId(Integer engclassId) {
+		//return userBackInfoDao.queryAllUserBackInfoByEngclass(engclassId);
+		return userBackInfoDao.selectBackInfoByEngclassId(engclassId);
 	}
 
 
 
 	@Override
-	public int createUserBackInfo( Integer classId, Integer userId, String backInfo) {
+	public int addUserBackInfo( Integer classId, Integer userId, String backInfo) {
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		Integer teacherId = engclassDao.queryTeacherIdByEngclassId(classId);
+		Integer teacherId = engclassDao.selectTeacherIdByEngclassId(classId);
 		
 		
 		UserBackInfo userBackInfo = new UserBackInfo();
@@ -88,12 +87,5 @@ public class BackInfoServerImpl implements BackInfoServer {
 			return 1;
 		}
 		return 0;
-		
-		
 	}
-	
-	
-	
-	
-	
 }

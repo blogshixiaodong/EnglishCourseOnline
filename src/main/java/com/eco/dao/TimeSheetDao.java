@@ -12,7 +12,7 @@ import com.eco.bean.model.TimeSheet;
  */
 public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	
-	public abstract List<TimeSheetDetail> getTimeSheetDetailByEnclass(Integer engclass, Date date);
+	public abstract List<TimeSheetDetail> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date);
 	
 	
 	/** 
@@ -21,7 +21,7 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	* @param engclass
 	* @return List<TimeSheetDao>
 	*/ 
-	public List<TimeSheetDetail> getTimeSheetByUser(Integer userid,Integer engclass);
+	public List<TimeSheetDetail> selectTimeSheetByUserIdAndEngclassId(Integer userId,Integer engclassId);
 	
 	
 	/** 
@@ -31,7 +31,7 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	* @param queryDate
 	* @return List<TimeSheetDetail>
 	*/ 
-	public List<TimeSheetDetail> getTimeSheetByUserAndTime(Integer userId,Integer engclassId,Date queryDate);
+	public List<TimeSheetDetail> selectTimeSheetByUserIdAndEngclassIdAndTime(Integer userId,Integer engclassId,Date queryDate);
 	
 	
 	
@@ -41,7 +41,7 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	* @param date
 	* @return List<TimeSheetDetail>
 	*/ 
-	public List<TimeSheetDetail> queryUserTimeSheetByClassIdAndTime(Integer classId,Date date);
+	public List<TimeSheetDetail> selectTimeSheetByClassIdAndTime(Integer engclassId,Date date);
 	
 	
 	
@@ -50,7 +50,7 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	* @param timeSheet
 	* @return boolean
 	*/ 
-	public boolean createTimeSheet(TimeSheet timeSheet);
+	public int insert(TimeSheet timeSheet);
 	
 	
 }

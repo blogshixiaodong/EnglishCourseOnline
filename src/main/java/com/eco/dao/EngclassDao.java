@@ -10,25 +10,27 @@ import com.eco.bean.model.Engclass;
  * date:   2018年4月20日 下午10:31:04
  * author: Shixiaodong
  */
-public interface EngclassDao extends BaseDao<Engclass> {
-
+/**
+ * @author 15129
+ *
+ */
+public interface EngclassDao {
 
 	/** 
-	* @Description: 开设班级 
+	* 开设班级 
 	* @param engclass void
 	*/ 
-	public abstract void createEngClass(Engclass engclass);
+	public abstract void insert(Engclass engclass);
 
-	public abstract List<EngclassDetail> getEngclassList(Integer teacherId);
+	/**
+	 * 
+	 * @param teacherId
+	 * @return selectEgcListByTchId
+	 */
+	public abstract List<EngclassDetail> selectEngclassListByTeacherId(Integer teacherId);
 	
 	
-	
-	/** 
-	* @Description: 查询用户班级信息
-	* @param userid
-	* @return List<EngclassDetail>
-	*/ 
-	public List<EngclassDetail> queryUserAllEngclassList(Integer userid);
+
 	
 	/** 
 	* @Description: 查询用户当前正在进行的班级信息 
@@ -37,20 +39,38 @@ public interface EngclassDao extends BaseDao<Engclass> {
 	*/ 
 	public abstract List<EngclassDetail> queryNowUserEngclassList(Integer userId);
 	
+
+	public List<EngclassDetail> selectUserAllEngclassListByUserId(Integer userid);
+
 	
 	/** 
-	* @Description: 根据班级查询教师id 
+	* 根据班级查询教师id 
 	* @param classId
 	* @return Integer
 	*/ 
-	public abstract Integer queryTeacherIdByEngclassId(Integer classId);
+	public Integer selectTeacherIdByEngclassId(Integer classId);
 	
-
 	
-	public Engclass getEngclassByClassId(Integer teacherId, Integer classId);
+	/**
+	 * 根据教师id和班级id查询班级信息
+	 * @param teacherId
+	 * @param classId
+	 * @return
+	 */
+	public Engclass selectEngclassByTeacherIdAndEngclassId(Integer teacherId, Integer classId);
 	 
-	public List<Engclass> getEngclassListByName(Integer teacherId, String className);
+	/**
+	 * 根据教师id和班级名称查询所有符合条件的班级信息列表
+	 * @param teacherId
+	 * @param className
+	 * @return
+	 */
+	public List<Engclass> selectEngclassListByTeacherIdAndEngclassName(Integer teacherId, String className);
 	
-	public EngclassDetail getEngclassDetail(Integer classId);
+	/**根据班级id铲鲟班级的详细信息
+	 * @param engclassId
+	 * @return
+	 */
+	public EngclassDetail selectEngclassDetailByEngclassId(Integer engclassId);
 	
 }

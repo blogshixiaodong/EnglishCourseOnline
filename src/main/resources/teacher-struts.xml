@@ -77,6 +77,12 @@
     		</result>
     	</action>
     	
+    	<action name="insertTimeSheet" class="com.eco.action.TeacherAction" method="insertTimeSheet">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     	
     </package>
 
