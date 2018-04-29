@@ -101,13 +101,11 @@ public class UserServerImpl implements UserServer{
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
 		if("".equals(queryDate)) {
 			//按classid查出该用户在该班级的所有考勤记录
-			//timeSheetDetailList = timeSheetDao.getTimeSheetByUser(userId, engclassId);
-			timeSheetDao.selectTimeSheetByUserIdAndEngclassId(userId, engclassId);
+			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassId(userId, engclassId);
 		}else {
 			Date formateDate = stringFormateToDate(queryDate);
 
-			//timeSheetDetailList = timeSheetDao.getTimeSheetByUserAndTime(userId, engclassId, formateDate);
-			timeSheetDao.selectTimeSheetByUserIdAndEngclassIdAndTime(userId, engclassId, formateDate);
+			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassIdAndTime(userId, engclassId, formateDate);
 		}			
 		return timeSheetDetailList;
 	}
@@ -145,7 +143,7 @@ public class UserServerImpl implements UserServer{
 			timeSheet.setRecordTime(formateDate);
 			timeSheet.setSheetInfo("0:"+leaveInfo);
 			
-			//tsDao.createTimeSheet(timeSheet);
+			timeSheetDao.insert(timeSheet);
 			return "提交成功";
 		}
 	}

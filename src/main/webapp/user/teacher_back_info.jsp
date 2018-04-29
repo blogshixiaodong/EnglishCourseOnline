@@ -234,7 +234,7 @@
     			url: "showTeacherBackInfos.action",
     			type : "post",
     			dataType: "json",
-    			data:{"classid" : classId},
+    			data:{"engclassId" : classId},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
