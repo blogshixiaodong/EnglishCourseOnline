@@ -12,33 +12,24 @@ import com.eco.dao.CourseDao;
  */
 public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao {
 
-	/*
-	 * 获取正在进行的课程记录
-	 * */
 	@Override
-	public List<CourseDetail> getNowCourseDetailList(Integer teacherId) {
+	public List<CourseDetail> selectTeacherNowCourseDetailListByTeacherId(Integer teacherId) {
 		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
 				 "FROM course c, course_record cr, engclass e " + 
 				 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND NOW() between starttime AND endtime ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
-	/*
-	 * 获取历史课程记录
-	 * */
 	@Override
-	public List<CourseDetail> getHistoryCourseDetailList(Integer teacherId) {
+	public List<CourseDetail> selectTeacherIdHistoryCourseDetailListByTeacherId(Integer teacherId) {
 		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
 				 	 "FROM course c, course_record cr, engclass e " + 
 				 	 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND endtime < NOW() ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
 
-	/*
-	 * 获取所有课程记录
-	 * */
 	@Override
-	public List<CourseDetail> getAllCourseDetailList(Integer teacherId) {
+	public List<CourseDetail> selectAllCourseDetailListByTeacherId(Integer teacherId) {
 		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
 					 "FROM course c, course_record cr, engclass e " + 
 					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid ORDER BY starttime DESC;";
@@ -46,27 +37,24 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	}
 
 	@Override
-	public List<CourseDetail> getUserNowCourseDetailList(Integer userid) {
+	public List<CourseDetail> selectUserNowCourseDetailListByUserId(Integer userid) {
 		String sql  = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
 					  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND NOW() BETWEEN starttime AND endtime";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
-	public List<CourseDetail> getUserHistoryCourseDetailList(Integer userid) {
+	public List<CourseDetail> selectUserHistoryCourseDetailListByUserId(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
 				  	 "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? AND endtime < NOW()";
 		return this.queryForListEx(sql, CourseDetail.class, userid);
 	}
 
 	@Override
-	public List<CourseDetail> getUserAllCourseDetailList(Integer userid) {
+	public List<CourseDetail> selectUserAllCourseDetailListByUserId(Integer userid) {
 		String sql = "SELECT t4.*,starttime,t3.courserecordid, endtime, closetime, signcount FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid LEFT JOIN course_record t3 " + 
 				  "ON t2.courserecordid = t3.courserecordid LEFT JOIN course t4 ON t3.courseid = t4.courseid WHERE t1.userid = ? ";
 		return this.queryForListEx(sql,CourseDetail.class,userid);
 	}
-	
-	
-	
 	
 }

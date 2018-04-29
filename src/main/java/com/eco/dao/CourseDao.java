@@ -3,49 +3,54 @@ package com.eco.dao;
 import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
-import com.eco.bean.model.Course;
 
-/*
- * date:   2018年4月20日 下午10:21:21
- * author: Shixiaodong
- */
 /**
+ * @date:   2018年4月20日 下午10:21:21
  * @author lenovo
  *
  */
-public interface CourseDao extends BaseDao<Course> {
-	//课程相关
-	public abstract List<CourseDetail> getNowCourseDetailList(Integer teacherId);
+public interface CourseDao {
 	
-	public abstract List<CourseDetail> getHistoryCourseDetailList(Integer teacherId);
+	/**
+	 * 根据教师id获取教师正在进行的课程详细信息列表
+	 * @param teacherId
+	 * @return
+	 */
+	public abstract List<CourseDetail> selectTeacherNowCourseDetailListByTeacherId(Integer teacherId);
 	
-	public abstract List<CourseDetail> getAllCourseDetailList(Integer teacherId);
+	/**
+	 * 根据教师id获取教师已完成的课程详细信息列表
+	 * @param teacherId
+	 * @return
+	 */
+	public abstract List<CourseDetail> selectTeacherIdHistoryCourseDetailListByTeacherId(Integer teacherId);
 	
+	/**
+	 * 根据教师id获取教师所有的课程详细信息列表
+	 * @param teacherId
+	 * @return
+	 */
+	public abstract List<CourseDetail> selectAllCourseDetailListByTeacherId(Integer teacherId);
 	
 	/** 
-	* @Description: 用户获取正在进行的课程记录
+	* 根据用户id获取用户正在进行的课程记录
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> getUserNowCourseDetailList(Integer userid);
-	
+	public abstract List<CourseDetail> selectUserNowCourseDetailListByUserId(Integer userid);
 	
 	/** 
-	* @Description: 用户获取历史的课程记录 
+	* 根据用户id获取用户已完成的课程记录 
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> getUserHistoryCourseDetailList(Integer userid);
-	
+	public abstract List<CourseDetail> selectUserHistoryCourseDetailListByUserId(Integer userid);
 	
 	/** 
-	* @Description: 用户获取所有课程记录 
+	* 根据用户id获取用户所有课程记录 
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> getUserAllCourseDetailList(Integer userid);
-	
-	
-	
-	
+	public abstract List<CourseDetail> selectUserAllCourseDetailListByUserId(Integer userid);
+
 }
