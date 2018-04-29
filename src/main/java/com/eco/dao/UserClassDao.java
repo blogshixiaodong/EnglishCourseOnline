@@ -10,6 +10,6 @@ public interface UserClassDao {
 	* @param uc
 	* @return boolean
 	*/ 
-	public abstract boolean createUserClass(UserClass uc);
+	public abstract int insert(UserClass userClass);
 	
 }
