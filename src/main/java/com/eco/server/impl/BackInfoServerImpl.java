@@ -73,7 +73,7 @@ public class BackInfoServerImpl implements BackInfoServer {
 	public int createUserBackInfo( Integer classId, Integer userId, String backInfo) {
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		Integer teacherId = engclassDao.queryTeacherIdByEngclassId(classId);
+		Integer teacherId = engclassDao.selectTeacherIdByEngclassId(classId);
 		
 		
 		UserBackInfo userBackInfo = new UserBackInfo();

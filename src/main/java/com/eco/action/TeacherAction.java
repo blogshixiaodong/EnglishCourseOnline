@@ -10,7 +10,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.TimeSheet;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
@@ -154,6 +156,21 @@ public class TeacherAction extends ActionSupport {
 		}
 		return Action.SUCCESS;
 		
+	}
+	
+	public String insertTimeSheet() {
+		Integer teacherId = getLoginTeacherId();
+		
+		JSONArray array = JSONArray.fromObject(ServletActionContext.getRequest().getParameterMap().get("list"));
+		List<TimeSheet> timeSheetList = null;
+		if(array != null && array.size() > 0) {
+			timeSheetList = (List<TimeSheet>)((List<TimeSheet>)array.toCollection(array, TimeSheet.class)).get(0);
+		}
+		for(int i = 0; i < timeSheetList.size(); i++) {
+			userServer.createTimeSheet(timeSheetList.get(i));
+		}
+		this.setJsonResult("success");
+		return Action.SUCCESS;
 	}
 	
 	

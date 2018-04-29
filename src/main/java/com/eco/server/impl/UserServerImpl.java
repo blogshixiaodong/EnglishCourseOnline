@@ -71,7 +71,7 @@ public class UserServerImpl implements UserServer{
 	public List<EngclassDetail> queryAllEngclassDetail(Integer userid) {
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		return engclassDao.queryUserAllEngclassList(userid);
+		return engclassDao.selectUserAllEngclassListByUserId(userid);
 	}
 	
 	
