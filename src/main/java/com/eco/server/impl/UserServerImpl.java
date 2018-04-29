@@ -31,6 +31,7 @@ import com.eco.server.UserServer;
 
 public class UserServerImpl implements UserServer{
 
+
 	//@Override
 //	public boolean enrolmentClass(UserClass userClass, Integer crId) {
 //		//UserDao userDao = new UserDaoImpl();
@@ -45,6 +46,22 @@ public class UserServerImpl implements UserServer{
 //		
 //		return true;
 //	}
+
+	@Override
+	public boolean enrolmentClass(UserClass uc, Integer crId) {
+		//UserDao userDao = new UserDaoImpl();
+		UserClassDao ucDao = new UserClassDaoImpl();
+		CourseRecordDao rcDao = new CourseRecordDaoImpl();
+		
+		//1.添加一条用户班级表记录
+		ucDao.createUserClass(uc);
+		
+		//2.修改课程记录表中报名人数
+		rcDao.updateCourseRecordSignCount(crId);
+		
+		return true;
+	}
+
 
 	@Override
 	public List<CourseDetail> queryUserNowCourseListByUserId(Integer userId){
@@ -91,8 +108,8 @@ public class UserServerImpl implements UserServer{
 	public List<BackInfoDetail> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId){
 		
 		TeacherBackInfoDao tbiDao = new TeacherBackInfoDaoImpl();
-		return tbiDao.queryBackInfoByUserClass(engclassId, userId);
 
+		return tbiDao.selectBackInfoDetailByEngclassIdAndUserId(classid, userid);
 	}
 
 	@Override
@@ -161,21 +178,4 @@ public class UserServerImpl implements UserServer{
 		
 		return timeSheetDetailList;
 	}
-
-	
-
-	
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

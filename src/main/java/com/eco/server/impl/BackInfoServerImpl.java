@@ -25,6 +25,7 @@ public class BackInfoServerImpl implements BackInfoServer {
 	private UserBackInfoDao userBackInfoDao = new UserBackInfoDaoImpl();
 	
 	
+  @Override
 	public List<BackInfoDetail> queryBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId) {
 		return teacherBackInfoDao.getBackInfoByTeacherIdAndClassId(teacherId, engclassId);
 	}
@@ -45,12 +46,12 @@ public class BackInfoServerImpl implements BackInfoServer {
 		if(userIdList.length == 1 && userIdList[0] == -1) {
 			//全体对象
 			teacherBackInfo.setUserId(null);
-			return teacherBackInfoDao.insertBackInfo(teacherBackInfo) ? 1 : 0;
+			return teacherBackInfoDao.insert(teacherBackInfo) ? 1 : 0;
 		} else {
 			int updateCount = 0;
 			for(int i = 0; i < userIdList.length; i++) {
 				teacherBackInfo.setUserId(userIdList[i]);
-				boolean status = teacherBackInfoDao.insertBackInfo(teacherBackInfo);
+				boolean status = teacherBackInfoDao.insert(teacherBackInfo);
 				if(status) {
 					updateCount++;
 				}
@@ -59,22 +60,18 @@ public class BackInfoServerImpl implements BackInfoServer {
 		}
 	}
 
-
 	@Override
 	public List<BackInfoDetail> queryUserBackInfobyClassId(Integer engclassId) {
 		//return userBackInfoDao.queryAllUserBackInfoByEngclass(engclassId);
 		return userBackInfoDao.selectBackInfoByEngclassId(engclassId);
 	}
 
-
-
 	@Override
 	public int addUserBackInfo( Integer classId, Integer userId, String backInfo) {
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
 		Integer teacherId = engclassDao.selectTeacherIdByEngclassId(classId);
-		
-		
+
 		UserBackInfo userBackInfo = new UserBackInfo();
 		userBackInfo.setTeacherId(teacherId);
 		userBackInfo.setUserId(userId);
