@@ -1,5 +1,6 @@
 package com.eco.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
@@ -27,6 +28,17 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	public boolean updateCourseRecordSignCount(Integer crid) {
 		String sql = "UPDATE course_record SET signcount = signcount - 1 WHERE courserecordid = ? ";
 		return this.update(sql,crid) == 1;
+	}
+
+
+	@Override
+	public boolean isOverEndTime(Integer classId, Date date) {
+		String sql = "SELECT count(*) FROM engclass t1 LEFT JOIN course_record t2 ON t1.courserecordid = t2.courserecordid " + 
+					 "WHERE STR_TO_DATE(endtime,'%Y-%m-%d') > STR_TO_DATE(?,'%Y-%m-%d') AND classid = ?";
+		
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		Long value = (Long)queryForValue(sql, sqlDate,classId);
+		return value == 1;
 	}
 	
 }

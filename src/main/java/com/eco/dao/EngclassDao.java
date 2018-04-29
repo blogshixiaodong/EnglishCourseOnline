@@ -30,12 +30,18 @@ public interface EngclassDao {
 	public abstract List<EngclassDetail> selectEngclassListByTeacherId(Integer teacherId);
 	
 	
+
+	
 	/** 
-	* 查询用户班级信息
-	* @param userid
+	* @Description: 查询用户当前正在进行的班级信息 
+	* @param userId
 	* @return List<EngclassDetail>
 	*/ 
+	public abstract List<EngclassDetail> queryNowUserEngclassList(Integer userId);
+	
+
 	public List<EngclassDetail> selectUserAllEngclassListByUserId(Integer userid);
+
 	
 	/** 
 	* 根据班级查询教师id 

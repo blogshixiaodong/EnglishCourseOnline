@@ -1,29 +1,26 @@
 package com.eco.action;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts2.ServletActionContext;
-
 import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.CourseRecord;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.bean.model.UserClass;
-import com.eco.dao.UserDao;
+import com.eco.dao.AccountDao;
+import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.server.BackInfoServer;
 import com.eco.server.UserServer;
 import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-
 import net.sf.json.JSONArray;
 
 public class UserAction extends ActionSupport {
@@ -35,7 +32,7 @@ public class UserAction extends ActionSupport {
 	
 	private TimeSheet timeSheet;
 	
-	private Integer classid;
+	private Integer engclassId;
 	
 	private UserBackInfo userBackInfo;
 	
@@ -49,15 +46,19 @@ public class UserAction extends ActionSupport {
 	
 	private String backInfo = "";
 	
+	private String leaveInfo = "";
+	
+	private Account account;
+	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
 	
 	
 	//获取当前正在进行的课程信息
 	public String showNowCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 		
-		List<CourseDetail> courseDetailList = userServer.queryNowCourseDetail(userid);
+		List<CourseDetail> courseDetailList = userServer.queryUserNowCourseListByUserId(userId); //userServer.queryNowCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -65,9 +66,9 @@ public class UserAction extends ActionSupport {
 
 	//获取所有的课程信息
 	public String showAllCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<CourseDetail> courseDetailList = userServer.queryAllCourseDetail(userid);
+		List<CourseDetail> courseDetailList =userServer.queryUserAllCourseListByUserId(userId) ;//userServer.queryAllCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -75,9 +76,9 @@ public class UserAction extends ActionSupport {
 
 	//获取所有的课程信息
 	public String showHistoryCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<CourseDetail> courseDetailList = userServer.queryHistoryCourseDetail(userid);
+		List<CourseDetail> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId) ;//userServer.queryHistoryCourseDetail(userId);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -85,22 +86,23 @@ public class UserAction extends ActionSupport {
 	
 	//查询所有班级
 	public String showAllEngclasses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 		
-		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userid);
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId) ;//userServer.queryAllEngclassDetail(userid);
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
 		return SUCCESS;
 	}
 	
 	
+	//通过班级编号查询所有学生信息
 	public String queryUserByClassid() {
 		
-		if(classid == null) {
+		if(engclassId == null) {
 			return Action.ERROR;
 		}
 		
-		List<User> userList = userServer.queryUserListByClassid(classid);
+		List<User> userList = userServer.queryUserListByClassid(this.getEngclassId());//userServer.queryUserListByClassid(this.getClassid());
 		if(userList == null) {
 			return ERROR;
 		}
@@ -114,19 +116,22 @@ public class UserAction extends ActionSupport {
 	
 	//查询某门课程的考勤记录
 	public String showTimeSheets() {
-		Integer userid = this.getLoginUserId();
-
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId());
-		request.setAttribute("timeSheetDetailList", timeSheetDetailList);
+		Integer userId = this.getLoginUserId();
+		
+		String queryDate = (String)request.getParameter("queryDate");
+		
+		List<TimeSheetDetail> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getClassId(), queryDate) ;//userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),queryDate);
+		
+		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
 		
 		return SUCCESS;
 	}
 	
 	//查询教师给的反馈信息
 	public String showTeacherBackInfos() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfo(classid, userid);
+		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(userId, this.getEngclassId());//userServer.queryTeacherBackInfo(this.getEngclassId(), userid);
 		//request.setAttribute("backInfoDetailList", backInfoDetailList);
 		
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
@@ -142,7 +147,7 @@ public class UserAction extends ActionSupport {
 		}
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByUserIdAndClassId(userId, engclassId)).toString();
+		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByUserIdAndClassId(userId, engclassId)).toString();
 		return Action.SUCCESS;
 	} 
 	
@@ -151,12 +156,10 @@ public class UserAction extends ActionSupport {
 		
 		Integer engclassId = engclass.getClassId();
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		List<BackInfoDetail> backInfoDetailList = backInfoServer.getAllUserBackInfobyClassId(engclassId);
+		List<BackInfoDetail> backInfoDetailList =backInfoServer.queryUserBackInfobyClassId(engclassId) ;//backInfoServer.getAllUserBackInfobyClassId(engclassId);
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		
 		return SUCCESS;
-		
-		
 	}
 	
 	
@@ -167,16 +170,32 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		UserServer userServer = new UserServerImpl();
-		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userId);
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId); //;userServer.queryAllEngclassDetail(userId);
 		if(engclassDetailList == null) {
 			return Action.ERROR;
 		}
-		//jsonResult = JSONArray.fromObject(engclassDetailList).toString();
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
 		return Action.SUCCESS;
 	}
+	
+	//查询用户当前正在进行的  班级
+	public String searchNowEngclasses() {
+		Integer userId = this.getLoginUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		
+		List<EngclassDetail> engclassDetailList =userServer.queryUserNowEngclassByUserId(userId) ;//userServer.queryNowEngclassDetail(userId);
+		if(engclassDetailList == null) {
+			return Action.ERROR;
+		}
+		request.setAttribute("engclassDetailList", engclassDetailList);
+		
+		return Action.SUCCESS;
+	}
+	
+	
 	
 	
 	//用户添加反馈信息
@@ -184,30 +203,42 @@ public class UserAction extends ActionSupport {
 		Integer userId = this.getLoginUserId();
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		backInfoServer.createUserBackInfo(classid, userId, backInfo);
-		
+		//backInfoServer.createUserBackInfo(this.getEngclass(), userId, backInfo);
+		backInfoServer.addUserBackInfo(userId,this.getEngclassId(), backInfo);
 		this.setJsonResult("success");
 		return SUCCESS;
 	}
 	
 	
 	//创建一条考勤记录（请假）
-	public String createTimeSheetAction() {
-		Integer userid = this.getLoginUserId();
+	public String createTimeSheet() {
+		Integer userId = this.getLoginUserId();
 		
-		//考勤记录手动添加 用户id 和classid -->待定
-		timeSheet.setUserId(userid);
+		String queryDate = (String)request.getParameter("queryDate");
 		
-		userServer.createTimeSheet(timeSheet);
-		
+		jsonResult =userServer.addTimeSheet(userId, engclassId, queryDate, this.getLeaveInfo()) ;//userServer.createTimeSheet(userId,classid,queryDate,this.getLeaveInfo());
+	
 		return SUCCESS;
 	}
+	
+	//登录判断
+	public String userLogin() {
+		
+		AccountDao aDao = new AccountDaoImpl();
+		if(aDao.checkLoginAccount(account.getId(), account.getPassword())) {
+			return SUCCESS;
+		}
+		
+		return ERROR;
+	}
+	
+	
 	
 	//报名课程
 	public String enrolmentClassAction() {
 		Integer userid = this.getLoginUserId();
 		
-		userServer.enrolmentClass(userClass, courseRecordId);
+		//userServer.enrolmentClass(userClass, courseRecordId);
 		
 		return SUCCESS;
 	}
@@ -223,8 +254,7 @@ public class UserAction extends ActionSupport {
 		
 		return userid;
 	}
-	
-	
+
 	public TimeSheet getTimeSheet() {
 		return timeSheet;
 	}
@@ -233,12 +263,13 @@ public class UserAction extends ActionSupport {
 		this.timeSheet = timeSheet;
 	}
 
-	public Integer getClassid() {
-		return classid;
+
+	public Integer getEngclassId() {
+		return engclassId;
 	}
 
-	public void setClassid(Integer classid) {
-		this.classid = classid;
+	public void setEngclassId(Integer engclassId) {
+		this.engclassId = engclassId;
 	}
 
 	public UserBackInfo getUserBackInfo() {
@@ -288,8 +319,13 @@ public class UserAction extends ActionSupport {
 	public void setBackInfo(String backInfo) {
 		this.backInfo = backInfo;
 	}
-	
-	
-	
-	
+
+	public String getLeaveInfo() {
+		return leaveInfo;
+	}
+
+	public void setLeaveInfo(String leaveInfo) {
+		this.leaveInfo = leaveInfo;
+	}
+
 }

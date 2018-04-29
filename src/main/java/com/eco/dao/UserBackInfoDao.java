@@ -20,14 +20,13 @@ public interface UserBackInfoDao {
 	* @param userClass
 	* @return List<BackInfoDetail>
 	*/ 
-	List<BackInfoDetail> queryBackInfoByUserClass(UserClass userClass);
-	
+	List<BackInfoDetail> selectBackInfoByUserClass(UserClass userClass);
 	
 	boolean createUserBackInfo(UserBackInfo backInfo);
 	
 	
 
-	public abstract List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId);
+	public abstract List<BackInfoDetail> selectBackInfoByEngclassId(Integer engclassId);
 	
 	
 	/** 
@@ -36,7 +35,7 @@ public interface UserBackInfoDao {
 	* @param engclassId
 	* @return List<BackInfoDetail>
 	*/ 
-	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId,Integer engclassId);
+	public abstract List<BackInfoDetail> selectBackInfoByUserIdAndClassId(Integer userId,Integer engclassId);
 	
 	
 	/** 
@@ -44,7 +43,7 @@ public interface UserBackInfoDao {
 	* @param engclassId
 	* @return List<BackInfoDetail>
 	*/ 
-	public abstract List<BackInfoDetail> queryAllUserBackInfoByEngclass(Integer engclassId);
+//	public abstract List<BackInfoDetail> selectAllBackInfoByEngclassId(Integer engclassId);
 	
 	
 }

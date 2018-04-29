@@ -64,8 +64,8 @@
 							<span class="fa fa-chevron-down"></span>
 						</a>
 						<ul class="nav child_menu">
-							<li><a href="search_timesheet.jsp">考勤记录</a></li>
-							<li><a href="tables_dynamic.html">请假</a></li>
+							<li><a href="time_sheet_histoty.jsp">考勤记录</a></li>
+							<li><a href="ask_for_leave.jsp">请假</a></li>
 						</ul>
 					</li>
 					<li>

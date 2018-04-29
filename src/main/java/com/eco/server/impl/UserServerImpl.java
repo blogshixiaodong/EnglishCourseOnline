@@ -1,6 +1,8 @@
 package com.eco.server.impl;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import com.eco.bean.dto.BackInfoDetail;
@@ -29,6 +31,22 @@ import com.eco.server.UserServer;
 
 public class UserServerImpl implements UserServer{
 
+
+	//@Override
+//	public boolean enrolmentClass(UserClass userClass, Integer crId) {
+//		//UserDao userDao = new UserDaoImpl();
+//		UserClassDao userClassDao = new UserClassDaoImpl();
+//		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
+//		
+//		//1.添加一条用户班级表记录
+//		userClassDao.insert(userClass);
+//		
+//		//2.修改课程记录表中报名人数
+//		//rcDao.updateSignCount(crId);
+//		
+//		return true;
+//	}
+
 	@Override
 	public boolean enrolmentClass(UserClass uc, Integer crId) {
 		//UserDao userDao = new UserDaoImpl();
@@ -44,89 +62,120 @@ public class UserServerImpl implements UserServer{
 		return true;
 	}
 
+
 	@Override
-	public List<CourseDetail> queryNowCourseDetail(Integer userid) {
+	public List<CourseDetail> queryUserNowCourseListByUserId(Integer userId){
 		
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.selectUserNowCourseDetailListByUserId(userid);
+		return cdDao.selectUserNowCourseDetailListByUserId(userId);
 
 	}
 
 	@Override
-	public List<CourseDetail> queryAllCourseDetail(Integer userid) {
+	public List<CourseDetail> queryUserAllCourseListByUserId(Integer userId){
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.selectUserAllCourseDetailListByUserId(userid);
+		return cdDao.selectUserAllCourseDetailListByUserId(userId);
 	}
 
 	@Override
-	public List<CourseDetail> queryHistoryCourseDetail(Integer userid) {
+	public List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId){
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.selectUserHistoryCourseDetailListByUserId(userid);
+		return cdDao.selectUserHistoryCourseDetailListByUserId(userId);
 	}
 
 	@Override
-	public List<EngclassDetail> queryAllEngclassDetail(Integer userid) {
+	public List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId){
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		return engclassDao.selectUserAllEngclassListByUserId(userid);
+		return engclassDao.selectUserAllEngclassListByUserId(userId);
 	}
+	
+	
+	@Override
+	public List<EngclassDetail> queryUserNowEngclassByUserId(Integer userId){
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		
+		return engclassDao.queryNowUserEngclassList(userId);
+	}
+	
 	
 	
 
 	@Override
-	public List<BackInfoDetail> queryTeacherBackInfo(Integer classid, Integer userid) {
+	public List<BackInfoDetail> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId){
 		
 		TeacherBackInfoDao tbiDao = new TeacherBackInfoDaoImpl();
-		return tbiDao.selectBackInfoDetailByEngclassIdAndUserId(classid, userid);
 
+		return tbiDao.selectBackInfoDetailByEngclassIdAndUserId(classid, userid);
 	}
 
 	@Override
-	public List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid, Integer engclassid) {
-		//List<TimeSheetDetail> timeSheetDetailList = null;
-		TimeSheetDao tsDao = new TimeSheetDaoImpl();
-			
-		return tsDao.getTimeSheetByUser(userid, engclassid);
-		
+	public List<TimeSheetDetail> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate){
+		List<TimeSheetDetail> timeSheetDetailList = null;
+		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
+		if("".equals(queryDate)) {
+			//按classid查出该用户在该班级的所有考勤记录
+			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassId(userId, engclassId);
+		}else {
+			Date formateDate = stringFormateToDate(queryDate);
+
+			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassIdAndTime(userId, engclassId, formateDate);
+		}			
+		return timeSheetDetailList;
+	}
+	
+	protected Date stringFormateToDate(String stringDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return sdf.parse(stringDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	
 	@Override
-	public boolean createTimeSheet(TimeSheet timeSheet) {
-		TimeSheetDao tsDao = new TimeSheetDaoImpl();
-		tsDao.createTimeSheet(timeSheet);
-		return true;
-	}
-
-	@Override
-	public List<User> queryUserListByClassid(Integer classid) {
-		UserDao userDao = new UserDaoImpl();
-		return userDao.queryAllUserByClassid(classid);
-	}
-
-	@Override
-	public List<TimeSheetDetail> queryUserTimeSheetDetailByClassId(Integer classId, Date date) {
+	public String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo) {
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
-		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.queryUserTimeSheetByClassIdAndTime(classId, date);
+		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
+		
+		Date formateDate = stringFormateToDate(queryDate);
+		
+		if((timeSheetDao.selectTimeSheetListByEnclassIdAndDate(engclassId, formateDate)).size() != 0 ) {
+			
+			return "不允许重复对当天请假";
+		}else if(courseRecordDao.isOverEndTime(engclassId,formateDate)) {
+			return "超出课程结课时间";
+		}
+		else {
+			TimeSheet timeSheet = new TimeSheet();
+			
+			timeSheet.setUserId(userId);
+			timeSheet.setClassId(engclassId);
+			timeSheet.setRecordTime(formateDate);
+			timeSheet.setSheetInfo("0:"+leaveInfo);
+			
+			timeSheetDao.insert(timeSheet);
+			return "提交成功";
+		}
+	}
+
+	@Override
+	public List<User> queryUserListByClassid(Integer classId) {
+		UserDao userDao = new UserDaoImpl();
+		return userDao.selectUserListByClassId(classId);
+	}
+
+	@Override
+	public List<TimeSheetDetail> queryUserTimeSheetByEngclassId(Integer engclassId,Date date){
+		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
+		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.selectTimeSheetListByEnclassIdAndDate(engclassId, date);
 		
 		return timeSheetDetailList;
 	}
-
-	
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

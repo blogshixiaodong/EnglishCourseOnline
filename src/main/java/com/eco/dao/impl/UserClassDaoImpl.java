@@ -6,10 +6,10 @@ import com.eco.dao.UserClassDao;
 public class UserClassDaoImpl extends AbstractBaseDao<UserClass> implements UserClassDao{
 
 	@Override
-	public boolean createUserClass(UserClass uc) {
+	public int insert(UserClass userClass){
 		String sql = "INSERT INTO user_class VALUES(?,?,?)";
-		int num = this.update(sql, uc.getUserId(),uc.getClassId(),uc.getIsAssigned());
-		return num == 1;
+		int num = this.update(sql, userClass.getUserId(),userClass.getClassId(),userClass.getIsAssigned());
+		return num;
 	}
 
 }

@@ -23,7 +23,7 @@ public interface UserServer {
 	* @param crId
 	* @return boolean
 	*/ 
-	public abstract boolean enrolmentClass(UserClass uc,Integer crId);
+	/*public abstract boolean enrolmentClass(UserClass uc,Integer crId);*/
 	
 
 	/** 
@@ -31,7 +31,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryNowCourseDetail(Integer userid);
+	public abstract List<CourseDetail> queryUserNowCourseListByUserId(Integer userId);
 	
 	
 	/** 
@@ -39,7 +39,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryAllCourseDetail(Integer userid);
+	public abstract List<CourseDetail> queryUserAllCourseListByUserId(Integer userId);
 	
 	
 	/** 
@@ -47,7 +47,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryHistoryCourseDetail(Integer userid);
+	public abstract List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId);
 	
 	
 	/** 
@@ -55,8 +55,15 @@ public interface UserServer {
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> queryAllEngclassDetail(Integer userid);
+	public abstract List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId);
 	
+	
+	/** 
+	* @Description: 查询当前正在进行的班级
+	* @param userId
+	* @return String
+	*/ 
+	public abstract List<EngclassDetail> queryUserNowEngclassByUserId(Integer userId);
 	
 	
 	/** 
@@ -67,22 +74,13 @@ public interface UserServer {
 	public abstract List<User> queryUserListByClassid(Integer classid);
 	
 	
-	
-	/** 
-	* @Description: 用户添加反馈信息 
-	* @param info
-	* @return 
-	*//* 
-	public abstract void createUserBackInfo(UserBackInfo backInfo);*/
-	
-	
 	/** 
 	* @Description: 用户查询教师反馈信息 
 	* @param classid
 	* @param userid
 	* @return List<TeacherBackInfo>
 	*/ 
-	public abstract List<BackInfoDetail> queryTeacherBackInfo(Integer classid,Integer userid);
+	public abstract List<BackInfoDetail> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId);
 	
 	
 	/** 
@@ -91,7 +89,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryTimeSheetDetailByUser(Integer userid,Integer engclassid);
+	public abstract List<TimeSheetDetail> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate);
 	
 	
 	
@@ -101,16 +99,27 @@ public interface UserServer {
 	* @param date
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryUserTimeSheetDetailByClassId(Integer classId,Date date);
+	public abstract List<TimeSheetDetail> queryUserTimeSheetByEngclassId(Integer engclassId,Date date);
+	
 	
 	
 	
 	/** 
-	* @Description: 用户请假
-	* @param timeSheet
-	* @return void
+	* @Description: 请假 
+	* @param userId
+	* @param classId
+	* @param queryDate
+	* @param leaveInfo
+	* @return String
 	*/ 
-	public abstract boolean createTimeSheet(TimeSheet timeSheet);
+	public abstract String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo);
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

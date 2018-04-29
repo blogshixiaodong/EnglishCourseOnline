@@ -9,7 +9,7 @@ import com.eco.bean.model.User;
  * author: Shixiaodong
  */
 public interface EngclassServer {
-	
+  
 	/**
 	 * 根据班级编号获取这个班级所有的学生列表
 	 * @param classId
