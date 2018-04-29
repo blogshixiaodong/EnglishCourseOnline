@@ -2,8 +2,6 @@ package com.eco.dao.impl;
 
 import java.util.List;
 
-import org.omg.CORBA.StringHolder;
-
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.dao.EngclassDao;
@@ -62,17 +60,5 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String sql = "SELECT teacherid FROM engclass WHERE classid = ?";
 		return (Integer)this.queryForValue(sql, classId);
 	}
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

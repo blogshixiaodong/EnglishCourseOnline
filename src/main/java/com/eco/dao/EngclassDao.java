@@ -14,7 +14,7 @@ import com.eco.bean.model.Engclass;
  * @author 15129
  *
  */
-public interface EngclassDao extends BaseDao<Engclass> {
+public interface EngclassDao {
 
 	/** 
 	* 开设班级 
