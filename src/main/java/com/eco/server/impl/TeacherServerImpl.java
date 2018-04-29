@@ -23,17 +23,17 @@ public class TeacherServerImpl implements TeacherServer {
 	
 	@Override
 	public List<CourseDetail> getNowCourseDetailList(Integer teacherId) {
-		return courseDao.getNowCourseDetailList(teacherId);
+		return courseDao.selectTeacherNowCourseDetailListByTeacherId(teacherId);
 	}
 
 	@Override
 	public List<CourseDetail> getHistoryCourseDetailList(Integer teacherId) {
-		return courseDao.getHistoryCourseDetailList(teacherId);
+		return courseDao.selectTeacherIdHistoryCourseDetailListByTeacherId(teacherId);
 	}
 
 	@Override
 	public List<CourseDetail> getAllCourseDetailList(Integer teacherId) {
-		return courseDao.getAllCourseDetailList(teacherId);
+		return courseDao.selectAllCourseDetailListByTeacherId(teacherId);
 	}
 	
 	public List<EngclassDetail> getEngclassList(Integer teacherId) {
