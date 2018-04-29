@@ -49,7 +49,7 @@ public class UserServerImpl implements UserServer{
 		
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.getUserNowCourseDetailList(userid);
+		return cdDao.selectUserNowCourseDetailListByUserId(userid);
 
 	}
 
@@ -57,14 +57,14 @@ public class UserServerImpl implements UserServer{
 	public List<CourseDetail> queryAllCourseDetail(Integer userid) {
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.getUserAllCourseDetailList(userid);
+		return cdDao.selectUserAllCourseDetailListByUserId(userid);
 	}
 
 	@Override
 	public List<CourseDetail> queryHistoryCourseDetail(Integer userid) {
 		CourseDao cdDao = new CourseDaoImpl();
 		
-		return cdDao.getUserHistoryCourseDetailList(userid);
+		return cdDao.selectUserHistoryCourseDetailListByUserId(userid);
 	}
 
 	@Override
