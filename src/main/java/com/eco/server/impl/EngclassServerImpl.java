@@ -16,8 +16,9 @@ public class EngclassServerImpl implements EngclassServer {
 	private UserDao userDao = new UserDaoImpl();
 	
 	@Override
-	public List<User> getUserList(Integer classId) {
-		return userDao.getUserListByEngclassId(classId);
+	public List<User> queryUserListByEngclassId(Integer engclassId){
+		//return userDao.getUserListByEngclassId(classId);
+		return userDao.selectUserByEngclassId(engclassId);
 	}
 	
 	

@@ -10,7 +10,7 @@ import com.eco.bean.dto.BackInfoDetail;
  */
 public interface BackInfoServer {
 		
-	public abstract List<BackInfoDetail> getBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
+	public abstract List<BackInfoDetail> queryBackInfoByTeacherIdAndClassId(Integer teacherId, Integer engclassId);
 	
 
 	
@@ -20,7 +20,7 @@ public interface BackInfoServer {
 	* @param engclassId
 	* @return List<BackInfoDetail>
 	*/ 
-	public abstract List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId);
+	public abstract List<BackInfoDetail> queryBackInfoByUserIdAndClassId(Integer userId, Integer engclassId);
 	
 	
 	/** 
@@ -30,11 +30,11 @@ public interface BackInfoServer {
 	* @param backInfo
 	* @return int
 	*/ 
-	public abstract int createUserBackInfo(Integer engclassId,Integer userId,String backInfo);
+	public abstract int addUserBackInfo(Integer engclassId,Integer userId,String backInfo);
 	
 	
 	
-	public abstract List<BackInfoDetail> getAllUserBackInfobyClassId(Integer engclassId);
+	public abstract List<BackInfoDetail> queryUserBackInfobyClassId(Integer engclassId);
 	
 	
 	

@@ -10,6 +10,6 @@ import com.eco.bean.model.User;
  */
 public interface EngclassServer {
 
-	public abstract List<User> getUserList(Integer classId);
+	public abstract List<User> queryUserListByEngclassId(Integer engclassId);
 	
 }
