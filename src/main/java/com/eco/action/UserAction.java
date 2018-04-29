@@ -32,7 +32,7 @@ public class UserAction extends ActionSupport {
 	
 	private TimeSheet timeSheet;
 	
-	private Integer classid;
+	private Integer engclassId;
 	
 	private UserBackInfo userBackInfo;
 	
@@ -56,9 +56,9 @@ public class UserAction extends ActionSupport {
 	
 	//获取当前正在进行的课程信息
 	public String showNowCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 		
-		List<CourseDetail> courseDetailList = userServer.queryNowCourseDetail(userid);
+		List<CourseDetail> courseDetailList = userServer.queryUserNowCourseListByUserId(userId); //userServer.queryNowCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -66,9 +66,9 @@ public class UserAction extends ActionSupport {
 
 	//获取所有的课程信息
 	public String showAllCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<CourseDetail> courseDetailList = userServer.queryAllCourseDetail(userid);
+		List<CourseDetail> courseDetailList =userServer.queryUserAllCourseListByUserId(userId) ;//userServer.queryAllCourseDetail(userid);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -76,9 +76,9 @@ public class UserAction extends ActionSupport {
 
 	//获取所有的课程信息
 	public String showHistoryCourses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<CourseDetail> courseDetailList = userServer.queryHistoryCourseDetail(userid);
+		List<CourseDetail> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId) ;//userServer.queryHistoryCourseDetail(userId);
 		request.setAttribute("courseDetailList",courseDetailList);
 		
 		return SUCCESS;
@@ -86,9 +86,9 @@ public class UserAction extends ActionSupport {
 	
 	//查询所有班级
 	public String showAllEngclasses() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 		
-		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userid);
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId) ;//userServer.queryAllEngclassDetail(userid);
 		request.setAttribute("engclassDetailList", engclassDetailList);
 		
 		return SUCCESS;
@@ -98,11 +98,11 @@ public class UserAction extends ActionSupport {
 	//通过班级编号查询所有学生信息
 	public String queryUserByClassid() {
 		
-		if(classid == null) {
+		if(engclassId == null) {
 			return Action.ERROR;
 		}
 		
-		List<User> userList = userServer.queryUserListByClassid(classid);
+		List<User> userList = userServer.queryUserListByClassid(this.getEngclassId());//userServer.queryUserListByClassid(this.getClassid());
 		if(userList == null) {
 			return ERROR;
 		}
@@ -116,12 +116,11 @@ public class UserAction extends ActionSupport {
 	
 	//查询某门课程的考勤记录
 	public String showTimeSheets() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 		
 		String queryDate = (String)request.getParameter("queryDate");
 		
-		List<TimeSheetDetail> timeSheetDetailList = userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),queryDate);
-		//request.setAttribute("timeSheetDetailList", timeSheetDetailList);
+		List<TimeSheetDetail> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getClassId(), queryDate) ;//userServer.queryTimeSheetDetailByUser(userid, engclass.getClassId(),queryDate);
 		
 		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
 		
@@ -130,9 +129,9 @@ public class UserAction extends ActionSupport {
 	
 	//查询教师给的反馈信息
 	public String showTeacherBackInfos() {
-		Integer userid = this.getLoginUserId();
+		Integer userId = this.getLoginUserId();
 
-		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfo(classid, userid);
+		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(userId, this.getEngclassId());//userServer.queryTeacherBackInfo(this.getEngclassId(), userid);
 		//request.setAttribute("backInfoDetailList", backInfoDetailList);
 		
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
@@ -148,7 +147,7 @@ public class UserAction extends ActionSupport {
 		}
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByUserIdAndClassId(userId, engclassId)).toString();
+		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByUserIdAndClassId(userId, engclassId)).toString();
 		return Action.SUCCESS;
 	} 
 	
@@ -157,7 +156,7 @@ public class UserAction extends ActionSupport {
 		
 		Integer engclassId = engclass.getClassId();
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		List<BackInfoDetail> backInfoDetailList = backInfoServer.getAllUserBackInfobyClassId(engclassId);
+		List<BackInfoDetail> backInfoDetailList =backInfoServer.queryUserBackInfobyClassId(engclassId) ;//backInfoServer.getAllUserBackInfobyClassId(engclassId);
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		
 		return SUCCESS;
@@ -171,7 +170,7 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		List<EngclassDetail> engclassDetailList = userServer.queryAllEngclassDetail(userId);
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId); //;userServer.queryAllEngclassDetail(userId);
 		if(engclassDetailList == null) {
 			return Action.ERROR;
 		}
@@ -187,7 +186,7 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		List<EngclassDetail> engclassDetailList = userServer.queryNowEngclassDetail(userId);
+		List<EngclassDetail> engclassDetailList =userServer.queryUserNowEngclassByUserId(userId) ;//userServer.queryNowEngclassDetail(userId);
 		if(engclassDetailList == null) {
 			return Action.ERROR;
 		}
@@ -204,8 +203,8 @@ public class UserAction extends ActionSupport {
 		Integer userId = this.getLoginUserId();
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		backInfoServer.createUserBackInfo(classid, userId, backInfo);
-		
+		//backInfoServer.createUserBackInfo(this.getEngclass(), userId, backInfo);
+		backInfoServer.addUserBackInfo(userId,this.getEngclassId(), backInfo);
 		this.setJsonResult("success");
 		return SUCCESS;
 	}
@@ -217,7 +216,7 @@ public class UserAction extends ActionSupport {
 		
 		String queryDate = (String)request.getParameter("queryDate");
 		
-		jsonResult = userServer.createTimeSheet(userId,classid,queryDate,this.getLeaveInfo());
+		jsonResult =userServer.addTimeSheet(userId, engclassId, queryDate, this.getLeaveInfo()) ;//userServer.createTimeSheet(userId,classid,queryDate,this.getLeaveInfo());
 	
 		return SUCCESS;
 	}
@@ -239,7 +238,7 @@ public class UserAction extends ActionSupport {
 	public String enrolmentClassAction() {
 		Integer userid = this.getLoginUserId();
 		
-		userServer.enrolmentClass(userClass, courseRecordId);
+		//userServer.enrolmentClass(userClass, courseRecordId);
 		
 		return SUCCESS;
 	}
@@ -255,8 +254,7 @@ public class UserAction extends ActionSupport {
 		
 		return userid;
 	}
-	
-	
+
 	public TimeSheet getTimeSheet() {
 		return timeSheet;
 	}
@@ -265,12 +263,13 @@ public class UserAction extends ActionSupport {
 		this.timeSheet = timeSheet;
 	}
 
-	public Integer getClassid() {
-		return classid;
+
+	public Integer getEngclassId() {
+		return engclassId;
 	}
 
-	public void setClassid(Integer classid) {
-		this.classid = classid;
+	public void setEngclassId(Integer engclassId) {
+		this.engclassId = engclassId;
 	}
 
 	public UserBackInfo getUserBackInfo() {
@@ -328,8 +327,5 @@ public class UserAction extends ActionSupport {
 	public void setLeaveInfo(String leaveInfo) {
 		this.leaveInfo = leaveInfo;
 	}
-	
-	
-	
-	
+
 }
