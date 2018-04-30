@@ -10,6 +10,6 @@ public interface AccountDao {
 	* @param id
 	* @return boolean
 	*/ 
-	public abstract boolean queryAccountByid(Integer id,String password);
+	public abstract boolean checkLoginAccount(Integer id,String password);
 	
 }

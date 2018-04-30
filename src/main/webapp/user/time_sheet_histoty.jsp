@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date, java.text.SimpleDateFormat" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,7 +25,7 @@
     <link href="../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-<link href="https://cdn.bootcss.com/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="https://cdn.bootcss.com/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
@@ -81,6 +82,15 @@
 					                        </s:iterator>
 					                    </select>  
 				                	</div> 
+				                	<div class="col-md-3 col-sm-3 col-xs-12 form-group">
+				                    	<div class="input-group date" id="myDatepicker">
+				                            <input id="queryDate" type="text" class="form-control" readonly="readonly"/>
+				                            <span class="input-group-addon">
+				                               <span class="glyphicon glyphicon-calendar"></span>
+				                            </span>
+				                        </div>
+					                </div>
+									
 									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
 										<button class="btn btn-primary" id="reset">重置查询</button>
 		                     		</div>
@@ -95,7 +105,7 @@
 						<div class="x_panel">
 							<div class="x_title">
 								<h2>
-									反馈列表
+									信息列表
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i
@@ -114,21 +124,19 @@
 							</div>
 							<div class="x_content">
 
-								<table id="userList" class="table table-striped">
+								<table id="timeSheet" class="table table-striped">
 									<thead>
 										<tr>
-											<th>记录编号</th>
-											
+											<th>#</th>
 											<th>用户编号</th>
 											<th>用户姓名</th>
-											
-											<th>反馈对象编号</th>
-											<th>反馈对象名称</th>
-											
-											<th>所在班级编号</th>
-											<th>所在班级名称</th>
-											<th>反馈时间</th>
-											<th>反馈内容</th>
+											<th>班级编号</th>
+											<th>班级名称</th>
+											<th>教师编号</th>
+											<th>教师名称</th>
+											<th>教室</th>
+											<th>考勤时间</th>
+											<th>考勤状态</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -138,11 +146,7 @@
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
-				
 			</div>
 			<!-- /page content -->
 
@@ -189,29 +193,29 @@
     <!-- bootstrap-daterangepicker -->
     <script src="../vendors/moment/min/moment.min.js"></script>
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+ 	<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+ 	<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
     
      <script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
     
     <script type="text/javascript">
-    
-    	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
-			$("#engclassList").selectpicker('refresh');
-			$("#userList tbody").html("");
-    	}
     	
-    	function AppendZero(number) {
+	    $('#myDatepicker').datepicker({
+	    	 format: 'yyyy-mm-dd'
+	    });
+	    
+	  
+	    
+	    function AppendZero(number) {
     		if(number < 10) {
     			return "0" + number;
     		}
     		return number;
     	}
-    	
-    	function JsonDateToString(dateObject) {
+	    
+	    function JsonDateToString(dateObject) {
     		var year = 1900 + dateObject.year;
     		var month = 1 + dateObject.month;
     		var day = dateObject.date;
@@ -223,41 +227,47 @@
     		
     		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
     	}
+	    
+    	function reset() {
+			document.getElementById("engclassList").options.selectedIndex = 0;
+			$("#engclassList").attr("index", 0);
+			$("#engclassList").selectpicker('refresh');
+			$("#myDatepicker").datepicker("clearDates");
+			$("#userList tbody").html("");
+    	}
     	
     	function sendCondition(e) {
-    		$("#userList tbody").html("");
+    		$("#timeSheet tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
-    		if(classId === "") {
+    		var queryDate = $("#queryDate").val();
+    		if(classId === ""){
     			return;
     		}
+    		/* if(classId === "" || queryDate === "") {
+    			return;
+    		} */
     		$.ajax({
-    			url: "showTeacherBackInfos.action",
+    			url: "showtimeSheets.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclassId" : classId},
+    			data:{"engclass.classId" : classId, "queryDate" : queryDate},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
     				for(var i = 0; i < json.length; i++) {
     					var tr = $("<tr></tr>");
     					var record = json[i];
-    					tr.append($("<td></td>").text('#'+(i+1000)));
+    					tr.append($("<td></td>").text(i));
     					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["userName"]));
-    					var to = record["userId"];
-    					if(to == 0) {
-    						tr.append($("<td></td>").text("全体成员"));
-        					tr.append($("<td></td>").text("全体成员"));
-    					} else {
-    						tr.append($("<td></td>").text(record["teacherId"]));
-        					tr.append($("<td></td>").text(record["teacherName"]));
-    					}
-    					
+    					tr.append($("<td></td>").text(record["username"]));
     					tr.append($("<td></td>").text(record["classId"]));
     					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(JsonDateToString(record["backTime"])));
-    					tr.append($("<td></td>").text(record["backInfo"]));
-    					$("#userList tbody").append(tr);		
+    					tr.append($("<td></td>").text(record["teacherId"]));
+    					tr.append($("<td></td>").text(record["teacherName"]));
+    					tr.append($("<td></td>").text(record["classRoom"]));
+    					tr.append($("<td></td>").text(JsonDateToString(record["recordTime"])));
+    					tr.append($("<td></td>").text(record["sheetInfo"]));
+    					$("#timeSheet tbody").append(tr);		
     				}
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -266,9 +276,8 @@
     			}
     		});
     	}
-		$("#inClassId").change("input", sendCondition);
-		$("#inClassName").change("input", sendCondition);
 		$("#engclassList").change(sendCondition);
+		  $("#myDatepicker").on("changeDate", sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});

@@ -13,7 +13,7 @@ import com.eco.dao.UserBackInfoDao;
 public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implements UserBackInfoDao {
 
 	@Override
-	public List<BackInfoDetail> queryBackInfoByUserClass(UserClass userClass) {
+	public List<BackInfoDetail> selectBackInfoByUserClass(UserClass userClass) {
 		String sql = "SELECT t1.teacherid,t1.userid,t1.classid,backtime,backinfo,t3.username,t4.teachername,t2.classname " + 
 					 "FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid " + 
 					 "LEFT JOIN USER t3 ON t1.userid = t3.userid LEFT JOIN teacher t4 ON t4.teacherid = t1.teacherid " + 
@@ -32,7 +32,7 @@ public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implement
 
 
 	@Override
-	public List<BackInfoDetail> queryBackInfoByEngclass(Integer engclassId) {
+	public List<BackInfoDetail> selectBackInfoByEngclassId(Integer engclassId){
 		String sql = "SELECT t.teacherid, u.userid, e.classid, backtime, backinfo, username, teachername, classname " +
 					 "FROM user u LEFT JOIN user_back_info ubi ON u.userid = ubi.userid  " +
 					 "LEFT JOIN engclass e ON ubi.classid = e.classid LEFT JOIN teacher t ON e.teacherid = t.teacherid " +
@@ -42,7 +42,7 @@ public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implement
 
 
 	@Override
-	public List<BackInfoDetail> getBackInfoByUserIdAndClassId(Integer userId, Integer engclassId) {
+	public List<BackInfoDetail> selectBackInfoByUserIdAndClassId(Integer userId,Integer engclassId){
 		String sql = "SELECT t1.teacherid,t1.userid,t1.classid,backtime,backinfo,t3.username,t4.teachername,t2.classname " + 
 				 	 "FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid " + 
 				 	 "LEFT JOIN USER t3 ON t1.userid = t3.userid LEFT JOIN teacher t4 ON t4.teacherid = t1.teacherid " + 
@@ -52,15 +52,15 @@ public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implement
 	}
 
 
-	@Override
-	public List<BackInfoDetail> queryAllUserBackInfoByEngclass(Integer engclassId) {
-		String sql = "SELECT t1.*,username,classname, teachername FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
-					 "LEFT JOIN USER t3 ON t3.userid = t1.userid LEFT JOIN teacher t4 ON t4.teacherid = t1.teacherid \r\n" + 
-					 "WHERE t1.classid = ? ORDER BY backInfo  DESC";
-		
-		List<BackInfoDetail> backInfoDetailList = queryForListEx(sql, BackInfoDetail.class, engclassId);
-		return backInfoDetailList;
-	}
+	//@Override
+//	public List<BackInfoDetail> selectAllBackInfoByEngclassId(Integer engclassId){
+//		String sql = "SELECT t1.*,username,classname, teachername FROM user_back_info t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
+//					 "LEFT JOIN USER t3 ON t3.userid = t1.userid LEFT JOIN teacher t4 ON t4.teacherid = t1.teacherid \r\n" + 
+//					 "WHERE t1.classid = ? ORDER BY backInfo  DESC";
+//		
+//		List<BackInfoDetail> backInfoDetailList = queryForListEx(sql, BackInfoDetail.class, engclassId);
+//		return backInfoDetailList;
+//	}
 	
 	
 	

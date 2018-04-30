@@ -129,7 +129,8 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null || engclassId == null) {
 			return Action.ERROR;
 		}
-		jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
+		//jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
+		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -149,7 +150,9 @@ public class TeacherAction extends ActionSupport {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
+			//jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
+			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclassId, sdf.parse(queryDate))).toString();
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -166,7 +169,8 @@ public class TeacherAction extends ActionSupport {
 			timeSheetList = (List<TimeSheet>)((List<TimeSheet>)array.toCollection(array, TimeSheet.class)).get(0);
 		}
 		for(int i = 0; i < timeSheetList.size(); i++) {
-			userServer.createTimeSheet(timeSheetList.get(i));
+			//存在冲突
+			//userServer.createTimeSheet(timeSheetList.get(i));
 		}
 		this.setJsonResult("success");
 		return Action.SUCCESS;
