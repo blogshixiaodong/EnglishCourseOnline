@@ -2,7 +2,6 @@ package com.eco.action;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.TimeSheet;
 import com.eco.server.BackInfoServer;
@@ -36,67 +34,68 @@ public class TeacherAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
+	
 	private EngclassServer engclassServer = new EngclassServerImpl();
+	
 	private BackInfoServer backInfoServer = new BackInfoServerImpl();
+	
 	private UserServer userServer = new UserServerImpl();
 	
 	private Engclass engclass;
 	
-	
 	private String jsonResult = "";
 	
-	public String showNowCourses() {
+	public String findTeacherNowCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
 		
-		List<CourseDetail> courseDetailList = teacherServer.getNowCourseDetailList(teacherId);
+		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
 		return Action.SUCCESS;
 	}
 	
-	public String showHistoryCourses() {
+	public String findTeacherHistoryCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<CourseDetail> courseDetailList = teacherServer.getHistoryCourseDetailList(teacherId);
+		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
 		return Action.SUCCESS;
 	}
 	
-	public String showAllCourses() {
+	public String findTeacherAllCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<CourseDetail> courseDetailList = teacherServer.getAllCourseDetailList(teacherId);
+		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
 		return Action.SUCCESS;
 	}
 	
-	public String showEngclasses() {
+	public String findTeacherAllEngclassDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<EngclassDetail> engclassDetailList = teacherServer.getEngclassList(teacherId);
+		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("engclassDetailList", engclassDetailList);
 		return Action.SUCCESS;
 	}
 	
-	
-	public String searchEngclasses() {
+	public String findTeacherEngclassListByCondition() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<Engclass> engclassList = teacherServer.getEngclassByClassIdAndName(teacherId, engclass.getClassId(), engclass.getClassName());
+		List<Engclass> engclassList = teacherServer.queryEngclassByCondition(teacherId, engclass.getClassId(), engclass.getClassName());
 		if(engclassList == null) {
 			return Action.ERROR;
 		}
@@ -110,21 +109,21 @@ public class TeacherAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		Map<String, Object> request = (Map<String, Object>)ActionContext.getContext().get("request");
-		request.put("engclassDetail", teacherServer.getEngclassDetail(engclassId));
+		request.put("engclassDetail", teacherServer.queryEngclassDetailByEngclassId(engclassId));
 		return Action.SUCCESS;
 	}
 	
-	public String searchUser() {
+	public String findUserInEngclass() {
 		Integer engclassId = engclass.getClassId();
 		if(engclassId == null) {
 			return Action.ERROR;
 		}
-		jsonResult = JSONArray.fromObject(engclassServer.getUserList(engclassId)).toString();
+		jsonResult = JSONArray.fromObject(engclassServer.queryUserListByEngclassId(engclassId)).toString();
 		return Action.SUCCESS;
 	}
 	
 	
-	public String teacherBackInfoHistory() {
+	public String findTeacherBackInfoHistory() {
 		Integer teacherId = getLoginTeacherId();
 		Integer engclassId = engclass.getClassId();
 		if(teacherId == null || engclassId == null) {
@@ -135,7 +134,7 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	
-	public String insertBackInfo() {
+	public String createTeacherBackInfo() {
 		Integer teacherId = getLoginTeacherId();
 		String[] userIdList = (String[])ServletActionContext.getRequest().getParameterMap().get("userIdList[]");
 		String backInfo = (String)ServletActionContext.getRequest().getParameter("backInfo");
@@ -144,7 +143,7 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
-	public String getUserTimeSheetDetail() {
+	public String findUserTimeSheetDetail() {
 		Integer engclassId = engclass.getClassId();
 		String queryDate = ((String [])ServletActionContext.getRequest().getParameterMap().get("queryDate"))[0].toString();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -158,7 +157,7 @@ public class TeacherAction extends ActionSupport {
 		
 	}
 	
-	public String insertTimeSheet() {
+	public String createTimeSheet() {
 		Integer teacherId = getLoginTeacherId();
 		
 		JSONArray array = JSONArray.fromObject(ServletActionContext.getRequest().getParameterMap().get("list"));
@@ -174,7 +173,7 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	
-	public Integer getLoginTeacherId() {
+	private Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
 		Object id = map.get("teacherId");
 		if(id == null || "".equals(id)) {
@@ -185,7 +184,7 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	//parameter内的参数
-	public Integer getEngclassId() {
+	private Integer getEngclassId() {
 		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
 		if(id != null) {
 			return new Integer(id.toString());
