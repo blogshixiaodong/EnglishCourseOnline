@@ -16,20 +16,20 @@
 		
 		<action name="historyCourses" class="com.eco.action.UserAction" method = "findUserHistoryCourseDetailList" >
 			<result name="success" type="dispatcher">
-    			<param name="location">/user/historyCourses.jsp</param>
+    			<param name="location">/user/history_courses.jsp</param>
     		</result>
 		</action>
 		
 		<action name="allCourses" class="com.eco.action.UserAction" method = "findUserAllCourseDetailList" >
 			<result name="success" type="dispatcher">
-    			<param name="location">/user/allCourses.jsp</param>
+    			<param name="location">/user/all_courses.jsp</param>
     		</result>
 		</action>
 		
 		
 		  <action name="allEngclasses" class="com.eco.action.UserAction" method = "findUserAllEngclassesList" >
 			<result name="success" type="dispatcher">
-    			<param name="location">/user/allEngclasses.jsp</param>
+    			<param name="location">/user/all_engclasses.jsp</param>
     		</result>
 		</action>
 		
