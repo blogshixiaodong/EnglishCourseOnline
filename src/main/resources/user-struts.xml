@@ -8,73 +8,67 @@
     
    
 	<package name="user_action" namespace="/user" extends="struts-default,json-default">
-		 <action name="nowCourses" class="com.eco.action.UserAction" method = "showNowCourses" >
+		 <action name="nowCourses" class="com.eco.action.UserAction" method = "findUserNowCourseDetailList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/index.jsp</param>
     		</result>
 		</action>
 		
-		<action name="historyCourses" class="com.eco.action.UserAction" method = "showHistoryCourses" >
+		<action name="historyCourses" class="com.eco.action.UserAction" method = "findUserHistoryCourseDetailList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/historyCourses.jsp</param>
     		</result>
 		</action>
 		
-		<action name="allCourses" class="com.eco.action.UserAction" method = "showAllCourses" >
+		<action name="allCourses" class="com.eco.action.UserAction" method = "findUserAllCourseDetailList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/allCourses.jsp</param>
     		</result>
 		</action>
 		
 		
-		  <action name="allEngclasses" class="com.eco.action.UserAction" method = "showAllEngclasses" >
+		  <action name="allEngclasses" class="com.eco.action.UserAction" method = "findUserAllEngclassesList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/allEngclasses.jsp</param>
     		</result>
 		</action>
 		
-		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "queryUserByClassid" >
+		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "findUserListByClassid" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
 		
-		<action name="queryUserBackInfoByClassId" class="com.eco.action.UserAction" method = "queryUserBackInfoByClassId" >
+		<action name="queryUserBackInfoByClassId" class="com.eco.action.UserAction" method = "findUserBackInfoInListByEngclass" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
 		
-		<action name="userBackInfoHistory" class="com.eco.action.UserAction" method = "userBackInfoHistory" >
+		<action name="userBackInfoHistory" class="com.eco.action.UserAction" method = "findUserHistoryBackInfoList" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
 		
 		
-		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
+		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "findTeacherBackInfoList" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
 		
 		
-		 <action name="searchEngclasses" class="com.eco.action.UserAction" method = "searchEngclasses" >
+		 <action name="searchEngclasses" class="com.eco.action.UserAction" method = "findUserAllEngclassList" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
 		
-		<action name="searchNowEngclasses" class="com.eco.action.UserAction" method = "searchNowEngclasses" >
+		<action name="searchNowEngclasses" class="com.eco.action.UserAction" method = "findUserNowEngclassList" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
-		</action>
-		
-		<action name="showTeacherBackInfos" class="com.eco.action.UserAction" method = "showTeacherBackInfos" >
-			<result name = "success" type = "json">
-				<param name="root">jsonResult</param>
-			</result>
 		</action>
 		
 		
@@ -84,13 +78,13 @@
 			</result>
 		</action>
 		
-		<action name="showtimeSheets" class="com.eco.action.UserAction" method = "showTimeSheets" >
+		<action name="showtimeSheets" class="com.eco.action.UserAction" method = "findUserTimeSheetList" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
 		</action>
 		
-		<action name="createTimeSheet" class="com.eco.action.UserAction" method = "createTimeSheet" >
+		<action name="createTimeSheet" class="com.eco.action.UserAction" method = "createUserTimeSheet" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
@@ -104,29 +98,6 @@
 			<!--添加失败情况  -->
 		</action>
 		
-		
-		<!-- <action name="someEngclasses" class="com.eco.action.UserAction" method = "searchEngclass" >
-			<result name="success" type="dispatcher">
-    			<param name="location">/user/search_engclass.jsp</param>
-    		</result>
-		</action> -->
-		
-		<!--
-		
-		
-		
-	
-		<action name="createUserBackInfoAction" class="com.eco.action.UserAction" method = "createUserBackInfoAction" >
-			<result name = "success">/</result>
-		</action>
-		
-		<action name="createTimeSheetAction" class="com.eco.action.UserAction" method = "createTimeSheetAction" >
-			<result name = "success">/</result>
-		</action>
-		
-		<action name="enrolmentClassAction" class="com.eco.action" method = "enrolmentClassAction" >
-			<result name = "success">/</result>
-		</action> --> 
 		
 	</package>
 	
