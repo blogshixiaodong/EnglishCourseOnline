@@ -16,19 +16,19 @@
 
     	<action name="historyCourses" class="com.eco.action.TeacherAction" method="findTeacherHistoryCourseDetailList">
     		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/historyCourses.jsp</param>
+    			<param name="location">/teacher/history_courses.jsp</param>
     		</result>
     	</action>
     	
     	<action name="allCourses" class="com.eco.action.TeacherAction" method="findTeacherAllCourseDetailList">
     		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/allCourses.jsp</param>
+    			<param name="location">/teacher/all_courses.jsp</param>
     		</result>
     	</action>
     	
     	<action name="allEngclasses" class="com.eco.action.TeacherAction" method="findTeacherAllEngclassDetailList">
     		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/allEngclasses.jsp</param>
+    			<param name="location">/teacher/all_engclasses.jsp</param>
     		</result>
     	</action>
     	
@@ -46,10 +46,10 @@
     	
     	<action name="engclassDetail" class="com.eco.action.TeacherAction" method="engclassDetail">
     		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/engclassDetail.jsp</param>
+    			<param name="location">/teacher/engclass_detail.jsp</param>
     		</result>
     		<result name="error" type="dispatcher">
-    			<param name="location">/teacher/engclassDetail.jsp</param>
+    			<param name="location">/teacher/engclass_detail.jsp</param>
     		</result>
     	</action>
     	
