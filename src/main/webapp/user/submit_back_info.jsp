@@ -272,7 +272,7 @@
 				url:"createUserBackInfo.action",
 				type:"post",
 				data:{
-					"classid" : classId,
+					"engclass.classId" : classId,
 					"backInfo": backInfo,
 					
 				},
