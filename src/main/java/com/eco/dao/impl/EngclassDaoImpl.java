@@ -11,7 +11,7 @@ import com.eco.dao.EngclassDao;
  * author: Shixiaodong
  */
 public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements EngclassDao {
-
+	
 	@Override
 	public void insert(Engclass engclass) {
 		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
@@ -55,6 +55,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	@Override
 	public List<Engclass> selectEngclassListByTeacherIdAndEngclassName(Integer teacherId, String className) {
 		String sql = "SELECT * FROM engclass WHERE classname = ?";
+		
 		return this.queryForList(sql, className);
 	}
 
@@ -71,5 +72,5 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String sql = "SELECT teacherid FROM engclass WHERE classid = ?";
 		return (Integer)this.queryForValue(sql, classId);
 	}
-
+	
 }

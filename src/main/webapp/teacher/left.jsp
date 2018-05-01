@@ -40,7 +40,7 @@
 						<ul class="nav child_menu">
 							<li><a href="nowCourses.action">进行课程信息</a></li>
 							<li><a href="historyCourses.action">历史课程记录</a></li>
-							<li><a href="allCourses.action">所有课程记录</a></li>
+							<li><a href="all_courses.jsp">所有课程记录</a></li>
 						</ul>
 					</li>
 					<li>

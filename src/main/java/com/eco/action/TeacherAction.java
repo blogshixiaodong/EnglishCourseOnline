@@ -10,6 +10,7 @@ import org.apache.struts2.ServletActionContext;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
@@ -41,6 +42,8 @@ public class TeacherAction extends ActionSupport {
 	
 	private UserServer userServer = new UserServerImpl();
 	
+	private PageContainer pageContainer;
+	
 	private Engclass engclass;
 	
 	private String jsonResult = "";
@@ -50,7 +53,6 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		
 		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
@@ -73,9 +75,12 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId);
+		ActionContext.getContext();
+		
+		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId, pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
+		request.put("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
@@ -220,6 +225,16 @@ public class TeacherAction extends ActionSupport {
 	public void setJsonResult(String jsonResult) {
 		this.jsonResult = jsonResult;
 	}
+
+	public PageContainer getPageContainer() {
+		return pageContainer;
+	}
+
+	public void setPageContainer(PageContainer pageContainer) {
+		this.pageContainer = pageContainer;
+	}
+	
+	
 	
 	
 }

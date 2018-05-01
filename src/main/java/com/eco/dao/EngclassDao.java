@@ -14,7 +14,7 @@ import com.eco.bean.model.Engclass;
  * @author 15129
  *
  */
-public interface EngclassDao {
+public interface EngclassDao extends PageDao {
 
 	/** 
 	* 开设班级 
@@ -28,9 +28,6 @@ public interface EngclassDao {
 	 * @return selectEgcListByTchId
 	 */
 	public abstract List<EngclassDetail> selectEngclassListByTeacherId(Integer teacherId);
-	
-	
-
 	
 	/** 
 	* @Description: 查询用户当前正在进行的班级信息 

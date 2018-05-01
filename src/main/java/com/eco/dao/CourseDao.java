@@ -9,7 +9,7 @@ import com.eco.bean.dto.CourseDetail;
  * @author lenovo
  *
  */
-public interface CourseDao {
+public interface CourseDao extends PageDao {
 	
 	/**
 	 * 根据教师id获取教师正在进行的课程详细信息列表
@@ -31,6 +31,13 @@ public interface CourseDao {
 	 * @return
 	 */
 	public abstract List<CourseDetail> selectAllCourseDetailListByTeacherId(Integer teacherId);
+	
+	/**
+	 * 根据教师id获取教师所有的课程记录数
+	 * @param teacherId
+	 * @return
+	 */
+	public int countAllCourseDetailByTeacherId(Integer teacherId);
 	
 	/** 
 	* 根据用户id获取用户正在进行的课程记录

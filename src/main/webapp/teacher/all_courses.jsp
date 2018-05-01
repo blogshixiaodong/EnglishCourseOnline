@@ -14,6 +14,11 @@
 	<link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
+	<s:if test="#request.pageContainer == null">
+		<s:action name="allCourses" namespace="/teacher">
+			<s:param name="pageContainer.currentPageNo">1</s:param>
+		</s:action>
+	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -47,7 +52,7 @@
 							</div>
 							
 							<div class="x_content">
-								<table class="table">
+								<table id="courseList" class="table">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -59,23 +64,48 @@
 										</tr>
 									</thead>
 									<tbody>
-										<s:iterator value="#request.courseDetailList" status="i"
-											var="courseDetail">
+										<s:iterator value="#request.courseDetailList" status="i" var="courseDetail">
 											<tr>
-												<th scope="row"><s:property value="#i.getIndex()" />
-												</td>
+												<th scope="row"><s:property value="#i.getIndex()" /></td>
 												<td><s:property value="#courseDetail.courseId" /></td>
 												<td><s:property value="#courseDetail.courseName" /></td>
 												<td><s:property value="#courseDetail.types" /></td>
-												<td><s:date name="#courseDetail.startTime"
-														format="yyyy-MM-dd" /></td>
-												<td><s:date name="#courseDetail.endTime"
-														format="yyyy-MM-dd" /></td>
+												<td><s:date name="#courseDetail.startTime" format="yyyy-MM-dd" /></td>
+												<td><s:date name="#courseDetail.endTime" format="yyyy-MM-dd" /></td>
 											</tr>
 										</s:iterator>
 									</tbody>
 								</table>
-
+								<div class="row">
+			                    	<div  class="btn-toolbar pull-right">
+				                        <div class="btn-group">
+				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
+				                        		<a class="btn btn-default disabled" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
+				                        	</s:if>
+				                        	<s:else>
+				                        		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
+				                        	</s:else>
+				                        	<s:bean name="org.apache.struts2.util.Counter" var="counter">
+									            <s:param name="first" value="1" />
+									            <s:param name="last" value="#request.pageContainer.pageCount" />
+									            <s:iterator>
+									            	<s:if test="#request.pageContainer.currentPageNo == #counter">
+									            		<a class="btn btn-default active" type="button"><s:property /></a>
+									            	</s:if>
+									            	<s:else>
+									            		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>
+									            	</s:else>
+									           	</s:iterator>
+									        </s:bean>
+									        <s:if test="#request.pageContainer.currentPageNo == #request.pageContainer.pageCount">
+				                          		<a class="btn btn-default disabled" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
+				                        	</s:if>
+				                        	<s:else>
+				                          		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
+				                        	</s:else>
+				                        </div>
+			                     	</div>
+			                    </div>
 							</div>
 						</div>
 					</div>
@@ -92,7 +122,12 @@
 	<!-- Bootstrap -->
 	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- Custom Theme Scripts -->
-	<script src="../build/js/custom.min.js"></script>
+	<script src="../build/js/custom.js"></script>
+	<script type="text/javascript">
+		
+	
+	</script>
+	
 </body>
 
 </html>

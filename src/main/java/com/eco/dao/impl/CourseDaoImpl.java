@@ -35,6 +35,14 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid ORDER BY starttime DESC;";
 		return this.queryForListEx(sql, CourseDetail.class, teacherId);
 	}
+	
+	@Override
+	public int countAllCourseDetailByTeacherId(Integer teacherId) {
+		String sql = "SELECT count(*) " + 
+					 "FROM course c, course_record cr, engclass e " + 
+					 "WHERE e.teacherid = ? AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid;";
+		return Integer.parseInt(this.queryForValue(sql, teacherId).toString());
+	}
 
 	@Override
 	public List<CourseDetail> selectUserNowCourseDetailListByUserId(Integer userid) {
@@ -57,4 +65,23 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 		return this.queryForListEx(sql,CourseDetail.class,userid);
 	}
 	
+	@Override
+	protected String beforeQueryForList(String sql) {
+		if(isPaging == false || pageContainer == null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = limitSql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + "," + pageContainer.getPageSize() + ";";
+		return limitSql;
+	}
+	
+	@Override
+	protected String beforeQueryForListEx(String sql) {
+		if(!isPaging && pageContainer != null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
+		return limitSql;
+	}
 }

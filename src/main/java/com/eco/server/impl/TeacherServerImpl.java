@@ -6,6 +6,7 @@ import java.util.List;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.dao.CourseDao;
 import com.eco.dao.EngclassDao;
 import com.eco.dao.impl.CourseDaoImpl;
@@ -33,12 +34,17 @@ public class TeacherServerImpl implements TeacherServer {
 	}
 
 	@Override
-	public List<CourseDetail> queryAllCourseDetailListByTeacherId(Integer teacherId) {
+	public List<CourseDetail> queryAllCourseDetailListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		pageContainer.setPageSize(5);
+		courseDao.beginPaging(pageContainer);
+		pageContainer.setRecordCount(courseDao.countAllCourseDetailByTeacherId(teacherId));
+		courseDao.beginPaging(pageContainer);
 		return courseDao.selectAllCourseDetailListByTeacherId(teacherId);
 	}
 	
 	@Override
 	public List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId) {
+		
 		return engclassDao.selectEngclassListByTeacherId(teacherId);
 	}
 

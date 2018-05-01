@@ -5,6 +5,7 @@ import java.util.List;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 
 /*
  * date:   2018年4月21日 上午11:05:51
@@ -31,7 +32,7 @@ public interface TeacherServer {
 	 * @param teacherId
 	 * @return
 	 */
-	public abstract List<CourseDetail> queryAllCourseDetailListByTeacherId(Integer teacherId);
+	public abstract List<CourseDetail> queryAllCourseDetailListByTeacherId(Integer teacherId, PageContainer pageContainer);
 	
 	/**
 	 * 根据教师id获取教师教过的班级详细信息
