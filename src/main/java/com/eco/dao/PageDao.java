@@ -1,19 +1,17 @@
 package com.eco.dao;
 
-import java.util.List;
+import com.eco.bean.model.PageContainer;
 
 /*
  * date:   2018年4月10日 下午3:28:47
  * author: Shixiaodong
  */
-public interface PageDao<T> {
+public interface PageDao {
 	
-	public default int getPageSize() {
-		return 10;
-	}
+	public abstract Boolean isPaging();	
 	
-	public abstract int getRecordCount();
+	public abstract void beginPaging(PageContainer pageContainer);
 	
-	public abstract List<T> getRecordByPageNo(int currentPage);
+	public abstract void closePaging();
 	
 }

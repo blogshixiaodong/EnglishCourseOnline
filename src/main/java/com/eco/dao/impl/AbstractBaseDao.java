@@ -11,20 +11,26 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import com.eco.bean.model.PageContainer;
 import com.eco.dao.BaseDao;
-
+import com.eco.dao.PageDao;
 import com.sxd.util.jdbc.JdbcUtils;
 
 /*
  * date:   2018/4/10 2:41:47
  * author: Shixiaodong
  */
-public abstract class AbstractBaseDao<T> implements BaseDao<T> {
+public abstract class AbstractBaseDao<T> implements BaseDao<T>, PageDao {
 	
 	private Connection connection;
+	
 	private QueryRunner query = new QueryRunner();
+	
 	protected Boolean autoCommit = true;
 
+	protected Boolean isPaging = false;
+	
+	protected PageContainer pageContainer;
 	
 	@Override
 	public final int insert(String sql, Object... params) {
@@ -138,7 +144,6 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		return sql;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private T doQueryForObject(String sql, Object... params) {
 		T bean = null;
 		try {
@@ -226,6 +231,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		init();
 		return beforeQueryForList(sql);
 	}
+	
 	protected String beforeQueryForListEx(String sql) {
 		return sql;
 	}
@@ -265,6 +271,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 				e.printStackTrace();
 			}
 		}
+		closePaging();
 	}
 	
 	protected Boolean isAutoCommit() {
@@ -281,6 +288,22 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         Type[] params = ((ParameterizedType) type).getActualTypeArguments();  
         return (Class<T>) params[0];
 	}
- 
+
+	@Override
+	public Boolean isPaging() {
+		return isPaging;
+	}
+	
+	@Override
+	public void beginPaging(PageContainer pageContainer) {
+		this.isPaging = true;
+		this.pageContainer = pageContainer;
+	}
+
+	@Override
+	public void closePaging() {
+		this.isPaging = false;
+		this.pageContainer = null;	
+	}
 	
 }
