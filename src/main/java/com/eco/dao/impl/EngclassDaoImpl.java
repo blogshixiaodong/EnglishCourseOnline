@@ -6,6 +6,8 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.dao.EngclassDao;
 
+import freemarker.core.ReturnInstruction.Return;
+
 /*
  * date:   2018年4月20日 下午10:32:20
  * author: Shixiaodong
@@ -37,12 +39,24 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	
 	@Override
 
-	public List<EngclassDetail> queryNowUserEngclassList(Integer userId) {
+	public List<EngclassDetail> selectUserNowEngclassListByUserId(Integer userId) {
 		String sql = "SELECT t2.*,courseName,teacherName,t5.courseid, t5.imgurl FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid\r\n" + 
 				 	 "LEFT JOIN teacher t3 ON t2.teacherid = t3.teacherid LEFT JOIN  course_record t4 ON t2.courserecordid = t4.courserecordid " + 
 				 	 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ? AND t4.endtime > NOW()";
 		return this.queryForListEx(sql, EngclassDetail.class, userId);
 	}
+	
+	@Override
+	public int countAllEngclassDetailByUserId(Integer userId) {
+		String sql = "SELECT COUNT(*) FROM user_class t1 LEFT JOIN engclass t2 ON t1.classid = t2.classid " + 
+				 	 "LEFT JOIN teacher t3 ON t2.teacherid = t3.teacherid LEFT JOIN  course_record t4 ON t2.courserecordid = t4.courserecordid " + 
+				 	 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ?";
+		return Integer.parseInt(this.queryForValue(sql, userId).toString());
+	}
+	
+	
+	
+	
 	
 
 
@@ -68,9 +82,51 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 
 	@Override
+	public int countAllUserByEngclassId(Integer engclassId) {
+		String sql = "SELECT COUNT(*) FROM course c LEFT JOIN  course_record cr ON c.courseid = cr.courseid LEFT JOIN engclass e ON cr.courserecordid = e.courserecordid " +
+				 	 "LEFT JOIN teacher t ON e.teacherid = t.teacherid WHERE e.classid = ?";
+		return Integer.parseInt(this.queryForValue(sql, engclassId).toString());
+	}
+
+	@Override
+	public int countAllEngclassDetailByTeacher(Integer teacherId) {
+		String sql = "SELECT COUNT(*) FROM course c LEFT JOIN  course_record cr ON c.courseid = cr.courseid LEFT JOIN engclass e ON cr.courserecordid = e.courserecordid "
+				+ "LEFT JOIN teacher t ON e.teacherid = t.teacherid WHERE t.teacherid = ?";
+		return Integer.parseInt(this.queryForValue(sql, teacherId).toString());
+	}
+	
+	
+	@Override
 	public Integer selectTeacherIdByEngclassId(Integer classId) {
 		String sql = "SELECT teacherid FROM engclass WHERE classid = ?";
 		return (Integer)this.queryForValue(sql, classId);
 	}
+	
+	
+	@Override
+	protected String beforeQueryForList(String sql) {
+		if(isPaging == false || pageContainer == null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = limitSql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + "," + pageContainer.getPageSize() + ";";
+		return limitSql;
+	}
+	
+	@Override
+	protected String beforeQueryForListEx(String sql) {
+		if(!isPaging && pageContainer != null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
+		return limitSql;
+	}
+
+	
+
+	
+	
+	
 	
 }

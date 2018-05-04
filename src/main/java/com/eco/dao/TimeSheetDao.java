@@ -10,7 +10,7 @@ import com.eco.bean.model.TimeSheet;
  * date:   2018年4月20日 下午11:07:27
  * author: Shixiaodong
  */
-public interface TimeSheetDao extends BaseDao<TimeSheet> {
+public interface TimeSheetDao extends PageDao {
 	
 	public abstract List<TimeSheetDetail> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date);
 	
@@ -52,5 +52,5 @@ public interface TimeSheetDao extends BaseDao<TimeSheet> {
 	*/ 
 	public int insert(TimeSheet timeSheet);
 	
-	
+
 }

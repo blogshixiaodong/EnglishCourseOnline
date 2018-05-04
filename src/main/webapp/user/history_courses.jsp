@@ -19,6 +19,13 @@
 	<link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
+		<s:if test="#request.pageContainer == null">
+			 <s:action name="historyCourses" namespace="/user">
+				<s:param name="pageContainer.currentPageNo">1</s:param>
+			</s:action>	 
+		
+		</s:if> 
+
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -81,7 +88,39 @@
 										</s:iterator>
 									</tbody>
 								</table>
-
+								<div class="row">
+			                    	<div  class="btn-toolbar pull-right">
+				                        <div class="btn-group">
+				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
+				                        		<a class="btn btn-default disabled" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
+				                        	</s:if>
+				                        	<s:else>
+				                        		<a class="btn btn-default" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
+				                        	</s:else>
+				                        	<s:bean name="org.apache.struts2.util.Counter" var="counter">
+									            <s:param name="first" value="1" />
+									            <s:param name="last" value="#request.pageContainer.pageCount" />
+									            <s:iterator>
+									            	<s:if test="#request.pageContainer.currentPageNo == #counter">
+									            		<a class="btn btn-default active" type="button"><s:property /></a>
+									            	</s:if>
+									            	<s:else>
+									            		<a class="btn btn-default" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>
+									            	</s:else>
+									           	</s:iterator>
+									        </s:bean>
+									        <s:if test="#request.pageContainer.currentPageNo == #request.pageContainer.pageCount">
+				                          		<a class="btn btn-default disabled" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
+				                        	</s:if>
+				                        	<s:else>
+				                          		<a class="btn btn-default" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
+				                        	</s:else>
+				                        </div>
+			                     	</div>
+			                    </div>
+								
+								
+								
 							</div>
 						</div>
 					</div>

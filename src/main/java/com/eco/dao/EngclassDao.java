@@ -34,7 +34,7 @@ public interface EngclassDao extends PageDao {
 	* @param userId
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> queryNowUserEngclassList(Integer userId);
+	public abstract List<EngclassDetail> selectUserNowEngclassListByUserId(Integer userId);
 	
 
 	public List<EngclassDetail> selectUserAllEngclassListByUserId(Integer userid);
@@ -69,5 +69,35 @@ public interface EngclassDao extends PageDao {
 	 * @return
 	 */
 	public EngclassDetail selectEngclassDetailByEngclassId(Integer engclassId);
+	
+	
+	
+	/** 
+	* @Description: 根据用户id获取用户所有的班级记录数
+	* @param userId
+	* @return int
+	*/ 
+	public int countAllEngclassDetailByUserId(Integer userId);
+	
+	
+	/** 
+	* @Description: 根据教师id获取该教师的班级记录数
+	* @param teacherId
+	* @return int
+	*/ 
+	public int countAllEngclassDetailByTeacher(Integer teacherId);
+	
+	
+	
+	/** 
+	* @Description: 通过班级id查询该班级是学生人数 
+	* @param engclassId
+	* @return int
+	*/ 
+	public int countAllUserByEngclassId(Integer engclassId);
+	
+	
+	
+	
 	
 }

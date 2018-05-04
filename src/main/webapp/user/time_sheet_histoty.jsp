@@ -136,13 +136,15 @@
 										<!-- get data and create dom by ajax -->
 									</tbody>
 								</table>
+								
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- /page content -->
-
+			
+			
 			<!-- footer -->
 			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
@@ -200,6 +202,9 @@
     	}
     	
     	function sendCondition(e) {
+    		var params = "";
+
+    		
     		$("#timeSheet tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
     		var queryDate = $("#queryDate").val();
@@ -207,7 +212,7 @@
     			return;
     		}
     		$.ajax({
-    			url: "showtimeSheets.action",
+    			url: "showtimeSheets.action"+ params ,
     			type : "post",
     			dataType: "json",
     			data:{"engclass.classId" : classId, "queryDate" : queryDate},
@@ -237,7 +242,7 @@
     		});
     	}
 		$("#engclassList").change(sendCondition);
-		  $("#myDatepicker").on("changeDate", sendCondition);
+		$("#myDatepicker").on("changeDate", sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});
