@@ -8,9 +8,30 @@
 
     <package name="teacher_action" namespace="/teacher" extends="struts-default,json-default">
     	
+    	<action name="teacherLogin" class="com.eco.action.TeacherAction" method="teacherLogin">
+    		<result name="success" type="redirect">
+    			<param name="location">/teacher/index.jsp</param>
+    		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
+    	<action name="teacherLogout" class="com.eco.action.TeacherAction" method="teacherLogout">
+    		<result name="success" type="redirect">
+    			<param name="location">../index.jsp</param>
+    		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
     	<action name="nowCourses" class="com.eco.action.TeacherAction" method="findTeacherNowCourseDetailList">
     		<result name="success" type="dispatcher">
     			<param name="location">/teacher/index.jsp</param>
+    		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
     		</result>
     	</action>
 
@@ -18,11 +39,17 @@
     		<result name="success" type="dispatcher">
     			<param name="location">/teacher/history_courses.jsp</param>
     		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
     	</action>
     	
     	<action name="allCourses" class="com.eco.action.TeacherAction" method="findTeacherAllCourseDetailList">
     		<result name="success" type="dispatcher">
     			<param name="location">/teacher/all_courses.jsp</param>
+    		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
     		</result>
     	</action>
     	

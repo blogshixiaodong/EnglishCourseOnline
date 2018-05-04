@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 
@@ -56,5 +57,12 @@ public interface TeacherServer {
 	 * @return
 	 */
 	public EngclassDetail queryEngclassDetailByEngclassId(Integer engclassId);
+	
+	/**
+	 * 根据账号信息，进行登陆校验
+	 * @param account
+	 * @return
+	 */
+	public Boolean loginCheck(Account account);
 	
 }

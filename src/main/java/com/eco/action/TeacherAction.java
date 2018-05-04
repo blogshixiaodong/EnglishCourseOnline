@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
@@ -45,6 +46,8 @@ public class TeacherAction extends ActionSupport {
 	private PageContainer pageContainer;
 	
 	private Engclass engclass;
+	
+	private Account account;
 	
 	private String jsonResult = "";
 	
@@ -181,12 +184,28 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String teacherLogin() {
+		if(!teacherServer.loginCheck(account)) {
+			return Action.ERROR;
+		}
+		Map<String, Object> map = ActionContext.getContext().getSession();
+		map.put("teacherId", account.getRoleId());
+		return Action.SUCCESS;
+	}
+	
+	
+	public String teacherLogout() {
+		Map<String, Object> map = ActionContext.getContext().getSession();
+		map.remove("teacherId");
+		return Action.SUCCESS;
+	}
+	
 	
 	private Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
 		Object id = map.get("teacherId");
 		if(id == null || "".equals(id)) {
-			return new Integer(50000);
+			return null;
 		}
 		//未登录测试
 		return new Integer(id.toString());
@@ -233,8 +252,13 @@ public class TeacherAction extends ActionSupport {
 	public void setPageContainer(PageContainer pageContainer) {
 		this.pageContainer = pageContainer;
 	}
-	
-	
-	
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 	
 }

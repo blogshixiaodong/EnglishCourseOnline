@@ -5,12 +5,15 @@ import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.CourseDao;
 import com.eco.dao.EngclassDao;
+import com.eco.dao.TeacherDao;
 import com.eco.dao.impl.CourseDaoImpl;
 import com.eco.dao.impl.EngclassDaoImpl;
+import com.eco.dao.impl.TeacherDaoImpl;
 import com.eco.server.TeacherServer;
 
 /*
@@ -22,6 +25,8 @@ public class TeacherServerImpl implements TeacherServer {
 	private CourseDao courseDao = new CourseDaoImpl();
 	
 	private EngclassDao engclassDao = new EngclassDaoImpl();
+	
+	private TeacherDao teacherDao = new TeacherDaoImpl();
 	
 	@Override
 	public List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId) {
@@ -68,5 +73,20 @@ public class TeacherServerImpl implements TeacherServer {
 	public EngclassDetail queryEngclassDetailByEngclassId(Integer classId) {
 		return engclassDao.selectEngclassDetailByEngclassId(classId);
 	}
-
+	
+	@Override
+	public Boolean loginCheck(Account account) {
+		//账号是否存在
+		if(teacherDao.countAccount(account.getId()) != 1) {
+			return false;
+		}
+		Account dbAccount = teacherDao.selectAccount(account.getId());
+		if(!dbAccount.getPassword().equals(account.getPassword())) {
+			return false;
+		}
+		account.setRoleId(dbAccount.getRoleId());
+		account.setRole(dbAccount.getRole());
+		return true;
+	}
+	
 }
