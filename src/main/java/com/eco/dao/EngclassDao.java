@@ -73,11 +73,20 @@ public interface EngclassDao extends PageDao {
 	
 	
 	/** 
-	* @Description: 根据用户id获取用户所有的班级记录 
+	* @Description: 根据用户id获取用户所有的班级记录数
 	* @param userId
 	* @return int
 	*/ 
 	public int countAllEngclassDetailByUserId(Integer userId);
+	
+	
+	/** 
+	* @Description: 根据教师id获取该教师的班级记录数
+	* @param teacherId
+	* @return int
+	*/ 
+	public int countAllEngclassDetailByTeacher(Integer teacherId);
+	
 	
 	
 	/** 

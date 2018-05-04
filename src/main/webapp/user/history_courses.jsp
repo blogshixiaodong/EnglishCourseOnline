@@ -20,11 +20,11 @@
 </head>
 <body class="nav-md">
 		<s:if test="#request.pageContainer == null">
-		 <s:action name="historyCourses" namespace="/user">
-			<s:param name="pageContainer.currentPageNo">1</s:param>
-		</s:action>	 
+			 <s:action name="historyCourses" namespace="/user">
+				<s:param name="pageContainer.currentPageNo">1</s:param>
+			</s:action>	 
 		
-	</s:if> 
+		</s:if> 
 
 	<div class="container body">
 		<div class="main_container">

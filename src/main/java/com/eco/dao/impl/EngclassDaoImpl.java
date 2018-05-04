@@ -6,6 +6,8 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.dao.EngclassDao;
 
+import freemarker.core.ReturnInstruction.Return;
+
 /*
  * date:   2018年4月20日 下午10:32:20
  * author: Shixiaodong
@@ -86,7 +88,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return Integer.parseInt(this.queryForValue(sql, engclassId).toString());
 	}
 
-	
+	@Override
+	public int countAllEngclassDetailByTeacher(Integer teacherId) {
+		String sql = "SELECT COUNT(*) FROM course c LEFT JOIN  course_record cr ON c.courseid = cr.courseid LEFT JOIN engclass e ON cr.courserecordid = e.courserecordid "
+				+ "LEFT JOIN teacher t ON e.teacherid = t.teacherid WHERE t.teacherid = ?";
+		return Integer.parseInt(this.queryForValue(sql, teacherId).toString());
+	}
 	
 	
 	@Override
@@ -115,6 +122,8 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
 		return limitSql;
 	}
+
+	
 
 	
 	
