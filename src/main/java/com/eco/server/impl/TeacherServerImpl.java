@@ -29,12 +29,21 @@ public class TeacherServerImpl implements TeacherServer {
 	private TeacherDao teacherDao = new TeacherDaoImpl();
 	
 	@Override
-	public List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId) {
+	public List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer) {
+		
+		pageContainer.setPageSize(5);
+		pageContainer.setRecordCount(courseDao.countNowCourseDetailByTeacherId(teacherId));
+		
+		courseDao.beginPaging(pageContainer);
 		return courseDao.selectTeacherNowCourseDetailListByTeacherId(teacherId);
 	}
 
 	@Override
-	public List<CourseDetail> queryHistoryCourseDetailListByTeacherId(Integer teacherId) {
+	public List<CourseDetail> queryHistoryCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer) {
+		
+		pageContainer.setPageSize(5);
+		pageContainer.setRecordCount(courseDao.countHistoryCourseDetailByTeacherId(teacherId));
+		
 		return courseDao.selectTeacherIdHistoryCourseDetailListByTeacherId(teacherId);
 	}
 
@@ -48,8 +57,11 @@ public class TeacherServerImpl implements TeacherServer {
 	}
 	
 	@Override
-	public List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId) {
+	public List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId,PageContainer pageContainer) {
 		
+		pageContainer.setPageSize(5);
+		pageContainer.setRecordCount(engclassDao.countAllEngclassDetailByTeacher(teacherId));
+		engclassDao.beginPaging(pageContainer);
 		return engclassDao.selectEngclassListByTeacherId(teacherId);
 	}
 

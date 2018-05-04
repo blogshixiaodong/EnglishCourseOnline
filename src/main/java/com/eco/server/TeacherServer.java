@@ -19,14 +19,14 @@ public interface TeacherServer {
 	 * @param teacherId
 	 * @return
 	 */
-	public abstract List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId);
+	public abstract List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer);
 	
 	/**
 	 * 根据教师id获取教师已完成的课程列表信息
 	 * @param teacherId
 	 * @return
 	 */
-	public abstract List<CourseDetail> queryHistoryCourseDetailListByTeacherId(Integer teacherId);
+	public abstract List<CourseDetail> queryHistoryCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer);
 	
 	/**
 	 * 根据教师id获取教师所有的课程列表信息
@@ -40,7 +40,7 @@ public interface TeacherServer {
 	 * @param teacherId
 	 * @return
 	 */
-	public abstract List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId);
+	public abstract List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId,PageContainer pageContainer);
 
 	/**
 	 * 根据教师id，班级id，班级名称 获取班级基本信息

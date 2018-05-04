@@ -56,9 +56,10 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId);
+		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId,pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
+		request.put("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
@@ -67,9 +68,10 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId);
+		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId,pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
+		request.put("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
@@ -78,7 +80,7 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		ActionContext.getContext();
+		//ActionContext.getContext();
 		
 		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId, pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
@@ -92,9 +94,10 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId);
+		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId,pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("engclassDetailList", engclassDetailList);
+		request.put("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
