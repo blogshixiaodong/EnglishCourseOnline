@@ -58,10 +58,11 @@ public class TeacherServerImpl implements TeacherServer {
 	
 	@Override
 	public List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId,PageContainer pageContainer) {
-		
-		pageContainer.setPageSize(5);
-		pageContainer.setRecordCount(engclassDao.countAllEngclassDetailByTeacher(teacherId));
-		engclassDao.beginPaging(pageContainer);
+		if(pageContainer != null) {
+			pageContainer.setPageSize(5);
+			pageContainer.setRecordCount(engclassDao.countAllEngclassDetailByTeacher(teacherId));
+			engclassDao.beginPaging(pageContainer);
+		}
 		return engclassDao.selectEngclassListByTeacherId(teacherId);
 	}
 

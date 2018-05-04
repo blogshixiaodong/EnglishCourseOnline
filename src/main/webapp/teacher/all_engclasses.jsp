@@ -16,13 +16,10 @@
 </head>
 <body class="nav-md">
 	<s:if test="#request.pageContainer == null">
-		 <s:action name="allEngclasses" namespace="/user">
+		 <s:action name="allEngclasses" namespace="/teacher">
 			<s:param name="pageContainer.currentPageNo">1</s:param>
 		</s:action>	 
-		
 	</s:if> 
-
-
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -94,7 +91,7 @@
 									            <s:param name="first" value="1" />
 									            <s:param name="last" value="#request.pageContainer.pageCount" />
 									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter">
+									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1">
 									            		<a class="btn btn-default active" type="button"><s:property /></a>
 									            	</s:if>
 									            	<s:else>

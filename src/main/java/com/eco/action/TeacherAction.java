@@ -56,6 +56,7 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
+		ActionContext.getContext();
 		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId,pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
 		request.put("courseDetailList", courseDetailList);
@@ -80,7 +81,6 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return Action.ERROR;
 		}
-		//ActionContext.getContext();
 		
 		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId, pageContainer);
 		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
