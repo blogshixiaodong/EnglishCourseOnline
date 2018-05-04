@@ -15,16 +15,11 @@ public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherD
 		String sql = "INSERT INTO teacher(teacherid, idcard, name, sex, age, phone, address, imgurl) VALUES(?, ?, ?, ?, ?, ?)";
 		return this.insert(sql, teacher.getIdCard(), teacher.getTeacherName(), teacher.getSex(), teacher.getAge(), teacher.getPhone(), teacher.getAddress(), teacher.getImgUrl());	
 	}
-	
-	public int countAccount(Integer id) {
-		String sql = "SELECT count(*) FROM account WHERE id = ?;";
-		return Integer.parseInt(this.queryForValue(sql, id).toString());
-	}
 
 	@Override
-	public Account selectAccount(Integer id) {
-		String sql = "SELECT * FROM account WHERE id = ?";
-		return this.queryForObjectEx(sql, Account.class, id);
+	public Teacher selectTeacher(Integer teacherid) {
+		String sql = "SELECT * FROM teacher WHERE teacherid = ?";
+		return this.queryForObject(sql, Teacher.class, teacherid);
 	}
 	
 }

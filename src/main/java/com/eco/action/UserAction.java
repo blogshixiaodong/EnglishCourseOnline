@@ -232,10 +232,10 @@ public class UserAction extends ActionSupport {
 	//登录判断
 	public String userLogin() {
 		
-		AccountDao aDao = new AccountDaoImpl();
-		if(aDao.checkLoginAccount(account.getId(), account.getPassword())) {
-			return SUCCESS;
-		}
+//		AccountDao aDao = new AccountDaoImpl();
+//		if(aDao.checkLoginAccount(account.getId(), account.getPassword())) {
+//			return SUCCESS;
+//		}
 		
 		return ERROR;
 	}

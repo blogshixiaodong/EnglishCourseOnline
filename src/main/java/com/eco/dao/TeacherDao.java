@@ -1,6 +1,5 @@
 package com.eco.dao;
 
-import com.eco.bean.model.Account;
 import com.eco.bean.model.Teacher;
 
 /*
@@ -17,17 +16,10 @@ public interface TeacherDao {
 	public abstract int insert(Teacher teacher);
 	
 	/**
-	 * 根据id查询账号记录数
+	 * 根据id查询教师信息
 	 * @param 账号id
 	 * @return
 	 */
-	public abstract int countAccount(Integer id);
-	
-	/**
-	 * 根据id查询账号记录
-	 * @param 账号id
-	 * @return
-	 */
-	public abstract Account selectAccount(Integer id);
+	public abstract Teacher selectTeacher(Integer id);
 	
 }

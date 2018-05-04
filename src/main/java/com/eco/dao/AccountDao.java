@@ -1,15 +1,21 @@
 package com.eco.dao;
 
-import com.eco.bean.model.Engclass;
+import com.eco.bean.model.Account;
 
 public interface AccountDao {
 	
+	/**
+	 * 根据id查询账号记录数
+	 * @param 账号id
+	 * @return
+	 */
+	public abstract int countAccount(Integer id);
 	
-	/** 
-	* @Description: 登录时判断账号密码是否正确
-	* @param id
-	* @return boolean
-	*/ 
-	public abstract boolean checkLoginAccount(Integer id,String password);
+	/**
+	 * 根据id查询账号记录
+	 * @param 账号id
+	 * @return
+	 */
+	public abstract Account selectAccount(Integer id);
 	
 }

@@ -8,9 +8,11 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
+import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
 import com.eco.dao.EngclassDao;
 import com.eco.dao.TeacherDao;
+import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.dao.impl.CourseDaoImpl;
 import com.eco.dao.impl.EngclassDaoImpl;
 import com.eco.dao.impl.TeacherDaoImpl;
@@ -27,6 +29,8 @@ public class TeacherServerImpl implements TeacherServer {
 	private EngclassDao engclassDao = new EngclassDaoImpl();
 	
 	private TeacherDao teacherDao = new TeacherDaoImpl();
+	
+	private AccountDao accountDao = new AccountDaoImpl();
 	
 	@Override
 	public List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer) {
@@ -90,10 +94,10 @@ public class TeacherServerImpl implements TeacherServer {
 	@Override
 	public Boolean loginCheck(Account account) {
 		//账号是否存在
-		if(teacherDao.countAccount(account.getId()) != 1) {
+		if(accountDao.countAccount(account.getId()) != 1) {
 			return false;
 		}
-		Account dbAccount = teacherDao.selectAccount(account.getId());
+		Account dbAccount = accountDao.selectAccount(account.getId());
 		if(!dbAccount.getPassword().equals(account.getPassword())) {
 			return false;
 		}

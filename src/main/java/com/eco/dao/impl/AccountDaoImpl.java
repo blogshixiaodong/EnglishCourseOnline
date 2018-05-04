@@ -6,9 +6,17 @@ import com.eco.dao.AccountDao;
 public class AccountDaoImpl extends AbstractBaseDao<Account> implements AccountDao {
 
 	@Override
-	public boolean checkLoginAccount(Integer id, String password) {
-		String sql = "SELECT * FROM account WHERE id = ? AND password = ?";
-		return this.queryForObject(sql, id,password) == null;
+	public int countAccount(Integer id) {
+		String sql = "SELECT count(*) FROM account WHERE id = ?;";
+		return Integer.parseInt(this.queryForValue(sql, id).toString());
 	}
 
+	@Override
+	public Account selectAccount(Integer id) {
+		String sql = "SELECT * FROM account WHERE id = ?";
+		return this.queryForObjectEx(sql, Account.class, id);
+	}
+
+	
+	
 }
