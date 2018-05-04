@@ -1,6 +1,8 @@
 package com.eco.action;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import com.eco.bean.dto.BackInfoDetail;
@@ -9,6 +11,7 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
@@ -20,6 +23,7 @@ import com.eco.server.UserServer;
 import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONArray;
 
@@ -50,6 +54,9 @@ public class UserAction extends ActionSupport {
 	
 	private Account account;
 	
+	private PageContainer pageContainer;
+	
+	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
 	
@@ -58,9 +65,9 @@ public class UserAction extends ActionSupport {
 	public String findUserNowCourseDetailList() {
 		Integer userId = this.getLoginUserId();
 		
-		List<CourseDetail> courseDetailList = userServer.queryUserNowCourseListByUserId(userId);
+		List<CourseDetail> courseDetailList = userServer.queryUserNowCourseListByUserId(userId,pageContainer);
 		request.setAttribute("courseDetailList",courseDetailList);
-		
+		request.setAttribute("pageContainer", pageContainer);
 		return SUCCESS;
 	}
 
@@ -68,19 +75,20 @@ public class UserAction extends ActionSupport {
 	public String findUserAllCourseDetailList() {
 		Integer userId = this.getLoginUserId();
 
-		List<CourseDetail> courseDetailList =userServer.queryUserAllCourseListByUserId(userId) ;
+		List<CourseDetail> courseDetailList =userServer.queryUserAllCourseListByUserId(userId,pageContainer) ;
 		request.setAttribute("courseDetailList",courseDetailList);
+		request.setAttribute("pageContainer", pageContainer);
 		
 		return SUCCESS;
 	}
 
-	//获取所有的课程信息
+	//获取所有历史的课程信息
 	public String findUserHistoryCourseDetailList() {
 		Integer userId = this.getLoginUserId();
-
-		List<CourseDetail> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId) ;
-		request.setAttribute("courseDetailList",courseDetailList);
 		
+		List<CourseDetail> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId,pageContainer) ;
+		request.setAttribute("courseDetailList",courseDetailList);
+		request.setAttribute("pageContainer", pageContainer);
 		return SUCCESS;
 	}
 	
@@ -88,8 +96,9 @@ public class UserAction extends ActionSupport {
 	public String findUserAllEngclassesList() {
 		Integer userId = this.getLoginUserId();
 		
-		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId) ;
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer) ;
 		request.setAttribute("engclassDetailList", engclassDetailList);
+		request.setAttribute("pageContainer", pageContainer);
 		
 		return SUCCESS;
 	}
@@ -102,7 +111,7 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		List<User> userList = userServer.queryUserListByClassid(this.getEngclassId());
+		List<User> userList = userServer.queryUserListByClassid(this.getEngclassId(),pageContainer);
 		if(userList == null) {
 			return ERROR;
 		}
@@ -162,14 +171,15 @@ public class UserAction extends ActionSupport {
 	}
 	
 	
-	//查询用户所在班级
+	//查询用户所有的所在班级
 	public String findUserAllEngclassList() {
 		Integer userId = this.getLoginUserId();
 		if(userId == null) {
 			return Action.ERROR;
 		}
 		
-		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId);
+		//待测试 pageContainer  是否可行！！！！
+		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer);
 		if(engclassDetailList == null) {
 			return Action.ERROR;
 		}
@@ -324,6 +334,14 @@ public class UserAction extends ActionSupport {
 
 	public void setLeaveInfo(String leaveInfo) {
 		this.leaveInfo = leaveInfo;
+	}
+
+	public PageContainer getPageContainer() {
+		return pageContainer;
+	}
+
+	public void setPageContainer(PageContainer pageContainer) {
+		this.pageContainer = pageContainer;
 	}
 
 }

@@ -50,6 +50,28 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 		String sql = "SELECT user.* FROM user,user_class WHERE user.userid = user_class.userid AND user_class.classid = ?";
 		List<User> userlist = queryForList(sql, classId); 
 		return userlist;
-	}	
+	}
+	
+	
+	@Override
+	protected String beforeQueryForList(String sql) {
+		if(isPaging == false || pageContainer == null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = limitSql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + "," + pageContainer.getPageSize() + ";";
+		return limitSql;
+	}
+	
+	@Override
+	protected String beforeQueryForListEx(String sql) {
+		if(!isPaging && pageContainer != null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
+		return limitSql;
+	}
+	
 
 }

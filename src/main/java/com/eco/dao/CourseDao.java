@@ -39,6 +39,30 @@ public interface CourseDao extends PageDao {
 	 */
 	public int countAllCourseDetailByTeacherId(Integer teacherId);
 	
+	
+	/** 
+	* @Description: 根据用户id获取用户所有的课程记录数 
+	* @param teacherId
+	* @return int
+	*/ 
+	public int countAllCourseDetailByUserId(Integer userId);
+	
+	
+	/** 
+	* @Description: 根据用户id获取用户当前正在进行的课程记录 
+	* @param userId
+	* @return int
+	*/ 
+	public int countNowCourseDetailByUserId(Integer userId);
+	
+	/** 
+	* @Description: 根据用户id获取用户历史正在进行的课程记录  
+	* @param userId
+	* @return int
+	*/ 
+	public int countHistoryCourseDetailByUserId(Integer userId);
+	
+	
 	/** 
 	* 根据用户id获取用户正在进行的课程记录
 	* @param userid

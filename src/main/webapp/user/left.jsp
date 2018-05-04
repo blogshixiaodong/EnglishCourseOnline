@@ -38,9 +38,9 @@
 						<a><i class="fa fa-home"></i>课程查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="nowCourses.action"  >进行课程信息</a></li>
-							<li><a href="historyCourses.action" >历史课程记录</a></li>
-							<li><a href="allCourses.action" >所有课程记录</a></li>
+							<li><a href="index.jsp"  >进行课程信息</a></li>
+							<li><a href="history_courses.jsp" >历史课程记录</a></li>
+							<li><a href="all_courses.jsp" >所有课程记录</a></li>
 						</ul>
 					</li>
 					<li>
@@ -48,7 +48,7 @@
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<!--  <li><a href="search_engclass.jsp">班级查询</a></li>  -->
-							<li><a href="allEngclasses.action">所有班级</a></li>
+							<li><a href="all_engclasses.jsp">所有班级</a></li>
 						</ul>
 					</li>
 					<!-- <li>

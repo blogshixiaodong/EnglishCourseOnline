@@ -7,6 +7,7 @@ import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserBackInfo;
@@ -26,28 +27,32 @@ public interface UserServer {
 	/*public abstract boolean enrolmentClass(UserClass uc,Integer crId);*/
 	
 
-	/** 
-	* @Description: 查询正在进行的courseDetail 
-	* @param userid
-	* @return List<CourseDetail>
-	*/ 
-	public abstract List<CourseDetail> queryUserNowCourseListByUserId(Integer userId);
-	
 	
 	/** 
-	* @Description: 查询所有的courseDetail 
-	* @param userid
+	* @Description: 查看正在进行的课程 
+	* @param userId
+	* @param pageContainer
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryUserAllCourseListByUserId(Integer userId);
+	public abstract List<CourseDetail> queryUserNowCourseListByUserId(Integer userId,PageContainer pageContainer);
+	
 	
 	
 	/** 
-	* @Description: 查询历史的courseDetail 
+	* @Description: 查看所有进行的课程 
+	* @param userId
+	* @param pageContainer
+	* @return List<CourseDetail>
+	*/ 
+	public abstract List<CourseDetail> queryUserAllCourseListByUserId(Integer userId, PageContainer pageContainer);
+	
+	
+	/** 
+	* @Description: 查询历史的课程
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId);
+	public abstract List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -55,7 +60,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId);
+	public abstract List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -71,7 +76,7 @@ public interface UserServer {
 	* @param classid
 	* @return List<User>
 	*/ 
-	public abstract List<User> queryUserListByClassid(Integer classid);
+	public abstract List<User> queryUserListByClassid(Integer classid,PageContainer pageContainer);
 	
 	
 	/** 

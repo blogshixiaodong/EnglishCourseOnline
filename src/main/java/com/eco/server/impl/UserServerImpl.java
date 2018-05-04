@@ -9,7 +9,8 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-
+import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserClass;
@@ -48,51 +49,70 @@ public class UserServerImpl implements UserServer{
 //	}
 
 	@Override
-	public List<CourseDetail> queryUserNowCourseListByUserId(Integer userId){
+	public List<CourseDetail> queryUserNowCourseListByUserId(Integer userId,PageContainer pageContainer){
 		
-		CourseDao cdDao = new CourseDaoImpl();
+		CourseDao courseDao = new CourseDaoImpl();
+		pageContainer.setPageSize(5);
 		
-		return cdDao.selectUserNowCourseDetailListByUserId(userId);
+		pageContainer.setRecordCount(courseDao.countNowCourseDetailByUserId(userId));
+		courseDao.beginPaging(pageContainer);
+		return courseDao.selectUserNowCourseDetailListByUserId(userId);
 
 	}
 
 	@Override
-	public List<CourseDetail> queryUserAllCourseListByUserId(Integer userId){
-		CourseDao cdDao = new CourseDaoImpl();
-		
-		return cdDao.selectUserAllCourseDetailListByUserId(userId);
+	public List<CourseDetail> queryUserAllCourseListByUserId(Integer userId, PageContainer pageContainer){
+		CourseDao courseDao = new CourseDaoImpl();
+		pageContainer.setPageSize(5);
+		//courseDao.beginPaging(pageContainer);
+		pageContainer.setRecordCount(courseDao.countAllCourseDetailByUserId(userId));
+		courseDao.beginPaging(pageContainer);
+		return courseDao.selectUserAllCourseDetailListByUserId(userId);
 	}
 
 	@Override
-	public List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId){
-		CourseDao cdDao = new CourseDaoImpl();
+	public List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId,PageContainer pageContainer){
+		CourseDao courseDao = new CourseDaoImpl();
+		pageContainer.setPageSize(5);
 		
-		return cdDao.selectUserHistoryCourseDetailListByUserId(userId);
+		
+		pageContainer.setRecordCount(courseDao.countHistoryCourseDetailByUserId(userId));
+		courseDao.beginPaging(pageContainer);
+		return courseDao.selectUserHistoryCourseDetailListByUserId(userId);
 	}
 
 	@Override
-	public List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId){
+	public List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId,PageContainer pageContainer){
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		return engclassDao.selectUserAllEngclassListByUserId(userId);
+		List<EngclassDetail> engclassDetailList = null;
+		
+		//如果pageContainer为null  则为不需要分页
+		if(pageContainer != null) {
+			pageContainer.setPageSize(5);
+			
+			pageContainer.setRecordCount(engclassDao.countAllEngclassDetailByUserId(userId));
+			
+			engclassDao.beginPaging(pageContainer);
+			engclassDetailList = engclassDao.selectUserAllEngclassListByUserId(userId);
+		}else {
+			engclassDetailList = engclassDao.selectUserAllEngclassListByUserId(userId);
+		}
+		
+		return engclassDetailList;
 	}
 	
 	
 	@Override
 	public List<EngclassDetail> queryUserNowEngclassByUserId(Integer userId){
 		EngclassDao engclassDao = new EngclassDaoImpl();
-		
-		return engclassDao.queryNowUserEngclassList(userId);
+		return engclassDao.selectUserNowEngclassListByUserId(userId);
 	}
 	
 	
-	
-
 	@Override
 	public List<BackInfoDetail> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId){
-		
 		TeacherBackInfoDao tbiDao = new TeacherBackInfoDaoImpl();
-
 		return tbiDao.selectBackInfoDetailByEngclassIdAndUserId(engclassId, userId);
 	}
 
@@ -100,12 +120,16 @@ public class UserServerImpl implements UserServer{
 	public List<TimeSheetDetail> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate){
 		List<TimeSheetDetail> timeSheetDetailList = null;
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
+		
+		
 		if("".equals(queryDate)) {
+			
 			//按classid查出该用户在该班级的所有考勤记录
 			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassId(userId, engclassId);
+		
 		}else {
+			
 			Date formateDate = stringFormateToDate(queryDate);
-
 			timeSheetDetailList = timeSheetDao.selectTimeSheetByUserIdAndEngclassIdAndTime(userId, engclassId, formateDate);
 		}			
 		return timeSheetDetailList;
@@ -148,11 +172,18 @@ public class UserServerImpl implements UserServer{
 			return "提交成功";
 		}
 	}
-
+	
+	
 	@Override
-	public List<User> queryUserListByClassid(Integer classId) {
+	public List<User> queryUserListByClassid(Integer engclassId,PageContainer pageContainer) {
 		UserDao userDao = new UserDaoImpl();
-		return userDao.selectUserListByClassId(classId);
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		
+		pageContainer.setPageSize(5);
+		pageContainer.setRecordCount(engclassDao.countAllUserByEngclassId(engclassId));
+		userDao.beginPaging(pageContainer);
+		
+		return userDao.selectUserByEngclassId(engclassId);
 	}
 
 	@Override

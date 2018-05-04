@@ -64,7 +64,27 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 		java.sql.Date sqlDate = new java.sql.Date(queryDate.getTime());
 		return queryForListEx(sql, TimeSheetDetail.class, userId,engclassId,sqlDate);
 	}
+
 	
+	@Override
+	protected String beforeQueryForList(String sql) {
+		if(isPaging == false || pageContainer == null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = limitSql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + "," + pageContainer.getPageSize() + ";";
+		return limitSql;
+	}
+	
+	@Override
+	protected String beforeQueryForListEx(String sql) {
+		if(!isPaging && pageContainer != null) {
+			return sql;
+		}
+		String limitSql = sql.replace(";", "");
+		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
+		return limitSql;
+	}
 	
 
 }
