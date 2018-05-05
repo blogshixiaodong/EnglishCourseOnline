@@ -2,6 +2,7 @@ package com.eco.server.impl;
 
 import java.util.List;
 
+import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.User;
 import com.eco.dao.EngclassDao;
@@ -29,7 +30,29 @@ public class EngclassServerImpl implements EngclassServer {
 	public List<Engclass> queryEnglclassListByCourseId(Integer courseId) {
 		return engclassDao.selectEngclassListByCourseId(courseId);
 	}
-	
-	
+
+	@Override
+	public EngclassDetail queryEngclassDetailByEngclasId(Integer engclassId) {
+		return engclassDao.selectEngclassDetailByEngclassId(engclassId);
+	}
+
+	@Override
+	public long create(Engclass engclass) {
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		
+		
+		return engclassDao.insert(engclass);
+	}
+
+	@Override
+	public int queryCourseRecordIdByEngclassId(Integer engclassId) {
+		
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		int coureseRecordId = engclassDao.selectCourseRecordIdByEngclassId(engclassId);
+		
+		
+		return coureseRecordId;
+	}
+
 	
 }

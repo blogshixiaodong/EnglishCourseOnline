@@ -61,6 +61,18 @@
     	</action>
 
     	
+    	<action name="engclassInfo" class="com.eco.action.BusinessAction" method="findEngclassByEngclassId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	
+    	<action name="mergeEngclass" class="com.eco.action.BusinessAction" method="mergeEngclass">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
     	
     </package>
 

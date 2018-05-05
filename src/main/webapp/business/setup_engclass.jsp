@@ -319,22 +319,34 @@
     					var courseName = json[i].courseName;
    	    				$("#courseList").append($("<option></option>").text(courseId + " : " + courseName))
     				}
+    			
+    				//教师列表
+    	    		$.ajax({
+    	    			url: "teacherList.action",
+    	    			type: "post",
+    	    			dataType: "json",
+    	    			success: function(responseText) {
+    	    				var json = JSON.parse(responseText);
+    	    				for(var i = 0; i < json.length; i++) {
+    	    					var teacherId = json[i].teacherId;
+    	    					var teacherName = json[i].teacherName;
+    	   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
+    	    				}
+    	    			}
+    	    		});	
+    			
     			}
+    		
+    			
+    		
+    		
+    		
     		});
-    		//教师列表
-    		$.ajax({
-    			url: "teacherList.action",
-    			type: "post",
-    			dataType: "json",
-    			success: function(responseText) {
-    				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var teacherId = json[i].teacherId;
-    					var teacherName = json[i].teacherName;
-   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
-    				}
-    			}
-    		});
+    		
+    		
+    		
+			
+    		
     	});
     	
   		//课程选择完成显示基本信息

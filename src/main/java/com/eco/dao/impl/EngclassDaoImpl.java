@@ -15,9 +15,9 @@ import freemarker.core.ReturnInstruction.Return;
 public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements EngclassDao {
 	
 	@Override
-	public Integer insert(Engclass engclass) {
+	public long insert(Engclass engclass) {
 		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
-		return this.update(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
+		return this.insert(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
 					engclass.getUserCount(),engclass.getClassRoom() );
 	}
 	
@@ -96,11 +96,13 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return (Integer)this.queryForValue(sql, classId);
 	}
 	
+	
+	//人数小于20才允许合并班级
 	@Override
 	public List<Engclass> selectEngclassListByCourseId(Integer courseId) {
 		String sql = "SELECT e.* FROM engclass e LEFT JOIN course_record cr ON e.courserecordid = cr.courserecordid " +
 					 "LEFT JOIN course c ON cr.courseid = c.courseid " +
-					 "WHERE c.courseid = ?";
+					 "WHERE c.courseid = ? AND usercount < 20";
 		return this.queryForList(sql, courseId);
 	}
 	
@@ -122,6 +124,19 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String limitSql = sql.replace(";", "");
 		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
 		return limitSql;
+	}
+
+	@Override
+	public int selectCourseRecordIdByEngclassId(Integer engclassId) {
+		String sql = "SELECT courseRecordId FROM engclass WHERE classid = ?";
+		return (int) queryForValue(sql,engclassId);
+	}
+
+	@Override
+	public void updateUserEngclassId(Integer oldEngclassId, Integer engclassId) {
+		String sql = "UPDATE user_class SET classId = ? WHERE classid = ? ";
+		update(sql, engclassId,oldEngclassId);
+		
 	}
 
 	

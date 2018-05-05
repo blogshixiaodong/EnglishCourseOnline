@@ -7,20 +7,24 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
+import com.eco.dao.CourseRecordDao;
 import com.eco.server.BusinessServer;
 import com.eco.server.CourseServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.UserServer;
 import com.eco.server.impl.BusinessServerImpl;
 import com.eco.server.impl.CourseServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
+import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -50,6 +54,11 @@ public class BusinessAction extends ActionSupport {
 	private CourseRecord courseRecord;
 	
 	private Engclass engclass;
+	
+	private Integer oldEngclassId1;
+	private Integer oldEngclassId2;
+	private Integer userNum1;
+	private Integer userNum2;
 	
 	
 	private BusinessServer businessServer = new BusinessServerImpl();
@@ -103,6 +112,27 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 	
+	public String mergeEngclass() {
+		
+		EngclassServer engclassServer = new EngclassServerImpl();
+		
+		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
+		
+		engclass.setCourseRecordId(courseRecordId);
+		engclass.setUserCount(userNum1 + userNum2);
+		int engclassId = new Long(engclassServer.create(engclass)).intValue();
+		
+		//教师无法修改
+		UserServer userver = new UserServerImpl();
+		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
+		
+		return SUCCESS;
+	}
+	
+	//数据库两个主码修改 user_class
+	//teacher 中有一个页面有bug
+	
+	
 	public String findAllCourseList() {
 
 		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
@@ -118,9 +148,23 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String findEngclassByEngclassId() {
+		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
+		jsonResult = JSONObject.fromObject(engclass).toString();
+		return Action.SUCCESS;
+	}
+	
 	
 	
 	//parameter内的参数
+	private Integer getEngclassId() {
+		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
+		if(id != null) {
+			return new Integer(id.toString());
+		}
+		return null;
+	}
+	
 	private Integer getCourseId() {
 		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("courseId");
 		if(id != null) {
@@ -178,5 +222,40 @@ public class BusinessAction extends ActionSupport {
 	public void setEngclass(Engclass engclass) {
 		this.engclass = engclass;
 	}
+
+	public Integer getOldEngclassId1() {
+		return oldEngclassId1;
+	}
+
+	public void setOldEngclassId1(Integer oldEngclassId1) {
+		this.oldEngclassId1 = oldEngclassId1;
+	}
+
+	public Integer getOldEngclassId2() {
+		return oldEngclassId2;
+	}
+
+	public void setOldEngclassId2(Integer oldEngclassId2) {
+		this.oldEngclassId2 = oldEngclassId2;
+	}
+
+	public Integer getUserNum1() {
+		return userNum1;
+	}
+
+	public void setUserNum1(Integer userNum1) {
+		this.userNum1 = userNum1;
+	}
+
+	public Integer getUserNum2() {
+		return userNum2;
+	}
+
+	public void setUserNum2(Integer userNum2) {
+		this.userNum2 = userNum2;
+	}
+	
+	
+	
 
 }

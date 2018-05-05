@@ -20,7 +20,7 @@ public interface EngclassDao extends PageDao {
 	* 开设班级 
 	* @param engclass void
 	*/ 
-	public abstract Integer insert(Engclass engclass);
+	public abstract long insert(Engclass engclass);
 
 	/**
 	 * 
@@ -71,7 +71,6 @@ public interface EngclassDao extends PageDao {
 	public EngclassDetail selectEngclassDetailByEngclassId(Integer engclassId);
 	
 	
-	
 	/** 
 	* @Description: 根据用户id获取用户所有的班级记录数
 	* @param userId
@@ -95,5 +94,11 @@ public interface EngclassDao extends PageDao {
 	public int countAllUserByEngclassId(Integer engclassId);
 	
 	public List<Engclass> selectEngclassListByCourseId(Integer courseId);
+	
+	
+	public int selectCourseRecordIdByEngclassId(Integer engclassId);
+	
+	public void updateUserEngclassId(Integer oldEngclassId,Integer engclassId);
+	
 	
 }
