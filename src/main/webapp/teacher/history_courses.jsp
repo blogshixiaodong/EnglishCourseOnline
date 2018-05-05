@@ -27,7 +27,7 @@
 				<jsp:include page="left.jsp"></jsp:include>
 			</div>
 			
-			<jsp:include page="top-nav.jsp"></jsp:include>
+			<jsp:include page="top_nav.jsp"></jsp:include>
 			
 
 			<!-- page content -->
@@ -95,8 +95,8 @@
 									            <s:param name="first" value="1" />
 									            <s:param name="last" value="#request.pageContainer.pageCount" />
 									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter">
-									            		<a class="btn btn-default active" type="button"><s:property /></a>
+									            	<s:if test="#request.pageContainer.currentPageNo == #request.counter.current - 1">
+									            		<a class="btn btn-default disabled" type="button"><s:property /></a>
 									            	</s:if>
 									            	<s:else>
 									            		<a class="btn btn-default" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>

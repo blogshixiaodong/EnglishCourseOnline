@@ -7,6 +7,7 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
+import com.eco.bean.model.Teacher;
 
 /*
  * date:   2018年4月21日 上午11:05:51
@@ -64,5 +65,7 @@ public interface TeacherServer {
 	 * @return
 	 */
 	public Boolean loginCheck(Account account);
+	
+	public Teacher queryTeacher(Integer teacherId);
 	
 }

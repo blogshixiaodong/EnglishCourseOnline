@@ -36,48 +36,19 @@
 				<h3>General</h3>
 				<ul class="nav side-menu">
 					<li>
-						<a><i class="fa fa-home"></i>课程查看
+						<a><i class="fa fa-home"></i>课程管理
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="index.jsp">进行课程信息</a></li>
-							<li><a href="history_courses.jsp">历史课程记录</a></li>
-							<li><a href="all_courses.jsp">所有课程记录</a></li>
+							<li><a href="add_course.jsp">添加课程基本信息</a></li>
 						</ul>
 					</li>
 					<li>
-						<a><i class="fa fa-edit"></i>班级查看
+						<a><i class="fa fa-edit"></i>班级管理
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="search_engclass.jsp">班级查询</a></li>
-							<li><a href="all_engclasses.jsp">所有班级</a></li>
-						</ul>
-					</li>
-					<li>
-						<a><i class="fa fa-desktop"></i>学生查看
-						<span class="fa fa-chevron-down"></span></a>
-						<ul class="nav child_menu">
-							<li><a href="search_user.jsp">学生查询</a></li>
-						</ul>
-					</li>
-					<li>
-						<a>
-							<i class="fa fa-table"></i>考勤信息
-							<span class="fa fa-chevron-down"></span>
-						</a>
-						<ul class="nav child_menu">
-							<li><a href="time_sheet_histoty.jsp">考勤记录</a></li>
-							<li><a href="register_time_sheet.jsp">考勤登记</a></li>
-						</ul>
-					</li>
-					<li>
-						<a>
-							<i class="fa fa-bar-chart-o"></i>反馈管理
-							<span class="fa fa-chevron-down"></span>
-						</a>
-						<ul class="nav child_menu">
-							<li><a href="back_info_history.jsp">反馈历史</a></li>
-							<li><a href="submit_back_info.jsp">教师反馈</a></li>
-							<li><a href="user_back_info_history.jsp">学生反馈</a></li>
+							<li><a href="setup_engclass.jsp">开设班级</a></li>
+							<li><a href="merge_engclasses.jsp">合并班级</a></li>
+							<li><a href="split_engclasses.jsp">拆分班级</a></li>
 						</ul>
 					</li>
 				</ul>

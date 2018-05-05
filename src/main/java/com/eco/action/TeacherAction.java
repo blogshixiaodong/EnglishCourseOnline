@@ -12,6 +12,7 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
+import com.eco.bean.model.Teacher;
 import com.eco.bean.model.TimeSheet;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
@@ -54,57 +55,51 @@ public class TeacherAction extends ActionSupport {
 	public String findTeacherNowCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
-		ActionContext.getContext();
-		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId,pageContainer);
-		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
-		request.put("courseDetailList", courseDetailList);
-		request.put("pageContainer", pageContainer);
+		List<CourseDetail> courseDetailList = teacherServer.queryNowCourseDetailListByTeacherId(teacherId, pageContainer);
+		putContextRequestMap("courseDetailList", courseDetailList);
+		putContextRequestMap("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
 	public String findTeacherHistoryCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
-		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId,pageContainer);
-		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
-		request.put("courseDetailList", courseDetailList);
-		request.put("pageContainer", pageContainer);
+		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId, pageContainer);
+		putContextRequestMap("courseDetailList", courseDetailList);
+		putContextRequestMap("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
 	public String findTeacherAllCourseDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
-		
 		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId, pageContainer);
-		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
-		request.put("courseDetailList", courseDetailList);
-		request.put("pageContainer", pageContainer);
+		putContextRequestMap("courseDetailList", courseDetailList);
+		putContextRequestMap("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
 	public String findTeacherAllEngclassDetailList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
-		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId,pageContainer);
-		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
-		request.put("engclassDetailList", engclassDetailList);
-		request.put("pageContainer", pageContainer);
+		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId, pageContainer);
+		putContextRequestMap("engclassDetailList", engclassDetailList);
+		putContextRequestMap("pageContainer", pageContainer);
 		return Action.SUCCESS;
 	}
 	
 	public String findTeacherEngclassListByCondition() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
 		List<Engclass> engclassList = teacherServer.queryEngclassByCondition(teacherId, engclass.getClassId(), engclass.getClassName());
 		if(engclassList == null) {
@@ -116,8 +111,9 @@ public class TeacherAction extends ActionSupport {
 	
 	public String engclassDetail() {
 		Integer engclassId = getEngclassId();
-		if(engclassId == null) {
-			return Action.ERROR;
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
 		}
 		Map<String, Object> request = (Map<String, Object>)ActionContext.getContext().get("request");
 		request.put("engclassDetail", teacherServer.queryEngclassDetailByEngclassId(engclassId));
@@ -126,8 +122,9 @@ public class TeacherAction extends ActionSupport {
 	
 	public String findUserInEngclass() {
 		Integer engclassId = engclass.getClassId();
-		if(engclassId == null) {
-			return Action.ERROR;
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
 		}
 		jsonResult = JSONArray.fromObject(engclassServer.queryUserListByEngclassId(engclassId)).toString();
 		return Action.SUCCESS;
@@ -138,7 +135,7 @@ public class TeacherAction extends ActionSupport {
 		Integer teacherId = getLoginTeacherId();
 		Integer engclassId = engclass.getClassId();
 		if(teacherId == null || engclassId == null) {
-			return Action.ERROR;
+			return "unlogin";
 		}
 		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
 		return Action.SUCCESS;
@@ -147,6 +144,9 @@ public class TeacherAction extends ActionSupport {
 	
 	public String createTeacherBackInfo() {
 		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
+		}
 		String[] userIdList = (String[])ServletActionContext.getRequest().getParameterMap().get("userIdList[]");
 		String backInfo = (String)ServletActionContext.getRequest().getParameter("backInfo");
 		backInfoServer.insertTeacherBackInfo(teacherId, getEngclassId(), formatToIntger(userIdList), backInfo);
@@ -155,23 +155,26 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	public String findUserTimeSheetDetail() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
+		}
 		Integer engclassId = engclass.getClassId();
 		String queryDate = ((String [])ServletActionContext.getRequest().getParameterMap().get("queryDate"))[0].toString();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
 		try {
 			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclassId, sdf.parse(queryDate))).toString();
-			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return Action.SUCCESS;
-		
 	}
 	
 	public String createTimeSheet() {
 		Integer teacherId = getLoginTeacherId();
-		
+		if(teacherId == null) {
+			return "unlogin";
+		}
 		JSONArray array = JSONArray.fromObject(ServletActionContext.getRequest().getParameterMap().get("list"));
 		List<TimeSheet> timeSheetList = null;
 		if(array != null && array.size() > 0) {
@@ -187,29 +190,29 @@ public class TeacherAction extends ActionSupport {
 	
 	public String teacherLogin() {
 		if(!teacherServer.loginCheck(account)) {
-			return Action.ERROR;
+			return "unlogin";
 		}
 		Map<String, Object> map = ActionContext.getContext().getSession();
-		map.put("teacherId", account.getRoleId());
+		map.put("teacher", teacherServer.queryTeacher(account.getRoleId()));
 		return Action.SUCCESS;
 	}
 	
 	
 	public String teacherLogout() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
-		map.remove("teacherId");
+		map.remove("teacher");
 		return Action.SUCCESS;
 	}
 	
 	
 	private Integer getLoginTeacherId() {
 		Map<String, Object> map = ActionContext.getContext().getSession();
-		Object id = map.get("teacherId");
-		if(id == null || "".equals(id)) {
+		Object teacher = map.get("teacher");
+		if(teacher == null || "".equals(teacher)) {
 			return null;
 		}
 		//未登录测试
-		return new Integer(id.toString());
+		return ((Teacher)teacher).getTeacherId();
 	}
 	
 	//parameter内的参数
@@ -229,6 +232,10 @@ public class TeacherAction extends ActionSupport {
 		return intgerArray;
 	}
 	
+	private void putContextRequestMap(String key, Object value) {
+		Map<String, Object> request = (Map<String, Object>) ActionContext.getContext().get("request");
+		request.put(key, value);
+	}
 
 	public Engclass getEngclass() {
 		return engclass;

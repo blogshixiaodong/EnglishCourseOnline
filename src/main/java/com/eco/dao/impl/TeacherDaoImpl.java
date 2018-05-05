@@ -19,7 +19,7 @@ public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherD
 	@Override
 	public Teacher selectTeacher(Integer teacherid) {
 		String sql = "SELECT * FROM teacher WHERE teacherid = ?";
-		return this.queryForObject(sql, Teacher.class, teacherid);
+		return this.queryForObjectEx(sql, Teacher.class, teacherid);
 	}
 	
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,7 +25,7 @@
 				<jsp:include page="left.jsp"></jsp:include>
 			</div>
 			
-			<jsp:include page="top-nav.jsp"></jsp:include>
+			<jsp:include page="top_nav.jsp"></jsp:include>
 			
 			<!-- page content -->
 			<div class="right_col" role="main">
