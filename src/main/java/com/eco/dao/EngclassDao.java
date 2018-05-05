@@ -20,7 +20,7 @@ public interface EngclassDao extends PageDao {
 	* 开设班级 
 	* @param engclass void
 	*/ 
-	public abstract void insert(Engclass engclass);
+	public abstract long insert(Engclass engclass);
 
 	/**
 	 * 
@@ -94,5 +94,11 @@ public interface EngclassDao extends PageDao {
 	public int countAllUserByEngclassId(Integer engclassId);
 	
 	public List<Engclass> selectEngclassListByCourseId(Integer courseId);
+	
+	
+	public int selectCourseRecordIdByEngclassId(Integer engclassId);
+	
+	public void updateUserEngclassId(Integer oldEngclassId,Integer engclassId);
+	
 	
 }

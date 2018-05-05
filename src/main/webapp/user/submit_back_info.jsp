@@ -143,9 +143,6 @@
 			$("#engclassList").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
-    	
-    	
-		
 		
 		$("#backInfoSubmit").click(function(){
 			

@@ -212,9 +212,18 @@ public class UserServerImpl implements UserServer{
 	public User queryUserByAccountId(Integer accountId) {
 		UserDao userDao = new UserDaoImpl();
 		User user = userDao.selectUserByAccountId(accountId);
-		
-		
 		return user;
+	}
+
+	@Override
+	public boolean mergeEngclass(Integer oldEngclassId1, Integer oldEngclassId2, Integer engclassId) {
+		
+		
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		engclassDao.updateUserEngclassId(oldEngclassId1, engclassId);
+		engclassDao.updateUserEngclassId(oldEngclassId2, engclassId);
+		
+		return true;
 	}
 }
 

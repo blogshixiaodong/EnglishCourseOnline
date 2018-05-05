@@ -253,6 +253,7 @@
 					</div>
 				</div>
 				
+
 				<div class="form-group">
                 	<div class="col-md-6 col-md-offset-5">
                         <button id="sendFrom" type="submit" class="btn btn-success">提交</button>
@@ -339,31 +340,30 @@
     				tr.append($("<td></td>").text(json["info"]));
     				tr.append($("<td></td>").text(json["types"]));
     				tr.append($("<td></td>").text(json["price"]));
+    			
+    				//根据该门课程选择班级
+    				$.ajax({
+    					url: "engclassList.action",
+    					type: "post",
+    					dataType: "json",
+    					data: {
+    						"courseId": courseId
+    					},
+    					success: function(responseText) {
+    	    				var json = JSON.parse(responseText);
+    	    				for(var i = 0; i < json.length; i++) {
+    	    					var engclassId = json[i].classId;
+    	    					var engclassName = json[i].className;
+    	    					var optionDom = $("<option></option>").text(engclassId + " : " + engclassName);
+    	   	    				$("#engclassList1").append($("<option></option>").text(engclassId + " : " + engclassName));
+    	   	    				$("#engclassList2").append($("<option></option>").text(engclassId + " : " + engclassName));
+    	    				}
+    	    				$("#engclassList1").selectpicker('refresh');
+    	    				$("#engclassList2").selectpicker('refresh');
+    					}
+    				});
     			}
     		});
-    		
-    		//根据该门课程选择班级
-			$.ajax({
-				url: "engclassList.action",
-				type: "post",
-				dataType: "json",
-				data: {
-					"courseId": courseId
-				},
-				success: function(responseText) {
-    				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var engclassId = json[i].classId;
-    					var engclassName = json[i].className;
-    					var optionDom = $("<option></option>").text(engclassId + " : " + engclassName);
-   	    				$("#engclassList1").append($("<option></option>").text(engclassId + " : " + engclassName));
-   	    				$("#engclassList2").append($("<option></option>").text(engclassId + " : " + engclassName));
-    				}
-    				$("#engclassList1").selectpicker('refresh');
-    				$("#engclassList2").selectpicker('refresh');
-				}
-			});
-		
     	});
 
     	$("#engclassList1").change(function() {
@@ -391,10 +391,9 @@
     				tr.append($("<td></td>").text(json["teacherName"]));
     				tr.append($("<td></td>").text(json["classRoom"]));
     				tr.append($("<td></td>").text(json["userCount"]));
+    				setTeacher();
     			}
     		});
-    		setTeacher();
-    		
     	});
     	
 		$("#engclassList2").change(function() {
@@ -422,16 +421,17 @@
     				tr.append($("<td></td>").text(json["teacherName"]));
     				tr.append($("<td></td>").text(json["classRoom"]));
     				tr.append($("<td></td>").text(json["userCount"]));
+    				setTeacher();
     			}
     		});
-    		setTeacher();
+    		
     	});
 		
 		function setTeacher() {
 			if($("#engclassList1").val() != "" && $("#engclassList2").val() != "") {
 				$("#teacherRadio").html("");
-				var teacherId1 = $("#engclassList1").val().split(" : ")[0];
-				var teacherId2 = $("#engclassList2").val().split(" : ")[0];
+				var teacherId1 = $("#engclass1").find("td").eq(3).text();
+				var teacherId2 = $("#engclass2").find("td").eq(3).text();
 				var teacher1 = $("<input name='teacher' type='radio' value='" + teacherId1 + "' /> ");
 				var teacher2 = $("<input name='teacher' type='radio' value='" + teacherId2 + "' /> ");
 				console.log($("#engclassList1").val());
@@ -440,6 +440,7 @@
 				$("#teacherRadio").append("教师1");
 				$("#teacherRadio").append(teacher2);
 				$("#teacherRadio").append("教师2");
+				
 			}
 		}
   		
@@ -467,23 +468,30 @@
     	$("#sendFrom").click(function() {
     		var className = $("#className").val();
     		var classRoom = $("#classRoom").val();
-    		var teacherId = $("input[name='radio']:checked").val();
+    		var teacherId = $("input[name='teacher']:checked").val();
+    		var oldEngclassId1 = $("#engclassList1").val().split(" : ")[0];
+    		var oldEngclassId2 = $("#engclassList2").val().split(" : ")[0];
+    		
+    		var userNum1 = $("#engclass1").find("td").eq(6).text();
+			var userNum2 = $("#engclass2").find("td").eq(6).text();
+    		
     		$.ajax({
-  				url: "setupEngclass.action",
+  				url: "mergeEngclass.action",
   				type: "post",
   				dataType: "json",
   				data: {
-  					"courseId": courseId,
-  					"teacherId": teacherId,
-  					"startTime": startTime,
-  					"endTime": endTime,
-  					"closeTime": closeTime,
-  					"clasName": className,
-  					"classRoom": classRoom,
-  					"userCount": userCount
+  					"engclass.teacherId": teacherId,
+  					"engclass.className": className,
+  					"engclass.classRoom": classRoom,
+  					"oldEngclassId1":oldEngclassId1,
+  					"oldEngclassId2":oldEngclassId2,
+  					"userNum1":userNum1,
+  					"userNum2":userNum2
+  					
   				},
   				success: function(responseText) {
-  					console.log(responseText);
+  					alert("合并成功");
+  					window.location.href="all_courses.jsp";
   				},
   				error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");

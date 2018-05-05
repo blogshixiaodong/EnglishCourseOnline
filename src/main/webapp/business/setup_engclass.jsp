@@ -319,22 +319,34 @@
     					var courseName = json[i].courseName;
    	    				$("#courseList").append($("<option></option>").text(courseId + " : " + courseName))
     				}
+    			
+    				//教师列表
+    	    		$.ajax({
+    	    			url: "teacherList.action",
+    	    			type: "post",
+    	    			dataType: "json",
+    	    			success: function(responseText) {
+    	    				var json = JSON.parse(responseText);
+    	    				for(var i = 0; i < json.length; i++) {
+    	    					var teacherId = json[i].teacherId;
+    	    					var teacherName = json[i].teacherName;
+    	   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
+    	    				}
+    	    			}
+    	    		});	
+    			
     			}
+    		
+    			
+    		
+    		
+    		
     		});
-    		//教师列表
-    		$.ajax({
-    			url: "teacherList.action",
-    			type: "post",
-    			dataType: "json",
-    			success: function(responseText) {
-    				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var teacherId = json[i].teacherId;
-    					var teacherName = json[i].teacherName;
-   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
-    				}
-    			}
-    		});
+    		
+    		
+    		
+			
+    		
     	});
     	
   		//课程选择完成显示基本信息
@@ -421,17 +433,18 @@
   				type: "post",
   				dataType: "json",
   				data: {
-  					"courseId": courseId,
-  					"teacherId": teacherId,
-  					"startTime": startTime,
-  					"endTime": endTime,
-  					"closeTime": closeTime,
-  					"clasName": className,
-  					"classRoom": classRoom,
-  					"userCount": userCount
+  					"courseRecord.courseId": courseId,
+  					"engclass.teacherId": teacherId,
+  					"courseRecord.startTime": startTime,
+  					"courseRecord.endTime": endTime,
+  					"courseRecord.closeTime": closeTime,
+  					"engclass.className": className,
+  					"engclass.classRoom": classRoom,
+  					"courseRecord.signCount": userCount
   				},
   				success: function(responseText) {
-  					console.log(responseText);
+  					alert("创建成功");
+  					window.location.href="all_courses.jsp";
   				},
   				error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
