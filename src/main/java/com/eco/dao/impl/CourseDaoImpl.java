@@ -133,10 +133,19 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	@Override
 	public List<Course> selectAllCourseList() {
 		String sql = "SELECT * FROM COURSE";
-		
 		return queryForList(sql);
 	}
 	
+	
+	
+	@Override
+	public List<CourseDetail> selectEnrollCourseList() {
+		String sql = "SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount " + 
+			 	 "FROM course c, course_record cr " + 
+			 	 "WHERE cr.courseid = c.courseid AND starttime > NOW() ORDER BY starttime DESC;";
+		return this.queryForListEx(sql, CourseDetail.class, new Object[] {});
+	}
+
 	@Override
 	public int countAllCourse() {
 		String sql = "SELECT COUNT(*) FROM COURSE";

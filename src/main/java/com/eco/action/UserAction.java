@@ -22,8 +22,12 @@ import com.eco.bean.model.UserClass;
 import com.eco.dao.AccountDao;
 import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.server.BackInfoServer;
+import com.eco.server.CourseServer;
+import com.eco.server.EngclassServer;
 import com.eco.server.UserServer;
 import com.eco.server.impl.BackInfoServerImpl;
+import com.eco.server.impl.CourseServerImpl;
+import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -62,6 +66,8 @@ public class UserAction extends ActionSupport {
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	UserServer userServer = new UserServerImpl();
+	CourseServer courseServer = new CourseServerImpl(); 
+	EngclassServer engclassServer = new EngclassServerImpl();
 	
 	
 	//获取当前正在进行的课程信息
@@ -197,6 +203,25 @@ public class UserAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String enrollCourseList() {
+		Integer userId = this.getLoginUser().getUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		List<CourseDetail> enrollCourseList = courseServer.queryEnrollCourseList();
+		if(enrollCourseList == null) {
+			return Action.ERROR;
+		}
+		request.setAttribute("enrollCourseList", enrollCourseList);
+		return Action.SUCCESS;
+	}
+	
+	public String enrollCourse() {
+		Integer courseRecordId = Integer.parseInt(request.getAttribute("courseRecordId").toString());
+		Integer engclassId = engclassServer.queryEngclassIdByCourseRecordId(courseRecordId);
+		engclassServer.addUserClass(this.getLoginUser().getUserId(), engclassId);
+		return Action.SUCCESS;
+	}
 	
 	//查询用户所有的所在班级
 	public String findUserAllEngclassList() {

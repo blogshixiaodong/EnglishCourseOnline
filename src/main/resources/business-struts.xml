@@ -50,6 +50,17 @@
     		</result>
     	</action>
     	
+    	<action name="login" class="com.eco.action.BusinessAction" method="businessLogin">
+    		<result name="success" type="redirect">
+    			<param name="location">index.jsp</param>
+    		</result>
+    		<result name="error" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
+    	
+    	
     </package>
 
 </struts>

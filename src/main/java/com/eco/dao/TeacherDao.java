@@ -15,7 +15,7 @@ public interface TeacherDao {
 	 * @param teacher
 	 * @return
 	 */
-	public abstract int insert(Teacher teacher);
+	public abstract Long insert(Teacher teacher);
 	
 	/**
 	 * 根据id查询教师信息

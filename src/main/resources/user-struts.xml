@@ -130,6 +130,23 @@
 		
 		</action>
 		
+		<action name = "enrollCourseList" class = "com.eco.action.UserAction" method = "enrollCourseList">
+			<result name = "success" type = "redirect">
+				<param name = "location">/user/login.jsp</param>
+			</result>
+			<result name = "error" type = "redirect">
+				<param name="location">user/login.jsp</param>
+			</result>
+		</action>
+		
+		<action name = "enrollCourse" class = "com.eco.action.UserAction" method = "enrollCourse">
+			<result name = "success" type = "redirect">
+				<param name = "location">index.jsp</param>
+			</result>
+			<result name = "error" type = "redirect">
+				<param name="location">login.jsp</param>
+			</result>
+		</action>
 		
 	</package>
 	

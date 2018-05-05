@@ -12,7 +12,7 @@ import com.eco.dao.TeacherDao;
 public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherDao {
 
 	@Override
-	public int insert(Teacher teacher) {
+	public Long insert(Teacher teacher) {
 		String sql = "INSERT INTO teacher(teacherid, idcard, name, sex, age, phone, address, imgurl) VALUES(?, ?, ?, ?, ?, ?)";
 		return this.insert(sql, teacher.getIdCard(), teacher.getTeacherName(), teacher.getSex(), teacher.getAge(), teacher.getPhone(), teacher.getAddress(), teacher.getImgUrl());	
 	}

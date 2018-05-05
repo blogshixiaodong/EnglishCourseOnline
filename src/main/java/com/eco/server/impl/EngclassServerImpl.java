@@ -35,6 +35,18 @@ public class EngclassServerImpl implements EngclassServer {
 	public EngclassDetail queryEngclassDetailByEngclasId(Integer engclassId) {
 		return engclassDao.selectEngclassDetailByEngclassId(engclassId);
 	}
+	
+	
+
+	@Override
+	public Long addUserClass(Integer userId, Integer engclassId) {
+		return engclassDao.insertUserClass(userId, engclassId);
+	}
+
+	@Override
+	public int queryEngclassIdByCourseRecordId(Integer courseRecordId) {
+		return engclassDao.countEngclassIdByCourseRecordId(courseRecordId);
+	}
 
 	
 }

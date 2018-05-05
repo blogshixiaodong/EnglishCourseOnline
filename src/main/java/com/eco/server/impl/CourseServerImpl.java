@@ -2,6 +2,7 @@ package com.eco.server.impl;
 
 import java.util.List;
 
+import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.model.Course;
 import com.eco.dao.CourseDao;
 import com.eco.dao.impl.CourseDaoImpl;
@@ -24,5 +25,10 @@ public class CourseServerImpl implements CourseServer {
 	public Course queryCourseByCourseId(Integer courseId) {
 		return courseDao.selectCourseByCourseId(courseId);
 	}
-		
+
+	@Override
+	public List<CourseDetail> queryEnrollCourseList() {
+		return courseDao.selectEnrollCourseList();
+	}
+	
 }

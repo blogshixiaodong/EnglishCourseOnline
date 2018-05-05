@@ -105,6 +105,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
+	public Long insertUserClass(Integer userId, Integer classId) {
+		String sql = "INSERT INTO user_class VALUES(?, ?, 1);";
+		return this.insert(sql, userId, classId);
+	}
+
+	@Override
 	protected String beforeQueryForList(String sql) {
 		if(isPaging == false || pageContainer == null) {
 			return sql;
@@ -122,6 +128,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		String limitSql = sql.replace(";", "");
 		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
 		return limitSql;
+	}
+
+	@Override
+	public int countEngclassIdByCourseRecordId(Integer courseRecordId) {
+		String sql = "SELECT classId FROM engclass WHERE courserecordid = ?;";
+		return Integer.parseInt(this.queryForValue(sql, courseRecordId).toString());
 	}
 
 	

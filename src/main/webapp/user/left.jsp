@@ -75,6 +75,15 @@
 							
 						</ul>
 					</li>
+					<li>
+						<a>
+							<i class="fa fa-bar-chart-o"></i>报名
+							<span class="fa fa-chevron-down"></span>
+						</a>
+						<ul class="nav child_menu">
+							<li><a href="enroll_course.jsp">课程报名</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<!-- /menu footer buttons -->

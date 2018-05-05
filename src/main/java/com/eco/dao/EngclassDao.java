@@ -95,4 +95,8 @@ public interface EngclassDao extends PageDao {
 	
 	public List<Engclass> selectEngclassListByCourseId(Integer courseId);
 	
+	public Long insertUserClass(Integer userId, Integer classId);
+	
+	public int countEngclassIdByCourseRecordId(Integer courseRecordId);
+	
 }

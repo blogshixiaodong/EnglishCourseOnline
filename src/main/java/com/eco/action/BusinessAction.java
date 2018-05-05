@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.EngclassDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
@@ -42,6 +43,8 @@ public class BusinessAction extends ActionSupport {
 	private EngclassServer engclassServer = new EngclassServerImpl();
 	
 	private Course course;
+	
+	private Account account;
 	
 	private PageContainer pageContainer;
 	
@@ -113,7 +116,14 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
-	
+	public String businessLogin() {
+		if(account != null) {
+			if(account.getId() == 123 && account.getPassword().equals("123")) {
+				return Action.SUCCESS;
+			}
+		}
+		return Action.ERROR;
+	}
 	
 	//parameter内的参数
 	private Integer getEngclassId() {
@@ -158,6 +168,14 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 	
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
 	public String getJsonResult() {
 		return jsonResult;
 	}

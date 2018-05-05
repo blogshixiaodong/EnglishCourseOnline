@@ -18,8 +18,8 @@
   </head>
 
   <body class="text-center">
-    <form class="form-signin" action="teacherLogin.action" method="POST">
-      <h1 class="h3 mb-3 font-weight-normal">Teacher Sign In</h1>
+    <form class="form-signin" action="login.action" method="POST">
+      <h1 class="h3 mb-3 font-weight-normal">Business Sign In</h1>
       <label for="inputAccount" class="sr-only">Account</label>
       <input type="text" id="inputAccount" name="account.id" class="form-control" placeholder="Account" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>

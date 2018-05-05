@@ -23,5 +23,8 @@ public interface EngclassServer {
 	
 	public abstract EngclassDetail queryEngclassDetailByEngclasId(Integer engclassId);
 	
+	public abstract Long addUserClass(Integer userId, Integer engclassId);
+	
+	public abstract int queryEngclassIdByCourseRecordId(Integer courseRecordId); 
 	
 }

@@ -2,6 +2,7 @@ package com.eco.server;
 
 import java.util.List;
 
+import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.model.Course;
 
 /*
@@ -22,5 +23,11 @@ public interface CourseServer {
 	 * @return
 	 */
 	public abstract Course queryCourseByCourseId(Integer courseId);
+	
+	/**
+	 * 查询可报名的课程
+	 * @return
+	 */
+	public abstract List<CourseDetail> queryEnrollCourseList();
 	
 }
