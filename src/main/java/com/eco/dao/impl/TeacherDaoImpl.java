@@ -1,6 +1,7 @@
 package com.eco.dao.impl;
 
-import com.eco.bean.model.Account;
+import java.util.List;
+
 import com.eco.bean.model.Teacher;
 import com.eco.dao.TeacherDao;
 
@@ -11,7 +12,7 @@ import com.eco.dao.TeacherDao;
 public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherDao {
 
 	@Override
-	public int insert(Teacher teacher) {
+	public long insert(Teacher teacher) {
 		String sql = "INSERT INTO teacher(teacherid, idcard, name, sex, age, phone, address, imgurl) VALUES(?, ?, ?, ?, ?, ?)";
 		return this.insert(sql, teacher.getIdCard(), teacher.getTeacherName(), teacher.getSex(), teacher.getAge(), teacher.getPhone(), teacher.getAddress(), teacher.getImgUrl());	
 	}
@@ -21,5 +22,13 @@ public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherD
 		String sql = "SELECT * FROM teacher WHERE teacherid = ?";
 		return this.queryForObjectEx(sql, Teacher.class, teacherid);
 	}
+
+	@Override
+	public List<Teacher> selectAllTeaher() {
+		String sql = "SELECT * FROM teacher";
+		return this.queryForList(sql, new Object[] {});
+	}
+	
+	
 	
 }

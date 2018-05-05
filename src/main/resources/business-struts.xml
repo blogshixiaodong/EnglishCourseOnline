@@ -5,11 +5,42 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    
-   
-	<package name="business_action" namespace="/business" extends="struts-default,json-default">
-		 
-		 <action name="createCourse" class = "com.eco.action.BusinessAction" method = "createCourse">
+
+
+    <package name="business_action" namespace="/business" extends="struts-default, json-default">
+    	
+    	<action name="courseList" class="com.eco.action.BusinessAction" method="findAllCourse">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	<action name="courseInfo" class="com.eco.action.BusinessAction" method="findCourseByCourseId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	<action name="teacherList" class="com.eco.action.BusinessAction" method="findAllTeacherList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	<action name="teacherInfo" class="com.eco.action.BusinessAction" method="findTeacherByTeacherId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	<action name="setupEngclass" class="com.eco.action.BusinessAction" method="createEngclass">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	
+    	<action name="createCourse" class = "com.eco.action.BusinessAction" method = "createCourse">
 		 	<result name = "success">
 		 		<param name = "location">/business/all_courses.jsp</param>
 		 	</result>
@@ -21,9 +52,8 @@
 		 		<param name = "location">/business/all_courses.jsp</param>
 		 	</result>
 		</action>
-		
-		
-	</package>
-	
-   
+    	
+    	
+    </package>
+
 </struts>

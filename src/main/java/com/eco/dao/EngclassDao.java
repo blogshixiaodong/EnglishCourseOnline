@@ -20,7 +20,7 @@ public interface EngclassDao extends PageDao {
 	* 开设班级 
 	* @param engclass void
 	*/ 
-	public abstract void insert(Engclass engclass);
+	public abstract Integer insert(Engclass engclass);
 
 	/**
 	 * 

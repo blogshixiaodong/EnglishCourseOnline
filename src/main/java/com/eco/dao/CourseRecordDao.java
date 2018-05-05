@@ -13,7 +13,7 @@ public interface CourseRecordDao {
 	* @param record
 	* @return boolean
 	*/ 
-	public abstract boolean  insert(CourseRecord record);
+	public abstract long insert(CourseRecord record);
 	
 	/** 
 	* 获取真正等待报名的课程记录 
@@ -37,6 +37,8 @@ public interface CourseRecordDao {
 	* @return boolean
 	*/ 
 	public abstract boolean isOverEndTime(Integer classId,Date date);
+
+	
 	
 	
 }

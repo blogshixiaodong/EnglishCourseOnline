@@ -105,6 +105,21 @@ public interface CourseDao extends PageDao {
 	*/ 
 	public abstract List<CourseDetail> selectUserAllCourseDetailListByUserId(Integer userid);
 	
+
+	/**
+	 * 查询所有课程基本信息
+	 * @return
+	 */
+	public abstract List<Course> selectAllCourse();
+	
+	
+	/**
+	 * 根据课程编号查询课程信息
+	 * @param courseId
+	 * @return
+	 */
+	public abstract Course selectCourseByCourseId(Integer courseId);
+
 	
 	/** 
 	* @Description:添加课程

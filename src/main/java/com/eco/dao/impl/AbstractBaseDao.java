@@ -33,9 +33,9 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T>, PageDao {
 	protected PageContainer pageContainer;
 	
 	@Override
-	public final int insert(String sql, Object... params) {
+	public final long insert(String sql, Object... params) {
 		String convertSql = initInsert(sql);
-		int generatedKeys = doInsert(convertSql, params);
+		long generatedKeys = doInsert(convertSql, params);
 		afterInsert();
 		return generatedKeys;
 	}
@@ -49,10 +49,10 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T>, PageDao {
 		return sql;
 	}
 	
-	private int doInsert(String sql, Object... params) {
-		int insertRowCount = -1;
+	private long doInsert(String sql, Object... params) {
+		long insertRowCount = -1;
 		try {
-			insertRowCount = query.insert(connection, sql, new ScalarHandler<Integer>(), params);
+			insertRowCount = (long)query.insert(connection, sql, new ScalarHandler<Long>(), params);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

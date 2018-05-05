@@ -15,9 +15,9 @@ import freemarker.core.ReturnInstruction.Return;
 public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements EngclassDao {
 	
 	@Override
-	public void insert(Engclass engclass) {
+	public Integer insert(Engclass engclass) {
 		String sql = "INSERT INTO engclass(teacherid,courserecordid,classname,usercount,classroom) VALUES(?,?,?,?,?)";
-		this.update(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
+		return this.update(sql, engclass.getTeacherId(),engclass.getCourseRecordId(),engclass.getClassName(),
 					engclass.getUserCount(),engclass.getClassRoom() );
 	}
 	

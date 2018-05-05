@@ -13,6 +13,10 @@ import com.eco.bean.model.Teacher;
  * date:   2018年4月21日 上午11:05:51
  * author: Shixiaodong
  */
+/**
+ * @author 15129
+ *
+ */
 public interface TeacherServer {
 	
 	/**
@@ -66,6 +70,18 @@ public interface TeacherServer {
 	 */
 	public Boolean loginCheck(Account account);
 	
+	/**
+	 * 根据教师编号查询教师
+	 * @param teacherId
+	 * @return
+	 */
 	public Teacher queryTeacher(Integer teacherId);
+	
+	
+	/**
+	 * 查询所有教师
+	 * @return
+	 */
+	public List<Teacher> queryAllTeacher();
 	
 }
