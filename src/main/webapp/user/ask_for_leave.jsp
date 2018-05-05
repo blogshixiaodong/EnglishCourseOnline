@@ -173,10 +173,11 @@
     	
 			$("#leaveInfoSubmit").click(function(){
 			
-			var backInfo = $("#leaveInfo").val();
+			var leaveInfo = $("#leaveInfo").val();
+			console.log(leaveInfo);
 			var classId = $("#engclassList").val().split(" : ")[0];
 			var queryDate = $('#queryDate').val();
-			if(backInfo == "" || classId =="" || queryDate == ""){
+			if(leaveInfo == "" || classId =="" || queryDate == ""){
 				alert("信息不完整，无法提交");
 				return;
 			}
@@ -185,10 +186,9 @@
 				url:"createTimeSheet.action",
 				type:"post",
 				data:{
-					"classid" : classId,
-					"leaveInfo": backInfo,
+					"timeSheet.classId" : classId,
+					"timeSheet.sheetInfo": leaveInfo,
 					"queryDate" : queryDate
-					
 				},
 				dataType: "json",
 				success : function(msg) {

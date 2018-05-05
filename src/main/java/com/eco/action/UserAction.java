@@ -1,5 +1,8 @@
 package com.eco.action;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -254,8 +257,12 @@ public class UserAction extends ActionSupport {
 		}
 		
 		String queryDate = (String)request.getParameter("queryDate");
-		jsonResult =userServer.addTimeSheet(userId, engclassId, queryDate, this.getLeaveInfo()) ;
-	
+		java.util.Date formateDate = stringFormateToDate(queryDate);
+		
+		timeSheet.setUserId(userId);
+		timeSheet.setRecordTime(formateDate);
+		
+		jsonResult =userServer.addTimeSheet(timeSheet) ;
 		return SUCCESS;
 	}
 	//登录判断
@@ -278,7 +285,6 @@ public class UserAction extends ActionSupport {
 		
 	}
 	
-	
 	//报名课程
 	/*public String enrolmentClassAction() {
 		Integer userid = this.getLoginUserId();
@@ -287,6 +293,16 @@ public class UserAction extends ActionSupport {
 		
 		return SUCCESS;
 	}*/
+	
+	protected java.util.Date stringFormateToDate(String stringDate) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return sdf.parse(stringDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	private User getLoginUser() {

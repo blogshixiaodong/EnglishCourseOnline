@@ -40,6 +40,7 @@
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="add_course.jsp">添加课程基本信息</a></li>
+							<li><a href="all_courses.jsp">所有课程</a></li>
 						</ul>
 					</li>
 					<li>

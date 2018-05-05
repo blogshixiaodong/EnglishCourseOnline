@@ -149,27 +149,20 @@ public class UserServerImpl implements UserServer{
 		return null;
 	}
 
-	
 	@Override
-	public String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo) {
+	public String addTimeSheet(TimeSheet timeSheet) {
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
 		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
 		
-		Date formateDate = stringFormateToDate(queryDate);
+		//Date formateDate = stringFormateToDate(timeSheet.getRecordTime());
 		
-		if((timeSheetDao.selectTimeSheetListByEnclassIdAndDate(engclassId, formateDate)).size() != 0 ) {
+		if((timeSheetDao.selectTimeSheetListByEnclassIdAndDate(timeSheet.getClassId(), timeSheet.getRecordTime())).size() != 0 ) {
 			
 			return "不允许重复对当天请假";
-		}else if(courseRecordDao.isOverEndTime(engclassId,formateDate)) {
+		}else if(courseRecordDao.isOverEndTime(timeSheet.getClassId(),timeSheet.getRecordTime())) {
 			return "超出课程结课时间";
 		}
 		else {
-			TimeSheet timeSheet = new TimeSheet();
-			
-			timeSheet.setUserId(userId);
-			timeSheet.setClassId(engclassId);
-			timeSheet.setRecordTime(formateDate);
-			timeSheet.setSheetInfo("0:"+leaveInfo);
 			
 			timeSheetDao.insert(timeSheet);
 			return "提交成功";
@@ -224,18 +217,4 @@ public class UserServerImpl implements UserServer{
 		return user;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

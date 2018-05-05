@@ -116,8 +116,8 @@ public interface UserServer {
 	* @param leaveInfo
 	* @return String
 	*/ 
-	public abstract String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo);
-	
+
+	public abstract String addTimeSheet(TimeSheet timeSheet);
 	
 	
 	/** 
