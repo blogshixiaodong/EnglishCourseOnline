@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "s" uri = "/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,7 +9,7 @@
 <body>
 	<div class="left_col scroll-view">
 		<div class="navbar nav_title" style="border: 0;">
-			<a href="index.html" class="site_title"><i class="fa fa-paw"></i>
+			 <a href="login.jsp" class="site_title"><i class="fa fa-paw"></i> 
 				<span>后台管理</span> 
 			</a>
 		</div>
@@ -21,8 +22,8 @@
 				<img src="../build/images/img.jpg" alt="..." class="img-circle profile_img">
 			</div>
 			<div class="profile_info">
-				<span>欢迎用户,</span>
-				<h2>用户名称</h2>
+				<span>欢迎用户</span>
+				<h2><s:property value="#session.user.username" />   </h2>
 			</div>
 		</div>
 		<!-- /menu profile quick info -->
@@ -47,17 +48,11 @@
 						<a><i class="fa fa-edit"></i>班级查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<!--  <li><a href="search_engclass.jsp">班级查询</a></li>  -->
+
 							<li><a href="all_engclasses.jsp">所有班级</a></li>
 						</ul>
 					</li>
-					<!-- <li>
-						<a><i class="fa fa-desktop"></i>学生查看
-						<span class="fa fa-chevron-down"></span></a>
-						<ul class="nav child_menu">
-							<li><a href="general_elements.html">学生查询</a></li>
-						</ul>
-					</li> -->
+
 					<li>
 						<a>
 							<i class="fa fa-table"></i>考勤信息

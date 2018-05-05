@@ -9,11 +9,13 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserClass;
+import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
 import com.eco.dao.CourseRecordDao;
 import com.eco.dao.EngclassDao;
@@ -21,6 +23,7 @@ import com.eco.dao.TeacherBackInfoDao;
 import com.eco.dao.TimeSheetDao;
 import com.eco.dao.UserClassDao;
 import com.eco.dao.UserDao;
+import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.dao.impl.CourseDaoImpl;
 import com.eco.dao.impl.CourseRecordDaoImpl;
 import com.eco.dao.impl.EngclassDaoImpl;
@@ -179,9 +182,11 @@ public class UserServerImpl implements UserServer{
 		UserDao userDao = new UserDaoImpl();
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		pageContainer.setPageSize(5);
-		pageContainer.setRecordCount(engclassDao.countAllUserByEngclassId(engclassId));
-		userDao.beginPaging(pageContainer);
+		if(pageContainer != null) {
+			pageContainer.setPageSize(5);
+			pageContainer.setRecordCount(engclassDao.countAllUserByEngclassId(engclassId));
+			userDao.beginPaging(pageContainer);
+		}
 		
 		return userDao.selectUserByEngclassId(engclassId);
 	}
@@ -193,4 +198,45 @@ public class UserServerImpl implements UserServer{
 		
 		return timeSheetDetailList;
 	}
+
+	@Override
+	public Boolean loginCheck(Account account) {
+		AccountDao accountDao = new AccountDaoImpl();
+		if(accountDao.countAccount(account.getId()) != 1) {
+			return false;
+		}
+		Account dbAccount = accountDao.selectAccount(account.getId());
+		if(!dbAccount.getPassword().equals(account.getPassword())) {
+			return false;
+		}
+		
+		account.setRoleId(dbAccount.getRoleId());
+		account.setRole(dbAccount.getRole());
+		
+		return true;
+	}
+
+	@Override
+	public User queryUserByAccountId(Integer accountId) {
+		UserDao userDao = new UserDaoImpl();
+		User user = userDao.selectUserByAccountId(accountId);
+		
+		
+		return user;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

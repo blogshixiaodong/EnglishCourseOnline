@@ -140,7 +140,6 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null || engclassId == null) {
 			return Action.ERROR;
 		}
-		//jsonResult = JSONArray.fromObject(backInfoServer.getBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
 		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByTeacherIdAndClassId(teacherId, engclassId)).toString();
 		return Action.SUCCESS;
 	}
@@ -161,7 +160,6 @@ public class TeacherAction extends ActionSupport {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			//jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetDetailByClassId(engclassId, sdf.parse(queryDate))).toString();
 			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclassId, sdf.parse(queryDate))).toString();
 			
 		} catch (ParseException e) {

@@ -8,15 +8,25 @@
     
    
 	<package name="user_action" namespace="/user" extends="struts-default,json-default">
+		 
 		 <action name="nowCourses" class="com.eco.action.UserAction" method = "findUserNowCourseDetailList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/index.jsp</param>
     		</result>
+    		
+    		<result  name = "error" type = "dispatcher">
+    			<param name = "location" >/user/login.jsp</param>
+    		</result>
+    		
 		</action>
 		
 		<action name="historyCourses" class="com.eco.action.UserAction" method = "findUserHistoryCourseDetailList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/history_courses.jsp</param>
+    		</result>
+    		
+    		<result  name = "error" type = "dispatcher">
+    			<param name = "location" >/user/login.jsp</param>
     		</result>
 		</action>
 		
@@ -24,12 +34,20 @@
 			<result name="success" type="dispatcher">
     			<param name="location">/user/all_courses.jsp</param>
     		</result>
+    		
+    		<result  name = "error" type = "dispatcher">
+    			<param name = "location" >/user/login.jsp</param>
+    		</result>
 		</action>
 		
 		
 		  <action name="allEngclasses" class="com.eco.action.UserAction" method = "findUserAllEngclassesList" >
 			<result name="success" type="dispatcher">
     			<param name="location">/user/all_engclasses.jsp</param>
+    		</result>
+    		
+    		<result  name = "error" type = "dispatcher">
+    			<param name = "location" >/user/login.jsp</param>
     		</result>
 		</action>
 		
@@ -92,10 +110,24 @@
 		
 		<!-- 用户登录 -->
 		<action name="userLogin" class="com.eco.action.UserAction" method = "userLogin" >
-			<result name = "success">
+			<result name = "success" type = "redirect">
 				<param name="location">/user/index.jsp</param>
 			</result>
-			<!--添加失败情况  -->
+			<result name = "error" type = "redirect">
+				<param name="location">user/login.jsp</param>
+			</result>
+		</action>
+		
+		
+		<action name = "userLoginOut" class = "com.eco.action.UserAction" method = "userLoginOut">
+			<result name = "success" type = "redirect">
+				<param name = "location">/user/login.jsp</param>
+			</result>
+			
+			<result name = "error" type = "redirect">
+				<param name="location">user/login.jsp</param>
+			</result>
+		
 		</action>
 		
 		
