@@ -18,6 +18,7 @@
 	<!-- main/resources/  -->
 	<include file="user-struts.xml"></include>
 	<include file="teacher-struts.xml"></include>
+	<include file="business-struts.xml"></include>
 
 	
    

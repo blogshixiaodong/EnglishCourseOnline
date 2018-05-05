@@ -60,11 +60,11 @@
                    				<div class="clearfix"></div>
                   			</div>
                   			<div class="x_content">
-                    			<form class="form-horizontal form-label-left" novalidate enctype='multipart/form-data' >
+                    			<form class="form-horizontal form-label-left" novalidate >
 				                    <div class="item form-group">
 				                    	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">课程名称 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text" />
+				                        	<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" required="required" type="text" />
 				                        </div>
 				                    </div>
 	                      			<div class="item form-group">

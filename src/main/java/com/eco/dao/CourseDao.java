@@ -3,6 +3,7 @@ package com.eco.dao;
 import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
+import com.eco.bean.model.Course;
 
 /**
  * @date:   2018年4月20日 下午10:21:21
@@ -101,5 +102,20 @@ public interface CourseDao extends PageDao {
 	* @return List<CourseDetail>
 	*/ 
 	public abstract List<CourseDetail> selectUserAllCourseDetailListByUserId(Integer userid);
+	
+	/**
+	 * 查询所有课程基本信息
+	 * @return
+	 */
+	public abstract List<Course> selectAllCourse();
+	
+	
+	/**
+	 * 根据课程编号查询课程信息
+	 * @param courseId
+	 * @return
+	 */
+	public abstract Course selectCourseByCourseId(Integer courseId);
+	
 
 }

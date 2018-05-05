@@ -1,6 +1,7 @@
 package com.eco.dao.impl;
 
-import com.eco.bean.model.Account;
+import java.util.List;
+
 import com.eco.bean.model.Teacher;
 import com.eco.dao.TeacherDao;
 
@@ -21,5 +22,13 @@ public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherD
 		String sql = "SELECT * FROM teacher WHERE teacherid = ?";
 		return this.queryForObjectEx(sql, Teacher.class, teacherid);
 	}
+
+	@Override
+	public List<Teacher> selectAllTeaher() {
+		String sql = "SELECT * FROM teacher";
+		return this.queryForList(sql, new Object[] {});
+	}
+	
+	
 	
 }

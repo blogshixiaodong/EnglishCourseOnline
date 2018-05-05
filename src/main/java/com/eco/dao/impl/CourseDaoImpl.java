@@ -111,6 +111,18 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	}
 	
 	@Override
+	public List<Course> selectAllCourse() {
+		String sql = "SELECT * FROM course;";
+		return this.queryForList(sql, new Object[] {});
+	}
+
+	@Override
+	public Course selectCourseByCourseId(Integer courseId) {
+		String sql = "SELECT * FROM course WHERE courseId = ?";
+		return this.queryForObject(sql, courseId);
+	}
+
+	@Override
 	protected String beforeQueryForList(String sql) {
 		if(isPaging == false || pageContainer == null) {
 			return sql;
@@ -132,10 +144,4 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 
 	
 
-	
-
-	
-
-	
-	
 }

@@ -112,4 +112,10 @@ public class TeacherServerImpl implements TeacherServer {
 		return teacherDao.selectTeacher(teacherId);
 	}
 	
+	@Override
+	public List<Teacher> queryAllTeacher() {
+		return teacherDao.selectAllTeaher();
+	}
+	
+	
 }

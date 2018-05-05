@@ -1,5 +1,7 @@
 package com.eco.dao;
 
+import java.util.List;
+
 import com.eco.bean.model.Teacher;
 
 /*
@@ -21,5 +23,8 @@ public interface TeacherDao {
 	 * @return
 	 */
 	public abstract Teacher selectTeacher(Integer id);
+	
+	
+	public abstract List<Teacher> selectAllTeaher();
 	
 }
