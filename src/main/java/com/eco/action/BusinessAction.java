@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
@@ -106,9 +107,23 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String findEngclassByEngclassId() {
+		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
+		jsonResult = JSONObject.fromObject(engclass).toString();
+		return Action.SUCCESS;
+	}
+	
 	
 	
 	//parameter内的参数
+	private Integer getEngclassId() {
+		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
+		if(id != null) {
+			return new Integer(id.toString());
+		}
+		return null;
+	}
+	
 	private Integer getCourseId() {
 		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("courseId");
 		if(id != null) {

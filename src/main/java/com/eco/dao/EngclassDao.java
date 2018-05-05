@@ -71,7 +71,6 @@ public interface EngclassDao extends PageDao {
 	public EngclassDetail selectEngclassDetailByEngclassId(Integer engclassId);
 	
 	
-	
 	/** 
 	* @Description: 根据用户id获取用户所有的班级记录数
 	* @param userId
