@@ -60,29 +60,30 @@
                    				<div class="clearfix"></div>
                   			</div>
                   			<div class="x_content">
-                    			<form class="form-horizontal form-label-left" novalidate enctype='multipart/form-data' >
+                    			<form action = "createCourse" class="form-horizontal form-label-left" novalidate enctype='multipart/form-data' >
+                    			
 				                    <div class="item form-group">
 				                    	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">课程名称 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text" />
+				                        	<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="course.courseName" placeholder="both name(s) e.g Jon Doe" required="required" type="text" />
 				                        </div>
 				                    </div>
 	                      			<div class="item form-group">
 	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">课程类别 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" />
+				                        	<input type="email" id="email" name="course.types" required="required" class="form-control col-md-7 col-xs-12" />
 				                        </div>
 	                      			</div>
 	                      			<div class="item form-group">
 	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">课程价格 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" />
+				                        	<input type="email" id="email" name="course.price" required="required" class="form-control col-md-7 col-xs-12" />
 				                        </div>
 	                      			</div>
 	                     			<div class="item form-group">
 	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">详细信息<span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email2" name="confirm_email" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12" />
+				                        	<input type="email" id="email2" name="course.info" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12" />
 				                        </div>
 	                      			</div>
 									<!--  img upload
@@ -97,8 +98,9 @@
 	                      			<div class="ln_solid"></div>
 				                    <div class="form-group">
 				                    	<div class="col-md-6 col-md-offset-3">
+				                    		<button id="send" type="submit" class="btn btn-success">Submit</button>
 				                        	<button type="submit" class="btn btn-primary">Cancel</button>
-				                            <button id="send" type="submit" class="btn btn-success">Submit</button>
+				                            
 				                        </div>
 				                    </div>
 					            	

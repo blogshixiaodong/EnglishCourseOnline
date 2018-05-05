@@ -181,8 +181,9 @@ public class TeacherAction extends ActionSupport {
 			timeSheetList = (List<TimeSheet>)((List<TimeSheet>)array.toCollection(array, TimeSheet.class)).get(0);
 		}
 		for(int i = 0; i < timeSheetList.size(); i++) {
-			//存在冲突
+
 			//userServer.createTimeSheet(timeSheetList.get(i));
+			userServer.addTimeSheet(timeSheetList.get(i));
 		}
 		this.setJsonResult("success");
 		return Action.SUCCESS;

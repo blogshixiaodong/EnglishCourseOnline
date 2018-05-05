@@ -15,7 +15,7 @@
 	</head>
 <body class="nav-md">
 	 <s:if test="#request.pageContainer == null">
-		 <s:action name="allCourses" namespace="/user">
+		 <s:action name="allCourses" namespace="/business">
 			<s:param name="pageContainer.currentPageNo">1</s:param>
 		</s:action>	 
 		
@@ -29,9 +29,8 @@
 				<jsp:include page="left.jsp"></jsp:include>
 			</div>
 			
-			<jsp:include page="top-nav.jsp"></jsp:include>
+			<jsp:include page="top_nav.jsp"></jsp:include>
 			
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="row">
@@ -63,23 +62,19 @@
 											<th>课程编号</th>
 											<th>课程名称</th>
 											<th>课程类型</th>
-											<th>开课时间</th>
-											<th>结课时间</th>
+											<th>价格</th>
+											<th>说明</th>
 										</tr>
 									</thead>
 									<tbody>
-										<s:iterator value="#request.courseDetailList" status="i"
-											var="courseDetail">
+										<s:iterator value="#request.courseList" status="i" var="course">
 											<tr>
-												<th scope="row"><s:property value="#i.getIndex()" />
-												</td>
-												<td><s:property value="#courseDetail.courseId" /></td>
-												<td><s:property value="#courseDetail.courseName" /></td>
-												<td><s:property value="#courseDetail.types" /></td>
-												<td><s:date name="#courseDetail.startTime"
-														format="yyyy-MM-dd" /></td>
-												<td><s:date name="#courseDetail.endTime"
-														format="yyyy-MM-dd" /></td>
+												<th scope="row"><s:property value="#i.getIndex()" /></th>
+												<td><s:property value="#course.courseId" /></td>
+												<td><s:property value="#course.courseName" /></td>
+												<td><s:property value="#course.types" /></td>
+												<td><s:property value="#course.price" /></td>
+												<td><s:property value="#course.info" /></td>
 											</tr>
 										</s:iterator>
 									</tbody>
@@ -93,11 +88,12 @@
 				                        	<s:else>
 				                        		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
 				                        	</s:else>
+				                        	
 				                        	<s:bean name="org.apache.struts2.util.Counter" var="counter">
 									            <s:param name="first" value="1" />
 									            <s:param name="last" value="#request.pageContainer.pageCount" />
 									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1">
+									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1 ">
 									            		<a class="btn btn-default disabled" type="button"><s:property /></a>
 									            	</s:if>
 									            	<s:else>

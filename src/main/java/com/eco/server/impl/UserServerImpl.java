@@ -9,11 +9,13 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserClass;
+import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
 import com.eco.dao.CourseRecordDao;
 import com.eco.dao.EngclassDao;
@@ -21,6 +23,7 @@ import com.eco.dao.TeacherBackInfoDao;
 import com.eco.dao.TimeSheetDao;
 import com.eco.dao.UserClassDao;
 import com.eco.dao.UserDao;
+import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.dao.impl.CourseDaoImpl;
 import com.eco.dao.impl.CourseRecordDaoImpl;
 import com.eco.dao.impl.EngclassDaoImpl;
@@ -146,27 +149,20 @@ public class UserServerImpl implements UserServer{
 		return null;
 	}
 
-	
 	@Override
-	public String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo) {
+	public String addTimeSheet(TimeSheet timeSheet) {
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
 		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
 		
-		Date formateDate = stringFormateToDate(queryDate);
+		//Date formateDate = stringFormateToDate(timeSheet.getRecordTime());
 		
-		if((timeSheetDao.selectTimeSheetListByEnclassIdAndDate(engclassId, formateDate)).size() != 0 ) {
+		if((timeSheetDao.selectTimeSheetListByEnclassIdAndDate(timeSheet.getClassId(), timeSheet.getRecordTime())).size() != 0 ) {
 			
 			return "不允许重复对当天请假";
-		}else if(courseRecordDao.isOverEndTime(engclassId,formateDate)) {
+		}else if(courseRecordDao.isOverEndTime(timeSheet.getClassId(),timeSheet.getRecordTime())) {
 			return "超出课程结课时间";
 		}
 		else {
-			TimeSheet timeSheet = new TimeSheet();
-			
-			timeSheet.setUserId(userId);
-			timeSheet.setClassId(engclassId);
-			timeSheet.setRecordTime(formateDate);
-			timeSheet.setSheetInfo("0:"+leaveInfo);
 			
 			timeSheetDao.insert(timeSheet);
 			return "提交成功";
@@ -179,9 +175,11 @@ public class UserServerImpl implements UserServer{
 		UserDao userDao = new UserDaoImpl();
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		
-		pageContainer.setPageSize(5);
-		pageContainer.setRecordCount(engclassDao.countAllUserByEngclassId(engclassId));
-		userDao.beginPaging(pageContainer);
+		if(pageContainer != null) {
+			pageContainer.setPageSize(5);
+			pageContainer.setRecordCount(engclassDao.countAllUserByEngclassId(engclassId));
+			userDao.beginPaging(pageContainer);
+		}
 		
 		return userDao.selectUserByEngclassId(engclassId);
 	}
@@ -192,4 +190,31 @@ public class UserServerImpl implements UserServer{
 		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.selectTimeSheetByClassIdAndTime(engclassId, date);
 		return timeSheetDetailList;
 	}
+
+	@Override
+	public Boolean loginCheck(Account account) {
+		AccountDao accountDao = new AccountDaoImpl();
+		if(accountDao.countAccount(account.getId()) != 1) {
+			return false;
+		}
+		Account dbAccount = accountDao.selectAccount(account.getId());
+		if(!dbAccount.getPassword().equals(account.getPassword())) {
+			return false;
+		}
+		
+		account.setRoleId(dbAccount.getRoleId());
+		account.setRole(dbAccount.getRole());
+		
+		return true;
+	}
+
+	@Override
+	public User queryUserByAccountId(Integer accountId) {
+		UserDao userDao = new UserDaoImpl();
+		User user = userDao.selectUserByAccountId(accountId);
+		
+		
+		return user;
+	}
 }
+

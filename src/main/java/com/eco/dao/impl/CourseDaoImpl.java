@@ -111,6 +111,30 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	}
 	
 	@Override
+	public int insertCourse(Course course) {
+		String sql = "INSERT INTO course(coursename,info,types,price) VALUES(?,?,?,?)";
+		
+		return update(sql, course.getCourseName(),course.getInfo(),course.getTypes(),course.getPrice());
+		
+	}
+	
+	@Override
+	public List<Course> selectAllCourseList() {
+		String sql = "SELECT * FROM COURSE";
+		
+		return queryForList(sql);
+	}
+	
+	@Override
+	public int countAllCourse() {
+		String sql = "SELECT COUNT(*) FROM COURSE";
+		return Integer.parseInt(queryForValue(sql).toString());
+	}
+	
+	
+	
+	
+	@Override
 	protected String beforeQueryForList(String sql) {
 		if(isPaging == false || pageContainer == null) {
 			return sql;
@@ -129,6 +153,12 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
 		return limitSql;
 	}
+
+	
+
+	
+
+	
 
 	
 
