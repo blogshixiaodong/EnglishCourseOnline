@@ -189,8 +189,7 @@ public class UserServerImpl implements UserServer{
 	@Override
 	public List<TimeSheetDetail> queryUserTimeSheetByEngclassId(Integer engclassId,Date date){
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
-		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.selectTimeSheetListByEnclassIdAndDate(engclassId, date);
-		
+		List<TimeSheetDetail> timeSheetDetailList = timeSheetDao.selectTimeSheetByClassIdAndTime(engclassId, date);
 		return timeSheetDetailList;
 	}
 }

@@ -8,6 +8,7 @@ import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
+import com.eco.bean.model.Teacher;
 import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
 import com.eco.dao.EngclassDao;
@@ -104,6 +105,11 @@ public class TeacherServerImpl implements TeacherServer {
 		account.setRoleId(dbAccount.getRoleId());
 		account.setRole(dbAccount.getRole());
 		return true;
+	}
+
+	@Override
+	public Teacher queryTeacher(Integer teacherId) {
+		return teacherDao.selectTeacher(teacherId);
 	}
 	
 }

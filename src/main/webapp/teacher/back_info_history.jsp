@@ -26,7 +26,7 @@
 				<jsp:include page="left.jsp"></jsp:include>
 			</div>
 			<!-- top nav bar -->
-			<jsp:include page="top-nav.jsp"></jsp:include>
+			<jsp:include page="top_nav.jsp"></jsp:include>
 
 
 			<!-- page content -->

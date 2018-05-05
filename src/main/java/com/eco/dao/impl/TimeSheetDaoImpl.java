@@ -13,12 +13,13 @@ import com.eco.dao.TimeSheetDao;
  */
 public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements TimeSheetDao {
 
+	//功能重复selectTimeSheetByClassIdAndTime
 	@Override
 	public List<TimeSheetDetail> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date) {
 		String sql = "SELECT u.userid, username, e.classid, classname, t.teacherid, teachername, classroom, recordtime, sheetinfo " + 
 					 "FROM user u LEFT JOIN user_class uc ON u.userid = uc.userid LEFT JOIN time_sheet ts ON uc.classid = ts.classid " +
 					 "LEFT JOIN engclass e ON ts.classid = e.classid LEFT JOIN teacher t ON e.teacherid = t.teacherid " +
-					 "WHERE e.classid = ? AND recordtime = ?;";
+					 "WHERE e.classid = ? AND STR_TO_DATE(recordtime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d');";
 		return this.queryForListEx(sql, TimeSheetDetail.class, engclassId, date);
 	}
 
