@@ -38,6 +38,13 @@
     		</result>
     	</action>
     	
+    	<action name="engclassList" class="com.eco.action.BusinessAction" method="findEngclassListByCourseId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	
     </package>
 
 </struts>

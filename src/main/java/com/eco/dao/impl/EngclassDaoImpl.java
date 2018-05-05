@@ -53,12 +53,6 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 				 	 "LEFT JOIN course t5 ON t5.courseid = t4.courseid WHERE t1.userid = ?";
 		return Integer.parseInt(this.queryForValue(sql, userId).toString());
 	}
-	
-	
-	
-	
-	
-
 
 	public Engclass selectEngclassByTeacherIdAndEngclassId(Integer teacherId, Integer classId) {
 
@@ -102,6 +96,13 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return (Integer)this.queryForValue(sql, classId);
 	}
 	
+	@Override
+	public List<Engclass> selectEngclassListByCourseId(Integer courseId) {
+		String sql = "SELECT e.* FROM engclass e LEFT JOIN course_record cr ON e.courserecordid = cr.courserecordid " +
+					 "LEFT JOIN course c ON cr.courseid = c.courseid " +
+					 "WHERE c.courseid = ?";
+		return this.queryForList(sql, courseId);
+	}
 	
 	@Override
 	protected String beforeQueryForList(String sql) {
@@ -125,8 +126,5 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 
 	
 
-	
-	
-	
 	
 }

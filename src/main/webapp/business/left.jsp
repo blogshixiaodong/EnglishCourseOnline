@@ -48,8 +48,8 @@
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="setup_engclass.jsp">开设班级</a></li>
-							<li><a href="merge_engclasses.jsp">合并班级</a></li>
-							<li><a href="split_engclasses.jsp">拆分班级</a></li>
+							<li><a href="merge_engclass.jsp">合并班级</a></li>
+							<li><a href="split_engclass.jsp">拆分班级</a></li>
 						</ul>
 					</li>
 				</ul>

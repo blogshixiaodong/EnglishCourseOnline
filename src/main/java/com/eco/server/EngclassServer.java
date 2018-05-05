@@ -2,6 +2,7 @@ package com.eco.server;
 
 import java.util.List;
 
+import com.eco.bean.model.Engclass;
 import com.eco.bean.model.User;
 
 /*
@@ -16,5 +17,7 @@ public interface EngclassServer {
 	 * @return
 	 */
 	public abstract List<User> queryUserListByEngclassId(Integer engclassId);
+	
+	public abstract List<Engclass> queryEnglclassListByCourseId(Integer courseId);
 	
 }

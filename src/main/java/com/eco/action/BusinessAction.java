@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.model.Course;
+import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
 import com.eco.server.BusinessServer;
 import com.eco.server.CourseServer;
+import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
 import com.eco.server.impl.BusinessServerImpl;
 import com.eco.server.impl.CourseServerImpl;
+import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -34,6 +37,8 @@ public class BusinessAction extends ActionSupport {
 	private CourseServer courseServer = new CourseServerImpl();
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
+	
+	private EngclassServer engclassServer = new EngclassServerImpl();
 	
 	private Course course;
 	
@@ -88,14 +93,19 @@ public class BusinessAction extends ActionSupport {
 	
 	
 	public String findAllCourseList() {
-		
-		
 		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
 		request.setAttribute("courseList",courseList);
 		request.setAttribute("pageContainer", pageContainer);
 		
 		return SUCCESS;
 	}
+
+	public String findEngclassListByCourseId() {
+		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
+		jsonResult = JSONArray.fromObject(engclassList).toString();
+		return Action.SUCCESS;
+	}
+	
 	
 	
 	//parameter内的参数
