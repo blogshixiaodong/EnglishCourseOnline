@@ -46,4 +46,13 @@ public interface UserDao extends PageDao {
 	List<User> selectUserListByClassId(int classId);
 	
 	
+	/** 
+	* @Description: 根据账号id 查询用户的个人信息 
+	* @param AccountId
+	* @return User
+	*/ 
+	public abstract User selectUserByAccountId(Integer AccountId);
+	
+	
+	
 }

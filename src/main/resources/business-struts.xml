@@ -8,7 +8,7 @@
 
     <package name="business_action" namespace="/business" extends="struts-default, json-default">
     	
-    	<action name="courseList" class="com.eco.action.BusinessAction" method="findAllCourseList">
+    	<action name="courseList" class="com.eco.action.BusinessAction" method="findAllCourse">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>

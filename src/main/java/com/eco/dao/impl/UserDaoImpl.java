@@ -52,6 +52,14 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 		return userlist;
 	}
 	
+	@Override
+	public User selectUserByAccountId(Integer accountId) {
+		String sql = "SELECT * FROM USER WHERE userid = ?";
+		User user = queryForObject(sql, accountId);
+		
+		return user;
+	}
+	
 	
 	@Override
 	protected String beforeQueryForList(String sql) {
@@ -72,6 +80,8 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 		limitSql = sql + " limit " + ((pageContainer.getCurrentPageNo() - 1) * pageContainer.getPageSize()) + " , " + pageContainer.getPageSize();
 		return limitSql;
 	}
+
+
 	
 
 }

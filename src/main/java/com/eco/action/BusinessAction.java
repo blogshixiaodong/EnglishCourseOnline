@@ -3,10 +3,17 @@ package com.eco.action;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.eco.bean.model.Course;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
+import com.eco.server.BusinessServer;
 import com.eco.server.CourseServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.impl.BusinessServerImpl;
 import com.eco.server.impl.CourseServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
 import com.opensymphony.xwork2.Action;
@@ -28,9 +35,17 @@ public class BusinessAction extends ActionSupport {
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
 	
+	private Course course;
+	
+	private PageContainer pageContainer;
+	
+	private BusinessServer businessServer = new BusinessServerImpl();
+	private HttpServletRequest request = ServletActionContext.getRequest();
+	
+	
 	private String jsonResult = "";
 	
-	public String findAllCourseList() {
+	public String findAllCourse() {
 		List<Course> corseList = courseServer.queryAllCourse();
 		jsonResult = JSONArray.fromObject(corseList).toString();
 		return Action.SUCCESS;
@@ -62,6 +77,26 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String createCourse() {
+		//判断商家账号
+		
+		if(businessServer.addCourse(course)) {
+			return SUCCESS; 
+		}
+		return ERROR;
+	}
+	
+	
+	public String findAllCourseList() {
+		
+		
+		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
+		request.setAttribute("courseList",courseList);
+		request.setAttribute("pageContainer", pageContainer);
+		
+		return SUCCESS;
+	}
+	
 	
 	//parameter内的参数
 	private Integer getCourseId() {
@@ -81,6 +116,22 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public PageContainer getPageContainer() {
+		return pageContainer;
+	}
+
+	public void setPageContainer(PageContainer pageContainer) {
+		this.pageContainer = pageContainer;
+	}
+	
 	
 	public String getJsonResult() {
 		return jsonResult;
@@ -89,5 +140,5 @@ public class BusinessAction extends ActionSupport {
 	public void setJsonResult(String jsonResult) {
 		this.jsonResult = jsonResult;
 	}
-	
+
 }

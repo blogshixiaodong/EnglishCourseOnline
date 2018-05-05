@@ -2,6 +2,8 @@ package com.eco.dao;
 
 import java.util.List;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.model.Course;
 
@@ -103,6 +105,7 @@ public interface CourseDao extends PageDao {
 	*/ 
 	public abstract List<CourseDetail> selectUserAllCourseDetailListByUserId(Integer userid);
 	
+
 	/**
 	 * 查询所有课程基本信息
 	 * @return
@@ -116,6 +119,28 @@ public interface CourseDao extends PageDao {
 	 * @return
 	 */
 	public abstract Course selectCourseByCourseId(Integer courseId);
+
+	
+	/** 
+	* @Description:添加课程
+	* @param course
+	* @return int
+	*/ 
+	public abstract int insertCourse(Course course);
+	
+	
+	/** 
+	* @Description: 查询所有课程记录 
+	* @return List<Course>
+	*/ 
+	public abstract List<Course> selectAllCourseList();
+	
+	
+	/** 
+	* @Description: 所有课程数 
+	* @return int
+	*/ 
+	public abstract int countAllCourse();
 	
 
 }

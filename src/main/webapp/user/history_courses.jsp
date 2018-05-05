@@ -101,8 +101,8 @@
 									            <s:param name="first" value="1" />
 									            <s:param name="last" value="#request.pageContainer.pageCount" />
 									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter">
-									            		<a class="btn btn-default active" type="button"><s:property /></a>
+									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1">
+									            		<a class="btn btn-default disabled" type="button"><s:property /></a>
 									            	</s:if>
 									            	<s:else>
 									            		<a class="btn btn-default" type="button" href="historyCourses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>

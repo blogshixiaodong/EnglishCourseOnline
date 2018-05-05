@@ -6,6 +6,7 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
+import com.eco.bean.model.Account;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
@@ -107,8 +108,6 @@ public interface UserServer {
 	public abstract List<TimeSheetDetail> queryUserTimeSheetByEngclassId(Integer engclassId,Date date);
 	
 	
-	
-	
 	/** 
 	* @Description: 请假 
 	* @param userId
@@ -117,14 +116,24 @@ public interface UserServer {
 	* @param leaveInfo
 	* @return String
 	*/ 
-	public abstract String addTimeSheet(Integer userId,Integer engclassId,String queryDate,String leaveInfo);
+
+	public abstract String addTimeSheet(TimeSheet timeSheet);
 	
 	
+	/** 
+	* @Description: 根据账号信息，进行登陆校验
+	* @param account
+	* @return Boolean
+	*/ 
+	public abstract Boolean loginCheck(Account account);
 	
 	
-	
-	
-	
+	/** 
+	* @Description: 根据登录账号查询用户个人信息 
+	* @param accountId
+	* @return User
+	*/ 
+	public User queryUserByAccountId(Integer accountId);
 	
 	
 	
