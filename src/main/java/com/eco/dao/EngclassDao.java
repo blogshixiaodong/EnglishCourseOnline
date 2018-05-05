@@ -87,8 +87,6 @@ public interface EngclassDao extends PageDao {
 	*/ 
 	public int countAllEngclassDetailByTeacher(Integer teacherId);
 	
-	
-	
 	/** 
 	* @Description: 通过班级id查询该班级是学生人数 
 	* @param engclassId
@@ -96,8 +94,6 @@ public interface EngclassDao extends PageDao {
 	*/ 
 	public int countAllUserByEngclassId(Integer engclassId);
 	
-	
-	
-	
+	public List<Engclass> selectEngclassListByCourseId(Integer courseId);
 	
 }

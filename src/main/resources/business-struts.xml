@@ -39,6 +39,7 @@
     		</result>
     	</action>
     	
+
     	
     	<action name="createCourse" class = "com.eco.action.BusinessAction" method = "createCourse">
 		 	<result name = "success">
@@ -52,6 +53,13 @@
 		 		<param name = "location">/business/all_courses.jsp</param>
 		 	</result>
 		</action>
+
+    	<action name="engclassList" class="com.eco.action.BusinessAction" method="findEngclassListByCourseId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+
     	
     	
     </package>
