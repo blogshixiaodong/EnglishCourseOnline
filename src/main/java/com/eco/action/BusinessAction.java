@@ -10,17 +10,22 @@ import org.apache.struts2.ServletActionContext;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Account;
 import com.eco.bean.model.Course;
+import com.eco.bean.model.CourseRecord;
+
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
+import com.eco.dao.CourseRecordDao;
 import com.eco.server.BusinessServer;
 import com.eco.server.CourseServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
+import com.eco.server.UserServer;
 import com.eco.server.impl.BusinessServerImpl;
 import com.eco.server.impl.CourseServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
+import com.eco.server.impl.UserServerImpl;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -47,6 +52,17 @@ public class BusinessAction extends ActionSupport {
 	private Account account;
 	
 	private PageContainer pageContainer;
+	
+	
+	private CourseRecord courseRecord;
+	
+	private Engclass engclass;
+	
+	private Integer oldEngclassId1;
+	private Integer oldEngclassId2;
+	private Integer userNum1;
+	private Integer userNum2;
+	
 	
 	private BusinessServer businessServer = new BusinessServerImpl();
 	private HttpServletRequest request = ServletActionContext.getRequest();
@@ -83,6 +99,9 @@ public class BusinessAction extends ActionSupport {
 	//创建班级，课程记录
 	public String createEngclass() {
 		
+		businessServer.setUpEngclass(engclass, courseRecord);
+		
+		
 		return Action.SUCCESS;
 	}
 	
@@ -96,7 +115,29 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 	
+	public String mergeEngclass() {
+		
+		EngclassServer engclassServer = new EngclassServerImpl();
+		
+		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
+		
+		engclass.setCourseRecordId(courseRecordId);
+		engclass.setUserCount(userNum1 + userNum2);
+		int engclassId = new Long(engclassServer.create(engclass)).intValue();
+		
+		//教师无法修改
+		UserServer userver = new UserServerImpl();
+		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
+		
+		return SUCCESS;
+	}
+	
+	//数据库两个主码修改 user_class
+	//teacher 中有一个页面有bug
+	
+	
 	public String findAllCourseList() {
+
 		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
 		request.setAttribute("courseList",courseList);
 		request.setAttribute("pageContainer", pageContainer);
@@ -183,5 +224,56 @@ public class BusinessAction extends ActionSupport {
 	public void setJsonResult(String jsonResult) {
 		this.jsonResult = jsonResult;
 	}
+
+	public CourseRecord getCourseRecord() {
+		return courseRecord;
+	}
+
+	public void setCourseRecord(CourseRecord courseRecord) {
+		this.courseRecord = courseRecord;
+	}
+
+	public Engclass getEngclass() {
+		return engclass;
+	}
+
+	public void setEngclass(Engclass engclass) {
+		this.engclass = engclass;
+	}
+
+	public Integer getOldEngclassId1() {
+		return oldEngclassId1;
+	}
+
+	public void setOldEngclassId1(Integer oldEngclassId1) {
+		this.oldEngclassId1 = oldEngclassId1;
+	}
+
+	public Integer getOldEngclassId2() {
+		return oldEngclassId2;
+	}
+
+	public void setOldEngclassId2(Integer oldEngclassId2) {
+		this.oldEngclassId2 = oldEngclassId2;
+	}
+
+	public Integer getUserNum1() {
+		return userNum1;
+	}
+
+	public void setUserNum1(Integer userNum1) {
+		this.userNum1 = userNum1;
+	}
+
+	public Integer getUserNum2() {
+		return userNum2;
+	}
+
+	public void setUserNum2(Integer userNum2) {
+		this.userNum2 = userNum2;
+	}
+	
+	
+	
 
 }

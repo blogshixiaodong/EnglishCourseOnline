@@ -10,10 +10,10 @@ import com.eco.dao.CourseRecordDao;
 public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implements CourseRecordDao {
 
 	@Override
-	public boolean insert(CourseRecord record) {
+	public long insert(CourseRecord record) {
 		String sql = "INSERT INTO course_record(courseid,starttime,endtime,closetime,signcount) VALUES(?,?,?,?,?)";
-		int num = this.update(sql,record.getCourseId(),record.getStartTime(),record.getEndTime(),record.getCloseTime(),record.getSignCount());
-		return num == 1;
+		return this.insert(sql,record.getCourseId(),record.getStartTime(),record.getEndTime(),record.getCloseTime(),record.getSignCount());
+		
 	}
 	
 	@Override

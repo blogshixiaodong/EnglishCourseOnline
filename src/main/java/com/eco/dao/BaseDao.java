@@ -12,6 +12,7 @@ public interface BaseDao<T> {
 	 * 返回数据库自增主键
 	 * */
 	Long insert(String sql, Object... params);
+
 	
 	/*
 	 * 返回 insert, delete，update影响行数

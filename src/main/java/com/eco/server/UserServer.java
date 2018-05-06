@@ -137,4 +137,8 @@ public interface UserServer {
 	
 	
 	
+	public boolean mergeEngclass(Integer oldEngclassId1,Integer oldEngclassId2,Integer engclassId);
+	
+	
+	
 }
