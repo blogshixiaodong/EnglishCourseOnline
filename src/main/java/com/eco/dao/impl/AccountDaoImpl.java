@@ -1,9 +1,9 @@
 package com.eco.dao.impl;
 
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.dao.AccountDao;
 
-public class AccountDaoImpl extends AbstractBaseDao<Account> implements AccountDao {
+public class AccountDaoImpl extends AbstractBaseDao<TeacherAccount> implements AccountDao {
 
 	@Override
 	public int countAccount(Integer id) {
@@ -12,9 +12,9 @@ public class AccountDaoImpl extends AbstractBaseDao<Account> implements AccountD
 	}
 
 	@Override
-	public Account selectAccount(Integer id) {
+	public TeacherAccount selectAccount(Integer id) {
 		String sql = "SELECT * FROM account WHERE id = ?";
-		return this.queryForObjectEx(sql, Account.class, id);
+		return this.queryForObjectEx(sql, TeacherAccount.class, id);
 	}
 
 	

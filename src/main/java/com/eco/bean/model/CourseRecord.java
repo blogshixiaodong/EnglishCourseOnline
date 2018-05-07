@@ -22,6 +22,8 @@ public class CourseRecord implements Serializable {
 	private Date closeTime;
 	
 	private Integer signCount;
+	
+	private Course course;
 
 	public Integer getCourseRecordId() {
 		return courseRecordId;
@@ -70,7 +72,13 @@ public class CourseRecord implements Serializable {
 	public void setSignCount(Integer signCount) {
 		this.signCount = signCount;
 	}
-	
-	
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 	
 }

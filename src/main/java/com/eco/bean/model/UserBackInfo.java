@@ -11,32 +11,24 @@ public class UserBackInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Integer userBackId;
-	
-	private Integer teacherId;
+	private Integer userBackInfoId;
 	
 	private Integer userId;
 	
-	private Integer classId;
+	private Integer engclassId;
 	
 	private Date backTime;
 	
 	private String backInfo;
+	
+	private Engclass engclass;
 
-	public Integer getUserBackId() {
-		return userBackId;
+	public Integer getUserBackInfoId() {
+		return userBackInfoId;
 	}
 
-	public void setUserBackId(Integer userBackId) {
-		this.userBackId = userBackId;
-	}
-
-	public Integer getTeacherId() {
-		return teacherId;
-	}
-
-	public void setTeacherId(Integer teacherId) {
-		this.teacherId = teacherId;
+	public void setUserBackInfoId(Integer userBackInfoId) {
+		this.userBackInfoId = userBackInfoId;
 	}
 
 	public Integer getUserId() {
@@ -47,12 +39,12 @@ public class UserBackInfo implements Serializable {
 		this.userId = userId;
 	}
 
-	public Integer getClassId() {
-		return classId;
+	public Integer getEngclassId() {
+		return engclassId;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setEngclassId(Integer engclassId) {
+		this.engclassId = engclassId;
 	}
 
 	public Date getBackTime() {
@@ -70,4 +62,13 @@ public class UserBackInfo implements Serializable {
 	public void setBackInfo(String backInfo) {
 		this.backInfo = backInfo;
 	}
+
+	public Engclass getEngclass() {
+		return engclass;
+	}
+
+	public void setEngclass(Engclass engclass) {
+		this.engclass = engclass;
+	}
+
 }

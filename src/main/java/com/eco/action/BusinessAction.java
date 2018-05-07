@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 
@@ -49,7 +49,7 @@ public class BusinessAction extends ActionSupport {
 	
 	private Course course;
 	
-	private Account account;
+	private TeacherAccount account;
 	
 	private PageContainer pageContainer;
 	
@@ -209,11 +209,11 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 	
-	public Account getAccount() {
+	public TeacherAccount getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(TeacherAccount account) {
 		this.account = account;
 	}
 

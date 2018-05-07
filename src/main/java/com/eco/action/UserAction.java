@@ -12,7 +12,7 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
@@ -59,7 +59,7 @@ public class UserAction extends ActionSupport {
 	
 	private String leaveInfo = "";
 	
-	private Account account;
+	private TeacherAccount account;
 	
 	private PageContainer pageContainer;
 	
@@ -416,11 +416,11 @@ public class UserAction extends ActionSupport {
 		this.pageContainer = pageContainer;
 	}
 
-	public Account getAccount() {
+	public TeacherAccount getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(TeacherAccount account) {
 		this.account = account;
 	}
 	

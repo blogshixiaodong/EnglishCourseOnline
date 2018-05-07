@@ -1,6 +1,7 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /*
  * date:   2018年4月19日 下午8:52:52
@@ -21,6 +22,8 @@ public class Course implements Serializable {
 	private Float price;
 	
 	private String imgUrl;
+
+	private Set<CourseRecord> courseRecordSet;
 
 	public Integer getCourseId() {
 		return courseId;
@@ -69,7 +72,13 @@ public class Course implements Serializable {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	
-	
+
+	public Set<CourseRecord> getCourseRecordSet() {
+		return courseRecordSet;
+	}
+
+	public void setCourseRecordSet(Set<CourseRecord> courseRecordSet) {
+		this.courseRecordSet = courseRecordSet;
+	}
 	
 }

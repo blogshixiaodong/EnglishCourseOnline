@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-5-6 23:22:59 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eco.bean.model.Engclass" table="ENGCLASS">
+        <id name="engclassId" type="java.lang.Integer">
+            <column name="ENGCLASSID" />
+            <generator class="assigned" />
+        </id>
+        <property name="engclassName" type="java.lang.String">
+            <column name="ENGCLASSNAME" />
+        </property>
+        <property name="courseRecordId" type="java.lang.Integer">
+            <column name="COURSERECORDID" />
+        </property>
+        <property name="teacherId" type="java.lang.Integer">
+            <column name="TEACHERID" />
+        </property>
+        <property name="userCount" type="java.lang.Integer">
+            <column name="USERCOUNT" />
+        </property>
+        <property name="classRoom" type="java.lang.String">
+            <column name="CLASSROOM" />
+        </property>
+        <property name="attendTime" type="java.util.Date">
+            <column name="ATTENDTIME" />
+        </property>
+        <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" fetch="join">
+            <column name="COURSERECORD" />
+        </many-to-one>
+        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" fetch="join">
+            <column name="TEACHER" />
+        </many-to-one>
+        <set name="teacherBackInfoSet" table="TEACHERBACKINFO" inverse="false" lazy="true">
+            <key>
+                <column name="ENGCLASSID" />
+            </key>
+            <one-to-many class="com.eco.bean.model.TeacherBackInfo" />
+        </set>
+        <set name="userSet" table="USER" inverse="false" lazy="true">
+            <key>
+                <column name="ENGCLASSID" />
+            </key>
+            <one-to-many class="com.eco.bean.model.User" />
+        </set>
+        <set name="userBackInfoSet" table="USERBACKINFO" inverse="false" lazy="true">
+            <key>
+                <column name="ENGCLASSID" />
+            </key>
+            <one-to-many class="com.eco.bean.model.UserBackInfo" />
+        </set>
+        <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="true">
+            <key>
+                <column name="ENGCLASSID" />
+            </key>
+            <one-to-many class="com.eco.bean.model.TimeSheet" />
+        </set>
+    </class>
+</hibernate-mapping>

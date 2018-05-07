@@ -1,41 +1,96 @@
 package com.eco.dao;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+
+import com.eco.bean.model.PageContainer;
 
 /*
  * date:   2018年4月10日 下午2:34:08
  * author: Shixiaodong
  */
 public interface BaseDao<T> {
-	
-	/*
-	 * 返回数据库自增主键
-	 * */
-	Long insert(String sql, Object... params);
 
+	/**
+	 * 保存实体
+	 * @param entity 实体对象
+	 * @return 实体主键
+	 */
+	Object save(T entity);
+
+	void save(List<T> list);
 	
-	/*
-	 * 返回 insert, delete，update影响行数
-	 * */
-	int update(String sql, Object... params);
+	/**
+	 * 删除实体
+	 * @param entity 实体对象
+	 */
+	void delete(T entity);
 	
-	/*
-	 * 返回单值
-	 * */
-	Object queryForValue(String sql, Object... params);
+	void delete(List<T> list);
+
+	/**
+	 * 更新实体
+	 * @param entity 实体对象
+	 */
+	void update(Object entity);
 	
-	/*
-	 * 返回对象
-	 * */
-	T queryForObject(String sql, Object... params);
+	void update(List<T> list);
+
+	/**
+	 * 保存或更新实体, 实体没有主键时保存，否则更新
+	 * @param entity 实体对象
+	 */
+	void saveOrUpdate(Object entity);
 	
-	<V> V queryForObjectEx(String sql, Class<V> clazz, Object... params);
+	void saveOrUpdate(List<T> list);
+
+	/**
+	 * 执行数据库更新操作
+	 * @param sql
+	 * @return 更新的记录条数
+	 */
+	Integer executeSQLUpdate(String sql);
+
+	/**
+	 * 执行数据库更新操作
+	 * @param hql
+	 * @return 更新的记录条数
+	 */
+	Integer executeHQLUpdate(String hql);
 	
-	/*
-	 * 返回对象列表
-	 * */
-	List<T> queryForList(String sql, Object... params);
-	
-	<V> List<V> queryForListEx(String sql, Class<V> clazz, Object... params);
-	
+	/**
+	 * 根据主键获取实体
+	 * @param id 主键
+	 * @return
+	 */
+	T get(Serializable id);
+
+	/**
+	 * 获取单个实体，根据查询语句及参数获取。
+	 * @param hql 查询语句
+	 * @param params 可选的查询参数
+	 * @return 单个实体，如果查询结果有多个，则返回第一个实体
+	 */
+	@SuppressWarnings("hiding")
+	<T> T get(String hql, Object... params);
+
+	/**
+	 * 查询实体列表
+	 * @param hql 查询语句
+	 * @param params 可选的查询参数
+	 * @return 实体列表
+	 */
+	@SuppressWarnings("hiding")
+	List<T> list(String hql, Object... params);
+
+	/**
+	 * 分页查询实体
+	 * @param hql 查询语句
+	 * @param pageContainer 分页信息
+	 * @return 实体分页对象
+	 */
+	@SuppressWarnings("hiding")
+	List<T> list(String queryString, PageContainer pageContainer, Object... params);
+
 }

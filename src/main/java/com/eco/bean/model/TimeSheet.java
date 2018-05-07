@@ -15,11 +15,15 @@ public class TimeSheet implements Serializable {
 	
 	private Integer userId;
 	
-	private Integer classId;
+	private Integer engclassId;
 	
 	private Date recordTime;
 	
 	private String sheetInfo;
+	
+	private User user;
+	
+	private Engclass engclass;
 
 	public Integer getTimeSheetId() {
 		return timeSheetId;
@@ -37,12 +41,12 @@ public class TimeSheet implements Serializable {
 		this.userId = userId;
 	}
 
-	public Integer getClassId() {
-		return classId;
+	public Integer getEngclassId() {
+		return engclassId;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setEngclassId(Integer engclassId) {
+		this.engclassId = engclassId;
 	}
 
 	public Date getRecordTime() {
@@ -60,7 +64,21 @@ public class TimeSheet implements Serializable {
 	public void setSheetInfo(String sheetInfo) {
 		this.sheetInfo = sheetInfo;
 	}
-	
-	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Engclass getEngclass() {
+		return engclass;
+	}
+
+	public void setEngclass(Engclass engclass) {
+		this.engclass = engclass;
+	}
 	
 }

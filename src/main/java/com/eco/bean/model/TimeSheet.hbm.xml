@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-5-6 23:22:59 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eco.bean.model.TimeSheet" table="TIMESHEET">
+        <id name="timeSheetId" type="java.lang.Integer">
+            <column name="TIMESHEETID" />
+            <generator class="assigned" />
+        </id>
+        <property name="userId" type="java.lang.Integer">
+            <column name="USERID" />
+        </property>
+        <property name="engclassId" type="java.lang.Integer">
+            <column name="ENGCLASSID" />
+        </property>
+        <property name="recordTime" type="java.util.Date">
+            <column name="RECORDTIME" />
+        </property>
+        <property name="sheetInfo" type="java.lang.String">
+            <column name="SHEETINFO" />
+        </property>
+        <many-to-one name="user" class="com.eco.bean.model.User" fetch="join">
+            <column name="USER" />
+        </many-to-one>
+        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" fetch="join">
+            <column name="ENGCLASS" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

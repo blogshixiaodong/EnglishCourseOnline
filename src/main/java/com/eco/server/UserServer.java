@@ -6,7 +6,7 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
@@ -125,7 +125,7 @@ public interface UserServer {
 	* @param account
 	* @return Boolean
 	*/ 
-	public abstract Boolean loginCheck(Account account);
+	public abstract Boolean loginCheck(TeacherAccount account);
 	
 	
 	/** 

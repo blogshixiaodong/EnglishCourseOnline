@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
@@ -93,12 +93,12 @@ public class TeacherServerImpl implements TeacherServer {
 	}
 	
 	@Override
-	public Boolean loginCheck(Account account) {
+	public Boolean loginCheck(TeacherAccount account) {
 		//账号是否存在
 		if(accountDao.countAccount(account.getId()) != 1) {
 			return false;
 		}
-		Account dbAccount = accountDao.selectAccount(account.getId());
+		TeacherAccount dbAccount = accountDao.selectAccount(account.getId());
 		if(!dbAccount.getPassword().equals(account.getPassword())) {
 			return false;
 		}

@@ -9,7 +9,7 @@ import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
@@ -192,12 +192,12 @@ public class UserServerImpl implements UserServer{
 	}
 
 	@Override
-	public Boolean loginCheck(Account account) {
+	public Boolean loginCheck(TeacherAccount account) {
 		AccountDao accountDao = new AccountDaoImpl();
 		if(accountDao.countAccount(account.getId()) != 1) {
 			return false;
 		}
-		Account dbAccount = accountDao.selectAccount(account.getId());
+		TeacherAccount dbAccount = accountDao.selectAccount(account.getId());
 		if(!dbAccount.getPassword().equals(account.getPassword())) {
 			return false;
 		}

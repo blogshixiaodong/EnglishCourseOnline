@@ -1,6 +1,6 @@
 package com.eco.dao;
 
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 
 public interface AccountDao {
 	
@@ -16,6 +16,6 @@ public interface AccountDao {
 	 * @param 账号id
 	 * @return
 	 */
-	public abstract Account selectAccount(Integer id);
+	public abstract TeacherAccount selectAccount(Integer id);
 	
 }

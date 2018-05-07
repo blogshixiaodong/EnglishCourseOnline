@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-5-6 23:22:59 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eco.bean.model.CourseRecord" table="COURSERECORD">
+        <id name="courseRecordId" type="java.lang.Integer">
+            <column name="COURSERECORDID" />
+            <generator class="assigned" />
+        </id>
+        <property name="courseId" type="java.lang.Integer">
+            <column name="COURSEID" />
+        </property>
+        <property name="startTime" type="java.util.Date">
+            <column name="STARTTIME" />
+        </property>
+        <property name="endTime" type="java.util.Date">
+            <column name="ENDTIME" />
+        </property>
+        <property name="closeTime" type="java.util.Date">
+            <column name="CLOSETIME" />
+        </property>
+        <property name="signCount" type="java.lang.Integer">
+            <column name="SIGNCOUNT" />
+        </property>
+        <many-to-one name="course" class="com.eco.bean.model.Course" fetch="join">
+            <column name="COURSE" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

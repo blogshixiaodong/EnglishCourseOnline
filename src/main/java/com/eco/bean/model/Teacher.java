@@ -1,6 +1,7 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /*
  * date:   2018年4月19日 上午9:37:43
@@ -12,13 +13,13 @@ public class Teacher implements Serializable {
 
 	private Integer teacherId;
 	
-	private String idCard;
-	
 	private String teacherName;
+	
+	private String idCard;
 	
 	private String sex;
 	
-	private int age;
+	private Integer age;
 	
 	private String phone;
 	
@@ -26,20 +27,14 @@ public class Teacher implements Serializable {
 	
 	private String imgUrl;
 
+	private Set<Engclass> engclassSet;
+	
 	public Integer getTeacherId() {
 		return teacherId;
 	}
 
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
-	}
-
-	public String getIdCard() {
-		return idCard;
-	}
-
-	public void setIdCard(String idCard) {
-		this.idCard = idCard;
 	}
 
 	public String getTeacherName() {
@@ -50,6 +45,14 @@ public class Teacher implements Serializable {
 		this.teacherName = teacherName;
 	}
 
+	public String getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
 	public String getSex() {
 		return sex;
 	}
@@ -58,11 +61,11 @@ public class Teacher implements Serializable {
 		this.sex = sex;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -90,10 +93,12 @@ public class Teacher implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-	
-	
-	
-	
-	 
-	
+	public Set<Engclass> getEngclassSet() {
+		return engclassSet;
+	}
+
+	public void setEngclassSet(Set<Engclass> engclassSet) {
+		this.engclassSet = engclassSet;
+	}
+
 }

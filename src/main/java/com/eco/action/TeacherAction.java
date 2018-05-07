@@ -9,7 +9,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.model.Account;
+import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
@@ -48,7 +48,7 @@ public class TeacherAction extends ActionSupport {
 	
 	private Engclass engclass;
 	
-	private Account account;
+	private TeacherAccount account;
 	
 	private String jsonResult = "";
 	
@@ -262,11 +262,11 @@ public class TeacherAction extends ActionSupport {
 		this.pageContainer = pageContainer;
 	}
 
-	public Account getAccount() {
+	public TeacherAccount getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(TeacherAccount account) {
 		this.account = account;
 	}
 	
