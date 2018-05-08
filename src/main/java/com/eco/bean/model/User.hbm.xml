@@ -29,17 +29,23 @@
         <property name="imgUrl" type="java.lang.String">
             <column name="IMGURL" />
         </property>
-        <set name="engclassSet" table="ENGCLASS" inverse="false" lazy="true">
+        
+        <set name="engclassSet" table="USER_ENGCLASS" cascade="all" inverse="false" lazy="true">
             <key>
                 <column name="USERID" />
             </key>
-            <one-to-many class="com.eco.bean.model.Engclass" />
+            <many-to-many class="com.eco.bean.model.Engclass" column="ENGCLASSID" />
         </set>
+        
         <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="true">
             <key>
                 <column name="USERID" />
             </key>
             <one-to-many class="com.eco.bean.model.TimeSheet" />
         </set>
+        
+        <one-to-one name="userAccount" class="com.eco.bean.model.UserAccount" property-ref="user">
+        </one-to-one>
+        
     </class>
 </hibernate-mapping>

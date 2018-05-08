@@ -1,6 +1,7 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -23,7 +24,7 @@ public class Course implements Serializable {
 	
 	private String imgUrl;
 
-	private Set<CourseRecord> courseRecordSet;
+	private Set<CourseRecord> courseRecordSet = new HashSet<CourseRecord>() ;
 
 	public Integer getCourseId() {
 		return courseId;

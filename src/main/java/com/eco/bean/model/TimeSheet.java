@@ -13,10 +13,6 @@ public class TimeSheet implements Serializable {
 
 	private Integer timeSheetId;
 	
-	private Integer userId;
-	
-	private Integer engclassId;
-	
 	private Date recordTime;
 	
 	private String sheetInfo;
@@ -31,22 +27,6 @@ public class TimeSheet implements Serializable {
 
 	public void setTimeSheetId(Integer timeSheetId) {
 		this.timeSheetId = timeSheetId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getEngclassId() {
-		return engclassId;
-	}
-
-	public void setEngclassId(Integer engclassId) {
-		this.engclassId = engclassId;
 	}
 
 	public Date getRecordTime() {

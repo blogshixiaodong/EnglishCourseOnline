@@ -1,6 +1,8 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.HashSet;
 import java.util.Set;
 
 public class User implements Serializable {
@@ -23,9 +25,11 @@ public class User implements Serializable {
 
 	private String imgUrl;
 	
-	private Set<Engclass> engclassSet;
+	private Set<Engclass> engclassSet = new HashSet<Engclass>() ;
 	
-	private Set<TimeSheet> timeSheetSet;
+	private Set<TimeSheet> timeSheetSet = new HashSet<TimeSheet>();
+	
+	private UserAccount userAccount;
 
 	public Integer getUserId() {
 		return userId;
@@ -105,6 +109,14 @@ public class User implements Serializable {
 
 	public void setTimeSheetSet(Set<TimeSheet> timeSheetSet) {
 		this.timeSheetSet = timeSheetSet;
+	}
+
+	public UserAccount getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 	
 }

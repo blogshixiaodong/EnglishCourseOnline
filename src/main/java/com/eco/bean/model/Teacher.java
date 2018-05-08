@@ -1,6 +1,7 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -26,8 +27,10 @@ public class Teacher implements Serializable {
 	private String address;
 	
 	private String imgUrl;
-
-	private Set<Engclass> engclassSet;
+	
+	private TeacherAccount teacherAccount;
+	
+	private Set<Engclass> engclassSet = new HashSet<Engclass>();
 	
 	public Integer getTeacherId() {
 		return teacherId;
@@ -101,4 +104,13 @@ public class Teacher implements Serializable {
 		this.engclassSet = engclassSet;
 	}
 
+	public TeacherAccount getTeacherAccount() {
+		return teacherAccount;
+	}
+
+	public void setTeacherAccount(TeacherAccount teacherAccount) {
+		this.teacherAccount = teacherAccount;
+	}
+	
+	
 }

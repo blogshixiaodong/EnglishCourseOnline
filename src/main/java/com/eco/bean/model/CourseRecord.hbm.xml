@@ -8,9 +8,6 @@
             <column name="COURSERECORDID" />
             <generator class="assigned" />
         </id>
-        <property name="courseId" type="java.lang.Integer">
-            <column name="COURSEID" />
-        </property>
         <property name="startTime" type="java.util.Date">
             <column name="STARTTIME" />
         </property>
@@ -23,8 +20,16 @@
         <property name="signCount" type="java.lang.Integer">
             <column name="SIGNCOUNT" />
         </property>
-        <many-to-one name="course" class="com.eco.bean.model.Course" fetch="join">
-            <column name="COURSE" />
+
+        <many-to-one name="course" class="com.eco.bean.model.Course" column = "COURSEID" cascade="all">
         </many-to-one>
+        
+        <set name="engclassSet" table="ENGCLASS" cascade="all" >
+        	<key column="COURSERECORDID"></key>
+        	<one-to-many class="com.eco.bean.model.Engclass" />
+        
+        </set>
+        
+        
     </class>
 </hibernate-mapping>

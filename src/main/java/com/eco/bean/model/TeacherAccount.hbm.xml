@@ -6,13 +6,14 @@
     <class name="com.eco.bean.model.TeacherAccount" table="TEACHERACCOUNT">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="foreign" >
+            	<param name="property">teacher</param>
+            </generator>
         </id>
         <property name="password" type="java.lang.String">
             <column name="PASSWORD" />
         </property>
-        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" fetch="join">
-            <column name="TEACHER" />
+         <many-to-one name="teacher" column="teacherid" class="com.eco.bean.model.Teacher" unique="true" >
         </many-to-one>
     </class>
 </hibernate-mapping>
