@@ -11,7 +11,7 @@
         <property name="courseName" type="java.lang.String">
             <column name="COURSENAME" />
         </property>
-        <property name="info" type="java.lang.String">
+        <property name="info" type="java.lang.String"> 
             <column name="INFO" />
         </property>
         <property name="types" type="java.lang.String">
@@ -23,7 +23,7 @@
         <property name="imgUrl" type="java.lang.String">
             <column name="IMGURL" />
         </property>
-        <set name="courseRecordSet" table="COURSERECORD" inverse="false" lazy="true">
+        <set name="courseRecordSet" table="COURSERECORD" cascade="all"  lazy="true">
             <key>
                 <column name="COURSEID" />
             </key>

@@ -2,6 +2,7 @@ package com.eco.bean.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -15,10 +16,6 @@ public class Engclass implements Serializable {
 	private Integer engclassId;
 	
 	private String engclassName;
-	
-	private Integer courseRecordId;
-	
-	private Integer teacherId;
 
 	private Integer userCount;
 	
@@ -30,13 +27,13 @@ public class Engclass implements Serializable {
 	
 	private Teacher teacher;
 	
-	private Set<TeacherBackInfo> teacherBackInfoSet;
+	private Set<User> userSet = new HashSet<User>();
 	
-	private Set<User> userSet;
+	private Set<TeacherBackInfo> teacherBackInfoSet = new HashSet<TeacherBackInfo>() ;
 	
-	private Set<UserBackInfo> userBackInfoSet;
+	private Set<UserBackInfo> userBackInfoSet = new HashSet<UserBackInfo>() ;
 	
-	private Set<TimeSheet> timeSheetSet;
+	private Set<TimeSheet> timeSheetSet = new HashSet<TimeSheet>() ;
 
 	public Integer getEngclassId() {
 		return engclassId;
@@ -52,22 +49,6 @@ public class Engclass implements Serializable {
 
 	public void setEngclassName(String engclassName) {
 		this.engclassName = engclassName;
-	}
-
-	public Integer getCourseRecordId() {
-		return courseRecordId;
-	}
-
-	public void setCourseRecordId(Integer courseRecordId) {
-		this.courseRecordId = courseRecordId;
-	}
-
-	public Integer getTeacherId() {
-		return teacherId;
-	}
-
-	public void setTeacherId(Integer teacherId) {
-		this.teacherId = teacherId;
 	}
 
 	public Integer getUserCount() {

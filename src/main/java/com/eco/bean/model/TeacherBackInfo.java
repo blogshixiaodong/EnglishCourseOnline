@@ -13,12 +13,6 @@ public class TeacherBackInfo implements Serializable {
 	
 	private Integer teacherBackInfoId;
 	
-	private Integer teacherId;
-	
-	private Integer userId;
-	
-	private Integer engclassId;
-	
 	private Date backTime;
 	
 	private String backInfo;
@@ -26,6 +20,8 @@ public class TeacherBackInfo implements Serializable {
 	private User user;
 	
 	private Engclass engclass;
+	
+	private Teacher teacher;
 
 	public Integer getTeacherBackInfoId() {
 		return teacherBackInfoId;
@@ -33,30 +29,6 @@ public class TeacherBackInfo implements Serializable {
 
 	public void setTeacherBackInfoId(Integer teacherBackInfoId) {
 		this.teacherBackInfoId = teacherBackInfoId;
-	}
-
-	public Integer getTeacherId() {
-		return teacherId;
-	}
-
-	public void setTeacherId(Integer teacherId) {
-		this.teacherId = teacherId;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getEngclassId() {
-		return engclassId;
-	}
-
-	public void setEngclassId(Integer engclassId) {
-		this.engclassId = engclassId;
 	}
 
 	public Date getBackTime() {
@@ -90,5 +62,15 @@ public class TeacherBackInfo implements Serializable {
 	public void setEngclass(Engclass engclass) {
 		this.engclass = engclass;
 	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+	
+	
 	
 }

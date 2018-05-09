@@ -8,26 +8,22 @@
             <column name="TEACHERBACKINFOID" />
             <generator class="assigned" />
         </id>
-        <property name="teacherId" type="java.lang.Integer">
-            <column name="TEACHERID" />
-        </property>
-        <property name="userId" type="java.lang.Integer">
-            <column name="USERID" />
-        </property>
-        <property name="engclassId" type="java.lang.Integer">
-            <column name="ENGCLASSID" />
-        </property>
         <property name="backTime" type="java.util.Date">
             <column name="BACKTIME" />
         </property>
         <property name="backInfo" type="java.lang.String">
             <column name="BACKINFO" />
         </property>
-        <many-to-one name="user" class="com.eco.bean.model.User" fetch="join">
-            <column name="USER" />
+        <many-to-one name="user" class="com.eco.bean.model.User" >
+            <column name="USERID" />
         </many-to-one>
-        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" fetch="join">
-            <column name="ENGCLASS" />
+        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" >
+            <column name="ENGCLASSID" />
         </many-to-one>
+        
+        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" >
+            <column name="TEACHERID" />
+        </many-to-one>
+        
     </class>
 </hibernate-mapping>

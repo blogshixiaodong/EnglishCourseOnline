@@ -2,6 +2,8 @@ package com.eco.bean.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * date:   2018年4月19日 下午8:30:43
@@ -13,8 +15,6 @@ public class CourseRecord implements Serializable {
 
 	private Integer courseRecordId;
 	
-	private Integer courseId;
-	
 	private Date startTime;
 	
 	private Date endTime;
@@ -24,6 +24,9 @@ public class CourseRecord implements Serializable {
 	private Integer signCount;
 	
 	private Course course;
+	
+	private Set<Engclass> engclassSet = new HashSet<Engclass>();
+	
 
 	public Integer getCourseRecordId() {
 		return courseRecordId;
@@ -31,14 +34,6 @@ public class CourseRecord implements Serializable {
 
 	public void setCourseRecordId(Integer courseRecordId) {
 		this.courseRecordId = courseRecordId;
-	}
-
-	public Integer getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Integer courseId) {
-		this.courseId = courseId;
 	}
 
 	public Date getStartTime() {
@@ -80,5 +75,15 @@ public class CourseRecord implements Serializable {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+	public Set<Engclass> getEngclassSet() {
+		return engclassSet;
+	}
+
+	public void setEngclassSet(Set<Engclass> engclassSet) {
+		this.engclassSet = engclassSet;
+	}
+	
+	
 	
 }

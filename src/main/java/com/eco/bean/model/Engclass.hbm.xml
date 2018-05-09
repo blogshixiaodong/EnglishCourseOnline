@@ -11,12 +11,6 @@
         <property name="engclassName" type="java.lang.String">
             <column name="ENGCLASSNAME" />
         </property>
-        <property name="courseRecordId" type="java.lang.Integer">
-            <column name="COURSERECORDID" />
-        </property>
-        <property name="teacherId" type="java.lang.Integer">
-            <column name="TEACHERID" />
-        </property>
         <property name="userCount" type="java.lang.Integer">
             <column name="USERCOUNT" />
         </property>
@@ -26,30 +20,34 @@
         <property name="attendTime" type="java.util.Date">
             <column name="ATTENDTIME" />
         </property>
-        <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" fetch="join">
-            <column name="COURSERECORD" />
+        <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" >
+            <column name="COURSERECORDID" />
         </many-to-one>
-        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" fetch="join">
-            <column name="TEACHER" />
+        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" >
+            <column name="TEACHERID" />
         </many-to-one>
+         
         <set name="teacherBackInfoSet" table="TEACHERBACKINFO" inverse="false" lazy="true">
             <key>
                 <column name="ENGCLASSID" />
             </key>
             <one-to-many class="com.eco.bean.model.TeacherBackInfo" />
         </set>
-        <set name="userSet" table="USER" inverse="false" lazy="true">
+        
+        <set name="userSet" table="USER_ENGCLASS" cascade="all" inverse="false" lazy="true">
             <key>
                 <column name="ENGCLASSID" />
             </key>
-            <one-to-many class="com.eco.bean.model.User" />
+            <many-to-many class="com.eco.bean.model.User" column="USERID"  />
         </set>
+        
         <set name="userBackInfoSet" table="USERBACKINFO" inverse="false" lazy="true">
             <key>
                 <column name="ENGCLASSID" />
             </key>
             <one-to-many class="com.eco.bean.model.UserBackInfo" />
         </set>
+        
         <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="true">
             <key>
                 <column name="ENGCLASSID" />
