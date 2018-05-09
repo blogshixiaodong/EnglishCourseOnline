@@ -1,7 +1,6 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ public class Engclass implements Serializable {
 	
 	private String classRoom;
 	
-	private Date attendTime;
+	private Integer attendTime;
 
 	private CourseRecord courseRecord;
 	
@@ -67,11 +66,11 @@ public class Engclass implements Serializable {
 		this.classRoom = classRoom;
 	}
 
-	public Date getAttendTime() {
+	public Integer getAttendTime() {
 		return attendTime;
 	}
 
-	public void setAttendTime(Date attendTime) {
+	public void setAttendTime(Integer attendTime) {
 		this.attendTime = attendTime;
 	}
 
@@ -91,20 +90,20 @@ public class Engclass implements Serializable {
 		this.teacher = teacher;
 	}
 
-	public Set<TeacherBackInfo> getTeacherBackInfoSet() {
-		return teacherBackInfoSet;
-	}
-
-	public void setTeacherBackInfoSet(Set<TeacherBackInfo> teacherBackInfoSet) {
-		this.teacherBackInfoSet = teacherBackInfoSet;
-	}
-
 	public Set<User> getUserSet() {
 		return userSet;
 	}
 
 	public void setUserSet(Set<User> userSet) {
 		this.userSet = userSet;
+	}
+
+	public Set<TeacherBackInfo> getTeacherBackInfoSet() {
+		return teacherBackInfoSet;
+	}
+
+	public void setTeacherBackInfoSet(Set<TeacherBackInfo> teacherBackInfoSet) {
+		this.teacherBackInfoSet = teacherBackInfoSet;
 	}
 
 	public Set<UserBackInfo> getUserBackInfoSet() {
@@ -122,5 +121,5 @@ public class Engclass implements Serializable {
 	public void setTimeSheetSet(Set<TimeSheet> timeSheetSet) {
 		this.timeSheetSet = timeSheetSet;
 	}
-
+	
 }

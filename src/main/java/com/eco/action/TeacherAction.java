@@ -101,7 +101,7 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return "unlogin";
 		}
-		List<Engclass> engclassList = teacherServer.queryEngclassByCondition(teacherId, engclass.getClassId(), engclass.getClassName());
+		List<Engclass> engclassList = teacherServer.queryEngclassByCondition(teacherId, engclass.getEngclassId(), engclass.getEngclassName());
 		if(engclassList == null) {
 			return Action.ERROR;
 		}
@@ -121,7 +121,7 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	public String findUserInEngclass() {
-		Integer engclassId = engclass.getClassId();
+		Integer engclassId = engclass.getEngclassId();
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
@@ -133,7 +133,7 @@ public class TeacherAction extends ActionSupport {
 	
 	public String findTeacherBackInfoHistory() {
 		Integer teacherId = getLoginTeacherId();
-		Integer engclassId = engclass.getClassId();
+		Integer engclassId = engclass.getEngclassId();
 		if(teacherId == null || engclassId == null) {
 			return "unlogin";
 		}
@@ -159,7 +159,7 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return "unlogin";
 		}
-		Integer engclassId = engclass.getClassId();
+		Integer engclassId = engclass.getEngclassId();
 		String queryDate = ((String [])ServletActionContext.getRequest().getParameterMap().get("queryDate"))[0].toString();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -194,7 +194,7 @@ public class TeacherAction extends ActionSupport {
 			return "unlogin";
 		}
 		Map<String, Object> map = ActionContext.getContext().getSession();
-		map.put("teacher", teacherServer.queryTeacher(account.getRoleId()));
+		map.put("teacher", teacherServer.queryTeacher(account.getTeacher().getTeacherId()));
 		return Action.SUCCESS;
 	}
 	

@@ -2,7 +2,6 @@ package com.eco.dao;
 
 import java.util.List;
 
-import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.model.TeacherBackInfo;
 
 public interface TeacherBackInfoDao {
@@ -13,7 +12,7 @@ public interface TeacherBackInfoDao {
 	 * @param userid
 	 * @return
 	 */
-	public List<BackInfoDetail> selectBackInfoDetailByEngclassIdAndUserId(Integer engclassId,Integer userId);
+	public List<TeacherBackInfo> selectBackInfoDetailByEngclassIdAndUserId(Integer engclassId,Integer userId);
 	
 	/**
 	 * 根据班级id和教师id查询反馈详细信息
@@ -21,7 +20,7 @@ public interface TeacherBackInfoDao {
 	 * @param engclassId
 	 * @return
 	 */
-	public abstract List<BackInfoDetail> selectBackInfoDetailByEngclassIdAndTeacherId(Integer teacherId, Integer engclassId);
+	public abstract List<TeacherBackInfo> selectBackInfoDetailByEngclassIdAndTeacherId(Integer teacherId, Integer engclassId);
 	
 	/**
 	 * 插入一条反馈信息到教师反馈信息表

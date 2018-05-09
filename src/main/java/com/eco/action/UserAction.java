@@ -17,10 +17,8 @@ import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
+import com.eco.bean.model.UserAccount;
 import com.eco.bean.model.UserBackInfo;
-import com.eco.bean.model.UserClass;
-import com.eco.dao.AccountDao;
-import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.server.BackInfoServer;
 import com.eco.server.CourseServer;
 import com.eco.server.EngclassServer;
@@ -49,8 +47,6 @@ public class UserAction extends ActionSupport {
 	
 	private Integer courseRecordId;
 	
-	private UserClass userClass;
-	
 	private Engclass engclass;
 	
 	private String jsonResult = "";
@@ -59,7 +55,7 @@ public class UserAction extends ActionSupport {
 	
 	private String leaveInfo = "";
 	
-	private TeacherAccount account;
+	private UserAccount account;
 	
 	private PageContainer pageContainer;
 	
@@ -158,7 +154,7 @@ public class UserAction extends ActionSupport {
 		
 		String queryDate = (String)request.getParameter("queryDate");
 		
-		List<TimeSheetDetail> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getClassId(), queryDate) ;
+		List<TimeSheetDetail> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getEngclassId(), queryDate) ;
 		
 		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
 		
@@ -173,7 +169,7 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		
-		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(engclass.getClassId(),userId);
+		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(engclass.getEngclassId(),userId);
 		
 		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
 		return SUCCESS;
@@ -182,7 +178,7 @@ public class UserAction extends ActionSupport {
 	//获取用户历史反馈信息
 	public String findUserHistoryBackInfoList() {
 		Integer userId = this.getLoginUser().getUserId();
-		Integer engclassId = engclass.getClassId();
+		Integer engclassId = engclass.getEngclassId();
 		if(userId == null || engclassId == null) {
 			return Action.ERROR;
 		}
@@ -194,7 +190,7 @@ public class UserAction extends ActionSupport {
 	
 	//根据classid 查询某班级的所有用户反馈信息
 	public String findUserBackInfoInListByEngclass() {
-		Integer engclassId = engclass.getClassId();
+		Integer engclassId = engclass.getEngclassId();
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
 		List<BackInfoDetail> backInfoDetailList =backInfoServer.queryUserBackInfobyClassId(engclassId) ;
@@ -267,7 +263,7 @@ public class UserAction extends ActionSupport {
 		}
 		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		backInfoServer.addUserBackInfo(engclass.getClassId(),userId, backInfo);
+		backInfoServer.addUserBackInfo(engclass.getEngclassId(),userId, backInfo);
 		this.setJsonResult("success");
 		return SUCCESS;
 	}
@@ -284,7 +280,7 @@ public class UserAction extends ActionSupport {
 		String queryDate = (String)request.getParameter("queryDate");
 		java.util.Date formateDate = stringFormateToDate(queryDate);
 		
-		timeSheet.setUserId(userId);
+		//timeSheet.setUserId(userId);
 		timeSheet.setRecordTime(formateDate);
 		
 		jsonResult =userServer.addTimeSheet(timeSheet) ;
@@ -296,7 +292,7 @@ public class UserAction extends ActionSupport {
 		if(!userServer.loginCheck(account)) {
 			return Action.ERROR;
 		}
-		User user = userServer.queryUserByAccountId(account.getRoleId());
+		User user = userServer.queryUserByAccountId(account.getUser().getUserId());
 		request.getSession().setAttribute("user",user);
 		
 		return SUCCESS;
@@ -368,14 +364,6 @@ public class UserAction extends ActionSupport {
 		this.courseRecordId = courseRecordId;
 	}
 
-	public UserClass getUserClass() {
-		return userClass;
-	}
-
-	public void setUserClass(UserClass userClass) {
-		this.userClass = userClass;
-	}
-
 	public Engclass getEngclass() {
 		return engclass;
 	}
@@ -416,14 +404,12 @@ public class UserAction extends ActionSupport {
 		this.pageContainer = pageContainer;
 	}
 
-	public TeacherAccount getAccount() {
+	public UserAccount getAccount() {
 		return account;
 	}
 
-	public void setAccount(TeacherAccount account) {
+	public void setAccount(UserAccount account) {
 		this.account = account;
 	}
-	
-	
 	
 }

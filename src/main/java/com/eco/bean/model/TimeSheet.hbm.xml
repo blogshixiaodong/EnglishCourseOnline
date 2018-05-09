@@ -6,7 +6,7 @@
     <class name="com.eco.bean.model.TimeSheet" table="TIMESHEET">
         <id name="timeSheetId" type="java.lang.Integer">
             <column name="TIMESHEETID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="recordTime" type="java.util.Date">
             <column name="RECORDTIME" />

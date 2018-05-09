@@ -2,7 +2,6 @@ package com.eco.dao;
 
 import java.util.List;
 
-import com.eco.bean.dto.CourseDetail;
 import com.eco.bean.model.User;
 
 /*
@@ -18,18 +17,8 @@ public interface UserDao extends PageDao {
 	* @param userid
 	* @return User
 	*/ 
-	public abstract User selectUserByUserId(int userId);
-	
-	
-	/** 
-	* @Description: 根据用户id获取课程信息  
-	* @param userid
-	* @return List<CourseDetail>
-	*/ 
-	List<CourseDetail> selectCoursebyUserId(int userId);
-	
-	
-	
+	User selectUserByUserId(int userId);
+		
 	/** 
 	* @Description: 用户是否存在
 	* @param userid
@@ -51,7 +40,7 @@ public interface UserDao extends PageDao {
 	* @param AccountId
 	* @return User
 	*/ 
-	public abstract User selectUserByAccountId(Integer AccountId);
+	User selectUserByAccountId(Integer AccountId);
 	
 	
 	

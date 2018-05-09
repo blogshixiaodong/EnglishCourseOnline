@@ -2,9 +2,8 @@ package com.eco.dao;
 
 import java.util.List;
 
-import com.eco.bean.dto.BackInfoDetail;
 import com.eco.bean.model.UserBackInfo;
-import com.eco.bean.model.UserClass;
+
 
 /**
  * @author lenovo
@@ -20,13 +19,13 @@ public interface UserBackInfoDao {
 	* @param userClass
 	* @return List<BackInfoDetail>
 	*/ 
-	List<BackInfoDetail> selectBackInfoByUserClass(UserClass userClass);
+	List<UserBackInfo> selectBackInfoByUserIdAndEngclassId(Integer userId, Integer engclassId);
 	
 	boolean createUserBackInfo(UserBackInfo backInfo);
 	
 	
 
-	public abstract List<BackInfoDetail> selectBackInfoByEngclassId(Integer engclassId);
+	public abstract List<UserBackInfo> selectBackInfoByEngclassId(Integer engclassId);
 	
 	
 	/** 
@@ -35,7 +34,7 @@ public interface UserBackInfoDao {
 	* @param engclassId
 	* @return List<BackInfoDetail>
 	*/ 
-	public abstract List<BackInfoDetail> selectBackInfoByUserIdAndClassId(Integer userId,Integer engclassId);
+	public abstract List<UserBackInfo> selectBackInfoByUserIdAndClassId(Integer userId,Integer engclassId);
 	
 	
 	/** 

@@ -11,8 +11,8 @@ import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
+import com.eco.bean.model.UserAccount;
 import com.eco.bean.model.UserBackInfo;
-import com.eco.bean.model.UserClass;
 
 public interface UserServer {
 	
@@ -125,7 +125,7 @@ public interface UserServer {
 	* @param account
 	* @return Boolean
 	*/ 
-	public abstract Boolean loginCheck(TeacherAccount account);
+	public abstract Boolean loginCheck(UserAccount account);
 	
 	
 	/** 

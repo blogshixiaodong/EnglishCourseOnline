@@ -6,7 +6,7 @@
     <class name="com.eco.bean.model.TeacherBackInfo" table="TEACHERBACKINFO">
         <id name="teacherBackInfoId" type="java.lang.Integer">
             <column name="TEACHERBACKINFOID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="backTime" type="java.util.Date">
             <column name="BACKTIME" />

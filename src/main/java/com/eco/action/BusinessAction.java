@@ -121,7 +121,7 @@ public class BusinessAction extends ActionSupport {
 		
 		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
 		
-		engclass.setCourseRecordId(courseRecordId);
+		//engclass.setCourseRecordId(courseRecordId);
 		engclass.setUserCount(userNum1 + userNum2);
 		int engclassId = new Long(engclassServer.create(engclass)).intValue();
 		

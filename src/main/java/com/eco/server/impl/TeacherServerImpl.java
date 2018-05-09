@@ -49,7 +49,7 @@ public class TeacherServerImpl implements TeacherServer {
 		pageContainer.setPageSize(5);
 		pageContainer.setRecordCount(courseDao.countHistoryCourseDetailByTeacherId(teacherId));
 		
-		return courseDao.selectTeacherIdHistoryCourseDetailListByTeacherId(teacherId);
+		return courseDao.selectTeacherHistoryCourseDetailListByTeacherId(teacherId);
 	}
 
 	@Override

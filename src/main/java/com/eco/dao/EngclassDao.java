@@ -2,7 +2,6 @@ package com.eco.dao;
 
 import java.util.List;
 
-import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.Engclass;
 
 
@@ -14,30 +13,30 @@ import com.eco.bean.model.Engclass;
  * @author 15129
  *
  */
-public interface EngclassDao extends PageDao {
+public interface EngclassDao {
 
 	/** 
 	* 开设班级 
 	* @param engclass void
 	*/ 
-	public abstract long insert(Engclass engclass);
+	public abstract void insert(Engclass engclass);
 
 	/**
 	 * 
 	 * @param teacherId
 	 * @return selectEgcListByTchId
 	 */
-	public abstract List<EngclassDetail> selectEngclassListByTeacherId(Integer teacherId);
+	public abstract List<Engclass> selectEngclassListByTeacherId(Integer teacherId);
 	
 	/** 
 	* @Description: 查询用户当前正在进行的班级信息 
 	* @param userId
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> selectUserNowEngclassListByUserId(Integer userId);
+	public abstract List<Engclass> selectUserNowEngclassListByUserId(Integer userId);
 	
 
-	public List<EngclassDetail> selectUserAllEngclassListByUserId(Integer userid);
+	public List<Engclass> selectUserAllEngclassListByUserId(Integer userid);
 
 	
 	/** 
@@ -68,7 +67,7 @@ public interface EngclassDao extends PageDao {
 	 * @param engclassId
 	 * @return
 	 */
-	public EngclassDetail selectEngclassDetailByEngclassId(Integer engclassId);
+	public Engclass selectEngclassDetailByEngclassId(Integer engclassId);
 	
 	
 	/** 
@@ -76,7 +75,7 @@ public interface EngclassDao extends PageDao {
 	* @param userId
 	* @return int
 	*/ 
-	public int countAllEngclassDetailByUserId(Integer userId);
+	public Integer countAllEngclassDetailByUserId(Integer userId);
 	
 	
 	/** 
@@ -84,23 +83,23 @@ public interface EngclassDao extends PageDao {
 	* @param teacherId
 	* @return int
 	*/ 
-	public int countAllEngclassDetailByTeacher(Integer teacherId);
+	public Integer countAllEngclassDetailByTeacher(Integer teacherId);
 	
 	/** 
 	* @Description: 通过班级id查询该班级是学生人数 
 	* @param engclassId
 	* @return int
 	*/ 
-	public int countAllUserByEngclassId(Integer engclassId);
+	public Integer countAllUserByEngclassId(Integer engclassId);
 	
 	public List<Engclass> selectEngclassListByCourseId(Integer courseId);
 	
 	public Long insertUserClass(Integer userId, Integer classId);
 	
-	public int countEngclassIdByCourseRecordId(Integer courseRecordId);
+	public Integer countEngclassIdByCourseRecordId(Integer courseRecordId);
 
 	
-	public int selectCourseRecordIdByEngclassId(Integer engclassId);
+	public Integer selectCourseRecordIdByEngclassId(Integer engclassId);
 	
 	public void updateUserEngclassId(Integer oldEngclassId,Integer engclassId);
 	

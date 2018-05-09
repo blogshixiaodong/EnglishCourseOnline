@@ -6,7 +6,7 @@
     <class name="com.eco.bean.model.Teacher" table="TEACHER">
         <id name="teacherId" type="java.lang.Integer">
             <column name="TEACHERID" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="teacherName" type="java.lang.String">
             <column name="TEACHERNAME" />

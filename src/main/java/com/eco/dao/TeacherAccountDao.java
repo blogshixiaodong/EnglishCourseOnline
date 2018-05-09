@@ -2,7 +2,7 @@ package com.eco.dao;
 
 import com.eco.bean.model.TeacherAccount;
 
-public interface AccountDao {
+public interface TeacherAccountDao {
 	
 	/**
 	 * 根据id查询账号记录数

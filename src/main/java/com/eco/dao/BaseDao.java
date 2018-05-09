@@ -50,14 +50,14 @@ public interface BaseDao<T> {
 	 * @param sql
 	 * @return 更新的记录条数
 	 */
-	Integer executeSQLUpdate(String sql);
+	Integer executeSQLUpdate(String sql, Object... params);
 
 	/**
 	 * 执行数据库更新操作
 	 * @param hql
 	 * @return 更新的记录条数
 	 */
-	Integer executeHQLUpdate(String hql);
+	Integer executeHQLUpdate(String hql, Object... params);
 	
 	/**
 	 * 根据主键获取实体
@@ -91,6 +91,6 @@ public interface BaseDao<T> {
 	 * @return 实体分页对象
 	 */
 	@SuppressWarnings("hiding")
-	List<T> list(String queryString, PageContainer pageContainer, Object... params);
+	List<T> list(String hql, PageContainer pageContainer, Object... params);
 
 }

@@ -1,28 +1,20 @@
 package com.eco.dao.impl;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.BaseDao;
 import com.eco.dao.PageDao;
 import com.eco.util.ReflectUtils;
-import com.sxd.util.jdbc.JdbcUtils;
+
 
 /*
  * date:   2018/4/10 2:41:47
@@ -32,7 +24,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	private static Configuration configuration;
 	
-	protected Class<T> entityClass;  
+	protected Class<T> entityClass;
 	  
     protected SessionFactory sessionFactory;
     
@@ -106,13 +98,17 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public Integer executeSQLUpdate(String sql) {
-		return session.createNativeQuery(sql).executeUpdate();
+	public Integer executeSQLUpdate(String sql, Object... params) {
+		NativeQuery nativeQuery = session.createNativeQuery(sql);
+		setParameter(nativeQuery, params);
+		return nativeQuery.executeUpdate();
 	}
 
 	@Override
-	public Integer executeHQLUpdate(String hql) {
-		return session.createQuery(hql).executeUpdate();
+	public Integer executeHQLUpdate(String hql, Object... params) {
+		Query query = session.createQuery(hql);
+		setParameter(query, params);
+		return query.executeUpdate();
 	}
 
 	@Override
@@ -141,15 +137,19 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 
 	@Override
-	public List<T> list(String queryString, PageContainer pageContainer, Object... params) {
-		Query query = getSession().createQuery(queryString.toString());  
-		int pageSize = pageContainer.getPageSize();
-		int currentPageNo = pageContainer.getCurrentPageNo();
-        if (pageSize > 0 && currentPageNo > 0) {  
-            query.setFirstResult((currentPageNo < 2) ? 0 : (currentPageNo - 1) * pageSize);  
-            query.setMaxResults(pageSize);  
-        }  
-  
+	public List<T> list(String hql, PageContainer pageContainer, Object... params) {
+		Query query = getSession().createQuery(hql.toString());
+		if(pageContainer != null) {
+			int pageSize = pageContainer.getPageSize();
+			int currentPageNo = pageContainer.getCurrentPageNo();
+	        if (pageSize > 0 && currentPageNo > 0) {  
+	            query.setFirstResult((currentPageNo < 2) ? 0 : (currentPageNo - 1) * pageSize);  
+	            query.setMaxResults(pageSize);  
+	        }  
+		} else {
+			return list(hql, params);
+		}
+		
         setParameter(query, params);  
        
         List<T> list = query.list();  

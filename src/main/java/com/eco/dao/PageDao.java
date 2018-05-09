@@ -8,10 +8,8 @@ import com.eco.bean.model.PageContainer;
  */
 public interface PageDao {
 	
-	public abstract Boolean isPaging();	
+	void beginPaging(PageContainer pageContainer);
 	
-	public abstract void beginPaging(PageContainer pageContainer);
-	
-	public abstract void closePaging();
+	void clearPaging();
 	
 }

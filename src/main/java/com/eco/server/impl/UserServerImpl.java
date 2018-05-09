@@ -14,7 +14,7 @@ import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
-import com.eco.bean.model.UserClass;
+import com.eco.bean.model.UserAccount;
 import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
 import com.eco.dao.CourseRecordDao;
@@ -192,7 +192,7 @@ public class UserServerImpl implements UserServer{
 	}
 
 	@Override
-	public Boolean loginCheck(TeacherAccount account) {
+	public Boolean loginCheck(UserAccount account) {
 		AccountDao accountDao = new AccountDaoImpl();
 		if(accountDao.countAccount(account.getId()) != 1) {
 			return false;

@@ -1,7 +1,6 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.HashSet;
 import java.util.Set;
 

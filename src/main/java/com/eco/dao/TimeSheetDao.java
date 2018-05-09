@@ -3,7 +3,6 @@ package com.eco.dao;
 import java.util.Date;
 import java.util.List;
 
-import com.eco.bean.dto.TimeSheetDetail;
 import com.eco.bean.model.TimeSheet;
 
 /*
@@ -12,7 +11,7 @@ import com.eco.bean.model.TimeSheet;
  */
 public interface TimeSheetDao extends PageDao {
 	
-	public abstract List<TimeSheetDetail> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date);
+	public abstract List<TimeSheet> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date);
 	
 	
 	/** 
@@ -21,7 +20,7 @@ public interface TimeSheetDao extends PageDao {
 	* @param engclass
 	* @return List<TimeSheetDao>
 	*/ 
-	public List<TimeSheetDetail> selectTimeSheetByUserIdAndEngclassId(Integer userId,Integer engclassId);
+	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId,Integer engclassId);
 	
 	
 	/** 
@@ -31,7 +30,7 @@ public interface TimeSheetDao extends PageDao {
 	* @param queryDate
 	* @return List<TimeSheetDetail>
 	*/ 
-	public List<TimeSheetDetail> selectTimeSheetByUserIdAndEngclassIdAndTime(Integer userId,Integer engclassId,Date queryDate);
+	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndTime(Integer userId,Integer engclassId,Date queryDate);
 	
 	
 	
@@ -41,7 +40,7 @@ public interface TimeSheetDao extends PageDao {
 	* @param date
 	* @return List<TimeSheetDetail>
 	*/ 
-	public List<TimeSheetDetail> selectTimeSheetByClassIdAndTime(Integer engclassId,Date date);
+	public List<TimeSheet> selectTimeSheetByClassIdAndTime(Integer engclassId,Date date);
 	
 	
 	
@@ -50,7 +49,7 @@ public interface TimeSheetDao extends PageDao {
 	* @param timeSheet
 	* @return boolean
 	*/ 
-	public int insert(TimeSheet timeSheet);
+	public void insert(TimeSheet timeSheet);
 	
 
 }
