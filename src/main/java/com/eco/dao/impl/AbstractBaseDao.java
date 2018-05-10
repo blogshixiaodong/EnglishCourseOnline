@@ -12,7 +12,6 @@ import org.hibernate.query.Query;
 
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.BaseDao;
-import com.eco.dao.PageDao;
 import com.eco.util.ReflectUtils;
 
 
@@ -40,7 +39,6 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
     	sessionFactory = configuration.buildSessionFactory();
 		session = getSession();
 		transaction = session.beginTransaction();
-		transaction.begin();
 		entityClass = ReflectUtils.getClass(getClass());
     }
     
@@ -138,18 +136,16 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	@Override
 	public List<T> list(String hql, PageContainer pageContainer, Object... params) {
-		Query query = getSession().createQuery(hql.toString());
-		if(pageContainer != null) {
-			int pageSize = pageContainer.getPageSize();
-			int currentPageNo = pageContainer.getCurrentPageNo();
-	        if (pageSize > 0 && currentPageNo > 0) {  
-	            query.setFirstResult((currentPageNo < 2) ? 0 : (currentPageNo - 1) * pageSize);  
-	            query.setMaxResults(pageSize);  
-	        }  
-		} else {
+		if(pageContainer == null) {
 			return list(hql, params);
 		}
-		
+		Query query = getSession().createQuery(hql.toString());
+		int pageSize = pageContainer.getPageSize();
+		int currentPageNo = pageContainer.getCurrentPageNo();
+        if (pageSize > 0 && currentPageNo > 0) {  
+            query.setFirstResult((currentPageNo < 2) ? 0 : (currentPageNo - 1) * pageSize);  
+            query.setMaxResults(pageSize);  
+        }  
         setParameter(query, params);  
        
         List<T> list = query.list();  

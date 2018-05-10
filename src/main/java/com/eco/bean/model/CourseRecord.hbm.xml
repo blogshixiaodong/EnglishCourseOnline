@@ -21,7 +21,7 @@
             <column name="SIGNCOUNT" />
         </property>
 
-        <many-to-one name="course" class="com.eco.bean.model.Course" column="COURSEID" cascade="all">
+        <many-to-one name="course" class="com.eco.bean.model.Course" column="COURSEID" cascade="all" >
         </many-to-one>
         
         <set name="engclassSet" table="ENGCLASS" cascade="all" >

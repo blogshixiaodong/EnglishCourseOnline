@@ -20,6 +20,8 @@ public class Engclass implements Serializable {
 	
 	private String classRoom;
 	
+	private Integer day;
+	
 	private Integer attendTime;
 
 	private CourseRecord courseRecord;
@@ -64,6 +66,14 @@ public class Engclass implements Serializable {
 
 	public void setClassRoom(String classRoom) {
 		this.classRoom = classRoom;
+	}
+
+	public Integer getDay() {
+		return day;
+	}
+
+	public void setDay(Integer day) {
+		this.day = day;
 	}
 
 	public Integer getAttendTime() {
@@ -121,5 +131,5 @@ public class Engclass implements Serializable {
 	public void setTimeSheetSet(Set<TimeSheet> timeSheetSet) {
 		this.timeSheetSet = timeSheetSet;
 	}
-	
+
 }
