@@ -32,4 +32,27 @@ public interface CourseDao {
 	 */
 	List<Course> selectTeacherAllCourseListByTeacherId(Integer teacherId);
 
+	/** 
+	* @Description: 用户 查询进程中课程
+	* @param userid
+	* @return List<User>
+	*/ 
+	List<Course> selectUserNowCourseListByUserId(Integer userId);
+	
+	
+	/** 
+	* @Description:用户查看历史课程
+	* @param userid
+	* @return List<Course>
+	*/ 
+	List<Course> selectUserHistoryCourseDetailListByUserId(Integer userId);
+	
+	
+	/** 
+	* @Description: 用户查询所有课程
+	* @param userid
+	* @return List<Course>
+	*/ 
+	List<Course> selectUserAllCourseDetailListByUserId(Integer userId);
+
 }

@@ -17,9 +17,12 @@
         <property name="classRoom" type="java.lang.String">
             <column name="CLASSROOM" />
         </property>
+<<<<<<< HEAD
         <property name="day" type="java.lang.Integer">
             <column name="DAY" />
         </property>
+=======
+>>>>>>> origin/hibernate
         <property name="attendTime" type="java.lang.Integer">
             <column name="ATTENDTIME" />
         </property>
