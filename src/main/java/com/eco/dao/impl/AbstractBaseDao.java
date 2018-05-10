@@ -40,7 +40,6 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
     	sessionFactory = configuration.buildSessionFactory();
 		session = getSession();
 		transaction = session.beginTransaction();
-		transaction.begin();
 		entityClass = ReflectUtils.getClass(getClass());
     }
     
