@@ -17,7 +17,7 @@
         <property name="classRoom" type="java.lang.String">
             <column name="CLASSROOM" />
         </property>
-        <property name="attendTime" type="java.util.Date">
+        <property name="attendTime" type="java.lang.Integer">
             <column name="ATTENDTIME" />
         </property>
         <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" >
