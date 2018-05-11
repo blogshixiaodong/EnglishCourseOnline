@@ -19,4 +19,12 @@ public interface TeacherBackInfoDao {
 	 * @param teacherBackInfoList
 	 */
 	void insertTeacherBackInfo(List<TeacherBackInfo> teacherBackInfoList);
+	
+	/** 
+	* @Description: 用户查询教师反馈信息 
+	* @param engclassId
+	* @return List<TeacherBackInfo>
+	*/ 
+	List<TeacherBackInfo> selectTeacherBackInfoByEngclassId(Integer userId,Integer engclassId);
+
 }
