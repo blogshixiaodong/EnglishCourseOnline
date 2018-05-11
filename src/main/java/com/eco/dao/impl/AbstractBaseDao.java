@@ -30,6 +30,8 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
     protected Session session;
     
     protected Transaction transaction;
+    
+    protected Boolean autoCommit = true;
 	
     static {
     	configuration = new Configuration().configure();
@@ -45,54 +47,70 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	@Override
 	public Object save(T entity) {
 		Object identifier = session.save(entity);
-		commit();
+		if(getAutoCommit()) {
+			commit();
+		}
 		return identifier;
 	}
 
 	@Override
 	public void save(List<T> list) {
+		this.setAutoCommit(false);
 		for(T t : list) {
 			save(t);
 		}
+		commit();
 	}
 
 	@Override
 	public void delete(T entity) {
 		session.delete(entity);
-		commit();
+		if(getAutoCommit()) {
+			commit();
+		}
 	}
 
 	@Override
 	public void delete(List<T> list) {
+		this.setAutoCommit(false);
 		for(T t : list) {
 			delete(t);
 		}
+		commit();
 	}
 
 	@Override
 	public void update(Object entity) {
 		session.update(entity);
-		commit();
+		if(getAutoCommit()) {
+			commit();
+		}
 	}
 
 	@Override
 	public void update(List<T> list) {
+		this.setAutoCommit(false);
 		for(T t : list) {
 			update(t);
 		}
+		commit();
 	}
 
 	@Override
 	public void saveOrUpdate(Object entity) {
 		session.saveOrUpdate(entity);
-		commit();
+		if(getAutoCommit()) {
+			commit();
+		}
 	}
 
 	@Override
 	public void saveOrUpdate(List<T> list) {
+		this.setAutoCommit(false);
 		for(T t : list) {
 			saveOrUpdate(t);
 		}
+		commit();
 	}
 
 	@Override
@@ -154,6 +172,12 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         pageContainer.setRecordCount(Integer.parseInt(query.uniqueResult().toString()));
         return list;  
 	}
+	
+	public Object getUniqueResult(String hql, Object... params) {
+		Query query = session.createQuery(hql);
+		setParameter(query, params);
+		return query.uniqueResult();
+	}
 
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -176,5 +200,13 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 			query.setParameter(i, params[i]);
 		}
 	}
-	
+
+	public Boolean getAutoCommit() {
+		return autoCommit;
+	}
+
+	public void setAutoCommit(Boolean autoCommit) {
+		this.autoCommit = autoCommit;
+	}
+
 }
