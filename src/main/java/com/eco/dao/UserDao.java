@@ -16,8 +16,5 @@ public interface UserDao {
 	* @return List<User>
 	*/ 
 	List<User> selectEngclassAllUserByEngclassId(Integer engclassId);
-	
 
-	
-	
 }

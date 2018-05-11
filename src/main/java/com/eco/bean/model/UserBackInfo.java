@@ -20,8 +20,6 @@ public class UserBackInfo implements Serializable {
 	private Engclass engclass;
 	
 	private User user;
-	
-	private Teacher teacher;
 
 	public Integer getUserBackInfoId() {
 		return userBackInfoId;
@@ -30,7 +28,6 @@ public class UserBackInfo implements Serializable {
 	public void setUserBackInfoId(Integer userBackInfoId) {
 		this.userBackInfoId = userBackInfoId;
 	}
-
 
 	public Date getBackTime() {
 		return backTime;
@@ -63,15 +60,5 @@ public class UserBackInfo implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public Teacher getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
-	
-	
 
 }

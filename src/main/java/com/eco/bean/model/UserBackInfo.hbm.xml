@@ -17,13 +17,8 @@
         <many-to-one name="engclass" class="com.eco.bean.model.Engclass">
             <column name="ENGCLASSID" />
         </many-to-one>
-        
         <many-to-one name="user" class="com.eco.bean.model.User">
             <column name="USERID" />
-        </many-to-one>
-        
-        <many-to-one name="teacher" class="com.eco.bean.model.Teacher">
-            <column name="TEACHERID" />
         </many-to-one>
     </class>
 </hibernate-mapping>

@@ -10,5 +10,10 @@ import com.eco.dao.UserBackInfoDao;
  */
 public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implements UserBackInfoDao {
 
+	@Override
+	public List<UserBackInfo> selectUserBackInfoByEngclassId(Integer engclassId) {
+		String hql = " SELECT ubi FROM UserBackInfo ubi WHERE ubi.engclass.engclassId = ?";
+		return this.list(hql, engclassId);
+	}
 
 }

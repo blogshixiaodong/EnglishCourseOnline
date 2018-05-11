@@ -2,7 +2,6 @@ package com.eco.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import com.eco.bean.model.PageContainer;
 
@@ -72,8 +71,7 @@ public interface BaseDao<T> {
 	 * @param params 可选的查询参数
 	 * @return 单个实体，如果查询结果有多个，则返回第一个实体
 	 */
-	@SuppressWarnings("hiding")
-	<T> T get(String hql, Object... params);
+	T get(String hql, Object... params);
 
 	/**
 	 * 查询实体列表
@@ -81,7 +79,6 @@ public interface BaseDao<T> {
 	 * @param params 可选的查询参数
 	 * @return 实体列表
 	 */
-	@SuppressWarnings("hiding")
 	List<T> list(String hql, Object... params);
 
 	/**
@@ -90,7 +87,6 @@ public interface BaseDao<T> {
 	 * @param pageContainer 分页信息
 	 * @return 实体分页对象
 	 */
-	@SuppressWarnings("hiding")
 	List<T> list(String hql, PageContainer pageContainer, Object... params);
 
 }

@@ -1,7 +1,5 @@
 package com.eco.dao.impl;
 
-import java.util.List;
-
 import com.eco.bean.model.Teacher;
 import com.eco.dao.TeacherDao;
 

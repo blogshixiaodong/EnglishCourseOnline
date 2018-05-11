@@ -134,7 +134,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 
 	@Override
-	public <T> T get(String hql, Object... params) {
+	public T get(String hql, Object... params) {
 		Query query = session.createQuery(hql);
 		setParameter(query, params);
 		List<T> list = query.list();
