@@ -154,6 +154,12 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         pageContainer.setRecordCount(Integer.parseInt(query.uniqueResult().toString()));
         return list;  
 	}
+	
+	public Object getUniqueResult(String hql, Object... params) {
+		Query query = session.createQuery(hql);
+		setParameter(query, params);
+		return query.uniqueResult();
+	}
 
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
