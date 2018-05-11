@@ -9,47 +9,47 @@ import com.eco.bean.model.TimeSheet;
  * date:   2018年4月20日 下午11:07:27
  * author: Shixiaodong
  */
-public interface TimeSheetDao extends PageDao {
-	
-	public abstract List<TimeSheet> selectTimeSheetListByEnclassIdAndDate(Integer engclassId, Date date);
+public interface TimeSheetDao {
 	
 	
 	/** 
-	* @Description: 通过用户id和班级id,返回用户所在班级的考勤记录 
-	* @param userid
-	* @param engclass
-	* @return List<TimeSheetDao>
+	* @Description: 查询某个班级的所有考勤信息
+	* @param userId
+	* @param engclassId
+	* @return List<TimeSheet>
 	*/ 
-	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId,Integer engclassId);
-	
+	List<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId);
 	
 	/** 
-	* @Description: 查询用户的某班某天的考勤记录
+	* @Description: 查询某个班级某天的考勤信息
 	* @param userId
 	* @param engclassId
 	* @param queryDate
-	* @return List<TimeSheetDetail>
+	* @return List<TimeSheet>
 	*/ 
-	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndTime(Integer userId,Integer engclassId,Date queryDate);
-	
-	
+	List<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate); 
 	
 	/** 
-	* @Description: 根据classid和日期查询该班级的考勤记录 
-	* @param classId
-	* @param date
-	* @return List<TimeSheetDetail>
+	* @Description: 判断用户在这个班级的这一天有没有课程，没有请假失败
+	* @param userId
+	* @param engclassId
+	* @param queryDate
+	* @return Integer
 	*/ 
-	public List<TimeSheet> selectTimeSheetByClassIdAndTime(Integer engclassId,Date date);
-	
-	
+	Integer countCourseByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate);
 	
 	/** 
-	* @Description: 通过考勤对象创建考勤记录 
-	* @param timeSheet
-	* @return boolean
+	* @Description: 是否存在重复请假问题 
+	* @param userId
+	* @param engclassId
+	* @param queryDate
+	* @return Integer
 	*/ 
-	public void insert(TimeSheet timeSheet);
-	
+	Integer countTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate);
 
+	/** 
+	* @Description: 添加请假记录 
+	* @param timeSheet void
+	*/ 
+	void insertTimeSheet(TimeSheet timeSheet);
 }
