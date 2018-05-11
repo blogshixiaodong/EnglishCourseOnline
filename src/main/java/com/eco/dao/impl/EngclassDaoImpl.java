@@ -62,7 +62,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 
 	@Override																		
 	public List<Engclass> selectEngclassByDate(Date beginDate,Integer userId) {
-		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND STR_TO_DATE(cr.endTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND STR_TO_DATE(cr.endTime,'%Y-%m-%d') < STR_TO_DATE(?,'%Y-%m-%d') ";
 		return this.list(hql, userId,beginDate) ;
 	}
 	

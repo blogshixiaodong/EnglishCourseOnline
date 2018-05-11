@@ -31,13 +31,13 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 	@Override
 	public Integer countCourseByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate) {
 		String hql = "SELECT COUNT(*) FROM User u ELFT JOIN u.engclassSet ec LEFT JOIN ec.courseRecord cr WHERE STR_TO_DATE(cr.startTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') AND u.userId = ? AND ec.engclassId = ? ";
-		return this.executeHQLUpdate(hql, queryDate,userId,engclassId) ;
+		return (Integer) this.getUniqueResult(hql, userId,engclassId);
 	}
 
 	@Override
 	public Integer countTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate) {
 		String hql = "SELECT COUNT(*) FROM User u LEFT JOIN u.engclassSet ec LEFT JOIN ec.timeSheetSet ts WHERE u.userId = ? AND ec.engclassId = ? AND STR_TO_DATE(ts.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
-		return this.executeHQLUpdate(hql, userId,engclassId,queryDate);
+		return (Integer) this.getUniqueResult(hql,userId,engclassId,queryDate);
 	}
 
 	@Override
