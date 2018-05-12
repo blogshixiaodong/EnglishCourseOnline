@@ -23,9 +23,9 @@
     		</result>
     	</action>
     	
-    	<action name="nowCourses" class="com.eco.action.TeacherAction" method="findTeacherNowCourseDetailList">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/index.jsp</param>
+    	<action name="nowCourses" class="com.eco.action.TeacherAction" method="findTeacherNowCourseList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>

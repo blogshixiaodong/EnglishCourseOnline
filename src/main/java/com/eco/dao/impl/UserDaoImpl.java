@@ -12,10 +12,10 @@ import com.eco.dao.UserDao;
  */
 public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 	
-	private PageContainer pageContainer;
+	private PageContainer<User> pageContainer;
 
 	@Override
-	public List<User> selectEngclassAllUserByEngclassId(Integer engclassId) {
+	public PageContainer<User> selectEngclassAllUserByEngclassId(Integer engclassId) {
 		String hql = " SELECT u FROM User u LEFT JOIN u.engclassSet es WHERE es.engclassId = ? ";
 		return this.list(hql, pageContainer, engclassId);
 	}

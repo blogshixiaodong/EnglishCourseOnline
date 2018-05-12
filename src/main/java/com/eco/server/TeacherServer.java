@@ -19,7 +19,7 @@ public interface TeacherServer {
 	 * @param pageContainer
 	 * @return
 	 */
-	PageContainer<Course> queryNowCourseListByTeacherId(Integer teacherId,PageContainer pageContainer);
+	PageContainer<Course> queryNowCourseListByTeacherId(Integer teacherId,PageContainer<Course> pageContainer);
 	
 	/**
 	 * 根据教师id获取教师已完成的课程列表信息,支持分页
@@ -27,7 +27,7 @@ public interface TeacherServer {
 	 * @param pageContainer
 	 * @return
 	 */
-	PageContainer<Course> queryHistoryCourseListByTeacherId(Integer teacherId,PageContainer pageContainer);
+	PageContainer<Course> queryHistoryCourseListByTeacherId(Integer teacherId,PageContainer<Course> pageContainer);
 	
 	/**
 	 * 根据教师id获取教师所有的课程列表信息,支持分页
@@ -35,14 +35,14 @@ public interface TeacherServer {
 	 * @param pageContainer
 	 * @return
 	 */
-	PageContainer<Course> queryAllCourseListByTeacherId(Integer teacherId, PageContainer pageContainer);
+	PageContainer<Course> queryAllCourseListByTeacherId(Integer teacherId, PageContainer<Course> pageContainer);
 	
 	/**
 	 * 根据教师id获取教师正在上课的的班级信息,支持分页
 	 * @param teacherId
 	 * @return
 	 */
-	List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer);
+	List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer);
 
 	/**
 	 * 根据教师id获取教师上过已结课的班级信息,支持分页
@@ -50,7 +50,7 @@ public interface TeacherServer {
 	 * @param pageContainer
 	 * @return
 	 */
-	List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer pageContainere);
+	List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainere);
 	
 	/**
 	 * 根据教师id获取教师上过所有的班级信息,支持分页
@@ -58,8 +58,6 @@ public interface TeacherServer {
 	 * @param pageContainer
 	 * @return
 	 */
-	List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer);
-	
-
+	List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer);
 	
 }

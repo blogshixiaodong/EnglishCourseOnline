@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.eco.bean.model.Engclass;
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.User;
 
 
@@ -11,32 +12,29 @@ import com.eco.bean.model.User;
  * date:   2018年4月20日 下午10:31:04
  * author: Shixiaodong
  */
-/**
- * @author 15129
- *
- */
-public interface EngclassDao extends PageDao {
+
+public interface EngclassDao extends PageDao<Engclass> {
 
 	/**
 	 * 根据教师id获取教师正在进行授课的班级
 	 * @param teacherId
 	 * @return
 	 */
-	List<Engclass> selectTeacherNowEngclassListByTeacherId(Integer teacherId);
+	PageContainer<Engclass> selectTeacherNowEngclassListByTeacherId(Integer teacherId);
 
 	/**
 	 * 根据教师id获取教师已完成授课的班级
 	 * @param teacherId
 	 * @return
 	 */
-	List<Engclass> selectTeacherHistoryEngclassListByTeacherId(Integer teacherId);
+	PageContainer<Engclass> selectTeacherHistoryEngclassListByTeacherId(Integer teacherId);
 
 	/**
 	 * 根据教师id获取教师所有授课的班级
 	 * @param teacherId
 	 * @return
 	 */
-	List<Engclass> selectTeacherAllEngclassListByTeacherId(Integer teacherId);
+	PageContainer<Engclass> selectTeacherAllEngclassListByTeacherId(Integer teacherId);
 	
 	
 	/** 
@@ -44,7 +42,7 @@ public interface EngclassDao extends PageDao {
 	* @param userid
 	* @return List<Engclass>
 	*/ 
-	List<Engclass> selectUserNowEngclassListByUserId(Integer userid);
+	PageContainer<Engclass> selectUserNowEngclassListByUserId(Integer userid);
 	
 	
 	/** 
@@ -52,7 +50,7 @@ public interface EngclassDao extends PageDao {
 	* @param userid
 	* @return List<Engclass>
 	*/ 
-	List<Engclass> selectUserHistoryEngclassListByUserId(Integer userid);
+	PageContainer<Engclass> selectUserHistoryEngclassListByUserId(Integer userid);
 	
 	
 	/** 
@@ -60,14 +58,14 @@ public interface EngclassDao extends PageDao {
 	* @param userid
 	* @return List<Engclass>
 	*/ 
-	List<Engclass> selectUserAllEngclassListByUserId(Integer userid);
+	PageContainer<Engclass> selectUserAllEngclassListByUserId(Integer userid);
 	
 	
 	/** 
-	* @Description: 添加用户 
+	* @Description: 根据班级id 在该班级(userengclass表)插入一条学生记录
 	* @param user void
 	*/ 
-	void insertUser(User user);
+	void insertUser(User user,Integer engclassId);
 	
 	
 	/** 

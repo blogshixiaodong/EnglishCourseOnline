@@ -13,21 +13,20 @@ import com.eco.dao.TimeSheetDao;
  */
 public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements TimeSheetDao {
 
-	private PageContainer pageContainer;
+	private PageContainer<TimeSheet> pageContainer;
 
 	@Override
-	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId) {
+	public PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId) {
 		String hql = "FROM TimeSheet ts LEFT JOIN FETCH ts.engclass ec LEFT JOIN FETCH ts.user u WHERE u.userId = ? and ec.engclassId = ?";
-		return this.list(hql, userId,engclassId);
+		return this.list(hql,pageContainer, userId,engclassId);
 	}
 
 	@Override
-	public List<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId,Date queryDate) {
+	public PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId,Date queryDate) {
 		String hql = "FROM TimeSheet ts LEFT JOIN FETCH ts.engclass ec LEFT JOIN FETCH ts.user u WHERE u.userId = ? and ec.engclassId = ? AND STR_TO_DATE(ts.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
-		return this.list(hql, userId,engclassId,queryDate);
+		return this.list(hql,pageContainer ,userId,engclassId,queryDate);
 	}
 
-	//判断用户在这个班级的这一天有没有课程，没有请假失败
 	@Override
 	public Integer countCourseByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate) {
 		String hql = "SELECT COUNT(*) FROM User u ELFT JOIN u.engclassSet ec LEFT JOIN ec.courseRecord cr WHERE STR_TO_DATE(cr.startTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') AND u.userId = ? AND ec.engclassId = ? ";
@@ -46,7 +45,7 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 	}
 	
 	@Override
-	public List<TimeSheet> selectTimeSheetByEnglassIdAndDate(Integer engclassId, Date date) {
+	public PageContainer<TimeSheet> selectTimeSheetByEnglassIdAndDate(Integer engclassId, Date date) {
 		String hql = " SELECT t FROM TimeSheet t WHERE t.engclass.engclassId = ? AND STR_TO_DATE(t.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
 		return this.list(hql, pageContainer, engclassId, date);
 	}

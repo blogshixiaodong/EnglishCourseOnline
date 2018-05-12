@@ -18,37 +18,37 @@ public class TeacherServerImpl implements TeacherServer {
 	private CourseDao courseDao = new CourseDaoImpl();
 	
 	@Override
-	public PageContainer<Course> queryNowCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+	public PageContainer<Course> queryNowCourseListByTeacherId(Integer teacherId, PageContainer<Course> pageContainer) {
 		courseDao.setPageContainer(pageContainer);
 		return courseDao.selectTeacherNowCourseListByTeacherId(teacherId);
 	}
 
 	@Override
-	public PageContainer<Course> queryHistoryCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+	public PageContainer<Course> queryHistoryCourseListByTeacherId(Integer teacherId, PageContainer<Course> pageContainer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PageContainer<Course> queryAllCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+	public PageContainer<Course> queryAllCourseListByTeacherId(Integer teacherId, PageContainer<Course> pageContainer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+	public List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer pageContainere) {
+	public List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainere) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+	public List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
