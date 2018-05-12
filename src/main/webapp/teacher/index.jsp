@@ -96,61 +96,81 @@
         		dataType: "json",
         		success: function(responseText) {
         			var json = JSON.parse(responseText);
-        			var tbody = $("#courseTable tbody");
-					
-        			//创建表格
-        			for(var i = 0; i < json.list.length; i++) {
-        				var course = json.list[i];
-        				//一门课程存在多个课程记录
-        				var courseRecordSet = course.courseRecordSet;
-        				for(var j = 0; j < courseRecordSet.length; j++) {
-        					var courseRecord = courseRecordSet[j];
-            				var courseId = $("<td></td>").html(course.courseId);
-            				var courseName = $("<td></td>").html(course.courseName);
-            				var info = $("<td></td>").html(course.info);
-            				var types = $("<td></td>").html(course.types);
-        					var startTime = $("<td></td>").html(JsonDateToString(courseRecord.startTime));
-            				var endTime = $("<td></td>").html(JsonDateToString(courseRecord.endTime));
-            				var tr = $("<tr></tr>");
-            				tr.append(courseId);
-            				tr.append(courseName);
-            				tr.append(info);
-            				tr.append(types);
-            				tr.append(startTime);
-            				tr.append(endTime);
-            				tbody.append(tr);
-        				}
-        			}
-        			
-        			//创建按钮组
-        			var btnGroup = $("#btnGroup");
-        			var currentPageNo = json.currentPageNo;
-        			var pageCount = json.pageCount;
-        			
-        			var recordCount = json.recordCount;
-        			if(currentPageNo == 1) {
-        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
-        			} else {
-        				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
-        			}
-        			for(var i = 1; i <= pageCount; i++) {
-        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
-        			}
-        			if(currentPageNo == pageCount) {
-        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
-        			} else {
-        				btnGroup.append($("<button class='btn btn-default' pageNo='" + currentPageNo  +"'>下一页</button>"));
-        			}
+        			createCourseTable(json);
         		}
         	});
     		
     	});
     	
-	  	$(".btn").click(function() {
-	  		
-	  		alert("click");
-	  	})
+	  	$("#btnGroup").on("click", ".btn", function() {
+	  		var pageNo = $(this).attr("pageNo");
+	  		$.ajax({
+        		url: "nowCourses.action",
+        		type: "post",
+        		data: {
+        			"pageContainer.currentPageNo": pageNo,
+        			"pageContainer.pageSize": 3
+        		},
+        		dataType: "json",
+        		success: function(responseText) {
+        			var json = JSON.parse(responseText);
+        			createCourseTable(json);
+        		}
+        	});
+	  	});
     
+		function createCourseTable(json) {
+			var tbody = $("#courseTable tbody");
+			tbody.html("");
+			//创建表格
+			for(var i = 0; i < json.list.length; i++) {
+				var course = json.list[i];
+				//一门课程存在多个课程记录
+				var courseRecordSet = course.courseRecordSet;
+				for(var j = 0; j < courseRecordSet.length; j++) {
+					var courseRecord = courseRecordSet[j];
+    				var courseId = $("<td></td>").html(course.courseId);
+    				var courseName = $("<td></td>").html(course.courseName);
+    				var info = $("<td></td>").html(course.info);
+    				var types = $("<td></td>").html(course.types);
+					var startTime = $("<td></td>").html(JsonDateToString(courseRecord.startTime));
+    				var endTime = $("<td></td>").html(JsonDateToString(courseRecord.endTime));
+    				var tr = $("<tr></tr>");
+    				tr.append(courseId);
+    				tr.append(courseName);
+    				tr.append(info);
+    				tr.append(types);
+    				tr.append(startTime);
+    				tr.append(endTime);
+    				tbody.append(tr);
+				}
+			}
+			
+			//创建按钮组
+			var btnGroup = $("#btnGroup");
+			btnGroup.html("");
+			var currentPageNo = json.currentPageNo;
+			var pageCount = json.pageCount;
+			
+			var recordCount = json.recordCount;
+			if(currentPageNo == 1) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo - 1) + "'>上一页</button>"));
+			}
+			for(var i = 1; i <= pageCount; i++) {
+				if(i == currentPageNo) {
+					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+					continue;
+				}
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
+			}
+			if(currentPageNo == pageCount) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo + 1 ) + "'>下一页</button>"));
+			}
+		}
 
     </script>
 </body>
