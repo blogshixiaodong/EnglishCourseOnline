@@ -21,10 +21,10 @@
             <column name="SIGNCOUNT" />
         </property>
 
-        <many-to-one name="course" class="com.eco.bean.model.Course" column="COURSEID" cascade="all" >
+        <many-to-one name="course" class="com.eco.bean.model.Course" column="COURSEID" cascade="all" lazy="false">
         </many-to-one>
         
-        <set name="engclassSet" table="ENGCLASS" cascade="all" >
+        <set name="engclassSet" table="ENGCLASS" cascade="all" lazy="false">
         	<key column="COURSERECORDID"></key>
         	<one-to-many class="com.eco.bean.model.Engclass" />
         </set>

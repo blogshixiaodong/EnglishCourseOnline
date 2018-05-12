@@ -30,7 +30,7 @@
             <column name="IMGURL" />
         </property>
         
-        <set name="engclassSet" table="USERENGCLASS" cascade="all" inverse="false" lazy="true">
+        <set name="engclassSet" table="USERENGCLASS" cascade="all" inverse="false" lazy="false">
             <key>
                 <column name="USERID" />
             </key>

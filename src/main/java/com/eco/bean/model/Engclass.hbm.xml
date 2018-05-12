@@ -23,35 +23,35 @@
         <property name="attendTime" type="java.lang.Integer">
             <column name="ATTENDTIME" />
         </property>
-        <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" >
+        <many-to-one name="courseRecord" class="com.eco.bean.model.CourseRecord" lazy="false" >
             <column name="COURSERECORDID" />
         </many-to-one>
         <many-to-one name="teacher" class="com.eco.bean.model.Teacher" >
             <column name="TEACHERID" />
         </many-to-one>
          
-        <set name="teacherBackInfoSet" table="TEACHERBACKINFO" inverse="false" lazy="true">
+        <set name="teacherBackInfoSet" table="TEACHERBACKINFO" inverse="false" lazy="false">
             <key>
                 <column name="ENGCLASSID" />
             </key>
             <one-to-many class="com.eco.bean.model.TeacherBackInfo" />
         </set>
         
-        <set name="userSet" table="USERENGCLASS" inverse="false" lazy="true">
+        <set name="userSet" table="USERENGCLASS" inverse="false" lazy="false">
             <key>
                 <column name="ENGCLASSID" />
             </key>
             <many-to-many class="com.eco.bean.model.User" column="USERID"  />
         </set>
         
-        <set name="userBackInfoSet" table="USERBACKINFO" inverse="false" lazy="true">
+        <set name="userBackInfoSet" table="USERBACKINFO" inverse="false" lazy="false">
             <key>
                 <column name="ENGCLASSID" />
             </key>
             <one-to-many class="com.eco.bean.model.UserBackInfo" />
         </set>
         
-        <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="true">
+        <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="false">
             <key>
                 <column name="ENGCLASSID" />
             </key>
