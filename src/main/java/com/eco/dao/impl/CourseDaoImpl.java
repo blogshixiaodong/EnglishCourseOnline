@@ -12,24 +12,24 @@ import com.eco.dao.CourseDao;
  */
 public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao {
 
-	private PageContainer pageContainer;
+	private PageContainer<Course> pageContainer;
 	
 	@Override
-	public List<Course> selectTeacherNowCourseListByTeacherId(Integer teacherId) {
+	public PageContainer<Course> selectTeacherNowCourseListByTeacherId(Integer teacherId) {
 		String hql = " SELECT distinct c FROM Course c LEFT JOIN CourseRecord cr ON c.courseId = cr.course.courseId LEFT JOIN Engclass e ON e.courseRecord.courseRecordId = cr.courseRecordId " +
 					 " WHERE e.teacher.teacherId = ? AND NOW() between cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer, teacherId);
 	}
 
 	@Override
-	public List<Course> selectTeacherHistoryCourseListByTeacherId(Integer teacherId) {
+	public PageContainer<Course> selectTeacherHistoryCourseListByTeacherId(Integer teacherId) {
 		String hql = " SELECT distinct c FROM Course c LEFT JOIN CourseRecord cr ON c.courseId = cr.course.courseId LEFT JOIN Engclass e ON e.courseRecord.courseRecordId = cr.courseRecordId " +
 				 " WHERE e.teacher.teacherId = ? AND endTime < NOW() ORDER BY startTime DESC ";
 		return this.list(hql, pageContainer, teacherId);
 	}
 
 	@Override
-	public List<Course> selectTeacherAllCourseListByTeacherId(Integer teacherId) {
+	public PageContainer<Course> selectTeacherAllCourseListByTeacherId(Integer teacherId) {
 		String hql = " SELECT distinct c FROM Course c LEFT JOIN CourseRecord cr ON c.courseId = cr.course.courseId LEFT JOIN Engclass e ON e.courseRecord.courseRecordId = cr.courseRecordId " +
 				 " WHERE e.teacher.teacherId = ? ORDER BY startTime DESC ";
 		return this.list(hql, pageContainer, teacherId);
@@ -55,10 +55,12 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 		return this.list(hql, userId);
 	}
 	
+	@Override
 	public PageContainer getPageContainer() {
 		return pageContainer;
 	}
 
+	@Override
 	public void setPageContainer(PageContainer pageContainer) {
 		this.pageContainer = pageContainer;
 

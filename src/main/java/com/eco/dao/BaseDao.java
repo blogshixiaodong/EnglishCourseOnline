@@ -87,6 +87,6 @@ public interface BaseDao<T> {
 	 * @param pageContainer 分页信息
 	 * @return 实体分页对象
 	 */
-	List<T> list(String hql, PageContainer pageContainer, Object... params);
+	PageContainer<T> list(String hql, PageContainer<T> pageContainer, Object... params);
 
 }

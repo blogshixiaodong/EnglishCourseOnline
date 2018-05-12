@@ -8,8 +8,8 @@ import com.eco.bean.model.PageContainer;
  */
 public interface PageDao {
 	
-	void beginPaging(PageContainer pageContainer);
-	
-	void clearPaging();
+	PageContainer getPageContainer();
+
+	void setPageContainer(PageContainer pageContainer);
 	
 }

@@ -1,12 +1,13 @@
 package com.eco.bean.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /*
  * date:   2018年5月1日 上午11:05:02
  * author: Shixiaodong
  */
-public class PageContainer implements Serializable {
+public class PageContainer<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -17,6 +18,8 @@ public class PageContainer implements Serializable {
 	private Integer pageCount;
 	
 	private Integer currentPageNo;
+	
+	private List<T> list;
 
 	public Integer getPageSize() {
 		if(pageSize == null) {
@@ -55,6 +58,14 @@ public class PageContainer implements Serializable {
 
 	public void setCurrentPageNo(Integer currentPageNo) {
 		this.currentPageNo = currentPageNo;
+	}
+
+	public List<T> getList() {
+		return list;
+	}
+
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 
 }

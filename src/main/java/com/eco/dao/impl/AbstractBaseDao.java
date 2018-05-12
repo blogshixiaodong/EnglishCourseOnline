@@ -153,10 +153,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 
 	@Override
-	public List<T> list(String hql, PageContainer pageContainer, Object... params) {
-		if(pageContainer == null) {
-			return list(hql, params);
-		}
+	public PageContainer<T> list(String hql, PageContainer<T> pageContainer, Object... params) {
 		Query query = getSession().createQuery(hql.toString());
 		int pageSize = pageContainer.getPageSize();
 		int currentPageNo = pageContainer.getCurrentPageNo();
@@ -170,7 +167,8 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         String countString = "SELECT COUNT(*) FROM " + entityClass.getName();
         query = getSession().createQuery(countString);
         pageContainer.setRecordCount(Integer.parseInt(query.uniqueResult().toString()));
-        return list;  
+        pageContainer.setList(list);
+        return pageContainer;  
 	}
 	
 	public Object getUniqueResult(String hql, Object... params) {
