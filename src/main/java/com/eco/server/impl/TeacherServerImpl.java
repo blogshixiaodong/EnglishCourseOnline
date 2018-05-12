@@ -1,22 +1,12 @@
 package com.eco.server.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.eco.bean.dto.CourseDetail;
-import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.model.TeacherAccount;
+import com.eco.bean.model.Course;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
-import com.eco.bean.model.Teacher;
-import com.eco.dao.AccountDao;
 import com.eco.dao.CourseDao;
-import com.eco.dao.EngclassDao;
-import com.eco.dao.TeacherDao;
-import com.eco.dao.impl.AccountDaoImpl;
 import com.eco.dao.impl.CourseDaoImpl;
-import com.eco.dao.impl.EngclassDaoImpl;
-import com.eco.dao.impl.TeacherDaoImpl;
 import com.eco.server.TeacherServer;
 
 /*
@@ -27,95 +17,41 @@ public class TeacherServerImpl implements TeacherServer {
 
 	private CourseDao courseDao = new CourseDaoImpl();
 	
-	private EngclassDao engclassDao = new EngclassDaoImpl();
-	
-	private TeacherDao teacherDao = new TeacherDaoImpl();
-	
-	private AccountDao accountDao = new AccountDaoImpl();
-	
 	@Override
-	public List<CourseDetail> queryNowCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer) {
-		
-		pageContainer.setPageSize(5);
-		pageContainer.setRecordCount(courseDao.countNowCourseDetailByTeacherId(teacherId));
-		
-		courseDao.beginPaging(pageContainer);
-		return courseDao.selectTeacherNowCourseDetailListByTeacherId(teacherId);
+	public PageContainer<Course> queryNowCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		courseDao.setPageContainer(pageContainer);
+		return courseDao.selectTeacherNowCourseListByTeacherId(teacherId);
 	}
 
 	@Override
-	public List<CourseDetail> queryHistoryCourseDetailListByTeacherId(Integer teacherId,PageContainer pageContainer) {
-		
-		pageContainer.setPageSize(5);
-		pageContainer.setRecordCount(courseDao.countHistoryCourseDetailByTeacherId(teacherId));
-		
-		return courseDao.selectTeacherHistoryCourseDetailListByTeacherId(teacherId);
+	public PageContainer<Course> queryHistoryCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public List<CourseDetail> queryAllCourseDetailListByTeacherId(Integer teacherId, PageContainer pageContainer) {
-		pageContainer.setPageSize(5);
-		courseDao.beginPaging(pageContainer);
-		pageContainer.setRecordCount(courseDao.countAllCourseDetailByTeacherId(teacherId));
-		courseDao.beginPaging(pageContainer);
-		return courseDao.selectAllCourseDetailListByTeacherId(teacherId);
-	}
-	
-	@Override
-	public List<EngclassDetail> queryEngclassListByTeacherId(Integer teacherId,PageContainer pageContainer) {
-		if(pageContainer != null) {
-			pageContainer.setPageSize(5);
-			pageContainer.setRecordCount(engclassDao.countAllEngclassDetailByTeacher(teacherId));
-			engclassDao.beginPaging(pageContainer);
-		}
-		return engclassDao.selectEngclassListByTeacherId(teacherId);
+	public PageContainer<Course> queryAllCourseListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public List<Engclass> queryEngclassByCondition(Integer teacherId, Integer classId, String className) {
-		List<Engclass> engclassList = null;
-		if(classId == null) {
-			if(className == null || "".equals(className)) {
-				return null;
-			} else {
-				engclassList = engclassDao.selectEngclassListByTeacherIdAndEngclassName(teacherId, className);
-			}
-		} else {
-			engclassList = new ArrayList<>();
-			engclassList.add(engclassDao.selectEngclassByTeacherIdAndEngclassId(teacherId, classId));
-		}
-		return engclassList;
+	public List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public EngclassDetail queryEngclassDetailByEngclassId(Integer classId) {
-		return engclassDao.selectEngclassDetailByEngclassId(classId);
-	}
-	
-	@Override
-	public Boolean loginCheck(TeacherAccount account) {
-		//账号是否存在
-		if(accountDao.countAccount(account.getId()) != 1) {
-			return false;
-		}
-		TeacherAccount dbAccount = accountDao.selectAccount(account.getId());
-		if(!dbAccount.getPassword().equals(account.getPassword())) {
-			return false;
-		}
-		account.setRoleId(dbAccount.getRoleId());
-		account.setRole(dbAccount.getRole());
-		return true;
+	public List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer pageContainere) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Teacher queryTeacher(Integer teacherId) {
-		return teacherDao.selectTeacher(teacherId);
+	public List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer pageContainer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	@Override
-	public List<Teacher> queryAllTeacher() {
-		return teacherDao.selectAllTeaher();
-	}
-	
+
 	
 }

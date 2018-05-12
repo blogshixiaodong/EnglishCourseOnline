@@ -66,10 +66,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return this.list(hql, userId,beginDate) ;
 	}
 	
+	@Override
 	public PageContainer getPageContainer() {
 		return pageContainer;
 	}
 
+	@Override
 	public void setPageContainer(PageContainer pageContainer) {
 		this.pageContainer = pageContainer;
 	}

@@ -32,18 +32,19 @@ public class TeacherLoginFilter implements Filter{
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)res;
 		HttpSession session = request.getSession();
-		
-		if(request.getServletPath().equals(excludedPages)) {
-			chain.doFilter(req, res);
-			return;
-		}
-		
-		Teacher teacher = (Teacher)session.getAttribute("teacher");
-		if(teacher == null) {
-			response.sendRedirect("login.jsp");
-		}else {
-			chain.doFilter(request,response);
-		}
+//		
+//		if(request.getServletPath().equals(excludedPages)) {
+//			chain.doFilter(req, res);
+//			return;
+//		}
+//		
+//		Teacher teacher = (Teacher)session.getAttribute("teacher");
+//		if(teacher == null) {
+//			response.sendRedirect("login.jsp");
+//		}else {
+//			chain.doFilter(request,response);
+//		}
+		chain.doFilter(request,response);
 	}
 	
 	@Override

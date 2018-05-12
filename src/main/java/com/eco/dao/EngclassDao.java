@@ -15,7 +15,7 @@ import com.eco.bean.model.User;
  * @author 15129
  *
  */
-public interface EngclassDao {
+public interface EngclassDao extends PageDao {
 
 	/**
 	 * 根据教师id获取教师正在进行授课的班级

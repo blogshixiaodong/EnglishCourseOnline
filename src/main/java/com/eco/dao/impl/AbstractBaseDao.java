@@ -162,10 +162,12 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
             query.setMaxResults(pageSize);  
         }  
         setParameter(query, params);  
-       
-        List<T> list = query.list();  
-        String countString = "SELECT COUNT(*) FROM " + entityClass.getName();
+        
+        List<T> list = query.list();
+        System.out.println(entityClass.getSimpleName());
+        String countString = "SELECT COUNT(*) " + hql.substring(hql.indexOf("FROM"));
         query = getSession().createQuery(countString);
+        setParameter(query, params);
         pageContainer.setRecordCount(Integer.parseInt(query.uniqueResult().toString()));
         pageContainer.setList(list);
         return pageContainer;  

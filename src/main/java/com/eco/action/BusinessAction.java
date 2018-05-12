@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.eco.bean.dto.EngclassDetail;
 import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
@@ -71,36 +70,36 @@ public class BusinessAction extends ActionSupport {
 	private String jsonResult = "";
 	
 	public String findAllCourse() {
-		List<Course> corseList = courseServer.queryAllCourse();
-		jsonResult = JSONArray.fromObject(corseList).toString();
+//		List<Course> corseList = courseServer.queryAllCourse();
+//		jsonResult = JSONArray.fromObject(corseList).toString();
 		return Action.SUCCESS;
 	}
 	
 	public String findCourseByCourseId() {
-		Course destCourse = courseServer.queryCourseByCourseId(getCourseId());
-		jsonResult = JSONObject.fromObject(destCourse).toString();
+//		Course destCourse = courseServer.queryCourseByCourseId(getCourseId());
+//		jsonResult = JSONObject.fromObject(destCourse).toString();
 		
 		return Action.SUCCESS;
 	}
 	
 	public String findAllTeacherList() {
-		List<Teacher> teacherList = teacherServer.queryAllTeacher();
-		jsonResult = JSONArray.fromObject(teacherList).toString();
+//		List<Teacher> teacherList = teacherServer.queryAllTeacher();
+//		jsonResult = JSONArray.fromObject(teacherList).toString();
 		return Action.SUCCESS;
 	}
 	
 	
 	public String findTeacherByTeacherId() {
-		Teacher teacher = teacherServer.queryTeacher(getTeacherId());
-		jsonResult = JSONObject.fromObject(teacher).toString();
+//		Teacher teacher = teacherServer.queryTeacher(getTeacherId());
+//		jsonResult = JSONObject.fromObject(teacher).toString();
 		return Action.SUCCESS;
 	}
 	
 	//创建班级，课程记录
 	public String createEngclass() {
-		
-		businessServer.setUpEngclass(engclass, courseRecord);
-		
+//		
+//		businessServer.setUpEngclass(engclass, courseRecord);
+//		
 		
 		return Action.SUCCESS;
 	}
@@ -108,26 +107,26 @@ public class BusinessAction extends ActionSupport {
 	public String createCourse() {
 		//判断商家账号
 		
-		if(businessServer.addCourse(course)) {
-			return SUCCESS; 
-		}
+//		if(businessServer.addCourse(course)) {
+//			return SUCCESS; 
+//		}
 		return ERROR;
 	}
 	
 	
 	public String mergeEngclass() {
 		
-		EngclassServer engclassServer = new EngclassServerImpl();
-		
-		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
-		
-		//engclass.setCourseRecordId(courseRecordId);
-		engclass.setUserCount(userNum1 + userNum2);
-		int engclassId = new Long(engclassServer.create(engclass)).intValue();
-		
-		//教师无法修改
-		UserServer userver = new UserServerImpl();
-		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
+//		EngclassServer engclassServer = new EngclassServerImpl();
+//		
+//		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
+//		
+//		//engclass.setCourseRecordId(courseRecordId);
+//		engclass.setUserCount(userNum1 + userNum2);
+//		int engclassId = new Long(engclassServer.create(engclass)).intValue();
+//		
+//		//教师无法修改
+//		UserServer userver = new UserServerImpl();
+//		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
 		
 		return SUCCESS;
 	}
@@ -138,22 +137,22 @@ public class BusinessAction extends ActionSupport {
 	
 	public String findAllCourseList() {
 
-		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
-		request.setAttribute("courseList",courseList);
-		request.setAttribute("pageContainer", pageContainer);
-		
+//		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
+//		request.setAttribute("courseList",courseList);
+//		request.setAttribute("pageContainer", pageContainer);
+//		
 		return SUCCESS;
 	}
 
 	public String findEngclassListByCourseId() {
-		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
-		jsonResult = JSONArray.fromObject(engclassList).toString();
+//		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
+//		jsonResult = JSONArray.fromObject(engclassList).toString();
 		return Action.SUCCESS;
 	}
 	
 	public String findEngclassByEngclassId() {
-		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
-		jsonResult = JSONObject.fromObject(engclass).toString();
+//		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
+//		jsonResult = JSONObject.fromObject(engclass).toString();
 		return Action.SUCCESS;
 	}
 	
