@@ -37,7 +37,7 @@
             <one-to-many class="com.eco.bean.model.TeacherBackInfo" />
         </set>
         
-        <set name="userSet" table="USERENGCLASS" cascade="all" inverse="false" lazy="true">
+        <set name="userSet" table="USERENGCLASS" inverse="false" lazy="true">
             <key>
                 <column name="ENGCLASSID" />
             </key>

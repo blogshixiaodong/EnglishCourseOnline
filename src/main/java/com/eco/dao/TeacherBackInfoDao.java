@@ -2,9 +2,10 @@ package com.eco.dao;
 
 import java.util.List;
 
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TeacherBackInfo;
 
-public interface TeacherBackInfoDao {
+public interface TeacherBackInfoDao extends PageDao {
 
 	/**
 	 * 根据教师编号和班级编号查询教师反馈信息
@@ -12,7 +13,7 @@ public interface TeacherBackInfoDao {
 	 * @param engclassId
 	 * @return
 	 */
-	List<TeacherBackInfo> selectTeacherBackInfoByTeacherIdAndEngclassId(Integer teacherId, Integer engclassId);
+	PageContainer<TeacherBackInfo> selectTeacherBackInfoByTeacherIdAndEngclassId(Integer teacherId, Integer engclassId);
 	
 	/**
 	 * 批量插入教师反馈信息
@@ -25,6 +26,6 @@ public interface TeacherBackInfoDao {
 	* @param engclassId
 	* @return List<TeacherBackInfo>
 	*/ 
-	List<TeacherBackInfo> selectTeacherBackInfoByEngclassId(Integer userId,Integer engclassId);
+	PageContainer<TeacherBackInfo> selectTeacherBackInfoByEngclassId(Integer userId,Integer engclassId);
 
 }
