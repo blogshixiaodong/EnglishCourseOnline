@@ -14,12 +14,11 @@
 	<link href="../build/css/custom.min.css" rel="stylesheet">
 	</head>
 <body class="nav-md">
-	 <s:if test="#request.pageContainer == null">
+	 <%-- <s:if test="#request.pageContainer == null">
 		 <s:action name="allCourses" namespace="/user">
 			<s:param name="pageContainer.currentPageNo">1</s:param>
 		</s:action>	 
-		
-	</s:if> 
+	</s:if>  --%>
 	
 	
 	<div class="container body">
@@ -84,7 +83,7 @@
 										</s:iterator>
 									</tbody>
 								</table>
-								<div class="row">
+								<%-- <div class="row">
 			                    	<div  class="btn-toolbar pull-right">
 				                        <div class="btn-group">
 				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
@@ -113,7 +112,7 @@
 				                        	</s:else>
 				                        </div>
 			                     	</div>
-			                    </div>
+			                    </div> --%>
 							</div>
 						</div>
 					</div>

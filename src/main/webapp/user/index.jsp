@@ -17,12 +17,12 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.pageContainer == null">
+	<%-- <s:if test="#request.pageContainer == null">
 		 <s:action name="nowCourses" namespace="/user">
 			<s:param name="pageContainer.currentPageNo">1</s:param>
 		</s:action>	 
 		
-	</s:if> 
+	</s:if>  --%>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -82,7 +82,7 @@
 										</s:iterator>
 									</tbody>
 								</table>
-								<div class="row">
+								<%-- <div class="row">
 			                    	<div  class="btn-toolbar pull-right">
 				                        <div class="btn-group">
 				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
@@ -111,7 +111,7 @@
 				                        	</s:else>
 				                        </div>
 			                     	</div>
-			                    </div>
+			                    </div> --%>
 								
 								
 							</div>
@@ -132,6 +132,33 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    
+    <script type="text/javascript">
+    	//入口函数
+    	$(sendAjax(1));
+    
+    	function sendAjax(currentPage){
+    		
+    		$.ajax({
+    			url:"nowCourses.action",
+    			type:"post",
+    			data:{
+    				"pageContainer.currentPageNo":currentPage
+    			},
+    			dataType:"json",
+    			success:function(msg){
+    				
+    			},
+    			error:function(data){
+    				alert(data);
+    			}
+    		});
+    		
+    	}
+    
+    </script>
+    
+    
 </body>
 </html>
 

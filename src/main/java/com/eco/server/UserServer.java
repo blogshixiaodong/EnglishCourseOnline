@@ -2,32 +2,17 @@ package com.eco.server;
 
 import java.util.Date;
 import java.util.List;
-import com.eco.bean.dto.BackInfoDetail;
-import com.eco.bean.dto.CourseDetail;
-import com.eco.bean.dto.EngclassDetail;
-import com.eco.bean.dto.TimeSheetDetail;
-import com.eco.bean.model.TeacherAccount;
+import com.eco.bean.model.TeacherBackInfo;
+import com.eco.bean.model.Course;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserAccount;
-import com.eco.bean.model.UserBackInfo;
 
 public interface UserServer {
 	
 	
-	//public abstract boolean login(Account account);
-	
-	/** 
-	* @Description: 报名班级，用户班级记录及修改课程记录中报名人数
-	* @param uc
-	* @param crId
-	* @return boolean
-	*/ 
-	/*public abstract boolean enrolmentClass(UserClass uc,Integer crId);*/
-	
-
 	
 	/** 
 	* @Description: 查看正在进行的课程 
@@ -35,7 +20,7 @@ public interface UserServer {
 	* @param pageContainer
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryUserNowCourseListByUserId(Integer userId,PageContainer pageContainer);
+	public abstract PageContainer<Course> queryUserNowCourseListByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	
@@ -45,7 +30,7 @@ public interface UserServer {
 	* @param pageContainer
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryUserAllCourseListByUserId(Integer userId, PageContainer pageContainer);
+	public abstract PageContainer<Course> queryUserAllCourseListByUserId(Integer userId, PageContainer pageContainer);
 	
 	
 	/** 
@@ -53,7 +38,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract List<CourseDetail> queryUserHistoryCourseListByUserId(Integer userId,PageContainer pageContainer);
+	public abstract PageContainer<Course> queryUserHistoryCourseListByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -61,7 +46,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract List<EngclassDetail> queryUserAllEngclassByUserId(Integer userId,PageContainer pageContainer);
+	public abstract PageContainer<Engclass> queryUserAllEngclassByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -69,7 +54,7 @@ public interface UserServer {
 	* @param userId
 	* @return String
 	*/ 
-	public abstract List<EngclassDetail> queryUserNowEngclassByUserId(Integer userId);
+	public abstract  PageContainer<Engclass> queryUserNowEngclassByUserId(Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -77,7 +62,7 @@ public interface UserServer {
 	* @param classid
 	* @return List<User>
 	*/ 
-	public abstract List<User> queryUserListByClassid(Integer classid,PageContainer pageContainer);
+	public abstract  PageContainer<User> queryUserListByClassid(Integer classid,PageContainer pageContainer);
 	
 	
 	/** 
@@ -86,7 +71,7 @@ public interface UserServer {
 	* @param userid
 	* @return List<TeacherBackInfo>
 	*/ 
-	public abstract List<BackInfoDetail> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId);
+	public abstract  PageContainer<TeacherBackInfo> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId,PageContainer pageContainer);
 	
 	
 	/** 
@@ -95,7 +80,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate);
+	public abstract  PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate,PageContainer pageContainer);
 	
 	
 	
@@ -105,7 +90,7 @@ public interface UserServer {
 	* @param date
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract List<TimeSheetDetail> queryUserTimeSheetByEngclassId(Integer engclassId,Date date);
+	public abstract  PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date);
 	
 	
 	/** 

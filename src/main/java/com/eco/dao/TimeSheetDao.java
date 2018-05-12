@@ -3,13 +3,14 @@ package com.eco.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 
 /*
  * date:   2018年4月20日 下午11:07:27
  * author: Shixiaodong
  */
-public interface TimeSheetDao {
+public interface TimeSheetDao extends PageDao {
 
 	/**
 	 * 根据班级编号，日期查询学生的考勤信息
@@ -17,7 +18,7 @@ public interface TimeSheetDao {
 	 * @param date
 	 * @return
 	 */
-	List<TimeSheet> selectTimeSheetByEnglassIdAndDate(Integer engclassId, Date date);
+	PageContainer<TimeSheet> selectTimeSheetByEnglassIdAndDate(Integer engclassId, Date date);
 
 	/**
 	 * 批量插入学生考勤信息
@@ -31,7 +32,7 @@ public interface TimeSheetDao {
 	* @param engclassId
 	* @return List<TimeSheet>
 	*/ 
-	List<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId);
+	PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId);
 	
 	/** 
 	* @Description: 查询某个班级某天的考勤信息
@@ -40,7 +41,7 @@ public interface TimeSheetDao {
 	* @param queryDate
 	* @return List<TimeSheet>
 	*/ 
-	List<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate); 
+	PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate); 
 	
 	/** 
 	* @Description: 判断用户在这个班级的这一天有没有课程，没有请假失败
