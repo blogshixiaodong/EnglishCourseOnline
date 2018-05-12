@@ -43,6 +43,14 @@ public interface UserServer {
 	public abstract PageContainer<Engclass> queryUserAllEngclassByUserId(Integer userId, PageContainer pageContainer);
 	
 	/** 
+	* @Description: 查询历史班级
+	* @param userid
+	* @param pageContainer
+	* @return List<Engclass>
+	*/ 
+	public abstract PageContainer<Engclass> queryUserHistoryEngclassListByUserId(Integer userid,PageContainer pageContainer);
+	
+	/** 
 	* @Description: 查询当前正在进行的班级
 	* @param userId
 	* @return String

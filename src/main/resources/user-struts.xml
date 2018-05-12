@@ -32,6 +32,18 @@
     		</result>
 		</action>
 		
+		 <action name="nowEngclasses" class="com.eco.action.UserAction" method = "findUserNowEngclassesList" >
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
+		
+		 <action name="historyEngclasses" class="com.eco.action.UserAction" method = "findUserHistoryEngclassesList" >
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
+		
 		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "findUserListByClassid" >
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>

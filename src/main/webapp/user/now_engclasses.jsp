@@ -7,7 +7,7 @@
 <title>首页</title>
 <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>用户管理</title>
+    <title>用户后台管理</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -26,15 +26,13 @@
 			<!-- top nav bar -->
 			<jsp:include page="top-nav.jsp"></jsp:include>
 
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="row">
-
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div class="x_title">
-								<h2>进行中的课程</h2>
+								<h2>所有班级</h2>
 								<ul class="nav navbar-right panel_toolbox">
 									<li><a class="collapse-link"><i
 											class="fa fa-chevron-up"></i></a></li>
@@ -52,29 +50,29 @@
 							<div class="x_content">
 
 								<table class="table" id="courseTable">
+								
 									<thead>
 										<tr>
 											<th>#</th>
+											<th>班级名称</th>
+											<th>教室</th>
+											<th>班级人数</th>
 											<th>课程编号</th>
 											<th>课程名称</th>
-											<th>课程类型</th>
-											<th>开课时间</th>
-											<th>结课时间</th>
+											<th>上课时间</th>
 										</tr>
 									</thead>
 									<tbody>
-										<!-- create after page load -->
+										<!-- ajax -->
 									</tbody>
 								</table>
-								 <div class="row">
+								<div class="row">
 			                    	<div  class="btn-toolbar pull-right">
-				                        <div id="btnGroup" class="btn-group">
-				                        	<!-- create after page load -->
+				                        <div class="btn-group" id="btnGroup">
+				                        	<!-- page load -->
 				                        </div>
 			                     	</div>
-			                    </div> 
-								
-								
+			                    </div>
 							</div>
 						</div>
 					</div>
@@ -90,7 +88,6 @@
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
     <script src="../build/js/common.js"></script>
@@ -101,39 +98,41 @@
     
     	function sendAjax(currentPage){
     		
+    		var weekArr = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+    		var timeArr = ["一二节","三四节","五六节","七八节"];
+    		
     		$.ajax({
-    			url:"nowCourses.action",
+    			url:"nowEngclasses.action",
     			type:"post",
     			data:{
     				"pageContainer.currentPageNo":currentPage
     			},
     			dataType:"json",
+    			
     			success:function(responseText){
     				var json = JSON.parse(responseText);
     				var tbody = $("#courseTable tbody");
     				//创建表格
     				for(var i = 0; i < json.list.length; i++){
-    					var course = json.list[i];
-    					//一门课程存在多条记录
-    					var courseRecordSet = course.courseRecordSet;
-    					for(var j = 0; j < courseRecordSet.length; j++){
-    						var courseRecord = courseRecordSet[j];
-    						var courseId =$("<td></td>").html(course.courseId);
-    						var courseName = $("<td></td>").html(course.courseName);
-            				var info = $("<td></td>").html(course.info);
-            				var types = $("<td></td>").html(course.types);
-        					var startTime = $("<td></td>").html(JsonDateToString(courseRecord.startTime));
-            				var endTime = $("<td></td>").html(JsonDateToString(courseRecord.endTime));
-            				var tr = $("<tr></tr>");
-            				tr.append(courseId);
-            				tr.append(courseName);
-            				tr.append(info);
-            				tr.append(types);
-            				tr.append(startTime);
-            				tr.append(endTime);
-            				tbody.append(tr);
+    					var engclass = json.list[i];
+    					var engclassId = $("<td></td>").html(engclass.engclassId);
+    					var engclassName = $("<td></td>").html(engclass.engclassName);
+    					var classRoom = $("<td></td>").html(engclass.classRoom);
+    					var userCount = $("<td></td>").html(engclass.userCount);
+    					var courseId = $("<td></td>").html(engclass.courseRecord.course.courseId);
+    					var courseName = $("<td></td>").html(engclass.courseRecord.course.courseName);
+    					var attandTime = $("<td></td>").html(weekArr[engclass.day]+ " "+ timeArr[engclass.attendTime]);
+            			var tr = $("<tr></tr>");
+            			tr.append(engclassId);
+        				tr.append(engclassName);
+        				tr.append(classRoom);
+        				tr.append(userCount);
+        				tr.append(courseId);
+        				tr.append(courseName);
+        				tr.append(attandTime);
+            			tbody.append(tr);
     					}
-    				}
+    				
     					//创建按钮组
     					var btnGroup = $("#btnGroup");
     					var currentPageNo = json.currentPageNo;
@@ -163,7 +162,6 @@
     	}
     
     </script>
-    
     
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.eco.server.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.eco.bean.model.TeacherBackInfo;
 import com.eco.bean.model.Course;
@@ -65,6 +66,12 @@ public class UserServerImpl implements UserServer{
 		return engclassDao.selectUserNowEngclassListByUserId(userId);
 	}
 	
+	@Override
+	public PageContainer<Engclass> queryUserHistoryEngclassListByUserId(Integer userid, PageContainer pageContainer) {
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		engclassDao.setPageContainer(pageContainer);
+		return engclassDao.selectUserHistoryEngclassListByUserId(userid);
+	}
 	
 	@Override
 	public PageContainer<TeacherBackInfo> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId, PageContainer pageContainer) {
@@ -156,6 +163,7 @@ public class UserServerImpl implements UserServer{
 		//engclassDao.updateUserEngclassId(oldEngclassId2, engclassId);
 		return true;
 	}
+
 	
 }
 

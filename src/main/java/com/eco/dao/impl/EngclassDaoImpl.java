@@ -39,19 +39,19 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	
 	@Override
 	public PageContainer<Engclass> selectUserNowEngclassListByUserId(Integer userId) {
-		String hql = "SELECT e FROM Engclass e LEFT JOIN FETCH e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND NOW() BETWEEN cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN e.courseRecord cr WHERE u.userId = ? AND NOW() BETWEEN cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer,  userId) ;
 	}
 
 	@Override
 	public PageContainer<Engclass> selectUserHistoryEngclassListByUserId(Integer userId) {
-		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND NOW() > cr.endTime ORDER BY cr.startTime DESC ";
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN e.courseRecord cr WHERE u.userId = ? AND NOW() > cr.endTime ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer,  userId) ;
 	}
 
 	@Override
 	public PageContainer<Engclass> selectUserAllEngclassListByUserId(Integer userId) {
-		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? ORDER BY cr.startTime DESC ";
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN e.courseRecord cr WHERE u.userId = ? ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer,  userId) ;
 	}
 	

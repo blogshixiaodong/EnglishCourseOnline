@@ -37,21 +37,21 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 
 	@Override
 	public PageContainer<Course> selectUserNowCourseListByUserId(Integer userId) {
-		String hql = "SELECT distinct c FROM Course c LEFT JOIN FETCH c.courseRecordSet cr LEFT JOIN FETCH " +
-				 	 "cr.engclassSet ec LEFT JOIN FETCH ec.userSet u WHERE u.userId=? AND NOW() BETWEEN cr.startTime AND cr.endTime";
+		String hql = "SELECT distinct c FROM Course c LEFT JOIN c.courseRecordSet cr LEFT JOIN " +
+				 	 "cr.engclassSet ec LEFT JOIN ec.userSet u WHERE u.userId=? AND NOW() BETWEEN cr.startTime AND cr.endTime";
 		return this.list(hql, pageContainer,userId);													
 	}
 
 	@Override
 	public PageContainer<Course> selectUserHistoryCourseDetailListByUserId(Integer userId) {
-		String hql = "SELECT distinct c FROM Course c LEFT JOIN FETCH c.courseRecordSet cr LEFT JOIN FETCH " +
-					 "cr.engclassSet ec LEFT JOIN FETCH ec.userSet u WHERE u.userId=? AND NOW() > cr.endTime";
+		String hql = "SELECT distinct c FROM Course c LEFT JOIN c.courseRecordSet cr LEFT JOIN " +
+					 "cr.engclassSet ec LEFT JOIN ec.userSet u WHERE u.userId=? AND NOW() > cr.endTime";
 		return this.list(hql, pageContainer,userId);
 	}
 
 	@Override
 	public PageContainer<Course> selectUserAllCourseDetailListByUserId(Integer userId) {
-		String hql = "SELECT distinct c FROM Course c LEFT JOIN FETCH c.courseRecordSet cr LEFT JOIN FETCH cr.engclassSet ec LEFT JOIN FETCH ec.userSet u WHERE u.userId=?";
+		String hql = "SELECT distinct c FROM Course c LEFT JOIN c.courseRecordSet cr LEFT JOIN cr.engclassSet ec LEFT JOIN ec.userSet u WHERE u.userId=?";
 		return this.list(hql,pageContainer, userId);
 	}
 
