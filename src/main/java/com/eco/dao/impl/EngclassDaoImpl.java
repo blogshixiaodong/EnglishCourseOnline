@@ -56,6 +56,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
+	public List<Engclass> selectEngclassByUserId(Integer userId) {
+		String hql = "SELECT new Engclass(e.engclassId,e.engclassName) FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN e.courseRecord cr WHERE u.userId = ? AND NOW() BETWEEN cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
+		return list(hql, userId);
+	}
+	
+	@Override
 	public void insertUser(User user,Integer engclassId) {
 		Engclass engclass = this.get(engclassId);
 		engclass.getUserSet().add(user);

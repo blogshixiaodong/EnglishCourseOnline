@@ -139,7 +139,16 @@ public class UserAction extends ActionSupport {
 		jsonResult = JSONObject.fromObject(engclassList,jsonConfig).toString();
 		return SUCCESS;
 	}
-	
+
+	public String findEngclassIdAndEngclassName() {
+		Integer userId = this.getLoginUser().getUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		List<Engclass> engclasseList = userServer.queryEngclassByUserId(userId);
+		jsonResult = JSONArray.fromObject(engclasseList).toString();
+		return SUCCESS;
+	}
 	
 	
 	//通过班级编号查询所有学生信息
@@ -166,8 +175,8 @@ public class UserAction extends ActionSupport {
 		}
 		String queryDate = (String)request.getParameter("queryDate");
 		PageContainer<TimeSheet> timeSheeList =userServer.queryTimeSheetByUserId(userId, engclass.getEngclassId(), queryDate,pageContainer) ;
-		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
-		jsonResult = JSONArray.fromObject(timeSheeList,jsonConfig).toString();
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("timeSheetSet","userAccount","engclassSet","userSet","teacherBackInfoSet","userBackInfoSet","teacher","courseRecord");                       
+		jsonResult = JSONObject.fromObject(timeSheeList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	

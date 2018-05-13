@@ -43,6 +43,12 @@
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
+	
+		<action name="queryEngclass" class="com.eco.action.UserAction" method="findEngclassIdAndEngclassName">
+			<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+		</action>
 		
 		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "findUserListByClassid" >
 			<result name="success" type="json">

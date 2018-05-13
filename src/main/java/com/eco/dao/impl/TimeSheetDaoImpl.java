@@ -17,13 +17,13 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 
 	@Override
 	public PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassId(Integer userId, Integer engclassId) {
-		String hql = "FROM TimeSheet ts LEFT JOIN FETCH ts.engclass ec LEFT JOIN FETCH ts.user u WHERE u.userId = ? and ec.engclassId = ?";
+		String hql = "SELECT ts FROM TimeSheet ts LEFT JOIN ts.engclass ec LEFT JOIN ts.user u WHERE u.userId = ? and ec.engclassId = ?";
 		return this.list(hql,pageContainer, userId,engclassId);
 	}
 
 	@Override
 	public PageContainer<TimeSheet> selectTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId,Date queryDate) {
-		String hql = "FROM TimeSheet ts LEFT JOIN FETCH ts.engclass ec LEFT JOIN FETCH ts.user u WHERE u.userId = ? and ec.engclassId = ? AND STR_TO_DATE(ts.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
+		String hql = "SELECT ts FROM TimeSheet ts LEFT JOIN ts.engclass ec LEFT JOIN ts.user u WHERE u.userId = ? and ec.engclassId = ? AND STR_TO_DATE(ts.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
 		return this.list(hql,pageContainer ,userId,engclassId,queryDate);
 	}
 

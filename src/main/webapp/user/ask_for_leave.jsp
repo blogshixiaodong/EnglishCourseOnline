@@ -20,9 +20,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="searchNowEngclasses" namespace="/user"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -66,10 +63,8 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
-					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                    <select id="engclassCombo" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
+
 					                    </select>  
 				                	</div> 
 				                	
@@ -134,7 +129,31 @@
      <script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
     
     <script type="text/javascript">
-    	
+	  	//入口函数	
+		$(getEngclassIdAndName());
+		
+		function getEngclassIdAndName(){
+			$.ajax({
+				url:"queryEngclass.action",
+				type : "post",
+				dataType : "json",
+				success: function(responseText){
+					var json = JSON.parse(responseText);
+					var engclassCombo = $("#engclassCombo");
+					for(var i = 0; i < json.length; i++){
+						var engclass = json[i];
+						var option = $("<option>"+engclass.engclassId + ":"+engclass.engclassName +"</option>");
+						engclassCombo.append(option);
+					}
+					$("#engclassCombo").selectpicker('refresh');
+				},
+				error : function(){
+					alert("班级下拉框错误");
+				}
+			});
+		};	
+    
+    
 	    $('#myDatepicker').datepicker({
 	    	 format: 'yyyy-mm-dd'
 	    });
@@ -162,20 +181,20 @@
     	}
 	    
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
-			$("#engclassList").selectpicker('refresh');
+			document.getElementById("engclassCombo").options.selectedIndex = 0;
+			$("#engclassCombo").attr("index", 0);
+			$("#engclassCombo").selectpicker('refresh');
 			$("#myDatepicker").datepicker("clearDates");
 			$("#userList tbody").html("");
     	}
     	
     	
     	
-			$("#leaveInfoSubmit").click(function(){
+		$("#leaveInfoSubmit").click(function(){
 			
 			var leaveInfo = $("#leaveInfo").val();
 			console.log(leaveInfo);
-			var classId = $("#engclassList").val().split(" : ")[0];
+			var classId = $("#engclassCombo").val().split(" : ")[0];
 			var queryDate = $('#queryDate').val();
 			if(leaveInfo == "" || classId =="" || queryDate == ""){
 				alert("信息不完整，无法提交");

@@ -57,6 +57,15 @@ public interface UserServer {
 	*/ 
 	public abstract  PageContainer<Engclass> queryUserNowEngclassByUserId(Integer userId, PageContainer pageContainer);
 	
+	
+	/** 
+	* @Description: 根据用户id 查询该用户当前正在进行的班级 
+	* @param userId
+	* @return Engclass
+	*/ 
+	public abstract List<Engclass> queryEngclassByUserId(Integer userId);
+	
+	
 	/** 
 	* @Description: 根据班级id 查询该班所有学生 
 	* @param classid
@@ -78,7 +87,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract  PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate, PageContainer pageContainer);
+	public abstract  PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate, PageContainer<TimeSheet> pageContainer);
 		
 	/** 
 	* @Description: 根据classid和日期查询该班级的考勤记录
@@ -114,5 +123,6 @@ public interface UserServer {
 	public User queryUserByAccountId(Integer accountId);
 	
 	public boolean mergeEngclass(Integer oldEngclassId1,Integer oldEngclassId2,Integer engclassId);
+
 	
 }

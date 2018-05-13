@@ -66,10 +66,8 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
-					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                    <select id="engclassCombo" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
+					                        
 					                    </select>  
 				                	</div> 
 				                	<div class="col-md-3 col-sm-3 col-xs-12 form-group">
@@ -122,8 +120,6 @@
 											<th>用户姓名</th>
 											<th>班级编号</th>
 											<th>班级名称</th>
-											<th>教师编号</th>
-											<th>教师名称</th>
 											<th>教室</th>
 											<th>考勤时间</th>
 											<th>考勤状态</th>
@@ -163,7 +159,30 @@
     <script src="../build/js/custom.min.js"></script>
     
     <script type="text/javascript">
+    	//入口函数	
+    	$(getEngclassIdAndName());
     	
+    	function getEngclassIdAndName(){
+    		$.ajax({
+    			url:"queryEngclass.action",
+    			type : "post",
+    			dataType : "json",
+    			success: function(responseText){
+    				var json = JSON.parse(responseText);
+    				var engclassCombo = $("#engclassCombo");
+    				for(var i = 0; i < json.length; i++){
+    					var engclass = json[i];
+    					var option = $("<option>"+engclass.engclassId + ":"+engclass.engclassName +"</option>");
+    					engclassCombo.append(option);
+    				}
+    				$("#engclassCombo").selectpicker('refresh');
+    			},
+    			error : function(){
+    				alert("班级下拉框错误");
+    			}
+    		});
+    	};
+    
 	    $('#myDatepicker').datepicker({
 	    	 format: 'yyyy-mm-dd'
 	    });
@@ -189,43 +208,44 @@
     	}
 	    
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
-			$("#engclassList").selectpicker('refresh');
+			document.getElementById("engclassCombo").options.selectedIndex = 0;
+			$("#engclassCombo").attr("index", 0);
+			$("#engclassCombo").selectpicker('refresh');
 			$("#myDatepicker").datepicker("clearDates");
 			$("#userList tbody").html("");
     	}
     	
-    	function sendCondition(e) {
+    	function sendCondition(currentPageNo) {
     		var params = "";
-
     		$("#timeSheet tbody").html("");
-    		var classId = $("#engclassList").val().split(" : ")[0];
+    		var engclassId = $("#engclassCombo").val().split(":")[0];
     		var queryDate = $("#queryDate").val();
-    		if(classId === ""){
+    		if(engclassId === ""){
     			return;
     		}
     		$.ajax({
     			url: "showtimeSheets.action"+ params ,
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId, "queryDate" : queryDate},
+    			data:{
+    					"engclass.engclassId" : engclassId, 
+    					"queryDate" : queryDate,
+    					"pageContainer.currentPageNo":currentPageNo
+    				},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
+    				for(var i = 0; i < json.list.length; i++) {
     					var tr = $("<tr></tr>");
-    					var record = json[i];
+    					var record = json.list[i];
     					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td></td>").text(record["classId"]));
-    					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(record["teacherId"]));
-    					tr.append($("<td></td>").text(record["teacherName"]));
-    					tr.append($("<td></td>").text(record["classRoom"]));
-    					tr.append($("<td></td>").text(JsonDateToString(record["recordTime"])));
-    					tr.append($("<td></td>").text(record["sheetInfo"]));
+    					tr.append($("<td></td>").html(record.user.userId));
+    					tr.append($("<td></td>").text(record.user.userName));
+    					tr.append($("<td></td>").text(record.engclass.engclassId));
+    					tr.append($("<td></td>").text(record.engclass.className));
+    					tr.append($("<td></td>").text(record.engclass.classRoom));
+    					tr.append($("<td></td>").text(JsonDateToString(record.recordTime)));
+    					tr.append($("<td></td>").text(record.sheetInfo));
     					$("#timeSheet tbody").append(tr);		
     				}
     			},
@@ -235,8 +255,10 @@
     			}
     		});
     	}
-		$("#engclassList").change(sendCondition);
-		$("#myDatepicker").on("changeDate", sendCondition);
+		$("#engclassCombo").change(function() {
+			sendCondition(1);
+		});
+		$("#myDatepicker").on("changeDate",{"currentPageNo":1}, sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});

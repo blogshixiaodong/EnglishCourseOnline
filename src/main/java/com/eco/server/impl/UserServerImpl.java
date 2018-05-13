@@ -74,13 +74,21 @@ public class UserServerImpl implements UserServer{
 	}
 	
 	@Override
+	public List<Engclass> queryEngclassByUserId(Integer userId) {
+		EngclassDao engclassDao = new EngclassDaoImpl();
+		List<Engclass> engclassList = engclassDao.selectEngclassByUserId(userId);
+		return engclassList;
+	}
+	
+	
+	@Override
 	public PageContainer<TeacherBackInfo> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId, PageContainer pageContainer) {
 		TeacherBackInfoDao teacherBackInfoDao = new TeacherBackInfoDaoImpl();
 		return teacherBackInfoDao.selectTeacherBackInfoByEngclassId(userId, engclassId);
 	}
 
 	@Override
-	public PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate,PageContainer pageContainer){
+	public PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate,PageContainer<TimeSheet> pageContainer){
 		PageContainer<TimeSheet> timeSheetList = null;
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
 		timeSheetDao.setPageContainer(pageContainer);
@@ -164,6 +172,5 @@ public class UserServerImpl implements UserServer{
 		return true;
 	}
 
-	
 }
 

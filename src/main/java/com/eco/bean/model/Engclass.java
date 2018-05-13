@@ -35,7 +35,14 @@ public class Engclass implements Serializable {
 	private Set<UserBackInfo> userBackInfoSet = new HashSet<UserBackInfo>() ;
 	
 	private Set<TimeSheet> timeSheetSet = new HashSet<TimeSheet>() ;
-
+	
+	public Engclass(){}
+	
+	public Engclass(Integer engclassId,String engclassName) {
+		this.engclassId = engclassId;
+		this.engclassName = engclassName;
+	}
+	
 	public Integer getEngclassId() {
 		return engclassId;
 	}

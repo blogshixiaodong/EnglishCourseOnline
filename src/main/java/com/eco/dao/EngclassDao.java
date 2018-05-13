@@ -69,6 +69,14 @@ public interface EngclassDao extends PageDao<Engclass> {
 	
 	
 	/** 
+	* @Description: 根据用户id 查询该用户的当前班级
+	* @param userId
+	* @return Engclass
+	*/ 
+	List<Engclass> selectEngclassByUserId(Integer userId);
+	
+	
+	/** 
 	* @Description: 用户查看课表
 	* @param beginDate
 	* @param endDate

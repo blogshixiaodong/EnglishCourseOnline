@@ -6,11 +6,15 @@
   <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
   <property name="connection.url">jdbc:mysql://localhost:3306/englishcourseonline_test</property>
   <property name="connection.username">root</property>
-  <property name="connection.password">shixiaodong</property>
+  <property name="connection.password">123456</property>
   <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-  <property name="hbm2ddl.auto">create</property>
+  
+  <property name="hbm2ddl.auto">update</property>
   <property name="format_sql">true</property>
   <property name="show_sql">true</property>
+  
+  <!-- current session -->
+  <property name="hibernate.current_session_context_class">thread</property>
   
   <mapping resource="com/eco/bean/model/Course.hbm.xml"/>
   <mapping resource="com/eco/bean/model/CourseRecord.hbm.xml"/>
