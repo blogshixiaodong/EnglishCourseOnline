@@ -23,9 +23,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="searchEngclasses" namespace="/user"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -171,8 +168,6 @@
 	    	 format: 'yyyy-mm-dd'
 	    });
 	    
-	  
-	    
 	    function AppendZero(number) {
     		if(number < 10) {
     			return "0" + number;
@@ -204,7 +199,6 @@
     	function sendCondition(e) {
     		var params = "";
 
-    		
     		$("#timeSheet tbody").html("");
     		var classId = $("#engclassList").val().split(" : ")[0];
     		var queryDate = $("#queryDate").val();
@@ -246,9 +240,6 @@
 		$("#reset").click(function() {
 			reset();
 		});
-		
-		
-	
 	</script>
 </body>
 </html>

@@ -17,14 +17,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-
-	<s:if test="#request.pageContainer == null">
-		 <s:action name="allEngclasses" namespace="/user">
-			<s:param name="pageContainer.currentPageNo">1</s:param>
-		</s:action>	 
-		
-	</s:if> 
-
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -57,59 +49,27 @@
 							</div>
 							<div class="x_content">
 
-								<table class="table">
+								<table class="table" id="courseTable">
+								
 									<thead>
 										<tr>
 											<th>#</th>
-											<th>班级编号</th>
 											<th>班级名称</th>
 											<th>教室</th>
 											<th>班级人数</th>
 											<th>课程编号</th>
 											<th>课程名称</th>
+											<th>上课时间</th>
 										</tr>
 									</thead>
 									<tbody>
-										<s:iterator value="#request.engclassDetailList" status="i" var="engclassDetail">
-											<tr>
-												<th scope="row"><s:property value="#i.getIndex()" /></td>
-												<td><s:property value="#engclassDetail.classId" /></td>
-												<td><s:property value="#engclassDetail.className" /></td>
-												<td><s:property value="#engclassDetail.classRoom" /></td>
-												<td><s:property value="#engclassDetail.userCount" /></td>
-												<td><s:property value="#engclassDetail.teacherId" /></td>
-												<td><s:property value="#engclassDetail.teacherName" /></td>
-											</tr>
-										</s:iterator>
+										<!-- ajax -->
 									</tbody>
 								</table>
 								<div class="row">
 			                    	<div  class="btn-toolbar pull-right">
-				                        <div class="btn-group">
-				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
-				                        		<a class="btn btn-default disabled" type="button" href="allEngclasses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
-				                        	</s:if>
-				                        	<s:else>
-				                        		<a class="btn btn-default" type="button" href="allEngclasses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
-				                        	</s:else>
-				                        	<s:bean name="org.apache.struts2.util.Counter" var="counter">
-									            <s:param name="first" value="1" />
-									            <s:param name="last" value="#request.pageContainer.pageCount" />
-									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1">
-									            		<a class="btn btn-default disabled" type="button"><s:property /></a>
-									            	</s:if>
-									            	<s:else>
-									            		<a class="btn btn-default" type="button" href="allEngclasses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>
-									            	</s:else>
-									           	</s:iterator>
-									        </s:bean>
-									        <s:if test="#request.pageContainer.currentPageNo == #request.pageContainer.pageCount">
-				                          		<a class="btn btn-default disabled" type="button" href="allEngclasses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
-				                        	</s:if>
-				                        	<s:else>
-				                          		<a class="btn btn-default" type="button" href="allEngclasses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
-				                        	</s:else>
+				                        <div class="btn-group" id="btnGroup">
+				                        	<!-- page load -->
 				                        </div>
 			                     	</div>
 			                    </div>
@@ -130,6 +90,79 @@
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/common.js"></script>
+    
+    <script type="text/javascript">
+    	//入口函数
+    	$(sendAjax(1));
+    
+    	function sendAjax(currentPage){
+    		
+    		var weekArr = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
+    		var timeArr = ["一二节","三四节","五六节","七八节"];
+    		
+    		$.ajax({
+    			url:"allEngclasses.action",
+    			type:"post",
+    			data:{
+    				"pageContainer.currentPageNo":currentPage
+    			},
+    			dataType:"json",
+    			
+    			success:function(responseText){
+    				var json = JSON.parse(responseText);
+    				var tbody = $("#courseTable tbody");
+    				//创建表格
+    				for(var i = 0; i < json.list.length; i++){
+    					var engclass = json.list[i];
+    					var engclassId = $("<td></td>").html(engclass.engclassId);
+    					var engclassName = $("<td></td>").html(engclass.engclassName);
+    					var classRoom = $("<td></td>").html(engclass.classRoom);
+    					var userCount = $("<td></td>").html(engclass.userCount);
+    					var courseId = $("<td></td>").html(engclass.courseRecord.course.courseId);
+    					var courseName = $("<td></td>").html(engclass.courseRecord.course.courseName);
+    					var attandTime = $("<td></td>").html(weekArr[engclass.day]+ " "+ timeArr[engclass.attendTime]);
+            			var tr = $("<tr></tr>");
+            			tr.append(engclassId);
+        				tr.append(engclassName);
+        				tr.append(classRoom);
+        				tr.append(userCount);
+        				tr.append(courseId);
+        				tr.append(courseName);
+        				tr.append(attandTime);
+            			tbody.append(tr);
+    					}
+    				
+    					//创建按钮组
+    					var btnGroup = $("#btnGroup");
+    					var currentPageNo = json.currentPageNo;
+    					var pageCount = json.pageCount;
+    					var recordCount = json.recordCount;
+    					
+    					if(currentPageNo == 1) {
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
+            			} else {
+            				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
+            			}
+            			for(var i = 1; i <= pageCount; i++) {
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+            			}
+            			if(currentPageNo == pageCount) {
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+            			} else {
+            				btnGroup.append($("<button class='btn btn-default' pageNo='" + currentPageNo  +"'>下一页</button>"));
+            			}
+    				
+    			},
+    			error:function(data){
+    				alert(data);
+    			}
+    		});
+    		
+    	}
+    
+    </script>
+    
 </body>
 </html>
 

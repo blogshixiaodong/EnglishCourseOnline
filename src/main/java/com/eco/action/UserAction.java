@@ -5,8 +5,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+
+import javax.print.attribute.ResolutionSyntax;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.json.JSONUtil;
+
 import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.TeacherBackInfo;
 import com.eco.bean.model.Course;
@@ -24,10 +28,14 @@ import com.eco.server.impl.BackInfoServerImpl;
 import com.eco.server.impl.CourseServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.UserServerImpl;
+import com.eco.util.JsonUtils;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.JSONUtils;
 
 public class UserAction extends ActionSupport {
 
@@ -66,94 +74,85 @@ public class UserAction extends ActionSupport {
 		if(userId == null) {
 			return Action.ERROR;
 		}	
-//		List<CourseDetail> courseDetailList = userServer.queryUserNowCourseListByUserId(userId,pageContainer);
-//		request.setAttribute("courseDetailList",courseDetailList);
-//		request.setAttribute("pageContainer", pageContainer);
-
 		PageContainer<Course> courseList = userServer.queryUserNowCourseListByUserId(userId, pageContainer);
-		jsonResult = JSONArray.fromObject(courseList).toString();
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONObject.fromObject(courseList,jsonConfig).toString();
 		return SUCCESS;
 	}
 
 	//获取所有的课程信息
 	public String findUserAllCourseDetailList() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-
-//		
-//		List<CourseDetail> courseDetailList =userServer.queryUserAllCourseListByUserId(userId,pageContainer) ;
-//		request.setAttribute("courseDetailList",courseDetailList);
-//		request.setAttribute("pageContainer", pageContainer);
-
-		
-		PageContainer<Course> courseDetailList =userServer.queryUserAllCourseListByUserId(userId,pageContainer) ;
-
-		
+		PageContainer<Course> courseList =userServer.queryUserAllCourseListByUserId(userId,pageContainer) ;
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONObject.fromObject(courseList,jsonConfig).toString();
 		return SUCCESS;
 	}
 
 	//获取所有历史的课程信息
 	public String findUserHistoryCourseDetailList() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
-
-//		List<CourseDetail> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId,pageContainer) ;
-//		request.setAttribute("courseDetailList",courseDetailList);
-//		request.setAttribute("pageContainer", pageContainer);
-
-		PageContainer<Course> courseDetailList =userServer.queryUserHistoryCourseListByUserId(userId,pageContainer) ;
-
+		PageContainer<Course> courseList =userServer.queryUserHistoryCourseListByUserId(userId,pageContainer) ;
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONObject.fromObject(courseList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
 	//查询所有班级
 	public String findUserAllEngclassesList() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
-
-//		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer) ;
-//		request.setAttribute("engclassDetailList", engclassDetailList);
-//		request.setAttribute("pageContainer", pageContainer);
-
-		PageContainer<Engclass> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer) ;
-
-		
+		PageContainer<Engclass> engclassList =userServer.queryUserAllEngclassByUserId(userId,pageContainer) ;
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","teacher","engclassSet","courseRecordSet");                         
+		jsonResult = JSONObject.fromObject(engclassList,jsonConfig).toString();
+		return SUCCESS;
+	}
+	
+	//查询当前班级
+	public String findUserNowEngclassesList() {
+		Integer userId = this.getLoginUser().getUserId();
+		if(userId == null) {
+			return Action.ERROR;
+		}
+		PageContainer<Engclass> engclassList = userServer.queryUserNowEngclassByUserId(userId, pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","teacher","engclassSet","courseRecordSet");                         
+		jsonResult = JSONObject.fromObject(engclassList,jsonConfig).toString();
+		return SUCCESS;
+	}
+	
+	//查询历史班级
+	public String findUserHistoryEngclassesList() {
+		Integer userId = this.getLoginUser().getUserId();
+		if(userId == null){
+			return Action.ERROR;
+		}
+		PageContainer<Engclass> engclassList = userServer.queryUserHistoryEngclassListByUserId(userId, pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","teacher","engclassSet","courseRecordSet");                         
+		jsonResult = JSONObject.fromObject(engclassList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
 	
+	
 	//通过班级编号查询所有学生信息
 	public String findUserListByClassid() {
-		
 		if(engclassId == null) {
 			return Action.ERROR;
 		}
-		
-//		List<User> userList = userServer.queryUserListByClassid(this.getEngclassId(),pageContainer);
-//		if(userList == null) {
-//			return ERROR;
-//		}
-//		
-//		jsonResult = JSONArray.fromObject(userList).toString();
 		PageContainer<User> userList = userServer.queryUserListByClassid(this.getEngclassId(),pageContainer);
 		if(userList == null) {
 			return ERROR;
 		}
-		
-		jsonResult = JSONArray.fromObject(userList).toString();
-
-		
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONArray.fromObject(userList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
@@ -162,47 +161,25 @@ public class UserAction extends ActionSupport {
 	//查询某门课程的考勤记录
 	public String findUserTimeSheetList() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-
-//		
-//		String queryDate = (String)request.getParameter("queryDate");
-//		
-//		List<TimeSheetDetail> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getEngclassId(), queryDate) ;
-//		
-//		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
-
-		
 		String queryDate = (String)request.getParameter("queryDate");
-		
-		PageContainer<TimeSheet> timeSheetDetailList =userServer.queryTimeSheetByUserId(userId, engclass.getEngclassId(), queryDate) ;
-		
-		jsonResult = JSONArray.fromObject(timeSheetDetailList).toString();
-
-		
+		PageContainer<TimeSheet> timeSheeList =userServer.queryTimeSheetByUserId(userId, engclass.getEngclassId(), queryDate,pageContainer) ;
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONArray.fromObject(timeSheeList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
 	//查询教师给的反馈信息
 	public String findTeacherBackInfoList() {
 		Integer userId = this.getLoginUser().getUserId();
-
 		if(userId == null) {
 			return Action.ERROR;
 		}
-
-//		
-//		List<BackInfoDetail> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(engclass.getEngclassId(),userId);
-//		
-//		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
-
-		
-		PageContainer<TeacherBackInfo> backInfoDetailList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(engclass.getEngclassId(),userId);
-		
-		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
-
+		PageContainer<TeacherBackInfo> backInfoList = userServer.queryTeacherBackInfoByEngclassIdAndUserId(engclass.getEngclassId(),userId,pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONArray.fromObject(backInfoList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
@@ -213,33 +190,19 @@ public class UserAction extends ActionSupport {
 		if(userId == null || engclassId == null) {
 			return Action.ERROR;
 		}
-		
-
-//		BackInfoServer backInfoServer = new BackInfoServerImpl();
-//		jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByUserIdAndClassId(userId, engclassId)).toString();
-
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		//jsonResult = JSONArray.fromObject(backInfoServer.queryBackInfoByUserIdAndClassId(userId, engclassId)).toString();
-
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		//jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();
 		return Action.SUCCESS;
 	} 
 	
 	//根据classid 查询某班级的所有用户反馈信息
 	public String findUserBackInfoInListByEngclass() {
 		Integer engclassId = engclass.getEngclassId();
-
-//		
-//		BackInfoServer backInfoServer = new BackInfoServerImpl();
-//		List<BackInfoDetail> backInfoDetailList =backInfoServer.queryUserBackInfobyClassId(engclassId) ;
-//		jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
-//		
-
-		
 		BackInfoServer backInfoServer = new BackInfoServerImpl();
-		//List<UserBackInfo> backInfoDetailList =backInfoServer.queryUserBackInfobyClassId(engclassId) ;
-		//jsonResult = JSONArray.fromObject(backInfoDetailList).toString();
-		
-
+		//List<UserBackInfo> backInfoList =backInfoServer.queryUserBackInfobyClassId(engclassId);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		//jsonResult = JSONArray.fromObject(backInfoList,jsonConfig).toString();
 		return SUCCESS;
 	}
 	
@@ -248,19 +211,11 @@ public class UserAction extends ActionSupport {
 		if(userId == null) {
 			return Action.ERROR;
 		}
-
-//		List<CourseDetail> enrollCourseList = courseServer.queryEnrollCourseList();
-//		if(enrollCourseList == null) {
-//			return Action.ERROR;
-//		}
-//		request.setAttribute("enrollCourseList", enrollCourseList);
-
-		List<Course> enrollCourseList = null;//courseServer.queryEnrollCourseList();
+		List<Course> enrollCourseList = null;
 		if(enrollCourseList == null) {
 			return Action.ERROR;
 		}
 		request.setAttribute("enrollCourseList", enrollCourseList);
-
 		return Action.SUCCESS;
 	}
 	
@@ -282,22 +237,12 @@ public class UserAction extends ActionSupport {
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
-
-//		List<EngclassDetail> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer);
-//		if(engclassDetailList == null) {
-//			return Action.ERROR;
-//		}
-//		request.setAttribute("engclassDetailList", engclassDetailList);
-//		
-
-		PageContainer<Engclass> engclassDetailList =userServer.queryUserAllEngclassByUserId(userId,pageContainer);
-		if(engclassDetailList == null) {
+		PageContainer<Engclass> engclassList =userServer.queryUserAllEngclassByUserId(userId,pageContainer);
+		if(engclassList == null) {
 			return Action.ERROR;
 		}
-		request.setAttribute("engclassDetailList", engclassDetailList);
-		
-
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -307,21 +252,12 @@ public class UserAction extends ActionSupport {
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
-
-//		List<EngclassDetail> engclassDetailList =userServer.queryUserNowEngclassByUserId(userId) ;
-//		if(engclassDetailList == null) {
-//			return Action.ERROR;
-//		}
-//		request.setAttribute("engclassDetailList", engclassDetailList);
-
-		PageContainer<Engclass> engclassDetailList =userServer.queryUserNowEngclassByUserId(userId) ;
-		if(engclassDetailList == null) {
+		PageContainer<Engclass> engclassList =userServer.queryUserNowEngclassByUserId(userId,pageContainer) ;
+		if(engclassList == null) {
 			return Action.ERROR;
 		}
-		request.setAttribute("engclassDetailList", engclassDetailList);
-
-		
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course","engclassSet");
+		jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -331,11 +267,9 @@ public class UserAction extends ActionSupport {
 	//用户添加反馈信息
 	public String createUserBackInfo() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
 //		BackInfoServer backInfoServer = new BackInfoServerImpl();
 //		backInfoServer.addUserBackInfo(engclass.getEngclassId(),userId, backInfo);
 //		this.setJsonResult("success");
@@ -346,36 +280,22 @@ public class UserAction extends ActionSupport {
 	//创建一条考勤记录（请假）
 	public String createUserTimeSheet() {
 		Integer userId = this.getLoginUser().getUserId();
-		
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
 		String queryDate = (String)request.getParameter("queryDate");
 		java.util.Date formateDate = stringFormateToDate(queryDate);
-		
 		timeSheet.setRecordTime(formateDate);
-		
 //		jsonResult =userServer.addTimeSheet(timeSheet) ;
 		return SUCCESS;
 	}
 	//登录判断
-
-	public String userLogin() {		
-//		if(!userServer.loginCheck(account)) {
-//			return Action.ERROR;
-//		}
-//		User user = userServer.queryUserByAccountId(account.getUser().getUserId());
-//		request.getSession().setAttribute("user",user);
-		
-=======
 	public String userLogin() {
 		if(!userServer.loginCheck(account)) {
 			return Action.ERROR;
 		}
 		User user = userServer.queryUserByAccountId(account.getId());
 		request.getSession().setAttribute("user",user);
-
 		return SUCCESS;
 	}
 	
@@ -384,15 +304,6 @@ public class UserAction extends ActionSupport {
 		request.getSession().removeAttribute("user");
 		return SUCCESS;
 	}
-	
-	//报名课程
-	/*public String enrolmentClassAction() {
-		Integer userid = this.getLoginUserId();
-		
-		//userServer.enrolmentClass(userClass, courseRecordId);
-		
-		return SUCCESS;
-	}*/
 	
 	protected java.util.Date stringFormateToDate(String stringDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

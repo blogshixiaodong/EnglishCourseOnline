@@ -48,7 +48,8 @@
 						<a><i class="fa fa-edit"></i>班级查看
 						<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-
+							<li><a href="now_engclasses.jsp">进行班级</a> </li>
+							<li><a href="history_engclasses.jsp">历史班级</a></li>
 							<li><a href="all_engclasses.jsp">所有班级</a></li>
 						</ul>
 					</li>
