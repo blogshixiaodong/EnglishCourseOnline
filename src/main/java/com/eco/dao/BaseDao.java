@@ -2,6 +2,7 @@ package com.eco.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import com.eco.bean.model.PageContainer;
 
@@ -88,5 +89,13 @@ public interface BaseDao<T> {
 	 * @return 实体分页对象
 	 */
 	PageContainer<T> list(String hql, PageContainer<T> pageContainer, Object... params);
-
+	
+	/**
+	 * 查询单值
+	 * @param hql
+	 * @param params
+	 * @return
+	 */
+	Object getUniqueResult(String hql, Object... params);
+	
 }

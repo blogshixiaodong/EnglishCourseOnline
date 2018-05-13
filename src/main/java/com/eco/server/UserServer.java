@@ -54,7 +54,7 @@ public interface UserServer {
 	* @param classid
 	* @return List<User>
 	*/ 
-	public abstract  PageContainer<User> queryUserListByClassid(Integer classid, PageContainer pageContainer);
+	public abstract  PageContainer<User> queryUserListByEngclassId(Integer engclassId, PageContainer pageContainer);
 	
 	/** 
 	* @Description: 用户查询教师反馈信息 

@@ -36,6 +36,26 @@ public interface EngclassDao extends PageDao<Engclass> {
 	 */
 	PageContainer<Engclass> selectTeacherAllEngclassListByTeacherId(Integer teacherId);
 	
+	/**
+	 * 根据教师编号查询班级编号名称
+	 * @param teacherId
+	 * @return
+	 */
+	List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId);
+	
+	/**
+	 * 根据班级编号查询
+	 * @param engclassId
+	 * @return
+	 */
+	Engclass selectEngclassByEngclassId(Integer teacherId, Integer engclassId);
+	
+	/**
+	 * 根据班级名称查询
+	 * @param engclassName
+	 * @return
+	 */
+	List<Engclass> selectEngclassListByEngclassName(Integer teacherId, String engclassName);
 	
 	/** 
 	* @Description: 根据用户id获取用户正在进行的课程 
@@ -75,6 +95,6 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @return List<Engclass>
 	*/ 
 	List<Engclass> selectEngclassByDate(Date beginDate,Integer userId);
-	
+
 	
 }

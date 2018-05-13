@@ -117,17 +117,16 @@ public class UserServerImpl implements UserServer{
 	
 	
 	@Override
-	public PageContainer<User> queryUserListByClassid(Integer engclassId,PageContainer pageContainer) {
+	public PageContainer<User> queryUserListByEngclassId(Integer engclassId,PageContainer pageContainer) {
 		UserDao userDao = new UserDaoImpl();
 		userDao.setPageContainer(pageContainer);
 		return userDao.selectEngclassAllUserByEngclassId(engclassId);
 	}
 
 	@Override
-	public PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date){
+	public PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId, Date date){
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
 		return timeSheetDao.selectTimeSheetByEnglassIdAndDate(engclassId, date);
-		
 	}
 
 	@Override
