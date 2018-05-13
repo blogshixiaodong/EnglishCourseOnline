@@ -14,14 +14,14 @@
         <property name="backInfo" type="java.lang.String">
             <column name="BACKINFO" />
         </property>
-        <many-to-one name="user" class="com.eco.bean.model.User" >
+        <many-to-one name="user" class="com.eco.bean.model.User" lazy="false" >
             <column name="USERID" />
         </many-to-one>
-        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" >
+        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" lazy="false" >
             <column name="ENGCLASSID" />
         </many-to-one>
         
-        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" >
+        <many-to-one name="teacher" class="com.eco.bean.model.Teacher" lazy="false" >
             <column name="TEACHERID" />
         </many-to-one>
         

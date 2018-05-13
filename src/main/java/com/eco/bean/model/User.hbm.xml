@@ -37,7 +37,7 @@
             <many-to-many class="com.eco.bean.model.Engclass" column="ENGCLASSID" />
         </set>
         
-        <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="true">
+        <set name="timeSheetSet" table="TIMESHEET" inverse="false" lazy="false">
             <key>
                 <column name="USERID" />
             </key>
