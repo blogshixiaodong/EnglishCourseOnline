@@ -1,7 +1,5 @@
 package com.eco.dao.impl;
 
-import java.util.List;
-
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.dao.UserBackInfoDao;
@@ -11,9 +9,9 @@ import com.eco.dao.UserBackInfoDao;
  *
  */
 public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implements UserBackInfoDao {
-
-	private PageContainer<UserBackInfo> pageContainer;
 	
+	private PageContainer<UserBackInfo> pageContainer;
+
 	@Override
 	public PageContainer<UserBackInfo> selectUserBackInfoByEngclassId(Integer engclassId) {
 		String hql = " SELECT ubi FROM UserBackInfo ubi WHERE ubi.engclass.engclassId = ?";
@@ -21,9 +19,9 @@ public class UserBackInfoDaoImpl extends AbstractBaseDao<UserBackInfo> implement
 	}
 
 	@Override
-	public List<UserBackInfo> selectUserBackInfoByUserIdAndEngclassId(Integer userId, Integer engclassId) {
+	public PageContainer<UserBackInfo> selectUserBackInfoByUserIdAndEngclassId(Integer userId, Integer engclassId) {
 		String hql = "SELECT ubi FROM User u LEFT JOIN u.engclassSet ec LEFT JOIN ec.userBackInfoSet ubi WHERE u.userId = ? AND ec.engclassId = ? ";
-		return this.list(hql, userId,engclassId);
+		return this.list(hql,pageContainer ,userId,engclassId);
 	}
 
 	@Override

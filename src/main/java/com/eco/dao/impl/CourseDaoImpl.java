@@ -1,7 +1,5 @@
 package com.eco.dao.impl;
 
-import java.util.List;
-
 import com.eco.bean.model.Course;
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.CourseDao;
@@ -77,13 +75,13 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	}
 
 	@Override
-	public void setPageContainer(PageContainer pageContainer) {
+	public void setPageContainer(PageContainer<Course> pageContainer) {
 		this.pageContainer = pageContainer;
 		
 	}
 
 	@Override
-	public PageContainer getPageContainer() {
+	public PageContainer<Course> getPageContainer() {
 		return pageContainer;
 	}
 }

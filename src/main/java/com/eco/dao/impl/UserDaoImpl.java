@@ -34,4 +34,9 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 		this.pageContainer = pageContainer;
 	}
 
+	@Override
+	public User selectUserByUserId(Integer userId) {
+		return this.get(userId) ;
+	}
+
 }

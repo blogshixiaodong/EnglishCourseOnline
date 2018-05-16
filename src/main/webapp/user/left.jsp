@@ -51,6 +51,8 @@
 							<li><a href="now_engclasses.jsp">进行班级</a> </li>
 							<li><a href="history_engclasses.jsp">历史班级</a></li>
 							<li><a href="all_engclasses.jsp">所有班级</a></li>
+							<li><a href="timeTable.jsp">课表</a></li>
+							
 						</ul>
 					</li>
 

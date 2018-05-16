@@ -17,6 +17,14 @@ public interface UserDao extends PageDao<User> {
 	* @return List<User>
 	*/ 
 	PageContainer<User> selectEngclassAllUserByEngclassId(Integer engclassId);
+	
+	
+	/** 
+	* @Description: 根据用户id 获得具体对象
+	* @param userId
+	* @return User
+	*/ 
+	User selectUserByUserId(Integer userId);
 
 	/**
 	 * 根据班级编号查询学生id/name

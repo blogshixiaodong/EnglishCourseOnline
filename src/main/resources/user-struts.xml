@@ -43,14 +43,8 @@
     			<param name="root">jsonResult</param>
     		</result>
 		</action>
-		
-		 <action name="queryUserByClassid" class="com.eco.action.UserAction" method = "findUserListByClassid" >
-			<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-		</action>
-		
-		<action name="queryUserBackInfoByClassId" class="com.eco.action.UserAction" method = "findUserBackInfoInListByEngclass" >
+	
+		<action name="queryEngclass" class="com.eco.action.UserAction" method="findEngclassIdAndEngclassName">
 			<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
@@ -67,22 +61,8 @@
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
 			</result>
-		</action>
-		
-		
-		 <action name="searchEngclasses" class="com.eco.action.UserAction" method = "findUserAllEngclassList" >
-			<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-		</action>
-		
-		<action name="searchNowEngclasses" class="com.eco.action.UserAction" method = "findUserNowEngclassList" >
-			<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-		</action>
-		
-		
+		</action>	
+
 		<action name="createUserBackInfo" class="com.eco.action.UserAction" method = "createUserBackInfo" >
 			<result name = "success" type = "json">
 				<param name="root">jsonResult</param>
@@ -123,12 +103,9 @@
 		
 		</action>
 		
-		<action name = "enrollCourseList" class = "com.eco.action.UserAction" method = "enrollCourseList">
-			<result name = "success" type = "redirect">
-				<param name = "location">/user/login.jsp</param>
-			</result>
-			<result name = "error" type = "redirect">
-				<param name="location">user/login.jsp</param>
+		<action name = "enrollCourseList" class = "com.eco.action.UserAction" method = "findenrollCourseList">
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
 			</result>
 		</action>
 		
@@ -140,6 +117,13 @@
 				<param name="location">login.jsp</param>
 			</result>
 		</action>
+		
+		<action name = "timeTable" class = "com.eco.action.UserAction" method = "getengClassTimeTable">
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
+			</result>
+		</action>
+		
 		
 	</package>
 	

@@ -21,9 +21,7 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="searchNowEngclasses" namespace="/user"></s:action>
-	</s:if>
+
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -67,10 +65,8 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
-					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                    <select id="engclassCombo" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
+					                        
 					                    </select>  
 				                	</div> 
 									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
@@ -137,15 +133,38 @@
     <script src="../build/js/custom.min.js"></script>
     
     <script type="text/javascript">
+	    $(getEngclassIdAndName());
+		
+		function getEngclassIdAndName(){
+			$.ajax({
+				url:"queryEngclass.action",
+				type : "post",
+				dataType : "json",
+				success: function(responseText){
+					var json = JSON.parse(responseText);
+					var engclassCombo = $("#engclassCombo");
+					for(var i = 0; i < json.length; i++){
+						var engclass = json[i];
+						var option = $("<option>"+engclass.engclassId + ":"+engclass.engclassName +"</option>");
+						engclassCombo.append(option);
+					}
+					$("#engclassCombo").selectpicker('refresh');
+				},
+				error : function(){
+					alert("班级下拉框错误");
+				}
+			});
+		};	
+    
+    
     
     	function reset() {
-    		document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").selectpicker('refresh');
+    		document.getElementById("engclassCombo").options.selectedIndex = 0;
+			$("#engclassCombo").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
 		
 		$("#backInfoSubmit").click(function(){
-			
 			var backInfo = $("#backInfo").val();
 			console.log(backInfo);
 			if(backInfo == ""){
@@ -153,13 +172,13 @@
 				return;
 			}
 			
-			var classId = $("#engclassList").val().split(" : ")[0];
+			var engclassId = $("#engclassCombo").val().split(":")[0];
 			$.ajax({
 				url:"createUserBackInfo.action",
 				type:"post",
 				data:{
-					"engclass.classId" : classId,
-					"backInfo": backInfo,
+					"userBackInfo.engclass.engclassId" : engclassId,
+					"userBackInfo.backInfo": backInfo,
 					
 				},
 				dataType: "text",
@@ -171,16 +190,12 @@
 					alert(data);
 			   	}
 			});
-			
-			
 		});
-		
 		
 		$("#backInfoReset").click(function() {
 			$("#backInfo").val("");
 		});
 		
-
 		$("#reset").click(function() {
 			reset();
 		});

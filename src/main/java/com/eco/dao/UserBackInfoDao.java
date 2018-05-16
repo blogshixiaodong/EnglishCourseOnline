@@ -1,7 +1,5 @@
 package com.eco.dao;
 
-import java.util.List;
-
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.UserBackInfo;
 
@@ -10,8 +8,9 @@ import com.eco.bean.model.UserBackInfo;
  * @author lenovo
  *
  */
+
 public interface UserBackInfoDao extends PageDao<UserBackInfo> {
-	
+
 	/**
 	 * 根据班级编号查询学生反馈信息
 	 * @param engclassId
@@ -25,7 +24,7 @@ public interface UserBackInfoDao extends PageDao<UserBackInfo> {
 	* @param engclassId
 	* @return List<UserBackInfo>
 	*/ 
-	List<UserBackInfo> selectUserBackInfoByUserIdAndEngclassId(Integer userId, Integer engclassId);
+	PageContainer<UserBackInfo> selectUserBackInfoByUserIdAndEngclassId(Integer userId, Integer engclassId);
 	
 	/** 
 	* @Description: 添加用户反馈信息
