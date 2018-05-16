@@ -5,10 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import freemarker.core.ReturnInstruction.Return;
-
 public class DateFormat {
-	
 	
 	public static Date getWeekStartDate(String queryDate) {
 		Calendar calendar = Calendar.getInstance();
@@ -20,8 +17,7 @@ public class DateFormat {
 		Date date = calendar.getTime();
 		return date;
 	}
-	
-	
+		
 	public static Date stringToDate(String date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date reDate = null;

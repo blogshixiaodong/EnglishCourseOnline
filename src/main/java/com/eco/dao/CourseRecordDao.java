@@ -1,9 +1,7 @@
 package com.eco.dao;
 
 import java.util.Date;
-import java.util.List;
 
-import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.PageContainer;
 

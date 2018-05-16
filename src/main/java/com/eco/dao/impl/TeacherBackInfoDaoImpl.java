@@ -28,12 +28,12 @@ public class TeacherBackInfoDaoImpl extends AbstractBaseDao<TeacherBackInfo> imp
 	}
 
 	@Override
-	public PageContainer getPageContainer() {
+	public PageContainer<TeacherBackInfo> getPageContainer() {
 		return pageContainer;
 	}
 
 	@Override
-	public void setPageContainer(PageContainer pageContainer) {
+	public void setPageContainer(PageContainer<TeacherBackInfo> pageContainer) {
 		this.pageContainer = pageContainer;
 	}
 }

@@ -3,12 +3,8 @@ package com.eco.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.struts2.components.Select;
-
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
-import com.eco.bean.model.User;
-
 
 /*
  * date:   2018年4月20日 下午10:31:04

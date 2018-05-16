@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.eco.bean.model.Teacher;
-import com.eco.bean.model.User;
 
 public class TeacherLoginFilter implements Filter{
 	

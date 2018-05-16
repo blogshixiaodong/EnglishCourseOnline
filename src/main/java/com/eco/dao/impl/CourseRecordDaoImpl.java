@@ -1,9 +1,7 @@
 package com.eco.dao.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.CourseRecordDao;
@@ -18,7 +16,6 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 		return null;
 	}
 
-
 	@Override
 	public Boolean updateCourseRecordSignCount(Integer crId) {
 		// TODO Auto-generated method stub
@@ -31,7 +28,6 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 		return null;
 	}
 
-
 	@Override
 	public PageContainer<CourseRecord> selectNowCoureseRecord() {
 		Integer userId = 40000;
@@ -39,17 +35,14 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 		return this.list(hql, pageContainer,userId);
 	}
 
-
 	@Override
 	public PageContainer<CourseRecord> getPageContainer() {
 		return pageContainer;
 	}
 
-
 	@Override
 	public void setPageContainer(PageContainer<CourseRecord> pageContainer) {
 		this.pageContainer = pageContainer;
 	}
-	
 	
 }

@@ -1,8 +1,5 @@
 package com.eco.action;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -10,27 +7,14 @@ import org.apache.struts2.ServletActionContext;
 import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
-
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
-import com.eco.bean.model.Teacher;
-import com.eco.dao.CourseRecordDao;
 import com.eco.server.BusinessServer;
-import com.eco.server.CourseServer;
-import com.eco.server.EngclassServer;
-import com.eco.server.TeacherServer;
-import com.eco.server.UserServer;
 import com.eco.server.impl.BusinessServerImpl;
-import com.eco.server.impl.CourseServerImpl;
-import com.eco.server.impl.EngclassServerImpl;
-import com.eco.server.impl.TeacherServerImpl;
-import com.eco.server.impl.UserServerImpl;
 import com.eco.util.JsonUtils;
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
@@ -44,9 +28,6 @@ public class BusinessAction extends ActionSupport {
 	
 	private BusinessServer businessServer = new BusinessServerImpl();
 	
-	private TeacherServer teacherServer = new TeacherServerImpl();
-	
-	private EngclassServer engclassServer = new EngclassServerImpl();
 	
 	private Course course;
 	
@@ -175,32 +156,6 @@ public class BusinessAction extends ActionSupport {
 		return Action.ERROR;
 	}
 	
-	//parameter内的参数
-	private Integer getEngclassId() {
-		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("engclassId");
-		if(id != null) {
-			return new Integer(id.toString());
-		}
-		return null;
-	}
-	
-	private Integer getCourseId() {
-		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("courseId");
-		if(id != null) {
-			return new Integer(id.toString());
-		}
-		return null;
-	}
-	
-	private Integer getTeacherId() {
-		Object id = ((Map<String, Object>)ActionContext.getContext().get("parameters")).get("teacherId");
-		if(id != null) {
-			return new Integer(id.toString());
-		}
-		return null;
-	}
-	
-
 	public Course getCourse() {
 		return course;
 	}
@@ -216,7 +171,6 @@ public class BusinessAction extends ActionSupport {
 	public void setPageContainer(PageContainer pageContainer) {
 		this.pageContainer = pageContainer;
 	}
-	
 	
 	public TeacherAccount getAccount() {
 		return account;
@@ -281,8 +235,5 @@ public class BusinessAction extends ActionSupport {
 	public void setUserNum2(Integer userNum2) {
 		this.userNum2 = userNum2;
 	}
-	
-	
-	
 
 }

@@ -112,7 +112,7 @@ public interface UserServer {
 	* @param pageContainer
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract  PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date, PageContainer pageContainer);
+	public abstract  PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date, PageContainer<TimeSheet> pageContainer);
 	
 	/** 
 	* @Description: 请假 
