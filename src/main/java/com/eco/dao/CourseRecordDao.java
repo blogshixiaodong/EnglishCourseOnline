@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
+import com.eco.bean.model.PageContainer;
 
-public interface CourseRecordDao {
+public interface CourseRecordDao extends PageDao<CourseRecord> {
 	
 	/** 
 	* 创建课程记录 
@@ -17,10 +18,9 @@ public interface CourseRecordDao {
 	
 	/** 
 	* 获取真正等待报名的课程记录 
-	* @param courseid
 	* @return List<CourseDetail>
 	*/ 
-	List<Course> selectNowCoureseRecordByCourseId(Integer courseid);
+	PageContainer<CourseRecord> selectNowCoureseRecord();
 	
 	/** 
 	* 报名成功，修改报名人数字段

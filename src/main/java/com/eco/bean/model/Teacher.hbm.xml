@@ -35,7 +35,6 @@
             </key>
             <one-to-many class="com.eco.bean.model.Engclass" />
         </set>
-        
         <one-to-one name="teacherAccount" class="com.eco.bean.model.TeacherAccount" property-ref="teacher" lazy="false">
         </one-to-one>
         

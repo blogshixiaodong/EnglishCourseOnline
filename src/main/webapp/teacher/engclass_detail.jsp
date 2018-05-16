@@ -66,10 +66,10 @@
 									                    <div>
 									                    	<div class="x_content">
 									                    		<div>
-									                    			<p><i>课程编号: </i><s:property value="#request.engclassDetail.courseId" /></p>
-									                    			<p><i>课程名称: </i><s:property value="#request.engclassDetail.courseName" /></p>
-									                    			<p><i>教师编号: </i><s:property value="#request.engclassDetail.teacherId" /></p>
-									                    			<p><i>教师名称: </i><s:property value="#request.engclassDetail.teacherName" /></p>
+									                    			<p><i>课程编号: </i><s:property value="#request.engclassDetail.courseRecord.course.courseId" /></p>
+									                    			<p><i>课程名称: </i><s:property value="#request.engclassDetail.courseRecord.course.courseName" /></p>
+									                    			<p><i>教师编号: </i><s:property value="#request.engclassDetail.teacher.teacherId" /></p>
+									                    			<p><i>教师名称: </i><s:property value="#request.engclassDetail.teacher.teacherName" /></p>
 								                 				</div>
 													
 															</div>
@@ -102,10 +102,11 @@
 								                    <div>
 								                    	<div class="x_content">
 								                    		<div>
-								                    			<p><i>班级编号: </i><s:property value="#request.engclassDetail.classId" /></p>
-								                    			<p><i>班级名称: </i><s:property value="#request.engclassDetail.className" /></p>
+								                    			<p><i>班级编号: </i><s:property value="#request.engclassDetail.engclassId" /></p>
+								                    			<p><i>班级名称: </i><s:property value="#request.engclassDetail.engclassName" /></p>
 								                    			<p><i>班级人数: </i><s:property value="#request.engclassDetail.userCount" /></p>
 								                    			<p><i>教室地点: </i><s:property value="#request.engclassDetail.classRoom" /></p>
+								                    			<p><i>上课时间: </i><p id="day"></p></p>
 							                 				</div>
 														</div>
 													</div>
@@ -135,6 +136,16 @@
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/common.js"></script>
+    
+    <script type="text/javascript">
+    	$(function() {
+    		var day = '<s:property value="#request.engclassDetail.day" />';
+    		var attendTime = '<s:property value="#request.engclassDetail.attendTime" />';
+    		$("#day").html(schooltime(day, attendTime));
+    	});
+    
+    </script>
 </body>
 </html>
 

@@ -14,10 +14,10 @@
         <property name="sheetInfo" type="java.lang.String">
             <column name="SHEETINFO" />
         </property>
-        <many-to-one name="user" class="com.eco.bean.model.User">
+        <many-to-one name="user" class="com.eco.bean.model.User" lazy="false">
             <column name="USERID" />
         </many-to-one>
-        <many-to-one name="engclass" class="com.eco.bean.model.Engclass">
+        <many-to-one name="engclass" class="com.eco.bean.model.Engclass" lazy="false">
             <column name="ENGCLASSID" />
         </many-to-one>
     </class>

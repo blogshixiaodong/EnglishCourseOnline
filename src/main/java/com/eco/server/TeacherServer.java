@@ -42,22 +42,22 @@ public interface TeacherServer {
 	 * @param teacherId
 	 * @return
 	 */
-	List<Engclass> queryNowEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer);
+	PageContainer<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer);
 
 	/**
-	 * 根据教师id获取教师上过已结课的班级信息,支持分页
-	 * @param teacherId
-	 * @param pageContainer
+	 * engclassId存在则返回唯一一条记录，engclassId为空根据engclassName模糊查询
+	 * @param engclassId
+	 * @param engclassName
 	 * @return
 	 */
-	List<Engclass> queryHistoryEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainere);
+	List<Engclass> searchEngclassByEngclassIdAndEngclassName(Integer teacherId, Integer engclassId, String engclassName);
 	
 	/**
-	 * 根据教师id获取教师上过所有的班级信息,支持分页
+	 * 根据教师编号查询班级编号
 	 * @param engclassId
-	 * @param pageContainer
 	 * @return
 	 */
-	List<Engclass> queryAllEngclassListByTeacherId(Integer teacherId, PageContainer<Engclass> pageContainer);
+	List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId);
+	
 	
 }

@@ -10,7 +10,7 @@ import com.eco.bean.model.TimeSheet;
  * date:   2018年4月20日 下午11:07:27
  * author: Shixiaodong
  */
-public interface TimeSheetDao extends PageDao {
+public interface TimeSheetDao extends PageDao<TimeSheet> {
 
 	/**
 	 * 根据班级编号，日期查询学生的考勤信息

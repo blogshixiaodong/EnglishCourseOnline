@@ -2,7 +2,6 @@ package com.eco.dao.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.dao.TimeSheetDao;
@@ -29,14 +28,14 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 
 	@Override
 	public Integer countCourseByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate) {
-		String hql = "SELECT COUNT(*) FROM User u ELFT JOIN u.engclassSet ec LEFT JOIN ec.courseRecord cr WHERE STR_TO_DATE(cr.startTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') AND u.userId = ? AND ec.engclassId = ? ";
-		return (Integer) this.getUniqueResult(hql, userId,engclassId);
+		String hql = "SELECT COUNT(*) FROM User u LEFT JOIN u.engclassSet ec LEFT JOIN ec.courseRecord cr WHERE STR_TO_DATE(cr.startTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') AND u.userId = ? AND ec.engclassId = ? ";
+		return ((Long) this.getUniqueResult(hql, queryDate,userId,engclassId)).intValue();
 	}
 
 	@Override
 	public Integer countTimeSheetByUserIdAndEngclassIdAndDate(Integer userId, Integer engclassId, Date queryDate) {
 		String hql = "SELECT COUNT(*) FROM User u LEFT JOIN u.engclassSet ec LEFT JOIN ec.timeSheetSet ts WHERE u.userId = ? AND ec.engclassId = ? AND STR_TO_DATE(ts.recordTime,'%Y-%m-%d') = STR_TO_DATE(?,'%Y-%m-%d') ";
-		return (Integer) this.getUniqueResult(hql,userId,engclassId,queryDate);
+		return ((Long) this.getUniqueResult(hql,userId,engclassId,queryDate)).intValue();
 	}
 
 	@Override
@@ -55,11 +54,11 @@ public class TimeSheetDaoImpl extends AbstractBaseDao<TimeSheet> implements Time
 		this.save(timeSheetList);
 	}
 	
-	public PageContainer getPageContainer() {
+	public PageContainer<TimeSheet> getPageContainer() {
 		return pageContainer;
 	}
 
-	public void setPageContainer(PageContainer pageContainer) {
+	public void setPageContainer(PageContainer<TimeSheet> pageContainer) {
 		this.pageContainer = pageContainer;
 	}
 

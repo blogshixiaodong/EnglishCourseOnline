@@ -32,36 +32,36 @@
     		</result>
     	</action>
 
-    	<action name="historyCourses" class="com.eco.action.TeacherAction" method="findTeacherHistoryCourseDetailList">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/history_courses.jsp</param>
+    	<action name="historyCourses" class="com.eco.action.TeacherAction" method="findTeacherHistoryCourseList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>
     		</result>
     	</action>
     	
-    	<action name="allCourses" class="com.eco.action.TeacherAction" method="findTeacherAllCourseDetailList">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/all_courses.jsp</param>
+    	<action name="allCourses" class="com.eco.action.TeacherAction" method="findTeacherAllCourselList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>
     		</result>
     	</action>
     	
-    	<action name="allEngclasses" class="com.eco.action.TeacherAction" method="findTeacherAllEngclassDetailList">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/all_engclasses.jsp</param>
+    	<action name="allEngclasses" class="com.eco.action.TeacherAction" method="findTeacherAllEngclassList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>
     		</result>
     	</action>
     	
-    	<action name="engclassList" class="com.eco.action.TeacherAction" method="findTeacherAllEngclassDetailList">
-    		<result name="success" type="dispatcher">
-    			<param name="location">/teacher/search_user.jsp</param>
+    	<action name="engclassList" class="com.eco.action.TeacherAction" method="findTeacherAllEngclassIdNameList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>
@@ -95,6 +95,15 @@
     		</result>
     	</action>
     	
+    	<action name="getUserTimeSheet" class="com.eco.action.TeacherAction" method="findUserTimeSheetDetail">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    		<result name="unlogin" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
     	<action name="teacherBackInfoHistory" class="com.eco.action.TeacherAction" method="findTeacherBackInfoHistory">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -113,14 +122,7 @@
     		</result>
     	</action>
     	
-    	<action name="getUserTimeSheetDetail" class="com.eco.action.TeacherAction" method="findUserTimeSheetDetail">
-    		<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-    		<result name="unlogin" type="redirect">
-    			<param name="location">login.jsp</param>
-    		</result>
-    	</action>
+    	
     	
     	<action name="insertTimeSheet" class="com.eco.action.TeacherAction" method="createTimeSheet">
     		<result name="success" type="json">

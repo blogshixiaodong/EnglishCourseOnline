@@ -1,6 +1,8 @@
 package com.eco.action;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
 import com.eco.bean.model.TeacherAccount;
 import com.eco.bean.model.TimeSheet;
+import com.eco.bean.model.User;
 import com.eco.server.BackInfoServer;
 import com.eco.server.EngclassServer;
 import com.eco.server.TeacherServer;
@@ -51,6 +54,8 @@ public class TeacherAction extends ActionSupport {
 	
 	private TeacherAccount account;
 	
+	private String queryDate;
+	
 	private String jsonResult = "";
 	
 	public String findTeacherNowCourseList() {
@@ -64,36 +69,47 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
-	public String findTeacherHistoryCourseDetailList() {
+	public String findTeacherHistoryCourseList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
 		}
-//		List<CourseDetail> courseDetailList = teacherServer.queryHistoryCourseDetailListByTeacherId(teacherId, pageContainer);
-//		putContextRequestMap("courseDetailList", courseDetailList);
-//		putContextRequestMap("pageContainer", pageContainer);
+		PageContainer<Course> courseList = teacherServer.queryHistoryCourseListByTeacherId(teacherId, pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course", "engclassSet");
+		jsonResult = JSONObject.fromObject(courseList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	
-	public String findTeacherAllCourseDetailList() {
+	public String findTeacherAllCourselList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
 		}
-//		List<CourseDetail> courseDetailList = teacherServer.queryAllCourseDetailListByTeacherId(teacherId, pageContainer);
-//		putContextRequestMap("courseDetailList", courseDetailList);
-//		putContextRequestMap("pageContainer", pageContainer);
+		PageContainer<Course> courseList = teacherServer.queryAllCourseListByTeacherId(teacherId, pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course", "engclassSet");
+		jsonResult = JSONObject.fromObject(courseList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	
-	public String findTeacherAllEngclassDetailList() {
+	public String findTeacherAllEngclassList() {
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
 		}
-//		List<EngclassDetail> engclassDetailList = teacherServer.queryEngclassListByTeacherId(teacherId, pageContainer);
-//		putContextRequestMap("engclassDetailList", engclassDetailList);
-//		putContextRequestMap("pageContainer", pageContainer);
+		PageContainer<Engclass> courseList = teacherServer.queryAllEngclassListByTeacherId(teacherId, pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet", "teacher", "engclassSet", "courseRecordSet", "teacherBackInfoSet", "userBackInfoSet", "timeSheetSet");
+		jsonResult = JSONObject.fromObject(courseList, jsonConfig).toString();
+		return Action.SUCCESS;
+	}
+	
+	//仅获取id/name列表
+	public String findTeacherAllEngclassIdNameList() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
+		}
+		List<Engclass> engclassList = teacherServer.selectEngclassIdAndEngclassNameByTeacherId(teacherId);
+		jsonResult = JSONArray.fromObject(engclassList).toString();
 		return Action.SUCCESS;
 	}
 	
@@ -102,35 +118,51 @@ public class TeacherAction extends ActionSupport {
 		if(teacherId == null) {
 			return "unlogin";
 		}
-//		List<Engclass> engclassList = teacherServer.queryEngclassByCondition(teacherId, engclass.getEngclassId(), engclass.getEngclassName());
-//		if(engclassList == null) {
-//			return Action.ERROR;
-//		}
-//		jsonResult = JSONArray.fromObject(engclassList).toString();
+		List<Engclass> engclassList = teacherServer.searchEngclassByEngclassIdAndEngclassName(teacherId, engclass.getEngclassId(), engclass.getEngclassName());
+		if(engclassList == null) {
+			return Action.ERROR;
+		}
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("courseRecord", "teacher", "userSet", "teacherBackInfoSet", "userBackInfoSet", "teacherBackInfoSet", "userBackInfoSet", "timeSheetSet");
+		jsonResult = JSONArray.fromObject(engclassList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}
-	
+
 	public String engclassDetail() {
-		Integer engclassId = getEngclassId();
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
 		}
-		Map<String, Object> request = (Map<String, Object>)ActionContext.getContext().get("request");
-//		request.put("engclassDetail", teacherServer.queryEngclassDetailByEngclassId(engclassId));
+		Engclass engclassDetail = teacherServer.searchEngclassByEngclassIdAndEngclassName(teacherId, engclass.getEngclassId(), null).get(0);
+		putContextRequestMap("engclassDetail", engclassDetail);
 		return Action.SUCCESS;
 	}
-	
+
 	public String findUserInEngclass() {
-		Integer engclassId = engclass.getEngclassId();
 		Integer teacherId = getLoginTeacherId();
 		if(teacherId == null) {
 			return "unlogin";
 		}
-//		jsonResult = JSONArray.fromObject(engclassServer.queryUserListByEngclassId(engclassId)).toString();
+		PageContainer<User> userList = userServer.queryUserListByEngclassId(engclass.getEngclassId(), pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("engclassSet", "timeSheetSet");
+		jsonResult = JSONObject.fromObject(userList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	
+	public String findUserTimeSheetDetail() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclass.getEngclassId(), sdf.parse(queryDate))).toString();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return Action.SUCCESS;
+	}
+	
+	////////////////////////////////////////////////
 	
 	public String findTeacherBackInfoHistory() {
 		Integer teacherId = getLoginTeacherId();
@@ -155,21 +187,7 @@ public class TeacherAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
-	public String findUserTimeSheetDetail() {
-		Integer teacherId = getLoginTeacherId();
-		if(teacherId == null) {
-			return "unlogin";
-		}
-		Integer engclassId = engclass.getEngclassId();
-		String queryDate = ((String [])ServletActionContext.getRequest().getParameterMap().get("queryDate"))[0].toString();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		try {
-//			jsonResult = JSONArray.fromObject(userServer.queryUserTimeSheetByEngclassId(engclassId, sdf.parse(queryDate))).toString();
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-		return Action.SUCCESS;
-	}
+	
 	
 	public String createTimeSheet() {
 		Integer teacherId = getLoginTeacherId();

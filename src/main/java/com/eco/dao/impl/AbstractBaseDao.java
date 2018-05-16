@@ -1,7 +1,9 @@
 package com.eco.dao.impl;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -173,6 +175,7 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         return pageContainer;  
 	}
 	
+	@Override
 	public Object getUniqueResult(String hql, Object... params) {
 		Query query = session.createQuery(hql);
 		setParameter(query, params);
@@ -200,6 +203,13 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 			query.setParameter(i, params[i]);
 		}
 	}
+	
+	private void setParameter(Query query, Map<String, Object> parameterMap) {  
+        for (Iterator iterator = parameterMap.keySet().iterator(); iterator.hasNext(); ) {  
+            String key = (String) iterator.next();  
+            query.setParameter(key, parameterMap.get(key));  
+        }  
+    } 
 
 	public Boolean getAutoCommit() {
 		return autoCommit;

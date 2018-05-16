@@ -21,9 +21,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="searchEngclasses" namespace="/user"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -67,10 +64,7 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
-					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                    <select id="engclassCombo" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
 					                    </select>  
 				                	</div> 
 									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
@@ -127,14 +121,15 @@
 										<!-- get data and create dom by ajax -->
 									</tbody>
 								</table>
+								<div  class="btn-toolbar pull-right">
+			                        <div class="btn-group" id="btnGroup">
+			                        	<!-- page load -->
+			                        </div>
+			                    </div>
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
-				
 			</div>
 			<!-- /page content -->
 
@@ -156,71 +151,93 @@
  	<script src="../vendors/bootstrap-select/bootstrap-select.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/common.js"></script>
     
     <script type="text/javascript">
+	    $(getEngclassIdAndName());
+		
+		function getEngclassIdAndName(){
+			$.ajax({
+				url:"queryEngclass.action",
+				type : "post",
+				dataType : "json",
+				success: function(responseText){
+					var json = JSON.parse(responseText);
+					var engclassCombo = $("#engclassCombo");
+					for(var i = 0; i < json.length; i++){
+						var engclass = json[i];
+						var option = $("<option>"+engclass.engclassId + ":"+engclass.engclassName +"</option>");
+						engclassCombo.append(option);
+					}
+					$("#engclassCombo").selectpicker('refresh');
+				},
+				error : function(){
+					alert("班级下拉框错误");
+				}
+			});
+		};
     
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
-			$("#engclassList").selectpicker('refresh');
+			document.getElementById("engclassCombo").options.selectedIndex = 0;
+			$("#engclassCombo").attr("index", 0);
+			$("#engclassCombo").selectpicker('refresh');
 			$("#userList tbody").html("");
+			$("#btnGroup").html("");
     	}
     	
-    	function AppendZero(number) {
-    		if(number < 10) {
-    			return "0" + number;
-    		}
-    		return number;
-    	}
-    	
-    	function JsonDateToString(dateObject) {
-    		var year = 1900 + dateObject.year;
-    		var month = 1 + dateObject.month;
-    		var day = dateObject.date;
-    		var hours = dateObject.hours;
-    		
-    		var minutes = dateObject.minutes;
-    		
-    		var seconds = dateObject.seconds;
-    		
-    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
-    	}
-    	
-    	function sendCondition(e) {
+    	function sendCondition(currentPageNo) {
     		$("#userList tbody").html("");
-    		var classId = $("#engclassList").val().split(" : ")[0];
-    		if(classId === "") {
+    		var engclassId = $("#engclassCombo").val().split(":")[0];
+    		if(engclassId === "") {
     			return;
     		}
     		$.ajax({
     			url: "showTeacherBackInfos.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
+    			data:{"engclass.engclassId" : engclassId,
+    				   "pageContainer.currentPageNo": currentPageNo	
+    			},
+
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
+    				$("#userList tbody").html("");
+    				$("#btnGroup").html("");
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
+    				for(var i = 0; i < json.list.length; i++) {
     					var tr = $("<tr></tr>");
-    					var record = json[i];
+    					var record = json.list[i];
     					tr.append($("<td></td>").text('#'+(i+1000)));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["userName"]));
-    					var to = record["userId"];
-    					if(to == 0) {
-    						tr.append($("<td></td>").text("全体成员"));
-        					tr.append($("<td></td>").text("全体成员"));
-    					} else {
-    						tr.append($("<td></td>").text(record["teacherId"]));
-        					tr.append($("<td></td>").text(record["teacherName"]));
-    					}
-    					
-    					tr.append($("<td></td>").text(record["classId"]));
-    					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(JsonDateToString(record["backTime"])));
-    					tr.append($("<td></td>").text(record["backInfo"]));
+    					tr.append($("<td></td>").text(record.user.userId ));
+    					tr.append($("<td></td>").text(record.user.username));
+    					tr.append($("<td></td>").text(record.teacher.teacherId));
+    					tr.append($("<td></td>").text(record.teacher.teacherName));
+    					tr.append($("<td></td>").text(record.engclass.engclassId));
+    					tr.append($("<td></td>").text(record.engclass.engclassName));
+    					tr.append($("<td></td>").text(JsonDateToString(record.backTime)));
+    					tr.append($("<td></td>").text(record.backInfo));
     					$("#userList tbody").append(tr);		
     				}
+    				//创建按钮组
+					var btnGroup = $("#btnGroup");
+					var currentPageNo = json.currentPageNo;
+					var pageCount = json.pageCount;
+					var recordCount = json.recordCount;
+					
+					if(currentPageNo == 1) {
+        				btnGroup.append($("<button class='btn btn-default disabled' pageNo=" + (currentPageNo+1)  +"'>上一页</button>"));
+        			} else {
+        				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
+        			}
+        			for(var i = 1; i <= pageCount; i++) {
+        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+        			}
+        			if(currentPageNo == pageCount) {
+        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+        			} else {
+        				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo+1)  +"'>下一页</button>"));
+        			}
+    				
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
@@ -228,15 +245,17 @@
     			}
     		});
     	}
-		$("#inClassId").change("input", sendCondition);
-		$("#inClassName").change("input", sendCondition);
-		$("#engclassList").change(sendCondition);
+		$("#engclassCombo").change(function(){
+			sendCondition(1);
+		});
 		$("#reset").click(function() {
 			reset();
 		});
+		$("#btnGroup").on('click','.btn',function(){
+    		var pageNo = $(this).attr('pageNo');
+    		sendCondition(pageNo);
+    	});
 		
-		
-	
 	</script>
 </body>
 </html>

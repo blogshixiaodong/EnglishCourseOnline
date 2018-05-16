@@ -97,10 +97,6 @@
     	$(sendAjax(1));
     
     	function sendAjax(currentPage){
-    		
-    		var weekArr = ["星期一","星期二","星期三","星期四","星期五","星期六","星期日"];
-    		var timeArr = ["一二节","三四节","五六节","七八节"];
-    		
     		$.ajax({
     			url:"allEngclasses.action",
     			type:"post",
@@ -110,8 +106,10 @@
     			dataType:"json",
     			
     			success:function(responseText){
+    				$("#btnGroup").html("");
     				var json = JSON.parse(responseText);
     				var tbody = $("#courseTable tbody");
+    				tbody.html("");
     				//创建表格
     				for(var i = 0; i < json.list.length; i++){
     					var engclass = json.list[i];
@@ -121,8 +119,8 @@
     					var userCount = $("<td></td>").html(engclass.userCount);
     					var courseId = $("<td></td>").html(engclass.courseRecord.course.courseId);
     					var courseName = $("<td></td>").html(engclass.courseRecord.course.courseName);
-    					var attandTime = $("<td></td>").html(weekArr[engclass.day]+ " "+ timeArr[engclass.attendTime]);
-            			var tr = $("<tr></tr>");
+    					var attandTime = $("<td></td>").html(schooltime(engclass.day,engclass.attendTime));
+            			var tr = $("<tr></tr>");     
             			tr.append(engclassId);
         				tr.append(engclassName);
         				tr.append(classRoom);
@@ -140,17 +138,21 @@
     					var recordCount = json.recordCount;
     					
     					if(currentPageNo == 1) {
-            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + (currentPageNo+1)  +"'>上一页</button>"));
             			} else {
             				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
             			}
             			for(var i = 1; i <= pageCount; i++) {
-            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+            				if(currentPageNo == i){
+            					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+            					continue;
+            				}
+            				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
             			}
             			if(currentPageNo == pageCount) {
             				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
             			} else {
-            				btnGroup.append($("<button class='btn btn-default' pageNo='" + currentPageNo  +"'>下一页</button>"));
+            				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo+1)  +"'>下一页</button>"));
             			}
     				
     			},
@@ -158,9 +160,12 @@
     				alert(data);
     			}
     		});
-    		
     	}
-    
+    	
+    	 $("#btnGroup").on('click','.btn',function(){
+ 			var pageNo = $(this).attr('pageNo');
+ 			sendAjax(pageNo);
+ 		});
     </script>
     
 </body>

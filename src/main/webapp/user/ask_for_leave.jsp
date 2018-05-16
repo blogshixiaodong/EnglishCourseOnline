@@ -125,7 +125,7 @@
  	<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-    
+    <script src="../build/js/common.js"></script>
      <script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
     
     <script type="text/javascript">
@@ -158,28 +158,6 @@
 	    	 format: 'yyyy-mm-dd'
 	    });
 	    
-	  
-	    
-	    function AppendZero(number) {
-    		if(number < 10) {
-    			return "0" + number;
-    		}
-    		return number;
-    	}
-	    
-	    function JsonDateToString(dateObject) {
-    		var year = 1900 + dateObject.year;
-    		var month = 1 + dateObject.month;
-    		var day = dateObject.date;
-    		var hours = dateObject.hours;
-    		
-    		var minutes = dateObject.minutes;
-    		
-    		var seconds = dateObject.seconds;
-    		
-    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
-    	}
-	    
     	function reset() {
 			document.getElementById("engclassCombo").options.selectedIndex = 0;
 			$("#engclassCombo").attr("index", 0);
@@ -188,13 +166,11 @@
 			$("#userList tbody").html("");
     	}
     	
-    	
-    	
 		$("#leaveInfoSubmit").click(function(){
 			
 			var leaveInfo = $("#leaveInfo").val();
 			console.log(leaveInfo);
-			var classId = $("#engclassCombo").val().split(" : ")[0];
+			var classId = $("#engclassCombo").val().split(":")[0];
 			var queryDate = $('#queryDate').val();
 			if(leaveInfo == "" || classId =="" || queryDate == ""){
 				alert("信息不完整，无法提交");
@@ -205,7 +181,7 @@
 				url:"createTimeSheet.action",
 				type:"post",
 				data:{
-					"timeSheet.classId" : classId,
+					"timeSheet.engclass.engclassId" : classId,
 					"timeSheet.sheetInfo": leaveInfo,
 					"queryDate" : queryDate
 				},

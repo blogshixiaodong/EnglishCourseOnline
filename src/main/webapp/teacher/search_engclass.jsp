@@ -25,7 +25,6 @@
 			<!-- top nav bar -->
 			<jsp:include page="top_nav.jsp"></jsp:include>
 
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="row">
@@ -39,15 +38,6 @@
 											<i class="fa fa-chevron-up"></i>
 										</a>
 									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-											<i class="fa fa-wrench"></i>
-										</a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul>
-									</li>
 									<li>
 										<a class="close-link"><i class="fa fa-close"></i></a>
 									</li>
@@ -59,12 +49,12 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
-										<input type="text" class="form-control has-feedback-left" id="inClassId" placeholder="班级编号" /> 
+										<input type="text" class="form-control has-feedback-left" id="engclassId" placeholder="班级编号" /> 
 										<span class="fa fa-hand-o-right form-control-feedback left" aria-hidden="true"></span>
 									</div>
 
 									<div class="col-md-5 col-sm-5 col-xs-12 form-group has-feedback">
-										<input type="text" class="form-control has-feedback-left" id="inClassName" placeholder="班级名称" /> 
+										<input type="text" class="form-control has-feedback-left" id="engclassName" placeholder="班级名称" /> 
 										<span class="fa fa-book form-control-feedback left" aria-hidden="true"></span>
 									</div>
 									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
@@ -84,30 +74,20 @@
 									班级简略信息
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-
 								<table id="engclassList" class="table table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
 											<th>班级编号</th>
 											<th>班级名称</th>
 											<th>班级人数</th>
 											<th>教室</th>
+											<th>上课时间</th>
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -118,11 +98,7 @@
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
-				
 			</div>
 			<!-- /page content -->
 
@@ -141,45 +117,42 @@
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/common.js"></script>
     <script type="text/javascript">
+
     	function reset() {
-			$("#inClassId").val("");
-			$("#inClassName").val("");
-			$("#classId").val("");
-			$("#className").val("");
-			$("#userCount").val("");
-			$("#classRoom").val("");
+			$("#engclassId").val("");
+			$("#engclassName").val("");
 			$("#engclassList tbody").html("");
     	}
     
     	function sendCondition(e) {
-    		var classId = $("#inClassId").val();
-    		var className = $("#inClassName").val();
-    		if(classId === "" && className === "") {
+    		var engclassId = $("#engclassId").val();
+    		var engclassName = $("#engclassName").val();
+    		if(engclassId === "" && engclassName === "") {
     			return;
     		}
     		$.ajax({
     			url: "searchEngclass.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId, "engclass.className" : className},
+    			data:{
+    				"engclass.engclassId" : engclassId, 
+    				"engclass.engclassName" : engclassName
+    			},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				$("#classId").val(json[0]["classId"]);
-    				$("#className").val(json[0]["className"]);
-    				$("#userCount").val(json[0]["userCount"]);
-    				$("#classRoom").val(json[0]["classRoom"]);
     				
     				for(var i = 0; i < json.length; i++) {
     					var tr = $("<tr></tr>");
     					var record = json[i];
-    					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["classId"]));
-    					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(record["userCount"]));
-    					tr.append($("<td></td>").text(record["classRoom"]));
-    					tr.append($("<button type='submit' class='btn btn-success btn-sm'>详细信息</button>"))
+    					tr.append($("<td></td>").text(record.engclassId));
+    					tr.append($("<td></td>").text(record.engclassName));
+    					tr.append($("<td></td>").text(record.userCount));
+    					tr.append($("<td></td>").text(record.classRoom));
+    					tr.append($("<td></td>").text(schooltime(record.day, record.attendTime)));
+    					tr.append($("<button type='submit' class='btn btn-success btn-sm' engclassId='" + record.engclassId + "'>详细信息</button>"))
     					$($("#engclassList tbody")).append(tr);
     				}
     			},
@@ -189,14 +162,14 @@
     			}
     		});
     	}
-		$("#inClassId").change("input", sendCondition);
-		$("#inClassName").change("input", sendCondition);
+		$("#engclassId").change("input", sendCondition);
+		$("#engclassName").change("input", sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});
 		$("#engclassList").on('click', "button[type='submit']", function() {
-			var classId = $(this).parent().children().eq(1).text();
-			window.location.href = "engclassDetail.action?engclassId=" +  classId;
+			var engclassId = $(this).attr("engclassId");
+			window.location.href = "engclassDetail.action?engclass.engclassId=" +  engclassId;
 		});
 	
 	</script>

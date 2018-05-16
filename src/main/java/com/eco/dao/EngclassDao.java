@@ -3,6 +3,8 @@ package com.eco.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts2.components.Select;
+
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.User;
@@ -36,6 +38,26 @@ public interface EngclassDao extends PageDao<Engclass> {
 	 */
 	PageContainer<Engclass> selectTeacherAllEngclassListByTeacherId(Integer teacherId);
 	
+	/**
+	 * 根据教师编号查询班级编号名称
+	 * @param teacherId
+	 * @return
+	 */
+	List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId);
+	
+	/**
+	 * 根据班级编号查询
+	 * @param engclassId
+	 * @return
+	 */
+	Engclass selectEngclassByEngclassId(Integer teacherId, Integer engclassId);
+	
+	/**
+	 * 根据班级名称查询
+	 * @param engclassName
+	 * @return
+	 */
+	List<Engclass> selectEngclassListByEngclassName(Integer teacherId, String engclassName);
 	
 	/** 
 	* @Description: 根据用户id获取用户正在进行的课程 
@@ -65,7 +87,7 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @Description: 根据班级id 在该班级(userengclass表)插入一条学生记录
 	* @param user void
 	*/ 
-	void insertUser(User user,Integer engclassId);
+	void insertUser(Engclass engclass);
 	
 	
 	/** 
@@ -84,5 +106,15 @@ public interface EngclassDao extends PageDao<Engclass> {
 	*/ 
 	List<Engclass> selectEngclassByDate(Date beginDate,Integer userId);
 	
+	
+	/** 
+	* @Description: 根据 courseReocrdId  获得对应的一个班级对象
+	* @param courseRecordId
+	* @return Engclass
+	*/ 
+	Engclass selectEngclassByCourseRecord(Integer courseRecordId);
+	
+	
+
 	
 }

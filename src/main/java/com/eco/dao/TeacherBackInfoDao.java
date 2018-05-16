@@ -5,7 +5,7 @@ import java.util.List;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TeacherBackInfo;
 
-public interface TeacherBackInfoDao extends PageDao {
+public interface TeacherBackInfoDao extends PageDao<TeacherBackInfo> {
 
 	/**
 	 * 根据教师编号和班级编号查询教师反馈信息

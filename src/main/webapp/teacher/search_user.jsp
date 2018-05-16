@@ -17,9 +17,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="engclassList" namespace="/teacher"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -42,15 +39,6 @@
 											<i class="fa fa-chevron-up"></i>
 										</a>
 									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-											<i class="fa fa-wrench"></i>
-										</a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul>
-									</li>
 									<li>
 										<a class="close-link"><i class="fa fa-close"></i></a>
 									</li>
@@ -60,12 +48,9 @@
 							<div class="x_content">
 								<br />
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
-
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
 					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                        <!-- after load -->
 					                    </select>  
 				                	</div> 
 									<div class="col-md-2 col-sm-2 col-xs-12 form-group has-feedback form-group">
@@ -85,45 +70,40 @@
 									学生列表
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 									<li><a class="close-link"><i class="fa fa-close"></i></a>
 									</li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-
-								<table id="userList" class="table table-striped">
+								<table id="userTable" class="table table-striped">
 									<thead>
 										<tr>
-											<th>#</th>
 											<th>学号</th>
 											<th>姓名</th>
-											<th>年龄</th>
 											<th>身份证</th>
 											<th>性别</th>
+											<th>年龄</th>
+											<th>联系方式</th>
+											<th>联系地址</th>
 										</tr>
 									</thead>
 									<tbody>
 										<!-- get data and create dom by ajax -->
 									</tbody>
 								</table>
+								<div class="row">
+			                    	<div class="btn-toolbar pull-right">
+				                        <div id="btnGroup" class="btn-group">
+				                        	<!-- create after page load -->
+				                        </div>
+			                     	</div>
+			                    </div>
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
-				
 			</div>
 			<!-- /page content -->
 
@@ -146,38 +126,132 @@
     <script src="../build/js/custom.min.js"></script>
     
     <script type="text/javascript">
+    	//获取班级下拉列表的id/name列表
+    	$(function() {
+    		$.ajax({
+    			url: "engclassList.action",
+    			type: "get",
+    			dataType: "json",
+    			success: function(responseText) {
+    				var json = JSON.parse(responseText);
+    				var select = $("#engclassList");
+    				for(var i = 0; i < json.length; i++) {
+    					var record = json[i];
+    					var option = $("<option></option>").html(record.engclassId + " : " + record.engclassName);
+    					select.append(option);
+    				}
+    				//刷新控件
+    				select.selectpicker('refresh');
+    			},
+	    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("服务端错误，请重试!");
+					reset();
+				}
+    		});
+    	});
     
     	function reset() {
 			document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").selectpicker('refresh');
-			$("#userList tbody").html("");
+			$("#userTable tbody").html("");
+			$("#btnGroup").html("");
     	}
     
+    	function createUserTable(json) {
+			var tbody = $("#userTable tbody");
+			tbody.html("");
+			$("#btnGroup").html("");
+			if(json.list.length == 0) {
+				return;
+			}
+			//创建表格
+			for(var i = 0; i < json.list.length; i++) {
+				var user = json.list[i];
+				var userId = $("<td></td>").html(user.userId);
+				var userName = $("<td></td>").html(user.username);
+				var idCard = $("<td></td>").html(user.idCard);
+				var sex = $("<td></td>").html(user.sex);
+				var age = $("<td></td>").html(user.age);
+				var phone = $("<td></td>").html(user.phone);
+				var address = $("<td></td>").html(user.address);
+				var tr = $("<tr></tr>");
+				tr.append(userId);
+				tr.append(userName);
+				tr.append(idCard);
+				tr.append(sex);
+				tr.append(age);
+				tr.append(phone);
+				tr.append(address);
+				tbody.append(tr);
+			}
+			
+			//创建按钮组
+			var btnGroup = $("#btnGroup");
+			btnGroup.html("");
+			var currentPageNo = json.currentPageNo;
+			var pageCount = json.pageCount;
+			
+			var recordCount = json.recordCount;
+			if(currentPageNo == 1) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo - 1) + "'>上一页</button>"));
+			}
+			for(var i = 1; i <= pageCount; i++) {
+				if(i == currentPageNo) {
+					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+					continue;
+				}
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
+			}
+			if(currentPageNo == pageCount) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo + 1 ) + "'>下一页</button>"));
+			}
+		}
+    	
+    	$("#btnGroup").on("click", ".btn", function() {
+	  		var pageNo = $(this).attr("pageNo");
+	  		var engclassId = $("#engclassList").val().split(" : ")[0];
+    		if(engclassId === "") {
+    			return;
+    		}
+	  		$.ajax({
+	    		url: "searchUser.action",
+	    		type: "post",
+	    		data: {
+	    			"pageContainer.currentPageNo": pageNo,
+	    			"pageContainer.pageSize": 3,
+	    			"engclass.engclassId" : engclassId
+	    		},
+	    		dataType: "json",
+	    		success: function(responseText) {
+	    			var json = JSON.parse(responseText);
+	    			createUserTable(json);
+	    		}
+	    	});
+	  	});
+    	
     	function sendCondition(e) {
     		$("#userList tbody").html("");
-    		var classId = $("#engclassList").val().split(" : ")[0];
-    		if(classId === "") {
+    		var engclassId = $("#engclassList").val().split(" : ")[0];
+    		if(engclassId === "") {
     			return;
     		}
     		$.ajax({
     			url: "searchUser.action",
-    			type : "post",
+    			type: "post",
+    			data: {
+    				"pageContainer.currentPageNo": 1,
+    				"pageContainer.pageSize": 3,
+    				"engclass.engclassId" : engclassId
+    			},
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var tr = $("<tr></tr>");
-    					var record = json[i];
-    					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td></td>").text(record["age"]));
-    					tr.append($("<td></td>").text(record["idCard"]));
-    					tr.append($("<td></td>").text(record["sex"]));
-    					$("#userList tbody").append(tr);
-    				}
+    				createUserTable(json);
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");

@@ -2,10 +2,8 @@ package com.eco.dao.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
-import com.eco.bean.model.User;
 import com.eco.dao.EngclassDao;
 
 /*
@@ -38,6 +36,24 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
+	public List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId) {
+		String hql = " SELECT new Engclass(engclassId, engclassName) FROM Engclass e WHERE e.teacher.teacherId = ?";
+		return this.list(hql, teacherId);
+	}
+
+	@Override
+	public Engclass selectEngclassByEngclassId(Integer teacherId, Integer engclassId) {
+		String hql = " SELECT e FROM Engclass e WHERE e.teacher.teacherId = ? AND e.engclassId = ? ";
+		return this.get(hql, teacherId, engclassId);
+	}
+	
+	@Override
+	public List<Engclass> selectEngclassListByEngclassName(Integer teacherId, String engclassName) {
+		String hql = " SELECT e FROM Engclass e WHERE e.teacher.teacherId = ? AND e.engclassName like ? ";
+		return this.list(hql, teacherId, engclassName);
+	}
+
+	@Override
 	public PageContainer<Engclass> selectUserNowEngclassListByUserId(Integer userId) {
 		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN e.courseRecord cr WHERE u.userId = ? AND NOW() BETWEEN cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer,  userId) ;
@@ -62,16 +78,20 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
-	public void insertUser(User user,Integer engclassId) {
-		Engclass engclass = this.get(engclassId);
-		engclass.getUserSet().add(user);
+	public void insertUser(Engclass engclass) {
 		this.save(engclass);
 	}
 
 	@Override																		
-	public List<Engclass> selectEngclassByDate(Date beginDate,Integer userId) {
+	public List<Engclass> selectEngclassByDate(Date beginDate, Integer userId) {
 		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(cr.startTime,'%Y-%m-%d') AND  STR_TO_DATE(cr.endTime,'%Y-%m-%d') ";
 		return this.list(hql, userId,beginDate) ;
+	}
+	
+	@Override
+	public Engclass selectEngclassByCourseRecord(Integer courseRecordId) {
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.courseRecord cr WHERE cr.courseRecordId = ?";
+		return (Engclass)this.get(hql,courseRecordId);
 	}
 	
 	@Override
@@ -84,4 +104,6 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		this.pageContainer = pageContainer;
 	}
 
+
+	
 }
