@@ -21,9 +21,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.enrollCourseList == null">
-		<s:action name="enrollCourseList" namespace="/user"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -59,7 +56,7 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-								<table id="timeSheet" class="table table-striped">
+								<table id="enrollList" class="table table-striped">
 									<thead>
 										<tr>
 											<th>#</th>
@@ -76,24 +73,16 @@
 										</tr>
 									</thead>
 									<tbody>
-										<s:iterator value="#request.enrollCourseList" status="i" var="courseDetail">
-											<tr>
-												<th scope="row"><s:property value="#i.getIndex()" /></td>
-												<td><s:property value="#courseDetail.courseId" /></td>
-												<td><s:property value="#courseDetail.courseName" /></td>
-												<td><s:property value="#courseDetail.info" /></td>
-												<td><s:property value="#courseDetail.types" /></td>
-												<td><s:property value="#courseDetail.price" /></td>
-												<td><s:date name="#courseDetail.startTime" format="yyyy-MM-dd" /></td>
-												<td><s:date name="#courseDetail.endTime" format="yyyy-MM-dd" /></td>
-												<td><s:property value="#courseDetail.signCount" /></td>
-												<td><s:date name="#courseDetail.closeTime" format="yyyy-MM-dd" /></td>
-												<td><a class="btn btn-primary btn-block" type="submit" href="enrollCourse.action?courseRecordId=<s:property value="#courseDetail.courseRecordId" />">报名</a></td>
-											</tr>
-										</s:iterator>
+									
+									<!-- ajax -->
+										
 									</tbody>
 								</table>
-								
+								<div  class="btn-toolbar pull-right">
+				                        <div class="btn-group" id="btnGroup">
+				                        	<!-- page load -->
+				                        </div>
+			                    </div>
 							</div>
 						</div>
 					</div>
@@ -121,13 +110,116 @@
  	<script src="../vendors/bootstrap-select/bootstrap-select.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/common.js"></script>
     
     <script type="text/javascript">
+    	$(getEnrollList(1));
     	
+    	function getEnrollList(currentPage){
+    		$.ajax({
+    			url:"enrollCourseList.action",
+    			type:"post",
+    			data:{
+    				"pageContainer.currentPageNo":currentPage
+    			},
+    			dataType:"json",
+    			success: function(responseText){
+    				var json = JSON.parse(responseText);
+    				var tbody = $("#enrollList tbody");
+    				tbody.html("");
+    				$("#btnGroup").html("");
+    				//创建表格
+    				for(var i = 0; i < json.list.length; i++){
+    					var courseRecord = json.list[i];
+    					var courseNo = $("<td></td>").html(i);
+   						var courseId =$("<td></td>").html(courseRecord.course.courseId);
+   						var courseName = $("<td></td>").html(courseRecord.course.courseName);
+           				var info = $("<td></td>").html(courseRecord.course.info);
+           				var types = $("<td></td>").html(courseRecord.course.types);
+           				var price = $("<td></td>").html(courseRecord.course.price);
+       					var startTime = $("<td></td>").html(JsonDateToString(courseRecord.startTime));
+           				var endTime = $("<td></td>").html(JsonDateToString(courseRecord.endTime));
+           				var signCount = $("<td></td>").html(courseRecord.signCount);
+           				var closeTime = $("<td></td>").html(JsonDateToString(courseRecord.closeTime));
+           				var tdTemp = $("<td><td>");
+           				var submit = $("<button class='register btn btn-primary btn-block' courseRecordId=" + courseRecord.courseRecordId +"></button>");
+           				submit.addClass("btn btn-primary btn-block");
+           				submit.html("报名");
+           				
+           				
+           				tdTemp.append(submit);
+           				
+           				var tr = $("<tr></tr>");
+           				tr.append(courseNo);
+           				tr.append(courseId);
+           				tr.append(courseName);
+           				tr.append(info);
+           				tr.append(types);
+           				tr.append(price);
+           				tr.append(startTime);
+           				tr.append(endTime);
+           				tr.append(signCount);
+           				tr.append(closeTime);
+           				tr.append(submit);
+           				tbody.append(tr);
+           				
+    				}
+    					//创建按钮组
+    					var btnGroup = $("#btnGroup");
+    					var currentPageNo = json.currentPageNo;
+    					var pageCount = json.pageCount;
+    					var recordCount = json.recordCount;
+    					
+    					if(currentPageNo == 1) {
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + (currentPageNo-1)  +"'>上一页</button>"));
+            			} else {
+            				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
+            			}
+            			for(var i = 1; i <= pageCount; i++) {
+            				if(currentPageNo == i){
+            					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i +"'>" + i + "</button>"));
+            					continue;
+            				}
+            				btnGroup.append($("<button class='btn btn-default' pageNo='" + i +"'>" + i + "</button>"));
+            			}
+            			if(currentPageNo == pageCount) {
+            				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+            			} else {
+            				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo+1)  +"'>下一页</button>"));
+            			}
+    			},
+    			error: function(data){
+    				
+    			}
+    		});
+    	}
+    	
+	   $("#enrollList tbody").on("click", ".register", function() {		   
+		   var courseRecordId = $(this).attr("courseRecordId");
+			enrollAjax(courseRecordId);
+	   });
 	   
-		
-		
-	
+	   function enrollAjax(courseRecordId){
+		   $.ajax({
+   			url:"enrollCourse.action",
+   			type:"post",
+   			data:{
+   				"courseRecordId":courseRecordId
+   			},
+   			dataType:"json",
+   			success: function(responseText){
+   				alert("报名成功");
+   				window.location.href="index.jsp";
+   				
+   			}
+	   	 });
+	   }
+	   
+	   $("#btnGroup").on('click','.btn',function(){
+			var pageNo = $(this).attr('pageNo');
+			getEnrollList(pageNo);
+		});
+
 	</script>
 </body>
 </html>

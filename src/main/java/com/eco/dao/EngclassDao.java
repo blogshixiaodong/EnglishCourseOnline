@@ -3,6 +3,8 @@ package com.eco.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.struts2.components.Select;
+
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.User;
@@ -85,7 +87,15 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @Description: 根据班级id 在该班级(userengclass表)插入一条学生记录
 	* @param user void
 	*/ 
-	void insertUser(User user,Integer engclassId);
+	void insertUser(Engclass engclass);
+	
+	
+	/** 
+	* @Description: 根据用户id 查询该用户的当前班级
+	* @param userId
+	* @return Engclass
+	*/ 
+	List<Engclass> selectEngclassByUserId(Integer userId);
 	
 	
 	/** 
@@ -95,6 +105,16 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @return List<Engclass>
 	*/ 
 	List<Engclass> selectEngclassByDate(Date beginDate,Integer userId);
+	
+	
+	/** 
+	* @Description: 根据 courseReocrdId  获得对应的一个班级对象
+	* @param courseRecordId
+	* @return Engclass
+	*/ 
+	Engclass selectEngclassByCourseRecord(Integer courseRecordId);
+	
+	
 
 	
 }

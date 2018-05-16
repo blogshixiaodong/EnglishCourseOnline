@@ -4,12 +4,18 @@ import java.util.Date;
 import java.util.List;
 import com.eco.bean.model.TeacherBackInfo;
 import com.eco.bean.model.Course;
+import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserAccount;
+import com.eco.bean.model.UserBackInfo;
 
+/**
+ * @author lenovo
+ *
+ */
 public interface UserServer {
 	
 	/** 
@@ -26,21 +32,21 @@ public interface UserServer {
 	* @param pageContainer
 	* @return List<CourseDetail>
 	*/ 
-	public abstract PageContainer<Course> queryUserAllCourseListByUserId(Integer userId, PageContainer pageContainer);
+	public abstract PageContainer<Course> queryUserAllCourseListByUserId(Integer userId, PageContainer<Course> pageContainer);
 	
 	/** 
 	* @Description: 查询历史的课程
 	* @param userid
 	* @return List<CourseDetail>
 	*/ 
-	public abstract PageContainer<Course> queryUserHistoryCourseListByUserId(Integer userId, PageContainer pageContainer);
+	public abstract PageContainer<Course> queryUserHistoryCourseListByUserId(Integer userId, PageContainer<Course> pageContainer);
 	
 	/** 
 	* @Description: 查询所有班级 
 	* @param userid
 	* @return List<EngclassDetail>
 	*/ 
-	public abstract PageContainer<Engclass> queryUserAllEngclassByUserId(Integer userId, PageContainer pageContainer);
+	public abstract PageContainer<Engclass> queryUserAllEngclassByUserId(Integer userId, PageContainer<Engclass> pageContainer);
 	
 	/** 
 	* @Description: 查询历史班级
@@ -48,21 +54,30 @@ public interface UserServer {
 	* @param pageContainer
 	* @return List<Engclass>
 	*/ 
-	public abstract PageContainer<Engclass> queryUserHistoryEngclassListByUserId(Integer userid,PageContainer pageContainer);
+	public abstract PageContainer<Engclass> queryUserHistoryEngclassListByUserId(Integer userid,PageContainer<Engclass> pageContainer);
 	
 	/** 
 	* @Description: 查询当前正在进行的班级
 	* @param userId
 	* @return String
 	*/ 
-	public abstract  PageContainer<Engclass> queryUserNowEngclassByUserId(Integer userId, PageContainer pageContainer);
+	public abstract  PageContainer<Engclass> queryUserNowEngclassByUserId(Integer userId, PageContainer<Engclass> pageContainer);
+	
+	
+	/** 
+	* @Description: 根据用户id 查询该用户当前正在进行的班级 
+	* @param userId
+	* @return Engclass
+	*/ 
+	public abstract List<Engclass> queryEngclassByUserId(Integer userId);
+	
 	
 	/** 
 	* @Description: 根据班级id 查询该班所有学生 
 	* @param classid
 	* @return List<User>
 	*/ 
-	public abstract  PageContainer<User> queryUserListByEngclassId(Integer engclassId, PageContainer pageContainer);
+	public abstract  PageContainer<User> queryUserListByEngclassId(Integer engclassId, PageContainer<User> pageContainer);
 	
 	/** 
 	* @Description: 用户查询教师反馈信息 
@@ -70,7 +85,17 @@ public interface UserServer {
 	* @param userid
 	* @return List<TeacherBackInfo>
 	*/ 
-	public abstract  PageContainer<TeacherBackInfo> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId, PageContainer pageContainer);
+	public abstract  PageContainer<TeacherBackInfo> queryTeacherBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId, PageContainer<TeacherBackInfo> pageContainer);
+	
+	/** 
+	* @Description: 用户查询某班级的反馈信息
+	* @param engclassId
+	* @param userId
+	* @param pageContainer
+	* @return PageContainer<UserBackInfo>
+	*/ 
+	public abstract PageContainer<UserBackInfo> queryUserBackInfoByEngclassIdAndUserId(Integer engclassId,Integer userId,PageContainer<UserBackInfo> pageContainer);
+	
 	
 	/** 
 	* @Description: 查询用户某门课程下考勤记录
@@ -78,7 +103,7 @@ public interface UserServer {
 	* @param engclass
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract  PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate, PageContainer pageContainer);
+	public abstract  PageContainer<TimeSheet> queryTimeSheetByUserId(Integer userId,Integer engclassId,String queryDate, PageContainer<TimeSheet> pageContainer);
 		
 	/** 
 	* @Description: 根据classid和日期查询该班级的考勤记录
@@ -97,7 +122,7 @@ public interface UserServer {
 	* @return String
 	*/ 
 
-	public abstract String addTimeSheet(TimeSheet timeSheet);
+	public abstract String addTimeSheet(TimeSheet timeSheet,Integer userId);
 	
 	/** 
 	* @Description: 根据账号信息，进行登陆校验
@@ -113,6 +138,37 @@ public interface UserServer {
 	*/ 
 	public User queryUserByAccountId(Integer accountId);
 	
-	public boolean mergeEngclass(Integer oldEngclassId1,Integer oldEngclassId2,Integer engclassId);
+	
+	/** 
+	* @Description: 添加用户反馈信息
+	* @param userBackInfo
+	*/ 
+	public abstract void addUserBackInfo(UserBackInfo userBackInfo,Integer userId);
+	
+	
+	/** 
+	* @Description: 查询报名课程记录列表
+	* @return PageContainer<CourseRecord>
+	*/ 
+	public abstract PageContainer<CourseRecord> queryAllEnroll(PageContainer<CourseRecord> pageContainer);
+	
+
+	/** 
+	* @Description: 报名  在用户班级表中添加记录 
+	* @param userId
+	* @param courseRecordId void
+	*/ 
+	public abstract void addUserEngclass(Integer userId,Integer courseRecordId);
+	
+	/** 
+	* @Description: 根据时间和用户id 获取该周课表 
+	* @param queryDate
+	* @param userId
+	* @return List<Engclass>
+	*/ 
+	public abstract List<Engclass> queryTimeTable(String queryDate,Integer userId);
+	
+	
+	
 	
 }

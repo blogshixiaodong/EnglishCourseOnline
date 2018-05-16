@@ -66,10 +66,8 @@
 								<form class="form-horizontal form-label-left input_mask" onsubmit="return false;" >
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
-					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                    <select id="engclassCombo" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
+					                        
 					                    </select>  
 				                	</div> 
 				                	<div class="col-md-3 col-sm-3 col-xs-12 form-group">
@@ -122,8 +120,6 @@
 											<th>用户姓名</th>
 											<th>班级编号</th>
 											<th>班级名称</th>
-											<th>教师编号</th>
-											<th>教师名称</th>
 											<th>教室</th>
 											<th>考勤时间</th>
 											<th>考勤状态</th>
@@ -133,6 +129,11 @@
 										<!-- get data and create dom by ajax -->
 									</tbody>
 								</table>
+								<div class="btn-toolbar pull-right">
+				                        <div class="btn-group" id="btnGroup">
+				                        	<!-- page load -->
+				                        </div>
+			                     	</div>
 								
 							</div>
 						</div>
@@ -161,73 +162,104 @@
  	<script src="../vendors/bootstrap-select/bootstrap-select.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-    
+    <script src="../build/js/common.js"></script>
     <script type="text/javascript">
+    	//入口函数	
+    	$(getEngclassIdAndName());
     	
+    	function getEngclassIdAndName(){
+    		$.ajax({
+    			url:"queryEngclass.action",
+    			type : "post",
+    			dataType : "json",
+    			success: function(responseText){
+    				var json = JSON.parse(responseText);
+    				var engclassCombo = $("#engclassCombo");
+    				for(var i = 0; i < json.length; i++){
+    					var engclass = json[i];
+    					var option = $("<option>"+engclass.engclassId + ":"+engclass.engclassName +"</option>");
+    					engclassCombo.append(option);
+    				}
+    				$("#engclassCombo").selectpicker('refresh');
+    			},
+    			error : function(){
+    				alert("班级下拉框错误");
+    			}
+    		});
+    	};
+    
 	    $('#myDatepicker').datepicker({
 	    	 format: 'yyyy-mm-dd'
 	    });
-	    
-	    function AppendZero(number) {
-    		if(number < 10) {
-    			return "0" + number;
-    		}
-    		return number;
-    	}
-	    
-	    function JsonDateToString(dateObject) {
-    		var year = 1900 + dateObject.year;
-    		var month = 1 + dateObject.month;
-    		var day = dateObject.date;
-    		var hours = dateObject.hours;
-    		
-    		var minutes = dateObject.minutes;
-    		
-    		var seconds = dateObject.seconds;
-    		
-    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
-    	}
-	    
+	     
     	function reset() {
-			document.getElementById("engclassList").options.selectedIndex = 0;
-			$("#engclassList").attr("index", 0);
-			$("#engclassList").selectpicker('refresh');
+			document.getElementById("engclassCombo").options.selectedIndex = 0;
+			$("#engclassCombo").attr("index", 0);
+			$("#engclassCombo").selectpicker('refresh');
 			$("#myDatepicker").datepicker("clearDates");
 			$("#userList tbody").html("");
+			$("#btnGroup").html("");
     	}
     	
-    	function sendCondition(e) {
+    	function sendCondition(currentPageNo) {
     		var params = "";
-
     		$("#timeSheet tbody").html("");
-    		var classId = $("#engclassList").val().split(" : ")[0];
+    		var engclassId = $("#engclassCombo").val().split(":")[0];
     		var queryDate = $("#queryDate").val();
-    		if(classId === ""){
+    		if(engclassId === ""){
     			return;
     		}
     		$.ajax({
     			url: "showtimeSheets.action"+ params ,
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId, "queryDate" : queryDate},
+    			data:{
+    					"engclass.engclassId" : engclassId, 
+    					"queryDate" : queryDate,
+    					"pageContainer.currentPageNo":currentPageNo
+    				},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
+    				$("#timeSheet tbody").html("");
+    				$("#btnGroup").html("");
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
+    				for(var i = 0; i < json.list.length; i++) {
     					var tr = $("<tr></tr>");
-    					var record = json[i];
+    					var record = json.list[i];
     					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td></td>").text(record["classId"]));
-    					tr.append($("<td></td>").text(record["className"]));
-    					tr.append($("<td></td>").text(record["teacherId"]));
-    					tr.append($("<td></td>").text(record["teacherName"]));
-    					tr.append($("<td></td>").text(record["classRoom"]));
-    					tr.append($("<td></td>").text(JsonDateToString(record["recordTime"])));
-    					tr.append($("<td></td>").text(record["sheetInfo"]));
+    					tr.append($("<td></td>").html(record.user.userId));
+    					tr.append($("<td></td>").text(record.user.username));
+    					tr.append($("<td></td>").text(record.engclass.engclassId));
+    					tr.append($("<td></td>").text(record.engclass.engclassName));
+    					tr.append($("<td></td>").text(record.engclass.classRoom));
+    					tr.append($("<td></td>").text(JsonDateToString(record.recordTime)));
+    					tr.append($("<td></td>").text(record.sheetInfo));
     					$("#timeSheet tbody").append(tr);		
     				}
+    				
+    				//创建按钮组
+					var btnGroup = $("#btnGroup");
+					var currentPageNo = json.currentPageNo;
+					var pageCount = json.pageCount;
+					var recordCount = json.recordCount;
+					
+					if(currentPageNo == 1) {
+        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + (currentPageNo+1)  +"'>上一页</button>"));
+        			} else {
+        				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
+        			}
+        			for(var i = 1; i <= pageCount; i++) {
+        				if(currentPageNo == i){
+        					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+        					continue;
+        				}
+        				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
+        			}
+        			if(currentPageNo == pageCount) {
+        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+        			} else {
+        				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo+1)  +"'>下一页</button>"));
+        			}
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
@@ -235,11 +267,20 @@
     			}
     		});
     	}
-		$("#engclassList").change(sendCondition);
-		$("#myDatepicker").on("changeDate", sendCondition);
+		$("#engclassCombo").change(function() {
+			sendCondition(1);
+		});
+		$("#myDatepicker").on("changeDate",function(){
+			 sendCondition(1);
+		});
 		$("#reset").click(function() {
 			reset();
 		});
+		$("#btnGroup").on('click','.btn',function(){
+    		var pageNo = $(this).attr('pageNo');
+    		sendCondition(pageNo);
+    	});
+		
 	</script>
 </body>
 </html>
