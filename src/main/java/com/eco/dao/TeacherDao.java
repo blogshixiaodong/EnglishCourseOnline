@@ -5,6 +5,6 @@ package com.eco.dao;
  * author: Shixiaodong
  */
 public interface TeacherDao {
-
+	
 	
 }

@@ -12,13 +12,12 @@
 		<div class="nav_menu">
 			<nav>
 				<div class="nav toggle">
-					<a id="menu_toggle"><i class="fa fa-bars" target="teacher_left"></i></a>
+					<a id="menu_toggle"><i class="fa fa-bars" target="left"></i></a>
 				</div>
 	
 				<ul class="nav navbar-nav navbar-right">
 					<li class="">
-						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
-							<img src="images/img.jpg" alt="" />
+						<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 							<s:property value="#session.teacher.teacherName"/>
 							<span class=" fa fa-angle-down"></span>
 						</a>

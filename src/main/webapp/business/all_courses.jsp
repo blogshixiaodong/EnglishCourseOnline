@@ -14,14 +14,6 @@
 	<link href="../build/css/custom.min.css" rel="stylesheet">
 	</head>
 <body class="nav-md">
-	 <s:if test="#request.pageContainer == null">
-		 <s:action name="allCourses" namespace="/business">
-			<s:param name="pageContainer.currentPageNo">1</s:param>
-		</s:action>	 
-		
-	</s:if> 
-	
-	
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -34,7 +26,6 @@
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="row">
-
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div class="x_title">
@@ -55,58 +46,25 @@
 							</div>
 							<div class="x_content">
 
-								<table class="table">
+								<table id="courseTable" class="table">
 									<thead>
 										<tr>
-											<th>#</th>
 											<th>课程编号</th>
 											<th>课程名称</th>
+											<th>课程信息</th>
 											<th>课程类型</th>
-											<th>价格</th>
-											<th>说明</th>
+											<th>开课时间</th>
+											<th>结课时间</th>
 										</tr>
 									</thead>
 									<tbody>
-										<s:iterator value="#request.courseList" status="i" var="course">
-											<tr>
-												<th scope="row"><s:property value="#i.getIndex()" /></th>
-												<td><s:property value="#course.courseId" /></td>
-												<td><s:property value="#course.courseName" /></td>
-												<td><s:property value="#course.types" /></td>
-												<td><s:property value="#course.price" /></td>
-												<td><s:property value="#course.info" /></td>
-											</tr>
-										</s:iterator>
+										<!-- after load -->
 									</tbody>
 								</table>
 								<div class="row">
-			                    	<div  class="btn-toolbar pull-right">
-				                        <div class="btn-group">
-				                        	<s:if test="#request.pageContainer.currentPageNo == 1">
-				                        		<a class="btn btn-default disabled" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
-				                        	</s:if>
-				                        	<s:else>
-				                        		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo - 1" />">上一页</a>
-				                        	</s:else>
-				                        	
-				                        	<s:bean name="org.apache.struts2.util.Counter" var="counter">
-									            <s:param name="first" value="1" />
-									            <s:param name="last" value="#request.pageContainer.pageCount" />
-									            <s:iterator>
-									            	<s:if test="#request.pageContainer.currentPageNo == #counter.current - 1 ">
-									            		<a class="btn btn-default disabled" type="button"><s:property /></a>
-									            	</s:if>
-									            	<s:else>
-									            		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property />"><s:property /></a>
-									            	</s:else>
-									           	</s:iterator>
-									        </s:bean>
-									        <s:if test="#request.pageContainer.currentPageNo == #request.pageContainer.pageCount">
-				                          		<a class="btn btn-default disabled" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
-				                        	</s:if>
-				                        	<s:else>
-				                          		<a class="btn btn-default" type="button" href="allCourses.action?pageContainer.currentPageNo=<s:property value="#request.pageContainer.currentPageNo + 1" />">下一页</a>
-				                        	</s:else>
+			                    	<div class="btn-toolbar pull-right">
+				                        <div id="btnGroup" class="btn-group">
+				                        	<!-- create after page load -->
 				                        </div>
 			                     	</div>
 			                    </div>
@@ -127,6 +85,96 @@
 	<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="../build/js/custom.min.js"></script>
+	<script src="../build/js/common.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$.ajax({
+	    		url: "allCourseList.action",
+	    		type: "post",
+	    		data: {
+	    			"pageContainer.currentPageNo": 1,
+	    			"pageContainer.pageSize": 3
+	    		},
+	    		dataType: "json",
+	    		success: function(responseText) {
+	    			var json = JSON.parse(responseText);
+	    			createCourseTable(json);
+	    		}
+	    	});
+			
+		});
+		
+	  	$("#btnGroup").on("click", ".btn", function() {
+	  		var pageNo = $(this).attr("pageNo");
+	  		$.ajax({
+	    		url: "allCourseList.action",
+	    		type: "post",
+	    		data: {
+	    			"pageContainer.currentPageNo": pageNo,
+	    			"pageContainer.pageSize": 3
+	    		},
+	    		dataType: "json",
+	    		success: function(responseText) {
+	    			var json = JSON.parse(responseText);
+	    			createCourseTable(json);
+	    		}
+	    	});
+	  	});
+	
+		function createCourseTable(json) {
+			var tbody = $("#courseTable tbody");
+			tbody.html("");
+			//创建表格
+			for(var i = 0; i < json.list.length; i++) {
+				var course = json.list[i];
+				//一门课程存在多个课程记录
+				var courseRecordSet = course.courseRecordSet;
+				for(var j = 0; j < courseRecordSet.length; j++) {
+					var courseRecord = courseRecordSet[j];
+					var courseId = $("<td></td>").html(course.courseId);
+					var courseName = $("<td></td>").html(course.courseName);
+					var info = $("<td></td>").html(course.info);
+					var types = $("<td></td>").html(course.types);
+					var startTime = $("<td></td>").html(JsonDateToString(courseRecord.startTime));
+					var endTime = $("<td></td>").html(JsonDateToString(courseRecord.endTime));
+					var tr = $("<tr></tr>");
+					tr.append(courseId);
+					tr.append(courseName);
+					tr.append(info);
+					tr.append(types);
+					tr.append(startTime);
+					tr.append(endTime);
+					tbody.append(tr);
+				}
+			}
+			
+			//创建按钮组
+			var btnGroup = $("#btnGroup");
+			btnGroup.html("");
+			var currentPageNo = json.currentPageNo;
+			var pageCount = json.pageCount;
+			
+			var recordCount = json.recordCount;
+			if(currentPageNo == 1) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='1'>上一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo - 1) + "'>上一页</button>"));
+			}
+			for(var i = 1; i <= pageCount; i++) {
+				if(i == currentPageNo) {
+					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+					continue;
+				}
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
+			}
+			if(currentPageNo == pageCount) {
+				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
+			} else {
+				btnGroup.append($("<button class='btn btn-default' pageNo='" + (currentPageNo + 1 ) + "'>下一页</button>"));
+			}
+		}
+    	
+    </script>
 </body>
 
 </html>

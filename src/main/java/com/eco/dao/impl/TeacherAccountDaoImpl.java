@@ -6,8 +6,8 @@ import com.eco.dao.TeacherAccountDao;
 public class TeacherAccountDaoImpl extends AbstractBaseDao<TeacherAccount> implements TeacherAccountDao {
 
 	@Override
-	public int countAccount(Integer id) {
-		return this.executeHQLUpdate("SELECT COUNT(*) FROM TeacherAccount WHERE id = ?", id);
+	public Integer countAccount(Integer id) {
+		return ((Long) this.getUniqueResult("SELECT COUNT(*) FROM TeacherAccount WHERE id = ?", id)).intValue();
 	}
 
 	@Override

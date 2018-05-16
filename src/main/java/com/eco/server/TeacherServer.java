@@ -5,12 +5,21 @@ import java.util.List;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
+import com.eco.bean.model.Teacher;
+import com.eco.bean.model.TeacherAccount;
+import com.eco.bean.model.TeacherBackInfo;
+import com.eco.bean.model.TimeSheet;
+import com.eco.bean.model.User;
 
 /*
  * date:   2018年4月21日 上午11:05:51
  * author: Shixiaodong
  */
 
+/**
+ * @author 15129
+ *
+ */
 public interface TeacherServer {
 	
 	/**
@@ -57,7 +66,47 @@ public interface TeacherServer {
 	 * @param engclassId
 	 * @return
 	 */
-	List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId);
+	List<Engclass> queryEngclassIdAndEngclassNameByTeacherId(Integer teacherId);
 	
+	/**
+	 * 保存用户考勤记录列表
+	 * @param timeSheetList
+	 */
+	void saveUserTimeSheet(List<TimeSheet> timeSheetList);
 	
+	/**
+	 * 根据教师编号，班级编号，查询教师反馈信息，支持分页
+	 * @param teacherId
+	 * @param engclassId
+	 * @param pageContainer
+	 * @return
+	 */
+	PageContainer<TeacherBackInfo> queryTeacherBackInfoByTeacherIdAndEngclassId(Integer teacherId, Integer engclassId, PageContainer<TeacherBackInfo> pageContainer);
+	
+	/**
+	 * 根据班级编号查询用户id/name
+	 * @param engclassId
+	 * @return
+	 */
+	List<User> queryUserIdAndUsernameByEngclassId(Integer engclassId);
+	
+	/**
+	 * 保存教师反馈信息列表
+	 * @param teacherBackInfoList
+	 */
+	void saveTeacherBackInfo(List<TeacherBackInfo> teacherBackInfoList);
+	
+	/**
+	 * 教师登陆校验
+	 * @param teacherAccount
+	 * @return
+	 */
+	Boolean loginCheck(TeacherAccount teacherAccount);
+	
+	/**
+	 * 根据账号编号查询教师
+	 * @param accountId
+	 * @return
+	 */
+	public Teacher queryTeacherrByAccountId(Integer accountId);
 }

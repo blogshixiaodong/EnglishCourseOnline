@@ -6,19 +6,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>添加反馈信息</title>
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-	<link href="../vendors/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+	<link href="../vendors/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="../build/css/custom.min.css" rel="stylesheet" />
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="engclassList" namespace="/teacher"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -105,7 +102,7 @@
 				                <div class="row">
 				                	<div class="col-md-5 col-sm-5 col-xs-12">
 										<div class="table-responsive">
-											<table id="userList" class="table table-striped jambo_table bulk_action">
+											<table id="userTable" class="table table-striped jambo_table bulk_action">
 				                        		<thead>
 				                          			<tr class="headings">
 							                            <th>
@@ -171,40 +168,69 @@
     <script src="../build/js/custom.min.js"></script>
    
     <script type="text/javascript">
-    
+	  //获取班级下拉列表的id/name列表
+	    $(function() {
+			$.ajax({
+				url: "engclassList.action",
+				type: "get",
+				dataType: "json",
+				success: function(responseText) {
+					var json = JSON.parse(responseText);
+					var select = $("#engclassList");
+					for(var i = 0; i < json.length; i++) {
+						var record = json[i];
+						var option = $("<option></option>").html(record.engclassId + " : " + record.engclassName);
+						select.append(option);
+					}
+					//刷新控件
+					select.selectpicker('refresh');
+				},
+	    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("请不要重复刷新!");
+					reset();
+				}
+			});
+		});		
     	function reset() {
     		document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").selectpicker('refresh');
 			$("#userList tbody").html("");
     	}
     	
+    	function createUserTable(json) {
+    		for(var i = 0; i < json.length; i++) {
+				var tr;
+				if(i % 2 == 0) {
+					tr = $("<tr class='odd pointer'></td>");
+				} else {
+					tr = $("<tr class='even pointer'></td>");
+				}
+				var record = json[i];
+				tr.append($("<td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>"));
+				tr.append($("<td></td>").text(record["userId"]));
+				tr.append($("<td></td>").text(record["username"]));
+				$("#userTable tbody").append(tr);		
+			}
+    		
+    	}
+    	
     	function sendCondition(e) {
-    		$("#userList tbody").html("");
+    		$("#userTable tbody").html("");
     		var engclassId = $("#engclassList").val().split(" : ")[0];
     		if(engclassId === "") {
     			return;
     		}
     		$.ajax({
-    			url: "../user/queryUserByClassid.action",
+    			url: "userList.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclassId" : engclassId},
+    			data:{
+    				"engclass.engclassId" : engclassId
+    			},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var tr;
-    					if(i % 2 == 0) {
-    						tr = $("<tr class='odd pointer'></td>");
-    					} else {
-    						tr = $("<tr class='even pointer'></td>");
-    					}
-    					var record = json[i];
-    					tr.append($("<td class='a-center '><input type='checkbox' class='flat' name='table_records'></td>"));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					$("#userList tbody").append(tr);		
-    				}
+    				createUserTable(json);
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
@@ -215,14 +241,16 @@
 		$("#engclassList").change(sendCondition);
 		
 		$("#backInfoSubmit").click(function() {
+			var engclassId = $("#engclassList").val().split(" : ")[0];
+			var teacherBackInfoList = new Array();
 			var userIdList = new Array();
 			var backInfo = $("#backInfo").val();
 			if($("#check-all").is(':checked')) {
 				//全体成员
 				userIdList.push(-1);
 			} else {
-				//个别对象
-				var children = $("#userList tbody").children();
+				//个别对象,获取用户编号
+				var children = $("#userTable tbody").children();
 				for(var i = 0; i < children.length; i++) {
 					var userId = $(children[i]).children().eq(1).html();
 					var checkbox = $(children[i]).find("input");
@@ -231,23 +259,27 @@
 					}
 				}
 			}
-			if(userIdList.length == 0 || backInfo === "") {
+			
+			if(backInfo === "") {
 				alert("信息不完整,无法提交!");
 				return ;
 			}
-			var classId = $("#engclassList").val().split(" : ")[0];
+			if(userIdList.length == 0) {
+				userIdList.push(-1);
+			}
+			
 			$.ajax({
 				url: "insertBackInfo.action",
 				type: "post",
 				data: {
-					"engclassId" : classId,
-					"userIdList" : userIdList,
-					"backInfo": backInfo
+					"userIdList": userIdList,
+					"backInfo": backInfo,
+					"engclassId": engclassId
 				},
 				dataType: "text",
 				success : function(msg) {
 					alert("提交成功!");
-					window.location.href="back_info_history.jsp";
+					window.location.href="teacher_back_info_history.jsp";
 				},
 				error : function(data){
 		     		alert(data);
@@ -261,7 +293,6 @@
 			$("#backInfo").val("");
 		});
 		
-
 		$("#reset").click(function() {
 			reset();
 		});

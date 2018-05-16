@@ -12,7 +12,7 @@ public class TeacherBackInfoDaoImpl extends AbstractBaseDao<TeacherBackInfo> imp
 	
 	@Override
 	public PageContainer<TeacherBackInfo> selectTeacherBackInfoByTeacherIdAndEngclassId(Integer teacherId, Integer engclassId) {
-		String hql = " SELECT tbi FROM UserBackInfo tbi WHERE tbi.teacher.teacherId = ? AND tbi.engclass.engclassId = ?";
+		String hql = " SELECT tbi FROM TeacherBackInfo tbi WHERE tbi.teacher.teacherId = ? AND tbi.engclass.engclassId = ?";
 		return this.list(hql,pageContainer, teacherId, engclassId);
 	}
 

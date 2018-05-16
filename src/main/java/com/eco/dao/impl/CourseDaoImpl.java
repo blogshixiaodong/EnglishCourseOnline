@@ -55,6 +55,27 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 		return this.list(hql,pageContainer, userId);
 	}
 
+	
+	
+	@Override
+	public PageContainer<Course> selectNowCourseList() {
+		String hql = " SELECT distinct c FROM Course c LEFT JOIN CourseRecord cr ON c.courseId = cr.course.courseId LEFT JOIN Engclass e ON e.courseRecord.courseRecordId = cr.courseRecordId " +
+					 " WHERE NOW() between cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
+		return this.list(hql, pageContainer);
+	}
+
+	@Override
+	public PageContainer<Course> selectAllCourseList() {
+		String hql = " SELECT distinct c FROM Course c LEFT JOIN CourseRecord cr ON c.courseId = cr.course.courseId LEFT JOIN Engclass e ON e.courseRecord.courseRecordId = cr.courseRecordId " +
+				 	 " ORDER BY startTime DESC ";
+		return this.list(hql, pageContainer);
+	}
+	
+	@Override
+	public void insertCourse(Course course) {
+		this.save(course);
+	}
+
 	@Override
 	public void setPageContainer(PageContainer pageContainer) {
 		this.pageContainer = pageContainer;

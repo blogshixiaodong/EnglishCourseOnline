@@ -1,5 +1,7 @@
 package com.eco.dao.impl;
 
+import java.util.List;
+
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.User;
 import com.eco.dao.UserDao;
@@ -16,6 +18,12 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 	public PageContainer<User> selectEngclassAllUserByEngclassId(Integer engclassId) {
 		String hql = " SELECT u FROM User u LEFT JOIN u.engclassSet es WHERE es.engclassId = ? ";
 		return this.list(hql, pageContainer, engclassId);
+	}
+	
+	public List<User> selectUserIdAndUsernameByEngclassId(Integer engclassId) {
+		//String hql = " SELECT new User(userId, username) FROM User u LEFT JOIN u.engclassSet es WHERE es.engclassId = ? ";
+		String hql = " SELECT u FROM User u LEFT JOIN u.engclassSet es WHERE es.engclassId = ? ";
+		return this.list(hql, engclassId);
 	}
 	
 	public PageContainer<User> getPageContainer() {

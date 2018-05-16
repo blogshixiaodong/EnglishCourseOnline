@@ -25,12 +25,14 @@ import com.eco.server.impl.CourseServerImpl;
 import com.eco.server.impl.EngclassServerImpl;
 import com.eco.server.impl.TeacherServerImpl;
 import com.eco.server.impl.UserServerImpl;
+import com.eco.util.JsonUtils;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 /*
  * date:   2018年5月5日 下午16:41:15
@@ -40,7 +42,7 @@ public class BusinessAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	
-	private CourseServer courseServer = new CourseServerImpl();
+	private BusinessServer businessServer = new BusinessServerImpl();
 	
 	private TeacherServer teacherServer = new TeacherServerImpl();
 	
@@ -52,7 +54,6 @@ public class BusinessAction extends ActionSupport {
 	
 	private PageContainer pageContainer;
 	
-	
 	private CourseRecord courseRecord;
 	
 	private Engclass engclass;
@@ -62,17 +63,33 @@ public class BusinessAction extends ActionSupport {
 	private Integer userNum1;
 	private Integer userNum2;
 	
-	
-	private BusinessServer businessServer = new BusinessServerImpl();
+
 	private HttpServletRequest request = ServletActionContext.getRequest();
 	
 	
 	private String jsonResult = "";
 	
-	public String findAllCourse() {
-//		List<Course> corseList = courseServer.queryAllCourse();
-//		jsonResult = JSONArray.fromObject(corseList).toString();
+	public String findNowCourse() {
+		PageContainer<Course> corseList = businessServer.queryNowCourseList(pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course", "engclassSet");
+		jsonResult = JSONObject.fromObject(corseList, jsonConfig).toString();
 		return Action.SUCCESS;
+	}
+	
+	public String findAllCourse() {
+		PageContainer<Course> corseList = businessServer.queryAllCourseList(pageContainer);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("course", "engclassSet");
+		jsonResult = JSONObject.fromObject(corseList, jsonConfig).toString();
+		return Action.SUCCESS;
+	}
+	
+	public String createCourse() {
+		//判断商家账号
+		if(course != null) {
+			businessServer.saveCourse(course);
+			return Action.SUCCESS;
+		}
+		return Action.ERROR;
 	}
 	
 	public String findCourseByCourseId() {
@@ -104,14 +121,7 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
-	public String createCourse() {
-		//判断商家账号
-		
-//		if(businessServer.addCourse(course)) {
-//			return SUCCESS; 
-//		}
-		return ERROR;
-	}
+
 	
 	
 	public String mergeEngclass() {

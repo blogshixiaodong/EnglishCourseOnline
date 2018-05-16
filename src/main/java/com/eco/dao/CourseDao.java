@@ -53,5 +53,19 @@ public interface CourseDao extends PageDao<Course> {
 	* @return List<Course>
 	*/ 
 	PageContainer<Course> selectUserAllCourseDetailListByUserId(Integer userId);
-
+	
+	/**
+	 * 商家查询所有进行中的课程
+	 * @return
+	 */
+	PageContainer<Course> selectNowCourseList();
+	
+	/**
+	 * 商家查询所有的课程
+	 * @return
+	 */
+	PageContainer<Course> selectAllCourseList();
+	
+	void insertCourse(Course course);
+	
 }

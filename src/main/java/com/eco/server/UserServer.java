@@ -9,6 +9,7 @@ import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserAccount;
+import com.eco.bean.model.UserBackInfo;
 
 public interface UserServer {
 	
@@ -82,11 +83,12 @@ public interface UserServer {
 		
 	/** 
 	* @Description: 根据classid和日期查询该班级的考勤记录
-	* @param classid
+	* @param engclassid
 	* @param date
+	* @param pageContainer
 	* @return List<TimeSheetDetail>
 	*/ 
-	public abstract  PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date);
+	public abstract  PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId,Date date, PageContainer pageContainer);
 	
 	/** 
 	* @Description: 请假 
@@ -114,5 +116,13 @@ public interface UserServer {
 	public User queryUserByAccountId(Integer accountId);
 	
 	public boolean mergeEngclass(Integer oldEngclassId1,Integer oldEngclassId2,Integer engclassId);
+	
+	
+	/**
+	 * 根据班级编号，查询该班级下所有学生的反馈信息
+	 * @param engclassId
+	 * @return
+	 */
+	PageContainer<UserBackInfo> queryUserBackInfoByEngclassId(Integer engclassId, PageContainer<UserBackInfo> pageContainer);
 	
 }

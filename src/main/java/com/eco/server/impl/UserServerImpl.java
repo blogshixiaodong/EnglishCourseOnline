@@ -12,12 +12,14 @@ import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.User;
 import com.eco.bean.model.UserAccount;
+import com.eco.bean.model.UserBackInfo;
 import com.eco.dao.CourseDao;
 import com.eco.dao.CourseRecordDao;
 import com.eco.dao.EngclassDao;
 import com.eco.dao.TeacherBackInfoDao;
 import com.eco.dao.TimeSheetDao;
 import com.eco.dao.UserAccountDao;
+import com.eco.dao.UserBackInfoDao;
 import com.eco.dao.UserDao;
 import com.eco.dao.impl.CourseDaoImpl;
 import com.eco.dao.impl.CourseRecordDaoImpl;
@@ -25,6 +27,7 @@ import com.eco.dao.impl.EngclassDaoImpl;
 import com.eco.dao.impl.TeacherBackInfoDaoImpl;
 import com.eco.dao.impl.TimeSheetDaoImpl;
 import com.eco.dao.impl.UserAccountDaoImpl;
+import com.eco.dao.impl.UserBackInfoDaoImpl;
 import com.eco.dao.impl.UserDaoImpl;
 import com.eco.server.UserServer;
 
@@ -131,8 +134,9 @@ public class UserServerImpl implements UserServer{
 	}
 
 	@Override
-	public PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId, Date date){
+	public PageContainer<TimeSheet> queryUserTimeSheetByEngclassId(Integer engclassId, Date date, PageContainer pageContainer){
 		TimeSheetDao timeSheetDao = new TimeSheetDaoImpl();
+		timeSheetDao.setPageContainer(pageContainer);
 		return timeSheetDao.selectTimeSheetByEnglassIdAndDate(engclassId, date);
 	}
 
@@ -163,6 +167,12 @@ public class UserServerImpl implements UserServer{
 		return true;
 	}
 
-	
+	@Override
+	public PageContainer<UserBackInfo> queryUserBackInfoByEngclassId(Integer engclassId, PageContainer<UserBackInfo> pageContainer) {
+		UserBackInfoDao userBackInfoDao = new UserBackInfoDaoImpl();
+		userBackInfoDao.setPageContainer(pageContainer);
+		return userBackInfoDao.selectUserBackInfoByEngclassId(engclassId);
+	}
+
 }
 

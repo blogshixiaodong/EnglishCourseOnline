@@ -41,16 +41,21 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
     
     public AbstractBaseDao() {
     	sessionFactory = configuration.buildSessionFactory();
-		session = getSession();
-		transaction = session.beginTransaction();
+//    	session = getSession();
+//		transaction = session.beginTransaction();
 		entityClass = ReflectUtils.getClass(getClass());
     }
     
 	@Override
 	public Object save(T entity) {
-		Object identifier = session.save(entity);
+		Object identifier = null;
+		session = getSession();
 		if(getAutoCommit()) {
+			transaction = session.beginTransaction();
+			identifier = session.save(entity);
 			commit();
+		} else {
+			identifier = session.save(entity);	
 		}
 		return identifier;
 	}
@@ -58,6 +63,8 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 	@Override
 	public void save(List<T> list) {
 		this.setAutoCommit(false);
+		session = getSession();
+		transaction = session.beginTransaction();
 		for(T t : list) {
 			save(t);
 		}
@@ -66,15 +73,21 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	@Override
 	public void delete(T entity) {
-		session.delete(entity);
+		session = getSession();
 		if(getAutoCommit()) {
+			transaction = session.beginTransaction();
+			session.delete(entity);
 			commit();
+		} else {
+			session.delete(entity);
 		}
 	}
 
 	@Override
 	public void delete(List<T> list) {
 		this.setAutoCommit(false);
+		session = getSession();
+		transaction = session.beginTransaction();
 		for(T t : list) {
 			delete(t);
 		}
@@ -83,15 +96,21 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	@Override
 	public void update(Object entity) {
-		session.update(entity);
+		session = getSession();
 		if(getAutoCommit()) {
+			transaction = session.beginTransaction();
+			session.update(entity);
 			commit();
+		} else {
+			session.update(entity);
 		}
 	}
 
 	@Override
 	public void update(List<T> list) {
 		this.setAutoCommit(false);
+		session = getSession();
+		transaction = session.beginTransaction();
 		for(T t : list) {
 			update(t);
 		}
@@ -100,15 +119,21 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	@Override
 	public void saveOrUpdate(Object entity) {
-		session.saveOrUpdate(entity);
+		session = getSession();
 		if(getAutoCommit()) {
+			transaction = session.beginTransaction();
+			session.saveOrUpdate(entity);
 			commit();
+		}else {
+			session.saveOrUpdate(entity);
 		}
 	}
 
 	@Override
 	public void saveOrUpdate(List<T> list) {
 		this.setAutoCommit(false);
+		session = getSession();
+		transaction = session.beginTransaction();
 		for(T t : list) {
 			saveOrUpdate(t);
 		}
@@ -117,40 +142,53 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	@Override
 	public Integer executeSQLUpdate(String sql, Object... params) {
+		session = getSession();
+		transaction = session.beginTransaction();
 		NativeQuery nativeQuery = session.createNativeQuery(sql);
 		setParameter(nativeQuery, params);
-		return nativeQuery.executeUpdate();
+		Integer result = nativeQuery.executeUpdate();
+		commit();
+		return result;
 	}
 
 	@Override
 	public Integer executeHQLUpdate(String hql, Object... params) {
+		session = getSession();
+		transaction = session.beginTransaction();
 		Query query = session.createQuery(hql);
 		setParameter(query, params);
-		return query.executeUpdate();
+		Integer result = query.executeUpdate();
+		commit();
+		return result;
 	}
 
 	@Override
 	public T get(Serializable id) {
-		return session.get(entityClass, id);
+		T t = getSession().get(entityClass, id);
+		closeSession();
+		return t;
 	}
 
 
 	@Override
 	public T get(String hql, Object... params) {
-		Query query = session.createQuery(hql);
+		Query query = getSession().createQuery(hql);
 		setParameter(query, params);
 		List<T> list = query.list();
 		if(list == null || list.isEmpty()) {
 			return null;
 		}
+		closeSession();
 		return list.get(0);
 	}
 
 	@Override
 	public List<T> list(String hql, Object... params) {
-		Query query = session.createQuery(hql);
+		Query query = getSession().createQuery(hql);
 		setParameter(query, params);
-		return query.list();
+		List<T> list = query.list();
+		closeSession();
+		return list;
 	}
 
 
@@ -172,18 +210,24 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
         setParameter(query, params);
         pageContainer.setRecordCount(Integer.parseInt(query.uniqueResult().toString()));
         pageContainer.setList(list);
+        closeSession();
         return pageContainer;  
 	}
 	
 	@Override
 	public Object getUniqueResult(String hql, Object... params) {
-		Query query = session.createQuery(hql);
+		Query query = getSession().createQuery(hql);
 		setParameter(query, params);
-		return query.uniqueResult();
+		Object result = query.uniqueResult();
+		closeSession();
+		return result;
 	}
 
 	public Session getSession() {
-		return sessionFactory.getCurrentSession();
+		if(session == null || !session.isOpen()) {
+			session = sessionFactory.openSession();	
+		}
+		return session;
 	}
 	
 	public void commit() {
@@ -196,6 +240,11 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 		transaction.rollback();
 		session.close();
 		sessionFactory.close();
+	}
+	
+	public void closeSession() {
+		session.close();
+		session = null;
 	}
 	
 	private void setParameter(Query query, Object... params) {

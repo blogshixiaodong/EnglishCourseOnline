@@ -10,19 +10,11 @@
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    
-    <!-- file input -->
-    <link href="../build/css/fileinput.css" rel="stylesheet" />
-    
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet" />
 </head>
 <body class="nav-md">
-	 <s:if test="#request.pageContainer == null">
-		<s:action name="nowCourses" namespace="/teacher">
-			<s:param name="pageContainer.currentPageNo">1</s:param>
-		</s:action>
-	</s:if> 
+
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -60,36 +52,46 @@
                    				<div class="clearfix"></div>
                   			</div>
                   			<div class="x_content">
-                    			<form action = "createCourse" class="form-horizontal form-label-left" novalidate enctype='multipart/form-data' >
-                    			
+                    			<form action = "createCourse" class="form-horizontal form-label-left" method="post" >
 				                    <div class="item form-group">
-				                    	<label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">课程名称 <span class="required">*</span></label>
+				                    	<label class="control-label col-md-3 col-sm-3 col-xs-12">课程名称 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="course.courseName" required="required" type="text" />
-
+				                        	<input type="text" class="form-control col-md-7 col-xs-12" name="course.courseName" required="required"  />
 				                        </div>
 				                    </div>
 	                      			<div class="item form-group">
-	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">课程类别 <span class="required">*</span></label>
-				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email" name="course.types" required="required" class="form-control col-md-7 col-xs-12" />
+	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12">课程类别 <span class="required">*</span></label>
+				                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+
+											<div class="radio">
+											 	<label>
+											        <input type="radio" name="course.types" value="初级" />初级
+											    </label>
+											    <label>
+											        <input type="radio" name="course.types" value="中级" />中级
+											    </label>
+											     <label>
+											        <input type="radio" name="course.types" value="高级" />高级
+											    </label>
+											</div>
+				                        
 				                        </div>
 	                      			</div>
 	                      			<div class="item form-group">
-	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">课程价格 <span class="required">*</span></label>
+	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12">课程价格 <span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email" name="course.price" required="required" class="form-control col-md-7 col-xs-12" />
+				                        	<input type="text" name="course.price" required="required" class="form-control col-md-7 col-xs-12" />
 				                        </div>
 	                      			</div>
 	                     			<div class="item form-group">
-	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">详细信息<span class="required">*</span></label>
+	                        			<label class="control-label col-md-3 col-sm-3 col-xs-12">详细信息<span class="required">*</span></label>
 				                        <div class="col-md-6 col-sm-6 col-xs-12">
-				                        	<input type="email" id="email2" name="course.info" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12" />
+				                        	<input type="textarea" name="course.info" data-validate-linked="email" required="required" class="form-control col-md-7 col-xs-12" />
 				                        </div>
 	                      			</div>
 									<!--  img upload
 		                      			<div class="item form-group"> 
-							                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">图片预览<span class="required">*</span></label>
+							                <label class="control-label col-md-3 col-sm-3 col-xs-12">图片预览<span class="required">*</span></label>
 											<div class="col-xs-7"> 
 												<input id="testlogo" type="file" name="icoFile" class="file-loading" /> 
 												<input type="text" name="htestlogo" id="htestlogo" onchange="addFile(this)" > 
@@ -99,9 +101,8 @@
 	                      			<div class="ln_solid"></div>
 				                    <div class="form-group">
 				                    	<div class="col-md-6 col-md-offset-3">
-				                    		<button id="send" type="submit" class="btn btn-success">Submit</button>
-				                        	<button type="submit" class="btn btn-primary">Cancel</button>
-				                            
+				                    		<button id="send" type="submit" class="btn btn-success">添加</button>
+				                        	<button id="rest" type="submit" class="btn btn-primary">重置</button>
 				                        </div>
 				                    </div>
 					            	
@@ -128,9 +129,13 @@
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
     
-    
     <script type="text/javascript"> 
-   
+   		/*$("send").click(function() {
+   			var courseName = $("input[name='course.courseName']").val();
+   			var types = $("input[name='course.types']:checked").val();
+   			var price = $("input[name='course.price']").val();
+   			console.log(courseName + types + price);
+   		})*/
 	</script>
 </body>
 </html>

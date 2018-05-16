@@ -147,7 +147,7 @@ public class UserAction extends ActionSupport {
 		if(engclassId == null) {
 			return Action.ERROR;
 		}
-		PageContainer<User> userList = userServer.queryUserListByClassid(this.getEngclassId(),pageContainer);
+		PageContainer<User> userList = userServer.queryUserListByEngclassId(this.getEngclassId(),pageContainer);
 		if(userList == null) {
 			return ERROR;
 		}

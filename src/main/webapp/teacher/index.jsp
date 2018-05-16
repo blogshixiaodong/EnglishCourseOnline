@@ -3,9 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>教师后台管理</title>
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
@@ -71,17 +70,18 @@
 				</div>
 			</div>
 			<!-- /page content -->
-
+			
 			<!-- footer -->
 			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
+
 	<!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+    <script src="../build/js/custom.js"></script>
     <script src="../build/js/common.js"></script>
 
     <script type="text/javascript">

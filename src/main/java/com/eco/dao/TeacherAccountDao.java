@@ -9,13 +9,13 @@ public interface TeacherAccountDao {
 	 * @param 账号id
 	 * @return
 	 */
-	public abstract int countAccount(Integer id);
+	Integer countAccount(Integer id);
 	
 	/**
 	 * 根据id查询账号记录
 	 * @param 账号id
 	 * @return
 	 */
-	public abstract TeacherAccount selectAccount(Integer id);
+	TeacherAccount selectAccount(Integer id);
 	
 }

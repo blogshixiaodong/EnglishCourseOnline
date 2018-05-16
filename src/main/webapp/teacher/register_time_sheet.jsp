@@ -18,9 +18,6 @@
     <link href="../build/css/custom.min.css" rel="stylesheet">
 </head>
 <body class="nav-md">
-	<s:if test="#request.engclassDetailList == null">
-		<s:action name="engclassList" namespace="/teacher"></s:action>
-	</s:if>
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
@@ -65,9 +62,7 @@
 
 									<div class="col-md-3 col-sm-3 col-xs-12 form-group">  
 					                    <select id="engclassList" class="selectpicker show-tick" title="请选择班级" data-live-search="true" data-size="5">
-					                        <s:iterator value="#request.engclassDetailList" status="i" var="engclass">
-					                        	<option><s:property value="#engclass.classId " /> : <s:property value="#engclass.className" /></option>
-					                        </s:iterator>
+					                        <!-- after load -->
 					                    </select>  
 				                	</div> 
 				                	<div class="col-md-3 col-sm-3 col-xs-12 form-group">
@@ -96,23 +91,15 @@
 		                  		<h2>学生列表</h2>
 	                  			<ul class="nav navbar-right panel_toolbox">
 				                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
-				                    <li class="dropdown">
-				                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-				                      <ul class="dropdown-menu" role="menu">
-				                      	<li><a href="#">Settings 1</a></li>
-				                        <li><a href="#">Settings 2</a> </li>
-				                      </ul>
-				                    </li>
 				                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
 	                  			</ul>
 		                  		<div class="clearfix"></div>
 		               		</div>
 		                	<div class="x_content">
 		                  		<div class="">
-		                  			<table id="userList" class="table table-striped">
+		                  			<table id="timeSheetTable" class="table table-striped">
 										<thead>
 											<tr>
-												<th>#</th>
 												<th>学生编号</th>
 												<th>学生姓名</th>
 												<th>状态</th>
@@ -153,71 +140,98 @@
     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
  	<script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
  	<script src="https://cdn.bootcss.com/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+ 	<!-- bootstrap select -->
+ 	<script src="../vendors/bootstrap-select/bootstrap-select.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-    
-    <script src="https://cdn.bootcss.com/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script> 
-    
+    <script src="../build/js/common.js"></script>
+   	
     <script type="text/javascript">
-   
-	    function AppendZero(number) {
-    		if(number < 10) {
-    			return "0" + number;
-    		}
-    		return number;
-    	}
-	    
-	    function JsonDateToString(dateObject) {
-    		var year = 1900 + dateObject.year;
-    		var month = 1 + dateObject.month;
-    		var day = dateObject.date;
-    		var hours = dateObject.hours;
-    		
-    		var minutes = dateObject.minutes;
-    		
-    		var seconds = dateObject.seconds;
-    		
-    		return year + "-" + AppendZero(month) + "-" + AppendZero(day) + " " + AppendZero(hours) + ":" + AppendZero(minutes) + ":" + AppendZero(seconds);
-    	}
-	    
+		//获取班级下拉列表的id/name列表
+	  	$(function() {
+			$.ajax({
+				url: "engclassList.action",
+				type: "get",
+				dataType: "json",
+				success: function(responseText) {
+					var json = JSON.parse(responseText);
+					var select = $("#engclassList");
+					for(var i = 0; i < json.length; i++) {
+						var record = json[i];
+						var option = $("<option></option>").html(record.engclassId + " : " + record.engclassName);
+						select.append(option);
+					}
+					//刷新控件
+					select.selectpicker('refresh');
+					//禁用提交
+					$("#timeSheetSubmit").attr("disabled", "true");
+				},
+	    		error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("服务端错误，请重试!");
+					reset();
+				}
+			});
+		});
+    
     	function reset() {
 			document.getElementById("engclassList").options.selectedIndex = 0;
 			$("#engclassList").attr("index", 0);
 			$("#engclassList").selectpicker('refresh');
-			$("#userList tbody").html("");
+			$("#timeSheetTable tbody").html("");
+			$("#timeSheetSubmit").attr("disabled", "true");
     	}
     	
+    	function createRegisterTimeSheetTable(json) {
+			var tbody = $("#timeSheetTable tbody");
+			tbody.html("");
+			$("#btnGroup").html("");
+			if(json.list.length == 0) {
+				return;
+			}
+			//创建表格
+			for(var i = 0; i < json.list.length; i++) {
+				var user = json.list[i];
+				var userId = $("<td></td>").html(user.userId);
+				var userName = $("<td></td>").html(user.username);
+				var sheetInfo = $("<td>" + 
+									"<input type='radio' name='status" + i  + "' class='flat' value='0'> 正常" +
+								  	"<input type='radio' name='status" + i  + "' class='flat' value='1'> 请假" +
+									"<input type='radio' name='status" + i  + "' class='flat' value='2'> 迟到" +
+									"<input type='radio' name='status" + i  + "' class='flat' value='3'> 缺席" +
+								  "</td>" +
+								  "<td>" +
+								  	"<input type='text' class='flat form-control' placeholder='notes'>"+
+								  "</td>");
+				var tr = $("<tr></tr>");
+				tr.append(userId);
+				tr.append(userName);
+				tr.append(sheetInfo);
+				tbody.append(tr);
+			}
+			//启用提交按钮
+			$("#timeSheetSubmit").removeAttr("disabled");
+		}
+    	
     	function sendCondition(e) {
-    		$("#userList tbody").html("");
-    		var classId = $("#engclassList").val().split(" : ")[0];
+    		$("#timeSheetTable tbody").html("");
+    		var engclassId = $("#engclassList").val().split(" : ")[0];
     		var queryDate = $("#queryDate").val();
-    		if(classId === "" || queryDate === "") {
+    		if(engclassId === "" || queryDate === "") {
     			return;
     		}
     		$.ajax({
     			url: "searchUser.action",
     			type : "post",
     			dataType: "json",
-    			data:{"engclass.classId" : classId},
+    			data:{
+    				"pageContainer.currentPageNo": 1,
+    				"pageContainer.pageSize": 50,
+    				"engclass.engclassId" : engclassId
+    			},
     			success: function(responseText) {
     				//JSON对象转JavaScript对象
     				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var tr = $("<tr></tr>");
-    					var record = json[i];
-    					tr.append($("<td></td>").text(i));
-    					tr.append($("<td></td>").text(record["userId"]));
-    					tr.append($("<td></td>").text(record["username"]));
-    					tr.append($("<td>" + 
-										"<input type='radio' name='status" + i  + "' class='flat' value='0'> 请假" +
-										"<input type='radio' name='status" + i  + "' class='flat' value='1'> 迟到" +
-										"<input type='radio' name='status" + i  + "' class='flat' value='2'> 缺席" +
-									"</td>" +
-									"<td>" +
-										"<input type='text' class='flat' placeholder='notes'>"+
-									"</td>"));
-    					$("#userList tbody").append(tr);		
-    				}
+    				createRegisterTimeSheetTable(json);
     			},
     			error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
@@ -226,51 +240,36 @@
     		});
     	}
     	
-    	
     	$("#timeSheetSubmit").click(function() {
-			/*var userIdList = new Array();
-			var backInfo = $("#backInfo").val();
-			if($("#check-all").is(':checked')) {
-				//全体成员
-				userIdList.push(-1);
-			} else {
-				//个别对象
-				var children = $("#userList tbody").children();
-				for(var i = 0; i < children.length; i++) {
-					var userId = $(children[i]).children().eq(1).html();
-					var checkbox = $(children[i]).find("input");
-					if($(checkbox).is(":checked")) {
-						userIdList.push(userId);
-					}
-				}
-			}
-			if(userIdList.length == 0 || backInfo === "") {
-				alert("信息不完整,无法提交!");
-				return ;
-			}*/
-			var classId = $("#engclassList").val().split(" : ")[0];
-			
+			var engclassId = $("#engclassList").val().split(" : ")[0];
 			var timeSheet = new Object();
-			var recordList = $("#userList tbody");
+			var recordList = $("#timeSheetTable tbody");
 			var length = recordList.find("tr").length;
+			if(length == 0) {
+				alert("没有记录可以提交.");
+				return ;
+			}
 			var timeSheetList = new Array();
 			for(var i = 0; i < length; i++) {
-				var record = new Object();
+				var timeSheet = new Object();
+				var user = new Object();
+				var engclass = new Object();
 				var li =  recordList.children().eq(i);
-				record.userId = li.children().eq(1).text();
-				record.classId = $("#engclassList").val().split(" : ")[0];
-				record.recordTime = new Date();
-				var index = li.children().eq(3).find("input[name='status" + i + "']:checked").val();
+				user.userId = li.children().eq(0).text();
+				engclass.engclassId = $("#engclassList").val().split(" : ")[0];
+				timeSheet.recordTime = new Date();
+				var index = li.children().eq(2).find("input[name='status" + i + "']:checked").val();
 				if(index === undefined) {
 					alert("未填写完整!!!");
 					return ;
 				}
-				var notes = li.children().eq(4).find("input").val();
-				record.sheetInfo = index + ":" + notes;
-				timeSheetList.push(record);
+				var notes = li.children().eq(3).find("input").val();
+				timeSheet.user = user;
+				timeSheet.engclass = engclass;
+				timeSheet.sheetInfo = index + ":" + notes;
+				timeSheetList.push(timeSheet);
 			}
 
-			
 			$.ajax({
 				url: "insertTimeSheet.action",
 				type: "post",
@@ -288,7 +287,7 @@
 			
 		});
 		$("#engclassList").change(sendCondition);
-		  $("#myDatepicker").on("changeDate", sendCondition);
+		//$("#myDatepicker").on("changeDate", sendCondition);
 		$("#reset").click(function() {
 			reset();
 		});

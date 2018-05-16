@@ -10,7 +10,7 @@
     	
     	<action name="teacherLogin" class="com.eco.action.TeacherAction" method="teacherLogin">
     		<result name="success" type="redirect">
-    			<param name="location">/teacher/index.jsp</param>
+    			<param name="location">index.jsp</param>
     		</result>
     		<result name="unlogin" type="redirect">
     			<param name="location">login.jsp</param>
@@ -19,7 +19,7 @@
     	
     	<action name="teacherLogout" class="com.eco.action.TeacherAction" method="teacherLogout">
     		<result name="success" type="redirect">
-    			<param name="location">../index.jsp</param>
+    			<param name="location">login.jsp</param>
     		</result>
     	</action>
     	
@@ -68,6 +68,15 @@
     		</result>
     	</action>
     	
+    	<action name="userList" class="com.eco.action.TeacherAction" method="findEngclassAllUserIdNameList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    		<result name="unlogin" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
     	<action name="searchEngclass" class="com.eco.action.TeacherAction" method="findTeacherEngclassListByCondition">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -96,6 +105,15 @@
     	</action>
     	
     	<action name="getUserTimeSheet" class="com.eco.action.TeacherAction" method="findUserTimeSheetDetail">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    		<result name="unlogin" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
+    	<action name="userBackInfoHistory" class="com.eco.action.TeacherAction" method="findUserBackInfoHistory">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
