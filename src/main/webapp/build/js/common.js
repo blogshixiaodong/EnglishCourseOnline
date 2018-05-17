@@ -66,3 +66,7 @@ function schooltime(day, attendTime) {
 	}
 	return dayString + " " + attendTimeString;
 }
+
+
+
+
