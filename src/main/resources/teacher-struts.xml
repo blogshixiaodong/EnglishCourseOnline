@@ -140,8 +140,6 @@
     		</result>
     	</action>
     	
-    	
-    	
     	<action name="insertTimeSheet" class="com.eco.action.TeacherAction" method="createTimeSheet">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -152,6 +150,5 @@
     	</action>
     </package>
 
-	
    
 </struts>

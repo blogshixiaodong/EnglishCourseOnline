@@ -12,8 +12,7 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	
 	@Override
 	public Integer insert(CourseRecord record) {
-		// TODO Auto-generated method stub
-		return null;
+		return Integer.parseInt(this.save(record).toString());
 	}
 
 	@Override

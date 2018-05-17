@@ -104,6 +104,9 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		this.pageContainer = pageContainer;
 	}
 
-
+	@Override
+	public void insertEngclass(Engclass engclass) {
+		this.save(engclass);
+	}
 	
 }

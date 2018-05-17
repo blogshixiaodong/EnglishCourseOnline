@@ -110,7 +110,10 @@ public interface EngclassDao extends PageDao<Engclass> {
 	*/ 
 	Engclass selectEngclassByCourseRecord(Integer courseRecordId);
 	
-	
+	/**
+	 * 
+	 * @param engclass
+	 */
+	void insertEngclass(Engclass engclass);
 
-	
 }

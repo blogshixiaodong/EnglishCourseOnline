@@ -30,18 +30,24 @@
     		</result>
 		</action>
     	
+    	<action name="courseIdNameList" class="com.eco.action.BusinessAction" method="findNowCourseIdAndNameList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	<action name="teacherIdNameList" class="com.eco.action.BusinessAction" method="findAllTeacherIdAndNameList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     	<action name="courseInfo" class="com.eco.action.BusinessAction" method="findCourseByCourseId">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
     	</action>
-    	
-    	<action name="teacherList" class="com.eco.action.BusinessAction" method="findAllTeacherList">
-    		<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-    	</action>
-    	
+
     	<action name="teacherInfo" class="com.eco.action.BusinessAction" method="findTeacherByTeacherId">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -55,9 +61,7 @@
     	</action>
     	
 
-    	
-    	
-		
+    
 		<action name = "allCourses" class = "com.eco.action.BusinessAction" method = "findAllCourseList">
 			<result name = "success">
 		 		<param name = "location">/business/all_courses.jsp</param>

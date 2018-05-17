@@ -1,5 +1,7 @@
 package com.eco.dao;
 
+import java.util.List;
+
 import com.eco.bean.model.Course;
 import com.eco.bean.model.PageContainer;
 
@@ -46,7 +48,6 @@ public interface CourseDao extends PageDao<Course> {
 	*/ 
 	PageContainer<Course> selectUserHistoryCourseDetailListByUserId(Integer userId);
 	
-	
 	/** 
 	* @Description: 用户查询所有课程
 	* @param userid
@@ -66,6 +67,23 @@ public interface CourseDao extends PageDao<Course> {
 	 */
 	PageContainer<Course> selectAllCourseList();
 	
+	/**
+	 * 保存课程基本信息
+	 * @param course
+	 */
 	void insertCourse(Course course);
+	
+	/**
+	 * 查询所有课程id/name列表
+	 * @return
+	 */
+	List<Course> selectNowCourseIdAndNameList();
+	
+	/**
+	 * 根据课程编号查询课程信息
+	 * @param courseId
+	 * @return
+	 */
+	Course selectCourseByCourseId(Integer courseId);
 	
 }
