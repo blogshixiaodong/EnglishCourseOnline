@@ -3,7 +3,6 @@ package com.eco.action;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import com.eco.bean.model.TeacherBackInfo;
@@ -17,7 +16,6 @@ import com.eco.bean.model.UserAccount;
 import com.eco.bean.model.UserBackInfo;
 import com.eco.server.UserServer;
 import com.eco.server.impl.UserServerImpl;
-
 import com.eco.util.JsonUtils;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
@@ -240,7 +238,6 @@ public class UserAction extends ActionSupport {
 		if(userId == null) {
 			return Action.ERROR;
 		}
-		
 		List<Engclass> engclassList = userServer.queryTimeTable(queryDate, userId);
 		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","engclassSet","courseRecordSet");                       
 		jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();

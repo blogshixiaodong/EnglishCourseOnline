@@ -83,7 +83,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 
 	@Override																		
-	public List<Engclass> selectEngclassByDate(Date beginDate, Integer userId) {
+	public List<Engclass> selectUserEngclassByDate(Date beginDate, Integer userId) {
 		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(cr.startTime,'%Y-%m-%d') AND  STR_TO_DATE(cr.endTime,'%Y-%m-%d') ";
 		return this.list(hql, userId,beginDate) ;
 	}
@@ -102,6 +102,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	@Override
 	public void setPageContainer(PageContainer<Engclass> pageContainer) {
 		this.pageContainer = pageContainer;
+	}
+
+	@Override
+	public List<Engclass> selectTeacherEngclassByDate(Date beginDate,Integer teacherId) {
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.teacher t LEFT JOIN e.courseRecord cr WHERE t.teacherId = ? AND STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(cr.startTime,'%Y-%m-%d') AND  STR_TO_DATE(cr.endTime,'%Y-%m-%d') ";
+		return this.list(hql,teacherId,beginDate);
 	}
 
 

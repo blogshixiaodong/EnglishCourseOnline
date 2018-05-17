@@ -100,7 +100,15 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @param endDate
 	* @return List<Engclass>
 	*/ 
-	List<Engclass> selectEngclassByDate(Date beginDate,Integer userId);
+	List<Engclass> selectUserEngclassByDate(Date beginDate,Integer userId);
+	
+	/** 
+	* @Description: TODO 
+	* @param teacherId
+	* @param beginDate
+	* @return List<Engclass>
+	*/ 
+	List<Engclass> selectTeacherEngclassByDate(Date beginDate,Integer teacherId);
 	
 	
 	/** 

@@ -210,7 +210,7 @@ public class UserServerImpl implements UserServer{
 	public List<Engclass> queryTimeTable(String queryDate, Integer userId) {
 		Date startDate = DateFormat.stringToDate(queryDate);
 		EngclassDao engclassDao = new EngclassDaoImpl();
-		List<Engclass> engclasseList = engclassDao.selectEngclassByDate(startDate, userId);
+		List<Engclass> engclasseList = engclassDao.selectUserEngclassByDate(startDate, userId);
 		return engclasseList;
 	}
 
