@@ -11,6 +11,10 @@ import com.eco.bean.model.PageContainer;
  * author: Shixiaodong
  */
 
+/**
+ * @author lenovo
+ *
+ */
 public interface EngclassDao extends PageDao<Engclass> {
 
 	/**
@@ -100,7 +104,15 @@ public interface EngclassDao extends PageDao<Engclass> {
 	* @param endDate
 	* @return List<Engclass>
 	*/ 
-	List<Engclass> selectEngclassByDate(Date beginDate,Integer userId);
+	List<Engclass> selectUserEngclassByDate(Date beginDate,Integer userId);
+	
+	/** 
+	* @Description: TODO 
+	* @param teacherId
+	* @param beginDate
+	* @return List<Engclass>
+	*/ 
+	List<Engclass> selectTeacherEngclassByDate(Date beginDate,Integer teacherId);
 	
 	
 	/** 
@@ -115,5 +127,40 @@ public interface EngclassDao extends PageDao<Engclass> {
 	 * @param engclass
 	 */
 	void insertEngclass(Engclass engclass);
-
+	
+	
+	/** 
+	* @Description: 根据课程id查询正在进行的班级id/name列表 
+	* @param courseId void
+	*/ 
+	List<Engclass> selectNowEngclassIdAndNameByCourseId(Integer courseId);
+	
+	/** 
+	* @Description: 根据班级id 查询该班级的基本信息 
+	* @param engclassId
+	* @return Engclass
+	*/ 
+	Engclass selectEngclassByEngclassId(Integer engclassId);
+	
+	/** 
+	* @Description: 修改班级信息
+	* @param engclass void
+	*/ 
+	void updateEngclass(Engclass engclass);
+	
+	
+	/** 
+	* @Description: 报名班级修改人数 
+	* @param engclassId
+	* @param userCount void
+	*/ 
+	void updateEngclassUserCount(Integer engclassId,Integer userCount);
+	
+	/** 
+	* @Description:合并时使用，将旧班级表中用户人数置-1
+	* @param engclassId void
+	*/ 
+	void updateEngclassUserCount(Integer engclassId);
+	
+	
 }

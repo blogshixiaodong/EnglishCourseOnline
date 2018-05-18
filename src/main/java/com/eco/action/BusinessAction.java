@@ -13,6 +13,7 @@ import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.bean.model.Teacher;
 import com.eco.server.BusinessServer;
+import com.eco.server.UserServer;
 import com.eco.server.impl.BusinessServerImpl;
 import com.eco.util.JsonUtils;
 import com.opensymphony.xwork2.Action;
@@ -36,7 +37,7 @@ public class BusinessAction extends ActionSupport {
 	
 	private Teacher teacher;
 	
-	private PageContainer pageContainer;
+	private PageContainer pageContainer; 
 	
 	private CourseRecord courseRecord;
 	
@@ -112,22 +113,13 @@ public class BusinessAction extends ActionSupport {
 	}
 	
 
-	
-	
 	public String mergeEngclass() {
-		
-//		EngclassServer engclassServer = new EngclassServerImpl();
-//		
-//		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
-//		
-//		//engclass.setCourseRecordId(courseRecordId);
-//		engclass.setUserCount(userNum1 + userNum2);
-//		int engclassId = new Long(engclassServer.create(engclass)).intValue();
-//		
-//		//教师无法修改
-//		UserServer userver = new UserServerImpl();
-//		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
-		
+		Integer oldEngclassId1 = Integer.parseInt(request.getParameter("oldEngclassId1"));
+		Integer oldEngclassId2 = Integer.parseInt(request.getParameter("oldEngclassId2"));
+		Integer userNum1 = Integer.parseInt(request.getParameter("userNum1"));
+		Integer userNum2 = Integer.parseInt(request.getParameter("userNum2"));
+		engclass.setUserCount(userNum1+userNum2);
+		businessServer.mergeEngclass(engclass,oldEngclassId1,oldEngclassId2);
 		return SUCCESS;
 	}
 	
@@ -145,14 +137,15 @@ public class BusinessAction extends ActionSupport {
 	}
 
 	public String findEngclassListByCourseId() {
-//		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
-//		jsonResult = JSONArray.fromObject(engclassList).toString();
+		List<Engclass> engclassList = businessServer.queryNowEngclassIdAndNameList(course.getCourseId());
+		jsonResult = JSONArray.fromObject(engclassList).toString();
 		return Action.SUCCESS;
 	}
 	
 	public String findEngclassByEngclassId() {
-//		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
-//		jsonResult = JSONObject.fromObject(engclass).toString();
+		Engclass engclassRe = businessServer.queryEngclassByEngclassId(engclass.getEngclassId()) ;
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("courseRecord","userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","teacherAccount","engclassSet");
+		jsonResult = JSONObject.fromObject(engclassRe,jsonConfig).toString();
 		return Action.SUCCESS;
 	}
 	

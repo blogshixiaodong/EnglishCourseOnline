@@ -234,15 +234,35 @@
 										<tr>
 											<th>班级名称</th>
 											<th>教室</th>
-											<td>教师</td>
+											<th>上课时间</th>
+											<th>教师</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td><input type="text" name="className" id="className" /></td>
 											<td><input type="text" name="classRoom" id="classRoom" /></td>
+											<th>
+											<select id="day" class="selectpicker show-tick">
+												<option>======  星期  ======</option>
+												<option>星期一</option>
+												<option>星期二</option>
+												<option>星期三</option>
+												<option>星期四</option>
+												<option>星期五</option>
+												<option>星期六</option>
+												<option>星期日</option>
+											</select>
+											<select id="attendTime" class="selectpicker show-tick">
+												<option>======  时间  ======</option>
+												<option>上午 1-2节</option>
+												<option>上午 3-4节</option>
+												<option>下午 5-6节</option>
+												<option>下午 7-8节</option>
+											</select>
+										</th>
 											<td id="teacherRadio">
-												
+												<!--ajax -->
 											</td>
 										</tr>
 										
@@ -293,7 +313,7 @@
     	$(function() {
     		//课程列表
     		$.ajax({
-    			url: "courseList.action",
+    			url: "courseIdNameList.action",
     			type: "post",
     			dataType: "json",
     			success: function(responseText) {
@@ -303,22 +323,23 @@
     					var courseName = json[i].courseName;
    	    				$("#courseList").append($("<option></option>").text(courseId + " : " + courseName))
     				}
+    				$("#courseList").selectpicker('refresh');
     			}
     		});
     		//教师列表
-    		$.ajax({
-    			url: "teacherList.action",
-    			type: "post",
-    			dataType: "json",
-    			success: function(responseText) {
-    				var json = JSON.parse(responseText);
-    				for(var i = 0; i < json.length; i++) {
-    					var teacherId = json[i].teacherId;
-    					var teacherName = json[i].teacherName;
-   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
-    				}
-    			}
-    		});
+//    		$.ajax({
+//    			url: "teacherList.action",
+//    			type: "post",
+//    			dataType: "json",
+//    			success: function(responseText) {
+//    				var json = JSON.parse(responseText);
+//    				for(var i = 0; i < json.length; i++) {
+//    					var teacherId = json[i].teacherId;
+//    					var teacherName = json[i].teacherName;
+//   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
+//    				}
+//    			}
+//   			});
     	});
     	
   		//课程选择完成显示基本信息
@@ -330,7 +351,7 @@
     			type: "post",
     			dataType: "json",
    				data: {
-   					"courseId": courseId
+   					"course.courseId": courseId
    				},
     			success: function(responseText) {
     				var json = JSON.parse(responseText);
@@ -347,13 +368,13 @@
     					type: "post",
     					dataType: "json",
     					data: {
-    						"courseId": courseId
+    						"course.courseId": courseId
     					},
     					success: function(responseText) {
     	    				var json = JSON.parse(responseText);
     	    				for(var i = 0; i < json.length; i++) {
-    	    					var engclassId = json[i].classId;
-    	    					var engclassName = json[i].className;
+    	    					var engclassId = json[i].engclassId;
+    	    					var engclassName = json[i].engclassName;
     	    					var optionDom = $("<option></option>").text(engclassId + " : " + engclassName);
     	   	    				$("#engclassList1").append($("<option></option>").text(engclassId + " : " + engclassName));
     	   	    				$("#engclassList2").append($("<option></option>").text(engclassId + " : " + engclassName));
@@ -378,19 +399,19 @@
     			type: "post",
     			dataType: "json",
    				data: {
-   					"engclassId": engclassId
+   					"engclass.engclassId": engclassId
    				},
     			success: function(responseText) {
     				var tr = $("#engclassInfo #engclass1");
     				tr.html("");
     				var json = JSON.parse(responseText);
     				tr.append($("<td></td>").text("待合并班级1"));
-    				tr.append($("<td></td>").text(json["classId"]));
-    				tr.append($("<td></td>").text(json["className"]));
-    				tr.append($("<td></td>").text(json["teacherId"]));
-    				tr.append($("<td></td>").text(json["teacherName"]));
-    				tr.append($("<td></td>").text(json["classRoom"]));
-    				tr.append($("<td></td>").text(json["userCount"]));
+    				tr.append($("<td></td>").text(json.engclassId));
+    				tr.append($("<td></td>").text(json.engclassName));
+    				tr.append($("<td></td>").text(json.teacher.teacherId));
+    				tr.append($("<td></td>").text(json.teacher.teacherName));
+    				tr.append($("<td></td>").text(json.classRoom));
+    				tr.append($("<td></td>").text(json.userCount));
     				setTeacher();
     			}
     		});
@@ -408,19 +429,19 @@
     			type: "post",
     			dataType: "json",
    				data: {
-   					"engclassId": engclassId
+   					"engclass.engclassId": engclassId
    				},
     			success: function(responseText) {
     				var tr = $("#engclassInfo #engclass2");
     				tr.html("");
     				var json = JSON.parse(responseText);
     				tr.append($("<td></td>").text("待合并班级2"));
-    				tr.append($("<td></td>").text(json["classId"]));
-    				tr.append($("<td></td>").text(json["className"]));
-    				tr.append($("<td></td>").text(json["teacherId"]));
-    				tr.append($("<td></td>").text(json["teacherName"]));
-    				tr.append($("<td></td>").text(json["classRoom"]));
-    				tr.append($("<td></td>").text(json["userCount"]));
+    				tr.append($("<td></td>").text(json.engclassId));
+    				tr.append($("<td></td>").text(json.engclassName));
+    				tr.append($("<td></td>").text(json.teacher.teacherId));
+    				tr.append($("<td></td>").text(json.teacher.teacherName));
+    				tr.append($("<td></td>").text(json.classRoom));
+    				tr.append($("<td></td>").text(json.userCount));
     				setTeacher();
     			}
     		});
@@ -432,14 +453,16 @@
 				$("#teacherRadio").html("");
 				var teacherId1 = $("#engclass1").find("td").eq(3).text();
 				var teacherId2 = $("#engclass2").find("td").eq(3).text();
+				var teacherName1 = $("#engclass1").find("td").eq(4).text();
+				var teacherName2 = $("#engclass2").find("td").eq(4).text();
 				var teacher1 = $("<input name='teacher' type='radio' value='" + teacherId1 + "' /> ");
 				var teacher2 = $("<input name='teacher' type='radio' value='" + teacherId2 + "' /> ");
 				console.log($("#engclassList1").val());
 				console.log($("#engclassList2").val());
 				$("#teacherRadio").append(teacher1);
-				$("#teacherRadio").append("教师1");
+				$("#teacherRadio").append(teacherName1);
 				$("#teacherRadio").append(teacher2);
-				$("#teacherRadio").append("教师2");
+				$("#teacherRadio").append(teacherName2);
 				
 			}
 		}
@@ -469,25 +492,34 @@
     		var className = $("#className").val();
     		var classRoom = $("#classRoom").val();
     		var teacherId = $("input[name='teacher']:checked").val();
+    		var courseId = $("#courseList").val().split(" : ")[0];
+    		var day = $("#day").prop("selectedIndex");
+    		var attendTime = $("#attendTime").prop("selectedIndex"); 
     		var oldEngclassId1 = $("#engclassList1").val().split(" : ")[0];
     		var oldEngclassId2 = $("#engclassList2").val().split(" : ")[0];
-    		
     		var userNum1 = $("#engclass1").find("td").eq(6).text();
 			var userNum2 = $("#engclass2").find("td").eq(6).text();
     		
+			if(className == "" || classRoom == "" || teacherId == "" || courseId == "" || day == "" || attendTime == "" || day == 0 || attendTime == 0 || oldEngclassId1 == "" || oldEngclassId2 == "" ) {                                                                  
+    			alert("信息不完整!");
+    			return ;
+    		}
+			
     		$.ajax({
   				url: "mergeEngclass.action",
   				type: "post",
   				dataType: "json",
   				data: {
-  					"engclass.teacherId": teacherId,
-  					"engclass.className": className,
+  					"engclass.courseRecord.course.courseId" : courseId,
+  					"engclass.teacher.teacherId": teacherId,
+  					"engclass.engclassName": className,
   					"engclass.classRoom": classRoom,
+  					"engclass.attendTime":attendTime,
+  					"engclass.day":day,
   					"oldEngclassId1":oldEngclassId1,
   					"oldEngclassId2":oldEngclassId2,
   					"userNum1":userNum1,
   					"userNum2":userNum2
-  					
   				},
   				success: function(responseText) {
   					alert("合并成功");

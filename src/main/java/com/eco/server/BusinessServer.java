@@ -61,4 +61,30 @@ public interface BusinessServer {
 	 */
 	void saveEngclass(Engclass engclass);
 	
+	
+	/** 
+	* @Description: 根据课程id查询正在进行的班级id/name列表
+	* @return List<Engclass>
+	*/ 
+	List<Engclass> queryNowEngclassIdAndNameList(Integer courseId);
+	
+	/** 
+	* @Description: 根据班级id查询该班级基本信息 
+	* @param engclassId
+	* @return Engclass
+	*/ 
+	Engclass queryEngclassByEngclassId(Integer engclassId);
+	
+	
+	/** 
+	* @Description: 合并班级 
+	* @param engclass   新班级对象
+ 	* @param oldEngclassId1  旧班级id
+	* @param oldEngclassId2
+	* @return String
+	*/ 
+	String mergeEngclass(Engclass engclass,Integer oldEngclassId1,Integer oldEngclassId2);
+	
+	
+	
 }

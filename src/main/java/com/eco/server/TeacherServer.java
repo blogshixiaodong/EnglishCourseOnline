@@ -109,4 +109,12 @@ public interface TeacherServer {
 	 * @return
 	 */
 	public Teacher queryTeacherrByAccountId(Integer accountId);
+	
+	/** 
+	* @Description: 获取教师课表 
+	* @param teacherId
+	* @return List<Engclass>
+	*/ 
+	public List<Engclass> queryTimeTable(String queryTime ,Integer teacherId);
+	
 }

@@ -12,7 +12,7 @@ import com.eco.bean.model.User;
 public interface UserDao extends PageDao<User> {
 	
 	/** 
-	* @Description: 根据班级查询所有学生
+	* @Description: 根据班级查询所有学生(分页)
 	* @param classid
 	* @return List<User>
 	*/ 
