@@ -40,12 +40,6 @@ public class BusinessAction extends ActionSupport {
 	private CourseRecord courseRecord;
 	
 	private Engclass engclass;
-	
-	private Integer oldEngclassId1;
-	private Integer oldEngclassId2;
-	private Integer userNum1;
-	private Integer userNum2;
-	
 
 	private HttpServletRequest request = ServletActionContext.getRequest();
 	
@@ -140,9 +134,8 @@ public class BusinessAction extends ActionSupport {
 		if(array != null && array.size() > 0) {
 			engclassList = (List<Engclass>)((List<Engclass>)array.toCollection(array, Engclass.class)).get(0);
 		}
-		
 		businessServer.saveSplitEngclass(engclassList.get(0));
-		businessServer.saveEngclass(engclassList.get(1));
+		businessServer.saveSplitEngclass(engclassList.get(1));
 		return Action.SUCCESS;
 	}
 
@@ -202,38 +195,6 @@ public class BusinessAction extends ActionSupport {
 
 	public void setEngclass(Engclass engclass) {
 		this.engclass = engclass;
-	}
-
-	public Integer getOldEngclassId1() {
-		return oldEngclassId1;
-	}
-
-	public void setOldEngclassId1(Integer oldEngclassId1) {
-		this.oldEngclassId1 = oldEngclassId1;
-	}
-
-	public Integer getOldEngclassId2() {
-		return oldEngclassId2;
-	}
-
-	public void setOldEngclassId2(Integer oldEngclassId2) {
-		this.oldEngclassId2 = oldEngclassId2;
-	}
-
-	public Integer getUserNum1() {
-		return userNum1;
-	}
-
-	public void setUserNum1(Integer userNum1) {
-		this.userNum1 = userNum1;
-	}
-
-	public Integer getUserNum2() {
-		return userNum2;
-	}
-
-	public void setUserNum2(Integer userNum2) {
-		this.userNum2 = userNum2;
 	}
 
 }
