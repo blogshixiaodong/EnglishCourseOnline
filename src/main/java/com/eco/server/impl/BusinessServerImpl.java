@@ -54,6 +54,11 @@ public class BusinessServerImpl implements BusinessServer {
 	}
 
 	@Override
+	public List<Engclass> queryAllEngclassIdAndNameList() {
+		return engclassDao.selectAllEngclassIdAndNameList();
+	}
+
+	@Override
 	public Course queryCourseByCourseId(Integer courseId) {
 		return courseDao.selectCourseByCourseId(courseId);
 	}
@@ -64,10 +69,20 @@ public class BusinessServerImpl implements BusinessServer {
 	}
 	
 	@Override
+	public Engclass queryEngclassByEngclasId(Integer engclassId) {
+		return engclassDao.selectEngclassByEngclassId(engclassId);
+	}
+
+	@Override
 	public void saveEngclass(Engclass engclass) {
 		//先保存课程记录
 		Integer courseRecordId = courseRecordDao.insert(engclass.getCourseRecord());
 		engclass.getCourseRecord().setCourseRecordId(courseRecordId);
+		engclassDao.insertEngclass(engclass);
+	}
+	
+	@Override
+	public void saveSplitEngclass(Engclass engclass) {
 		engclassDao.insertEngclass(engclass);
 	}
 	

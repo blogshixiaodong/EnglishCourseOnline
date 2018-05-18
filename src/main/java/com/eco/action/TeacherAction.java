@@ -149,7 +149,7 @@ public class TeacherAction extends ActionSupport {
 			return "unlogin";
 		}
 		PageContainer<User> userList = userServer.queryUserListByEngclassId(engclass.getEngclassId(), pageContainer);
-		JsonConfig jsonConfig = JsonUtils.JsonExclude("engclassSet", "timeSheetSet");
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("engclassSet", "timeSheetSet", "userAccount");
 		jsonResult = JSONObject.fromObject(userList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}

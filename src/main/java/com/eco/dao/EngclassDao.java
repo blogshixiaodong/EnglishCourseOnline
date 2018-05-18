@@ -28,6 +28,12 @@ public interface EngclassDao extends PageDao<Engclass> {
 	PageContainer<Engclass> selectTeacherHistoryEngclassListByTeacherId(Integer teacherId);
 
 	/**
+	 * 查询所有班级的id/name列表
+	 * @return
+	 */
+	List<Engclass> selectAllEngclassIdAndNameList();
+	
+	/**
 	 * 根据教师id获取教师所有授课的班级
 	 * @param teacherId
 	 * @return
@@ -111,9 +117,16 @@ public interface EngclassDao extends PageDao<Engclass> {
 	Engclass selectEngclassByCourseRecord(Integer courseRecordId);
 	
 	/**
-	 * 
+	 * 保存班级信息
 	 * @param engclass
 	 */
 	void insertEngclass(Engclass engclass);
-
+	
+	/**
+	 * 根据班级编号查询班级信息
+	 * @param engclassId
+	 * @return
+	 */
+	Engclass selectEngclassByEngclassId(Integer engclassId);
+	
 }

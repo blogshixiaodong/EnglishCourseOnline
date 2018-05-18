@@ -71,7 +71,7 @@ public interface CourseDao extends PageDao<Course> {
 	 * 保存课程基本信息
 	 * @param course
 	 */
-	void insertCourse(Course course);
+	Integer insertCourse(Course course);
 	
 	/**
 	 * 查询所有课程id/name列表

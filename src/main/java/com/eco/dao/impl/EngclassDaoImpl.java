@@ -36,6 +36,12 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 	
 	@Override
+	public List<Engclass> selectAllEngclassIdAndNameList() {
+		String hql = " SELECT new Engclass(engclassId, engclassName) FROM Engclass e";
+		return this.list(hql);
+	}
+	
+	@Override
 	public List<Engclass> selectEngclassIdAndEngclassNameByTeacherId(Integer teacherId) {
 		String hql = " SELECT new Engclass(engclassId, engclassName) FROM Engclass e WHERE e.teacher.teacherId = ?";
 		return this.list(hql, teacherId);
@@ -94,6 +100,11 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return (Engclass)this.get(hql,courseRecordId);
 	}
 	
+	@Override
+	public Engclass selectEngclassByEngclassId(Integer engclassId) {
+		return this.get(engclassId);
+	}
+
 	@Override
 	public PageContainer<Engclass> getPageContainer() {
 		return pageContainer;

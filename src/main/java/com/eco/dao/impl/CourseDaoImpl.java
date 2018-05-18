@@ -72,8 +72,8 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	}
 	
 	@Override
-	public void insertCourse(Course course) {
-		this.save(course);
+	public Integer insertCourse(Course course) {
+		return Integer.parseInt(this.save(course).toString());
 	}
 
 	@Override

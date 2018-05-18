@@ -23,7 +23,7 @@
         <property name="imgUrl" type="java.lang.String">
             <column name="IMGURL" />
         </property>
-        <set name="courseRecordSet" table="COURSERECORD" cascade="all" lazy="false">
+        <set name="courseRecordSet" table="COURSERECORD" cascade="all" lazy="false" inverse="true" >
             <key>
                 <column name="COURSEID" />
             </key>

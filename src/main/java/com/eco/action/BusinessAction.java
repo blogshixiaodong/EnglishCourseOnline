@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.eco.bean.model.TeacherAccount;
+import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.Engclass;
@@ -88,6 +89,12 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String findAllEngclassIdAndNameList() {
+		List<Engclass> engclassList = businessServer.queryAllEngclassIdAndNameList();
+		jsonResult = JSONArray.fromObject(engclassList).toString();
+		return Action.SUCCESS;
+	}
+	
 	public String findCourseByCourseId() {
 		Course destCourse = businessServer.queryCourseByCourseId(course.getCourseId());
 		JsonConfig jsonConfig = JsonUtils.JsonExclude("courseRecordSet");
@@ -102,6 +109,13 @@ public class BusinessAction extends ActionSupport {
 		return Action.SUCCESS;
 	}
 	
+	public String findEngclassByEngclassId() {
+		Engclass destEngclass = businessServer.queryEngclassByEngclasId(engclass.getEngclassId());
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("courseRecordSet", "engclassSet", "teacherAccount", "teacherAccount", "userSet", "teacherBackInfoSet", "userBackInfoSet", "timeSheetSet");
+		jsonResult = JSONObject.fromObject(destEngclass, jsonConfig).toString();
+		return Action.SUCCESS;
+	}
+	
 	//创建班级，课程记录
 	public String createEngclass() {
 		courseRecord.setCourse(course);
@@ -110,9 +124,6 @@ public class BusinessAction extends ActionSupport {
 		businessServer.saveEngclass(engclass);
 		return Action.SUCCESS;
 	}
-	
-
-	
 	
 	public String mergeEngclass() {
 		
@@ -131,10 +142,23 @@ public class BusinessAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	
+	public String splitEngclass() {
+		Object engclssList = ServletActionContext.getRequest().getParameterMap().get("engclassList");
+		JSONArray array = JSONArray.fromObject(engclssList);
+		List<Engclass> engclassList = null;
+		if(array != null && array.size() > 0) {
+			engclassList = (List<Engclass>)((List<Engclass>)array.toCollection(array, Engclass.class)).get(0);
+		}
+		
+		businessServer.saveSplitEngclass(engclassList.get(0));
+		businessServer.saveEngclass(engclassList.get(1));
+		return Action.SUCCESS;
+	}
+	
+	
 	//数据库两个主码修改 user_class
 	//teacher 中有一个页面有bug
-	
-	
 	public String findAllCourseList() {
 
 //		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
@@ -147,12 +171,6 @@ public class BusinessAction extends ActionSupport {
 	public String findEngclassListByCourseId() {
 //		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
 //		jsonResult = JSONArray.fromObject(engclassList).toString();
-		return Action.SUCCESS;
-	}
-	
-	public String findEngclassByEngclassId() {
-//		EngclassDetail engclass = engclassServer.queryEngclassDetailByEngclasId(getEngclassId());
-//		jsonResult = JSONObject.fromObject(engclass).toString();
 		return Action.SUCCESS;
 	}
 	

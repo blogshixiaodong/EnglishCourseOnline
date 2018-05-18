@@ -27,7 +27,6 @@
             <column name="COURSERECORDID" />
         </many-to-one>
         <many-to-one name="teacher" class="com.eco.bean.model.Teacher" lazy="false">
-
             <column name="TEACHERID" />
         </many-to-one>
         <set name="teacherBackInfoSet" table="TEACHERBACKINFO" inverse="false" lazy="false">

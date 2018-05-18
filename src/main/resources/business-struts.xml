@@ -42,6 +42,12 @@
     		</result>
     	</action>
     	
+    	<action name="engclassIdNameList" class="com.eco.action.BusinessAction" method="findAllEngclassIdAndNameList">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     	<action name="courseInfo" class="com.eco.action.BusinessAction" method="findCourseByCourseId">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
@@ -54,14 +60,18 @@
     		</result>
     	</action>
     	
+    	<action name="engclassInfo" class="com.eco.action.BusinessAction" method="findEngclassByEngclassId">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
     	<action name="setupEngclass" class="com.eco.action.BusinessAction" method="createEngclass">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
     	</action>
     	
-
-    
 		<action name = "allCourses" class = "com.eco.action.BusinessAction" method = "findAllCourseList">
 			<result name = "success">
 		 		<param name = "location">/business/all_courses.jsp</param>
@@ -73,15 +83,7 @@
     			<param name="root">jsonResult</param>
     		</result>
     	</action>
-
     	
-    	<action name="engclassInfo" class="com.eco.action.BusinessAction" method="findEngclassByEngclassId">
-    		<result name="success" type="json">
-    			<param name="root">jsonResult</param>
-    		</result>
-    	</action>
-    	
-
     	<action name="login" class="com.eco.action.BusinessAction" method="businessLogin">
     		<result name="success" type="redirect">
     			<param name="location">index.jsp</param>
@@ -92,12 +94,19 @@
     	</action>
     	
     	
-    	
     	<action name="mergeEngclass" class="com.eco.action.BusinessAction" method="mergeEngclass">
     		<result name="success" type="json">
     			<param name="root">jsonResult</param>
     		</result>
     	</action>
+    	
+    	<action name="splitEngclass" class="com.eco.action.BusinessAction" method="splitEngclass">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    	</action>
+    	
+    	
     	
     </package>
 

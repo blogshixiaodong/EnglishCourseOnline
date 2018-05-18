@@ -41,6 +41,13 @@ public interface BusinessServer {
 	 */
 	List<Teacher> queryAllTeacherIdAndNameList();
 	
+	
+	/**
+	 * 查询所有班级的id/name列表
+	 * @return
+	 */
+	List<Engclass> queryAllEngclassIdAndNameList();
+	
 	/**
 	 * 根据课程编号查询课程信息
 	 * @param courseId
@@ -56,9 +63,22 @@ public interface BusinessServer {
 	Teacher queryTeacherByTeacherId(Integer teacherId);
 	
 	/**
+	 * 根据班级编号查询班级信息
+	 * @param engclassId
+	 * @return
+	 */
+	Engclass queryEngclassByEngclasId(Integer engclassId);
+	
+	/**
 	 * 保存班级信息
 	 * @param engclass
 	 */
 	void saveEngclass(Engclass engclass);
+	
+	/**
+	 * 保存分班后的班级，无需新建课程记录，直接引用原班级的课程记录即可
+	 * @param engclass
+	 */
+	void saveSplitEngclass(Engclass engclass);
 	
 }
