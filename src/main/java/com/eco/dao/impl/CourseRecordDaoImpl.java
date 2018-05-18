@@ -12,14 +12,13 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	
 	@Override
 	public Integer insert(CourseRecord record) {
-		// TODO Auto-generated method stub
-		return null;
+		return Integer.parseInt(this.save(record).toString());
 	}
 
 	@Override
-	public Boolean updateCourseRecordSignCount(Integer crId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void updateCourseRecordSignCount(Integer courseRecordId, Integer count) {
+		String hql = "UPDATE CourseRecord cr SET cr.signCount += ?  WHERE cr.courseRecordId = ?";
+		this.executeHQLUpdate(hql, count,courseRecordId);
 	}
 
 	@Override
@@ -31,10 +30,16 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	@Override
 	public PageContainer<CourseRecord> selectNowCoureseRecord() {
 		Integer userId = 40000;
-		String hql = " SELECT cr FROM CourseRecord cr LEFT JOIN cr.engclassSet e LEFT JOIN e.userSet us WHERE us.userId <> ? AND NOW() between cr.startTime AND cr.endTime ORDER BY cr.startTime DESC ";
+		String hql = " SELECT DISTINCT(cr) FROM CourseRecord cr LEFT JOIN cr.engclassSet e LEFT JOIN e.userSet us WHERE us.userId <> ? AND NOW() < cr.closeTime AND cr.signCount <> 0 ORDER BY cr.startTime DESC ";
 		return this.list(hql, pageContainer,userId);
 	}
-
+	
+	@Override
+	public CourseRecord selectCourseRecordByCourseRecordId(Integer engclassId) {
+		String hql = "SELECT DISTINCT(cr) FROM CourseRecord cr LEFT JOIN cr.engclassSet e WHERE e.engclassId = ?";
+		return this.get(hql,engclassId);
+	}
+	
 	@Override
 	public PageContainer<CourseRecord> getPageContainer() {
 		return pageContainer;
@@ -44,5 +49,7 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 	public void setPageContainer(PageContainer<CourseRecord> pageContainer) {
 		this.pageContainer = pageContainer;
 	}
+
+	
 	
 }

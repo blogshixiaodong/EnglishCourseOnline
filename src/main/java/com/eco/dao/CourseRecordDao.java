@@ -1,7 +1,6 @@
 package com.eco.dao;
 
 import java.util.Date;
-
 import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.PageContainer;
 
@@ -25,7 +24,7 @@ public interface CourseRecordDao extends PageDao<CourseRecord> {
 	* @param crId
 	* @return boolean
 	*/ 
-	Boolean updateCourseRecordSignCount(Integer crId);
+	void updateCourseRecordSignCount(Integer courseRecordId,Integer count);
 	
 	
 	/** 
@@ -35,6 +34,13 @@ public interface CourseRecordDao extends PageDao<CourseRecord> {
 	* @return boolean
 	*/ 
 	Boolean isOverEndTime(Integer classId,Date date);
+	
+	/** 
+	* @Description: 根据班级记录号  查询该课程记录
+	* @param courseRecordId
+	* @return CourseRecord
+	*/ 
+	CourseRecord selectCourseRecordByCourseRecordId(Integer engclassId); 
 
 	
 	

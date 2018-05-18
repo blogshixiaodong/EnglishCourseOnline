@@ -1,5 +1,7 @@
 package com.eco.dao.impl;
 
+import java.util.List;
+
 import com.eco.bean.model.Teacher;
 import com.eco.dao.TeacherDao;
 
@@ -9,7 +11,15 @@ import com.eco.dao.TeacherDao;
  */
 public class TeacherDaoImpl extends AbstractBaseDao<Teacher> implements TeacherDao {
 
-	
-	
+	@Override
+	public List<Teacher> selectAllTeacherIdAndNameList() {
+		String hql = " SELECT new Teacher(t.teacherId, t.teacherName) FROM Teacher t";
+		return this.list(hql);
+	}
+
+	@Override
+	public Teacher selectTeacherByTeacherId(Integer teacherId) {
+		return this.get(teacherId);
+	}
 	
 }

@@ -1,5 +1,7 @@
 package com.eco.dao.impl;
 
+import java.util.List;
+
 import com.eco.bean.model.Course;
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.CourseDao;
@@ -84,4 +86,18 @@ public class CourseDaoImpl extends AbstractBaseDao<Course> implements CourseDao 
 	public PageContainer<Course> getPageContainer() {
 		return pageContainer;
 	}
+
+	@Override
+	public List<Course> selectNowCourseIdAndNameList() {
+		String hql = " SELECT new Course(c.courseId, c.courseName) FROM Course c ";
+		return this.list(hql);
+	}
+
+	@Override
+	public Course selectCourseByCourseId(Integer courseId) {
+		return this.get(courseId);
+	}
+	
+	
+	
 }

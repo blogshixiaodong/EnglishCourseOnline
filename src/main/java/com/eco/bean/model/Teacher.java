@@ -32,6 +32,13 @@ public class Teacher implements Serializable {
 	
 	private Set<Engclass> engclassSet = new HashSet<Engclass>();
 	
+	public Teacher() { }
+	
+	public Teacher(Integer teacherId, String teacherName) {
+		this.teacherId = teacherId;
+		this.teacherName = teacherName;
+	}
+	
 	public Integer getTeacherId() {
 		return teacherId;
 	}

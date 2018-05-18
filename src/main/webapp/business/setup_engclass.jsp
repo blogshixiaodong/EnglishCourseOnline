@@ -7,14 +7,14 @@
 	<title>开设班级</title>
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
-    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-	<link href="../vendors/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+	<link href="../vendors/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="../build/css/custom.min.css" rel="stylesheet" />
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -34,23 +34,8 @@
 							<div class="x_title">
 								<h2>开设班级</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li>
-										<a class="collapse-link">
-											<i class="fa fa-chevron-up"></i>
-										</a>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-											<i class="fa fa-wrench"></i>
-										</a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul>
-									</li>
-									<li>
-										<a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -84,17 +69,8 @@
 									课程基本信息
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -104,14 +80,15 @@
 										<tr>
 											<th>课程编号</th>
 											<th>课程名称</th>
-											<th>课程信息</th>
 											<th>课程类型</th>
 											<th>课程价格</th>
+											<th>课程信息</th>
 										</tr>
 									</thead>
 									<tbody>
-										<!-- 课程选完通过ajax加载课程基本信息 -->
-										<tr></tr>
+										<tr>
+											<!-- 课程选完通过ajax加载课程基本信息 -->
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -127,17 +104,8 @@
 									教师基本信息
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -155,8 +123,9 @@
 										</tr>
 									</thead>
 									<tbody>
-										<!-- 教师选完通过ajax加载教师基本信息 -->
-										<tr></tr>
+										<tr>
+											<!-- 教师选完通过ajax加载教师基本信息 -->
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -172,22 +141,12 @@
 									添加课程记录
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
 							<div class="x_content">
-
 								<table id="userList" class="table table-striped">
 									<thead>
 										<tr>
@@ -236,17 +195,8 @@
 									添加班级信息
 								</h2>
 								<ul class="nav navbar-right panel_toolbox">
-									<li><a class="collapse-link"><i
-											class="fa fa-chevron-up"></i></a></li>
-									<li class="dropdown"><a href="#" class="dropdown-toggle"
-										data-toggle="dropdown" role="button" aria-expanded="false"><i
-											class="fa fa-wrench"></i></a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a href="#">Settings 1</a></li>
-											<li><a href="#">Settings 2</a></li>
-										</ul></li>
-									<li><a class="close-link"><i class="fa fa-close"></i></a>
-									</li>
+									<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+									<li><a class="close-link"><i class="fa fa-close"></i></a></li>
 								</ul>
 								<div class="clearfix"></div>
 							</div>
@@ -257,12 +207,32 @@
 											<th>班级名称</th>
 											<th>教室</th>
 											<th>班级人数</th>
+											<th>上课时间</th>
 										</tr>
 									</thead>
 									<tbody>
-										<th><input id="className" name="clssname" /></th>
-										<th><input id="classRoom" name="classroom" /></th>
-										<th><input id="userCount" name="usercount" /></th>
+										<th><input id="engclassName" class="form-control" name="clssname" /></th>
+										<th><input id="classRoom" class="form-control" name="classroom" /></th>
+										<th><input id="signCount" class="form-control" name="signCount" /></th>
+										<th>
+											<select id="day" class="selectpicker show-tick">
+												<option>======  星期  ======</option>
+												<option>星期一</option>
+												<option>星期二</option>
+												<option>星期三</option>
+												<option>星期四</option>
+												<option>星期五</option>
+												<option>星期六</option>
+												<option>星期日</option>
+											</select>
+											<select id="attendTime" class="selectpicker show-tick">
+												<option>======  时间  ======</option>
+												<option>上午 1-2节</option>
+												<option>上午 3-4节</option>
+												<option>下午 5-6节</option>
+												<option>下午 7-8节</option>
+											</select>
+										</th>
 									</tbody>
 								</table>
 							</div>
@@ -304,49 +274,48 @@
     <script src="../build/js/jquery.json.min.js"></script> 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
-    
+    <script src="../build/js/common.js"></script>
     <script type="text/javascript">
     	$(function() {
     		//课程列表
     		$.ajax({
-    			url: "courseList.action",
-    			type: "post",
+    			url: "courseIdNameList.action",
+    			type: "get",
     			dataType: "json",
     			success: function(responseText) {
     				var json = JSON.parse(responseText);
+    				var select = $("#courseList");
     				for(var i = 0; i < json.length; i++) {
     					var courseId = json[i].courseId;
     					var courseName = json[i].courseName;
-   	    				$("#courseList").append($("<option></option>").text(courseId + " : " + courseName))
+   	    				select.append($("<option></option>").text(courseId + " : " + courseName))
     				}
-    			
-    				//教师列表
-    	    		$.ajax({
-    	    			url: "teacherList.action",
-    	    			type: "post",
-    	    			dataType: "json",
-    	    			success: function(responseText) {
-    	    				var json = JSON.parse(responseText);
-    	    				for(var i = 0; i < json.length; i++) {
-    	    					var teacherId = json[i].teacherId;
-    	    					var teacherName = json[i].teacherName;
-    	   	    				$("#teacherList").append($("<option></option>").text(teacherId + " : " + teacherName))
-    	    				}
-    	    			}
-    	    		});	
-    			
+    				select.selectpicker('refresh');
+    			},
+    			error: function(XMLHttpRequest, textStatus, errorThrown) {
+    				alert("请勿重复刷新!");
     			}
-    		
-    			
-    		
-    		
-    		
     		});
     		
-    		
-    		
-			
-    		
+    		//教师列表
+    		$.ajax({
+    			url: "teacherIdNameList.action",
+    			type: "get",
+    			dataType: "json",
+    			success: function(responseText) {
+    				var json = JSON.parse(responseText);
+    				var select = $("#teacherList");
+    				for(var i = 0; i < json.length; i++) {
+    					var teacherId = json[i].teacherId;
+    					var teacherName = json[i].teacherName;
+    					select.append($("<option></option>").text(teacherId + " : " + teacherName))
+    				}
+    				select.selectpicker('refresh');
+    			},
+    			error: function(XMLHttpRequest, textStatus, errorThrown) {
+    				alert("请勿重复刷新!");
+    			}
+    		});
     	});
     	
   		//课程选择完成显示基本信息
@@ -358,19 +327,20 @@
     			type: "post",
     			dataType: "json",
    				data: {
-   					"courseId": courseId
+   					"course.courseId": courseId
    				},
     			success: function(responseText) {
     				var json = JSON.parse(responseText);
     				var tr = $("#courseInfo tbody tr");
     				tr.append($("<td></td>").text(json["courseId"]));
     				tr.append($("<td></td>").text(json["courseName"]));
-    				tr.append($("<td></td>").text(json["info"]));
     				tr.append($("<td></td>").text(json["types"]));
     				tr.append($("<td></td>").text(json["price"]));
+    				tr.append($("<td></td>").text(json["info"]));
     			}
     		});
     	});
+  		
     	//教师选择完成显示基本信息
     	$("#teacherList").change(function() {
     		$("#teacherInfo tbody tr").html("");
@@ -380,7 +350,7 @@
     			type: "post",
     			dataType: "json",
    				data: {
-   					"teacherId": teacherId
+   					"teacher.teacherId": teacherId
    				},
     			success: function(responseText) {
     				var json = JSON.parse(responseText);
@@ -414,9 +384,8 @@
 			$("#teacherList").attr("index", 0);
 			$("#teacherList").selectpicker('refresh');
 			
-			
-			$("#myDatepicker").datepicker("clearDates");
-			$("#userList tbody").html("");
+			$("#courseInfo tbody tr").html("");
+			$("#teacherInfo tbody tr").html("");
 		});
     	
     	$("#sendFrom").click(function() {
@@ -425,22 +394,31 @@
     		var startTime = $("#starttime").val();
     		var endTime = $("#endtime").val();
     		var closeTime = $("#closetime").val();
-    		var className = $("#className").val();
+    		var className = $("#engclassName").val();
     		var classRoom = $("#classRoom").val();
-    		var userCount = $("#userCount").val();
+    		var signCount = $("#signCount").val();
+    		var day = $("#day").prop("selectedIndex");
+    		var attendTime = $("#attendTime").prop("selectedIndex"); 
+    		if(courseId == "" || teacherId == "" || startTime == "" || endTime == "" || closeTime == "" || className == "" || classRoom == "" || signCount == "" || day == 0 || attendTime == 0) {
+    			alert("信息不完整!");
+    			return ;
+    		}
     		$.ajax({
   				url: "setupEngclass.action",
   				type: "post",
   				dataType: "json",
   				data: {
-  					"courseRecord.courseId": courseId,
-  					"engclass.teacherId": teacherId,
+  					"course.courseId": courseId,
+  					"teacher.teacherId": teacherId,
   					"courseRecord.startTime": startTime,
   					"courseRecord.endTime": endTime,
   					"courseRecord.closeTime": closeTime,
-  					"engclass.className": className,
+  					"courseRecord.signCount": signCount,
+  					"engclass.engclassName": className,
   					"engclass.classRoom": classRoom,
-  					"courseRecord.signCount": userCount
+  					"engclass.userCount": 0,
+  					"engclass.day": day,
+  					"engclass.attendTime": attendTime
   				},
   				success: function(responseText) {
   					alert("创建成功");
@@ -449,7 +427,6 @@
   				error: function(XMLHttpRequest, textStatus, errorThrown) {
     				alert("查询失败，请重新输入!");
     			}
-  				
   			});
     	});
 	

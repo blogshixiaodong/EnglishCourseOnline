@@ -44,8 +44,8 @@ public class UserAction extends ActionSupport {
 	String queryDate;
 	
 	HttpServletRequest request = ServletActionContext.getRequest();
-	UserServer userServer = new UserServerImpl();
 	
+	UserServer userServer = new UserServerImpl();
 	
 	//获取当前正在进行的课程信息
 	public String findUserNowCourseDetailList() {
@@ -168,7 +168,6 @@ public class UserAction extends ActionSupport {
 		return Action.SUCCESS;
 	} 
 	
-
 	//获取报名列表
 	public String findenrollCourseList() {
 		Integer userId = this.getLoginUser().getUserId();
@@ -180,7 +179,6 @@ public class UserAction extends ActionSupport {
 		jsonResult = JSONObject.fromObject(enrollCourseList,jsonConfig).toString();
 		return Action.SUCCESS;
 	}
-	
 	
 	public String enrollCourse() {
 		Integer userId = this.getLoginUser().getUserId();

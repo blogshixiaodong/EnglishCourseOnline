@@ -25,7 +25,14 @@ public class Course implements Serializable {
 	private String imgUrl;
 
 	private Set<CourseRecord> courseRecordSet = new HashSet<CourseRecord>() ;
-
+	
+	public Course() { }
+	
+	public Course(Integer courseId, String  courseName) {
+		this.courseId = courseId;
+		this.courseName = courseName;
+	}
+	
 	public Integer getCourseId() {
 		return courseId;
 	}

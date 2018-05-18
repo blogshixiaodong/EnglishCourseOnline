@@ -67,6 +67,10 @@ function schooltime(day, attendTime) {
 	return dayString + " " + attendTimeString;
 }
 
-
-
+function isNullOrUndefined(value) {
+	if(value == null || value == undefined) {
+		return true;
+	}
+	return false;
+}
 

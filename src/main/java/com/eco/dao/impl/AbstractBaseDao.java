@@ -225,6 +225,9 @@ public abstract class AbstractBaseDao<T> implements BaseDao<T> {
 
 	public Session getSession() {
 		if(session == null || !session.isOpen()) {
+			if(sessionFactory.isClosed()) {
+				sessionFactory = configuration.buildSessionFactory();
+			}
 			session = sessionFactory.openSession();	
 		}
 		return session;
