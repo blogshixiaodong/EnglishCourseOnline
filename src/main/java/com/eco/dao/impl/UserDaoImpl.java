@@ -26,17 +26,23 @@ public class UserDaoImpl extends AbstractBaseDao<User> implements UserDao {
 		return this.list(hql, engclassId);
 	}
 	
+	@Override
+	public List<User> selectUserByEngclassId(Integer engclassId) {
+		String hql = " SELECT u FROM User u LEFT JOIN u.engclassSet es WHERE es.engclassId = ? ";
+		return this.list(hql, engclassId);
+	}
+	
+	@Override
+	public User selectUserByUserId(Integer userId) {
+		return this.get(userId) ;
+	}
+	
 	public PageContainer<User> getPageContainer() {
 		return pageContainer;
 	}
 
 	public void setPageContainer(PageContainer<User> pageContainer) {
 		this.pageContainer = pageContainer;
-	}
-
-	@Override
-	public User selectUserByUserId(Integer userId) {
-		return this.get(userId) ;
 	}
 
 }

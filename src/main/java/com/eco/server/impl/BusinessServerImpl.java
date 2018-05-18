@@ -109,9 +109,9 @@ public class BusinessServerImpl implements BusinessServer {
 		engclassDao.updateEngclassUserCount(oldEngclassId1);
 		engclassDao.updateEngclassUserCount(oldEngclassId2);
 		//1. 旧班级学生 转到新班级
-		List<User> userList = userDao.selectUserIdAndUsernameByEngclassId(oldEngclassId1);
+		List<User> userList = userDao.selectUserByEngclassId(oldEngclassId1);
 		Set<User> resultSet = new HashSet<User>(userList); 
-		userList = userDao.selectUserIdAndUsernameByEngclassId(oldEngclassId2);
+		userList = userDao.selectUserByEngclassId(oldEngclassId2);
 		resultSet.addAll(userList);
 		engclass.getUserSet().addAll(resultSet);
 		engclassDao.updateEngclass(engclass);
