@@ -148,6 +148,16 @@
     			<param name="location">login.jsp</param>
     		</result>
     	</action>
+    	
+    	 <action name="timeTable" class="com.eco.action.TeacherAction" method="findTimeTable">
+    		<result name="success" type="json">
+    			<param name="root">jsonResult</param>
+    		</result>
+    		<result name="unlogin" type="redirect">
+    			<param name="location">login.jsp</param>
+    		</result>
+    	</action>
+    	
     </package>
 
    

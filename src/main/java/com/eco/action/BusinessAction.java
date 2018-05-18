@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.eco.bean.model.TeacherAccount;
-import com.eco.bean.model.TimeSheet;
 import com.eco.bean.model.Course;
 import com.eco.bean.model.CourseRecord;
 import com.eco.bean.model.Engclass;
@@ -37,7 +35,7 @@ public class BusinessAction extends ActionSupport {
 	
 	private Teacher teacher;
 	
-	private PageContainer pageContainer;
+	private PageContainer pageContainer; 
 	
 	private CourseRecord courseRecord;
 	
@@ -124,24 +122,16 @@ public class BusinessAction extends ActionSupport {
 		businessServer.saveEngclass(engclass);
 		return Action.SUCCESS;
 	}
-	
+
 	public String mergeEngclass() {
-		
-//		EngclassServer engclassServer = new EngclassServerImpl();
-//		
-//		int courseRecordId = engclassServer.queryCourseRecordIdByEngclassId(oldEngclassId1);
-//		
-//		//engclass.setCourseRecordId(courseRecordId);
-//		engclass.setUserCount(userNum1 + userNum2);
-//		int engclassId = new Long(engclassServer.create(engclass)).intValue();
-//		
-//		//教师无法修改
-//		UserServer userver = new UserServerImpl();
-//		userver.mergeEngclass(oldEngclassId1, oldEngclassId2, engclassId);
-		
+		Integer oldEngclassId1 = Integer.parseInt(request.getParameter("oldEngclassId1"));
+		Integer oldEngclassId2 = Integer.parseInt(request.getParameter("oldEngclassId2"));
+		Integer userNum1 = Integer.parseInt(request.getParameter("userNum1"));
+		Integer userNum2 = Integer.parseInt(request.getParameter("userNum2"));
+		engclass.setUserCount(userNum1+userNum2);
+		businessServer.mergeEngclass(engclass,oldEngclassId1,oldEngclassId2);
 		return SUCCESS;
 	}
-	
 	
 	public String splitEngclass() {
 		Object engclssList = ServletActionContext.getRequest().getParameterMap().get("engclassList");
@@ -155,22 +145,10 @@ public class BusinessAction extends ActionSupport {
 		businessServer.saveEngclass(engclassList.get(1));
 		return Action.SUCCESS;
 	}
-	
-	
-	//数据库两个主码修改 user_class
-	//teacher 中有一个页面有bug
-	public String findAllCourseList() {
-
-//		List<Course> courseList =businessServer.queryqueryAllCourseList(pageContainer) ;
-//		request.setAttribute("courseList",courseList);
-//		request.setAttribute("pageContainer", pageContainer);
-//		
-		return SUCCESS;
-	}
 
 	public String findEngclassListByCourseId() {
-//		List<Engclass> engclassList = engclassServer.queryEnglclassListByCourseId(getCourseId());
-//		jsonResult = JSONArray.fromObject(engclassList).toString();
+		List<Engclass> engclassList = businessServer.queryNowEngclassIdAndNameList(course.getCourseId());
+		jsonResult = JSONArray.fromObject(engclassList).toString();
 		return Action.SUCCESS;
 	}
 	

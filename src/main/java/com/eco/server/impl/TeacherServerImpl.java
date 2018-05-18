@@ -1,6 +1,7 @@
 package com.eco.server.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.eco.bean.model.Course;
@@ -24,6 +25,7 @@ import com.eco.dao.impl.TeacherBackInfoDaoImpl;
 import com.eco.dao.impl.TimeSheetDaoImpl;
 import com.eco.dao.impl.UserDaoImpl;
 import com.eco.server.TeacherServer;
+import com.eco.util.DateFormat;
 
 /*
  * date:   2018年4月21日 上午11:06:01
@@ -119,6 +121,13 @@ public class TeacherServerImpl implements TeacherServer {
 	@Override
 	public Teacher queryTeacherrByAccountId(Integer accountId) {
 		return teacherAccountDao.selectAccount(accountId).getTeacher();
+	}
+
+	@Override
+	public List<Engclass> queryTimeTable(String queryTime ,Integer teacherId) {
+		Date startTime = DateFormat.stringToDate(queryTime);
+		List<Engclass> engclassList = engclassDao.selectTeacherEngclassByDate(startTime, teacherId);
+		return engclassList;
 	}
 	
 	

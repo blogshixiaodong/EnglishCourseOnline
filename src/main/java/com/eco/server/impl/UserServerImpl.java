@@ -193,10 +193,13 @@ public class UserServerImpl implements UserServer{
 	public void addUserEngclass(Integer userId, Integer courseRecordId) {
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		UserDao userDao = new UserDaoImpl();
+		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
 		User user = userDao.selectUserByUserId(userId);
 		Engclass engclass = engclassDao.selectEngclassByCourseRecord(courseRecordId);
 		engclass.getUserSet().add(user);
 		engclassDao.insertUser(engclass);
+		engclassDao.updateEngclassUserCount(engclass.getEngclassId(),+1);
+		courseRecordDao.updateCourseRecordSignCount(courseRecordId,+1);
 	}
 
 	@Override
@@ -210,7 +213,7 @@ public class UserServerImpl implements UserServer{
 	public List<Engclass> queryTimeTable(String queryDate, Integer userId) {
 		Date startDate = DateFormat.stringToDate(queryDate);
 		EngclassDao engclassDao = new EngclassDaoImpl();
-		List<Engclass> engclasseList = engclassDao.selectEngclassByDate(startDate, userId);
+		List<Engclass> engclasseList = engclassDao.selectUserEngclassByDate(startDate, userId);
 		return engclasseList;
 	}
 

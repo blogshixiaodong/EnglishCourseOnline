@@ -2,6 +2,7 @@ package com.eco.dao.impl;
 
 import java.util.Date;
 import java.util.List;
+
 import com.eco.bean.model.Engclass;
 import com.eco.bean.model.PageContainer;
 import com.eco.dao.EngclassDao;
@@ -89,7 +90,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 
 	@Override																		
-	public List<Engclass> selectEngclassByDate(Date beginDate, Integer userId) {
+	public List<Engclass> selectUserEngclassByDate(Date beginDate, Integer userId) {
 		String hql = "SELECT e FROM Engclass e LEFT JOIN e.userSet u LEFT JOIN FETCH e.courseRecord cr WHERE u.userId = ? AND STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(cr.startTime,'%Y-%m-%d') AND  STR_TO_DATE(cr.endTime,'%Y-%m-%d') ";
 		return this.list(hql, userId,beginDate) ;
 	}
@@ -116,8 +117,40 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	}
 
 	@Override
+	public List<Engclass> selectTeacherEngclassByDate(Date beginDate,Integer teacherId) {
+		String hql = "SELECT e FROM Engclass e LEFT JOIN e.teacher t LEFT JOIN e.courseRecord cr WHERE t.teacherId = ? AND STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(cr.startTime,'%Y-%m-%d') AND  STR_TO_DATE(cr.endTime,'%Y-%m-%d') ";
+		return this.list(hql,teacherId,beginDate);
+	}
+
+	@Override
 	public void insertEngclass(Engclass engclass) {
 		this.save(engclass);
 	}
+
+	@Override
+	public List<Engclass> selectNowEngclassIdAndNameByCourseId(Integer courseId) {
+		String hql = "SELECT new Engclass(e.engclassId,e.engclassName) FROM Engclass e LEFT JOIN  e.courseRecord cr LEFT JOIN cr.course c WHERE c.courseId = ? AND e.userCount <> -1";
+		return list(hql, courseId);
+	}
+
+	
+
+	@Override
+	public void updateEngclass(Engclass engclass) {
+		this.update(engclass);
+	}
+
+	@Override
+	public void updateEngclassUserCount(Integer engclassId, Integer userCount) {
+		String hql = "UPDATE Engclass e SET e.userCount += ? WHERE e.engclassId = ?";
+		this.executeHQLUpdate(hql,engclassId,engclassId);
+	}
+
+	@Override
+	public void updateEngclassUserCount(Integer engclassId) {
+		String hql = "UPDATE Engclass e SET e.userCount = -1 WHERE e.engclassId = ?";
+		this.executeHQLUpdate(hql, engclassId);
+	}
+
 	
 }

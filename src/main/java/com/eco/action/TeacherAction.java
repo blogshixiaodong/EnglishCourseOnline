@@ -261,6 +261,18 @@ public class TeacherAction extends ActionSupport {
 	}
 	
 	
+	public String findTimeTable() {
+		Integer teacherId = getLoginTeacherId();
+		if(teacherId == null) {
+			return "unlogin";
+		}
+		List<Engclass> engclassList = teacherServer.queryTimeTable(queryDate, teacherId);
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","engclassSet","courseRecordSet","teacherAccount");                       
+		jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();
+		return Action.SUCCESS;
+	}
+	
+	
 	public String teacherLogin() {
 		if(!teacherServer.loginCheck(account)) {
 			return "unlogin";

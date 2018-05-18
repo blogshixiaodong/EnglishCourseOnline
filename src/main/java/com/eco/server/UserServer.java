@@ -169,10 +169,6 @@ public interface UserServer {
 	*/ 
 	public abstract List<Engclass> queryTimeTable(String queryDate,Integer userId);
 	
-	
-	
-	
-	
 	/**
 	 * 根据班级编号，查询该班级下所有学生的反馈信息
 	 * @param engclassId
