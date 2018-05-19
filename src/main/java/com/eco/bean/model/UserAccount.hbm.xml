@@ -11,7 +11,7 @@
         <property name="password" type="java.lang.String">
             <column name="PASSWORD" />
         </property>
-        <many-to-one name="user" column="userid" class="com.eco.bean.model.User" unique="true" >
+        <many-to-one name="user" column="userid" class="com.eco.bean.model.User" unique="true" lazy="false">
         </many-to-one>
     </class>
 </hibernate-mapping>

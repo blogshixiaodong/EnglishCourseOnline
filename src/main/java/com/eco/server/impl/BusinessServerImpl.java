@@ -119,8 +119,24 @@ public class BusinessServerImpl implements BusinessServer {
 	}
 	
 	@Override
-	public void saveSplitEngclass(Engclass engclass) {
-		engclassDao.insertEngclass(engclass);
+	public void saveSplitEngclass(Engclass engclass1, Engclass engclass2, Integer oldEngclassId) {
+		int engclassCount1 = engclass1.getUserCount();
+		
+		//获取所有学生
+		List<User> userList = userDao.selectUserByEngclassId(oldEngclassId);
+		//先后在engclass set相应的user
+		for(int i = 0; i < userList.size(); i++) {
+			if(i >= engclassCount1) {
+				engclass1.getUserSet().add(userList.get(i));
+			} else {
+				engclass2.getUserSet().add(userList.get(i));
+			}
+		}
+		//修改旧班级的学生人数
+		engclassDao.updateEngclassUserCount(oldEngclassId);
+		//保存两个旧班级
+		engclassDao.insertEngclass(engclass1);
+		engclassDao.insertEngclass(engclass2);
 	}
 	
 	

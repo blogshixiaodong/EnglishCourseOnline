@@ -112,7 +112,7 @@ public class TeacherAction extends ActionSupport {
 	public String findEngclassAllUserIdNameList() {
 		Integer engclassId = engclass.getEngclassId();
 		List<User> userList = teacherServer.queryUserIdAndUsernameByEngclassId(engclassId);
-		JsonConfig jsonConfig = JsonUtils.JsonExclude("engclassSet", "timeSheetSet");
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("engclassSet", "timeSheetSet", "userAccount");
 		jsonResult = JSONArray.fromObject(userList, jsonConfig).toString();
 		return Action.SUCCESS;
 	}

@@ -79,7 +79,7 @@ public interface BusinessServer {
 	 * 保存分班后的班级，无需新建课程记录，直接引用原班级的课程记录即可
 	 * @param engclass
 	 */
-	void saveSplitEngclass(Engclass engclass);
+	void saveSplitEngclass(Engclass engclass, Engclass engclass2, Integer oldEngclassId);
 	
 	/** 
 	* @Description: 根据课程id查询正在进行的班级id/name列表

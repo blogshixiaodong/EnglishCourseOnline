@@ -134,8 +134,7 @@ public class BusinessAction extends ActionSupport {
 		if(array != null && array.size() > 0) {
 			engclassList = (List<Engclass>)((List<Engclass>)array.toCollection(array, Engclass.class)).get(0);
 		}
-		businessServer.saveSplitEngclass(engclassList.get(0));
-		businessServer.saveSplitEngclass(engclassList.get(1));
+		businessServer.saveSplitEngclass(engclassList.get(0), engclassList.get(1), engclass.getEngclassId());
 		return Action.SUCCESS;
 	}
 
