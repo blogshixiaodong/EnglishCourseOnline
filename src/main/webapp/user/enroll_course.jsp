@@ -210,7 +210,6 @@
    			success: function(responseText){
    				alert("报名成功");
    				window.location.href="index.jsp";
-   				
    			}
 	   	 });
 	   }

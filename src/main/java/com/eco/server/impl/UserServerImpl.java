@@ -197,8 +197,8 @@ public class UserServerImpl implements UserServer{
 		Engclass engclass = engclassDao.selectEngclassByCourseRecord(courseRecordId);
 		engclass.getUserSet().add(user);
 		engclassDao.insertUser(engclass);
-		engclassDao.updateEngclassUserCount(engclass.getEngclassId(),+1);
-		courseRecordDao.updateCourseRecordSignCount(courseRecordId,+1);
+		engclassDao.updateEngclassUserCount(engclass.getEngclassId(),1);
+		courseRecordDao.updateCourseRecordSignCount(courseRecordId,1);
 	}
 
 	@Override

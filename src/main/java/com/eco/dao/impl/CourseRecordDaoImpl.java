@@ -17,7 +17,7 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 
 	@Override
 	public void updateCourseRecordSignCount(Integer courseRecordId, Integer count) {
-		String hql = "UPDATE CourseRecord cr SET cr.signCount += ?  WHERE cr.courseRecordId = ?";
+		String hql = "UPDATE CourseRecord cr SET cr.signCount = cr.signCount + ?  WHERE cr.courseRecordId = ?";
 		this.executeHQLUpdate(hql, count,courseRecordId);
 	}
 
@@ -29,9 +29,8 @@ public class CourseRecordDaoImpl extends AbstractBaseDao<CourseRecord> implement
 
 	@Override
 	public PageContainer<CourseRecord> selectNowCoureseRecord() {
-		Integer userId = 40000;
-		String hql = " SELECT DISTINCT(cr) FROM CourseRecord cr LEFT JOIN cr.engclassSet e LEFT JOIN e.userSet us WHERE us.userId <> ? AND NOW() < cr.closeTime AND cr.signCount <> 0 ORDER BY cr.startTime DESC ";
-		return this.list(hql, pageContainer,userId);
+		String hql = " SELECT DISTINCT(cr) FROM CourseRecord cr LEFT JOIN cr.engclassSet e LEFT JOIN e.userSet us WHERE NOW() < cr.closeTime ORDER BY cr.startTime DESC ";
+		return this.list(hql, pageContainer);
 	}
 	
 	@Override
