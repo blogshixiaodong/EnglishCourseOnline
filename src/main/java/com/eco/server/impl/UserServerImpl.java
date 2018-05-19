@@ -193,10 +193,12 @@ public class UserServerImpl implements UserServer{
 		EngclassDao engclassDao = new EngclassDaoImpl();
 		UserDao userDao = new UserDaoImpl();
 		CourseRecordDao courseRecordDao = new CourseRecordDaoImpl();
-		User user = userDao.selectUserByUserId(userId);
+		//User user = userDao.selectUserByUserId(userId);
+		User user = new User();
+		user.setUserId(userId);
 		Engclass engclass = engclassDao.selectEngclassByCourseRecord(courseRecordId);
 		engclass.getUserSet().add(user);
-		engclassDao.insertUser(engclass);
+		engclassDao.updateEngclass(engclass);
 		engclassDao.updateEngclassUserCount(engclass.getEngclassId(),1);
 		courseRecordDao.updateCourseRecordSignCount(courseRecordId,1);
 	}
