@@ -22,8 +22,7 @@
 				<img src="../build/images/img.jpg" alt="..." class="img-circle profile_img">
 			</div>
 			<div class="profile_info">
-				<span>欢迎教师,</span>
-				<h2><s:property value="#session.teacher.teacherName"/></h2>
+				<span>欢迎管理员</span>
 			</div>
 		</div>
 		<!-- /menu profile quick info -->

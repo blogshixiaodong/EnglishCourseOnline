@@ -35,6 +35,9 @@
 						<li><a href="userLoginOut.action"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 					</ul>
 				</li>
+				<li>
+					<a href="../index.html" class="user-profile dropdown-toggle">回到首页</a>
+				</li>
 			</ul>
 			</nav>
 		</div>

@@ -31,6 +31,9 @@
 							<li><a href="teacherLogout.action"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
 						</ul>
 					</li>
+					<li>
+						<a href="../index.html" class="user-profile dropdown-toggle">回到首页</a>
+					</li>
 					<!-- envelope list -->
 					<!-- 
 						<li role="presentation" class="dropdown">
