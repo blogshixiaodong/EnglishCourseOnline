@@ -21,9 +21,9 @@
     <form class="form-signin" action="login.action" method="POST">
       <h1 class="h3 mb-3 font-weight-normal">Business Sign In</h1>
       <label for="inputAccount" class="sr-only">Account</label>
-      <input type="text" id="inputAccount" name="account.id" class="form-control" placeholder="Account" required autofocus>
+      <input type="text" id="inputAccount" name="systemAccount.id" class="form-control" placeholder="Account" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" name="account.password" class="form-control" placeholder="Password" required>
+      <input type="password" id="inputPassword" name="systemAccount.password" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </form>

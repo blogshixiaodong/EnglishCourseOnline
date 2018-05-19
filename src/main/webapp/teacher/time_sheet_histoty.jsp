@@ -175,6 +175,32 @@
 			$("#userList tbody").html("");
     	}
     	
+    	function sheetInfoFormat(sheetInfo) {
+    		var sheetInfoArr = sheetInfo.split(":");
+    		if(sheetInfoArr.length == 1) {
+    			return sheetInfoArr[0];
+    		}
+			var infoString = "";
+			switch(sheetInfoArr[0]) {
+				case "0":
+					infoString += "正常:";
+					break;
+				case "1":
+					infoString += "请假:";
+					break;
+				case "2":
+					infoString += "迟到:";
+					break;
+				case "3":
+					infoString += "缺席:";
+					break;
+				default:
+					infoString += "未知状态:";
+					break;
+			}
+			return infoString + sheetInfoArr[1];
+    	}
+    	
     	function createTimeSheetTable(json) {
 			var tbody = $("#timeSheetTable tbody");
 			tbody.html("");
@@ -193,7 +219,8 @@
 				var courseId = $("<td></td>").html(timeSheet.engclass.courseRecord.course.courseId);
 				var courseName = $("<td></td>").html(timeSheet.engclass.courseRecord.course.courseName);
 				var recordTime = $("<td></td>").html(JsonDateToString(timeSheet.recordTime));
-				var sheetInfo = $("<td></td>").html(timeSheet.sheetInfo);
+				
+				var sheetInfo = $("<td></td>").html(sheetInfoFormat(timeSheet.sheetInfo));
 				var tr = $("<tr></tr>");
 				tr.append(userId);
 				tr.append(userName);

@@ -68,21 +68,21 @@
 								<table class="table" id="timeTable">
 									<thead>
 										<tr>
-											<th>#</th>
-											<th>星期一</th>
-											<th>星期二</th>
-											<th>星期三</th>
-											<th>星期四</th>
-											<th>星期五</th>
-											<th>星期六</th>
-											<th>星期日</th>
+											<th class="col-md-1">#</th>
+											<th class="col-md-1">星期一</th>
+											<th class="col-md-1">星期二</th>
+											<th class="col-md-1">星期三</th>
+											<th class="col-md-1">星期四</th>
+											<th class="col-md-1">星期五</th>
+											<th class="col-md-1">星期六</th>
+											<th class="col-md-1">星期日</th>
 											
 										</tr>
 									</thead>
 									<tbody>
 										<!-- ajax  -->
 										<tr id = "first">
-											<td id="week1">一二节</td>
+											<td id="week0">一二节</td>
 											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
@@ -92,7 +92,7 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "second">
-											<td id="week1">三四节</td>
+											<td id="week0">三四节</td>
 											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
@@ -102,7 +102,8 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "third">
-											<td id="week1">五六节</td>
+											<td id="week0">五六节</td>
+											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
 											<td id="week4"></td>
@@ -111,7 +112,8 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "forth">
-											<td id="week1">七八节</td>
+											<td id="week0">七八节</td>
+											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
 											<td id="week4"></td>
@@ -163,6 +165,15 @@
 		return year+ "-" + monthStr + "-" + day;
 	}
 	
+	function clearCourseTable() {
+		var tr = $("#timeTable tbody").find("tr");
+		for(var i = 0; i < tr.length; i++) {
+			for(var j = 1; j <= 7; j++) {
+				$(tr[i]).find("#week" + j).html("");
+			}
+		}
+	}
+	
 	 function getPartName(attendTime){
 		 var partName = "";
 		 switch(attendTime){
@@ -197,11 +208,12 @@
 			dataType:"json",
 			success: function(responseText){
 				var json = JSON.parse(responseText);
+				clearCourseTable();
 				for(var i = 0; i < json.length; i++){
 					var engclass = json[i];
 					var partName = getPartName(engclass.attendTime);
 					var weekName = "week"+engclass.day;
-					var info = engclass.courseRecord.course.courseName +" " + engclass.teacher.teacherName+" "+engclass.classRoom;
+					var info = engclass.courseRecord.course.courseName + " " +engclass.classRoom;
 					$("#timeTable tbody #"+partName+" #"+weekName).html(info);
 				}
 			},
@@ -213,7 +225,7 @@
 	
 	$('#myDatepicker').datepicker({
    	 format: 'yyyy-mm-dd'
-   });
+   	});
 	
 	$("#myDatepicker").on("changeDate",function(){
 		 sendCondition();

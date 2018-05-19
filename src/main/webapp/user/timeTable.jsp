@@ -82,7 +82,7 @@
 									<tbody>
 										<!-- ajax  -->
 										<tr id = "first">
-											<td id="week1">一二节</td>
+											<td id="week0">一二节</td>
 											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
@@ -92,7 +92,7 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "second">
-											<td id="week1">三四节</td>
+											<td id="week0">三四节</td>
 											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
@@ -102,7 +102,8 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "third">
-											<td id="week1">五六节</td>
+											<td id="week0">五六节</td>
+											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
 											<td id="week4"></td>
@@ -111,7 +112,8 @@
 											<td id="week7"></td>
 										</tr>
 										<tr id = "forth">
-											<td id="week1">七八节</td>
+											<td id="week0">七八节</td>
+											<td id="week1"></td>
 											<td id="week2"></td>
 											<td id="week3"></td>
 											<td id="week4"></td>
@@ -163,6 +165,15 @@
 		return year+ "-" + monthStr + "-" + day;
 	}
 	
+	function clearCourseTable() {
+		var tr = $("#timeTable tbody").find("tr");
+		for(var i = 0; i < tr.length; i++) {
+			for(var j = 1; j <= 7; j++) {
+				$(tr[i]).find("#week" + j).html("");
+			}
+		}
+	}
+	
 	 function getPartName(attendTime){
 		 var partName = "";
 		 switch(attendTime){
@@ -196,6 +207,7 @@
 			},
 			dataType:"json",
 			success: function(responseText){
+				clearCourseTable();
 				var json = JSON.parse(responseText);
 				for(var i = 0; i < json.length; i++){
 					var engclass = json[i];
