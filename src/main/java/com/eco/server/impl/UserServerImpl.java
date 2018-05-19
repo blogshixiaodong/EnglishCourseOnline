@@ -168,8 +168,7 @@ public class UserServerImpl implements UserServer{
 	@Override
 	public User queryUserByAccountId(Integer accountId) {
 		UserAccountDao userAccountDao = new UserAccountDaoImpl();
-		User user = userAccountDao.selectAccount(accountId).getUser();
-		return user;
+		return userAccountDao.selectAccount(accountId).getUser();
 	}
 
 	@Override

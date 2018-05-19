@@ -252,7 +252,6 @@ public class UserAction extends ActionSupport {
 		return null;
 	}
 	
-	
 	private User getLoginUser() {
 		User user = (User)request.getSession().getAttribute("user");
 		return user;
