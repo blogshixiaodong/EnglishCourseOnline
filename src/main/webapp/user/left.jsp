@@ -1,3 +1,4 @@
+<%@page import="com.eco.bean.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "s" uri = "/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -19,11 +20,11 @@
 		<!-- menu profile quick info -->
 		<div class="profile clearfix">
 			<div class="profile_pic">
-				<img src="../build/images/img.jpg" alt="..." class="img-circle profile_img">
+				<img src="../build/images/img.jpg" alt="..." class="img-circle profile_img"/>
 			</div>
 			<div class="profile_info">
 				<span>欢迎用户</span>
-				<h2><s:property value="#session.user.username" />   </h2>
+				<h2><s:property value="#session.user.username"/>   </h2>
 			</div>
 		</div>
 		<!-- /menu profile quick info -->
@@ -51,11 +52,18 @@
 							<li><a href="now_engclasses.jsp">进行班级</a> </li>
 							<li><a href="history_engclasses.jsp">历史班级</a></li>
 							<li><a href="all_engclasses.jsp">所有班级</a></li>
-							<li><a href="timeTable.jsp">课表</a></li>
-							
 						</ul>
 					</li>
-
+					
+					
+					<li>
+						<a><i class="fa fa-edit"></i>课表
+						<span class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+							<li><a href="timeTable.jsp">查看课表</a></li>
+						</ul>
+					</li>
+					
 					<li>
 						<a>
 							<i class="fa fa-table"></i>考勤信息
@@ -110,3 +118,4 @@
 	</div>
 
 </body>
+</html>

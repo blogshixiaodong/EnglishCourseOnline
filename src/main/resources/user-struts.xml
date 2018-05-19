@@ -84,21 +84,21 @@
 		<!-- 用户登录 -->
 		<action name="userLogin" class="com.eco.action.UserAction" method = "userLogin" >
 			<result name = "success" type = "redirect">
-				<param name="location">/user/index.jsp</param>
+				<param name="location">index.jsp</param>
 			</result>
 			<result name = "error" type = "redirect">
-				<param name="location">user/login.jsp</param>
+				<param name="location">login.jsp</param>
 			</result>
 		</action>
 		
 		
 		<action name = "userLoginOut" class = "com.eco.action.UserAction" method = "userLoginOut">
 			<result name = "success" type = "redirect">
-				<param name = "location">/user/login.jsp</param>
+				<param name = "location">login.jsp</param>
 			</result>
 			
 			<result name = "error" type = "redirect">
-				<param name="location">user/login.jsp</param>
+				<param name="location">login.jsp</param>
 			</result>
 		
 		</action>
