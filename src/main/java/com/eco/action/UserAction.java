@@ -237,7 +237,7 @@ public class UserAction extends ActionSupport {
 			return Action.ERROR;
 		}
 		List<Engclass> engclassList = userServer.queryTimeTable(queryDate, userId);
-		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","engclassSet","courseRecordSet");                       
+		JsonConfig jsonConfig = JsonUtils.JsonExclude("userSet","teacherBackInfoSet","userBackInfoSet","timeSheetSet","engclassSet","courseRecordSet","teacherAccount");                       
 		jsonResult = JSONArray.fromObject(engclassList,jsonConfig).toString();
 		return Action.SUCCESS;
 	}

@@ -1,277 +1,197 @@
 /*
-Navicat MySQL Data Transfer
-
-Source Server         : EnglishCourseOnline
-Source Server Version : 50024
-Source Host           : localhost:3306
-Source Database       : englishcourseonline
-
-Target Server Type    : MYSQL
-Target Server Version : 50024
-File Encoding         : 65001
-
-Date: 2018-04-19 00:13:53
+SQLyog Ultimate v12.5.1 (64 bit)
+MySQL - 5.0.24-community-nt : Database - englishcourseonline_test
+*********************************************************************
 */
 
-SET FOREIGN_KEY_CHECKS=0;
+/*!40101 SET NAMES utf8 */;
 
--- ----------------------------
--- Table structure for account
--- ----------------------------
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE `account` (
-  `id` int(10) AUTO_INCREMENT NOT NULL,
-  `password` varchar(18) NOT NULL,
-  `roleid` int(11) NOT NULL,
-  `role` varchar(2) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET SQL_MODE=''*/;
 
-ALTER TABLE `account` AUTO_INCREMENT = 10000; 
--- ----------------------------
--- Table structure for system_account
--- ----------------------------
-DROP TABLE IF EXISTS `system_account`;
-CREATE TABLE `system_account` (
-  `id` int(11) NOT NULL,
-  `password` varchar(18) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`englishcourseonline_test` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+USE `englishcourseonline_test`;
 
--- ----------------------------
--- Table structure for course
--- ----------------------------
+/*Table structure for table `course` */
+
 DROP TABLE IF EXISTS `course`;
+
 CREATE TABLE `course` (
-  `courseid` int(11) AUTO_INCREMENT NOT NULL,
-  `coursename` varchar(15) NOT NULL,
-  `info` varchar(50) NOT NULL,
-  `types` varchar(10) NOT NULL,
-  `price` float(10,2) NOT NULL,
-  `imgurl` varchar(50) default NULL,
-  PRIMARY KEY  (`courseid`)
+  `COURSEID` int(11) NOT NULL,
+  `COURSENAME` varchar(255) default NULL,
+  `INFO` varchar(255) default NULL,
+  `TYPES` varchar(255) default NULL,
+  `PRICE` float default NULL,
+  `IMGURL` varchar(255) default NULL,
+  PRIMARY KEY  (`COURSEID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `course` AUTO_INCREMENT = 20000; 
+/*Table structure for table `courserecord` */
 
+DROP TABLE IF EXISTS `courserecord`;
 
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E0', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E1', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E2', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E3', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E4', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E5', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E6', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E7', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E8', 'TEST E1', 'English', 1000, 'F://');
-INSERT INTO course(coursename, info, types, price, imgurl) VALUES('E9', 'TEST E1', 'English', 1000, 'F://');
-
--- ----------------------------
--- Table structure for course_record
--- ----------------------------
-DROP TABLE IF EXISTS `course_record`;
-CREATE TABLE `course_record` (
-  `courserecordid` int(11) AUTO_INCREMENT NOT NULL,
-  `courseid` int(11) NOT NULL,
-  `starttime` datetime default NULL,
-  `endtime` datetime default NULL,
-  `closetime` datetime default NULL,
-  `signcount` int(11) default '0',
-  PRIMARY KEY  (`courserecordid`),
-  CONSTRAINT `fk_course_id` FOREIGN KEY (`courseid`) REFERENCES `course` (`courseid`)
+CREATE TABLE `courserecord` (
+  `COURSERECORDID` int(11) NOT NULL,
+  `STARTTIME` datetime default NULL,
+  `ENDTIME` datetime default NULL,
+  `CLOSETIME` datetime default NULL,
+  `SIGNCOUNT` int(11) default NULL,
+  `COURSEID` int(11) default NULL,
+  PRIMARY KEY  (`COURSERECORDID`),
+  KEY `FKr6dyx456wy0jnbied49p7ol94` (`COURSEID`),
+  CONSTRAINT `FKr6dyx456wy0jnbied49p7ol94` FOREIGN KEY (`COURSEID`) REFERENCES `course` (`COURSEID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `course_record` AUTO_INCREMENT = 30000; 
+/*Table structure for table `engclass` */
 
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20000, '2018-4-1', '2018-6-1', '2018-3-1', 30);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20003, '2018-1-1', '2018-6-1', '2017-11-1', 50);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20005, '2018-2-1', '2018-5-1', '2018-1-1', 60);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20007, '2018-5-1', '2018-3-1', '2018-3-1', 100);
-INSERT INTO course_record(courseid, starttime, endtime, closetime, signcount) VALUES(20009, '2018-9-1', '2018-10-1', '2018-3-1', 50);
-
-
-
-
--- ----------------------------
--- Table structure for user
--- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `userid` int(11) AUTO_INCREMENT  NOT NULL,
-  `username` varchar(10) NOT NULL,
-  `age` int(11) default NULL,
-  `idcard` varchar(18) NOT NULL,
-  `sex` varchar(5) default NULL,
-  `imgurl` varchar(50) default NULL,
-  PRIMARY KEY  (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-ALTER TABLE `user` AUTO_INCREMENT = 40000; 
-
-INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('zs', 22, '3151911', '男', 'C:');
-INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('ls', 23, '3151912', '男', 'F:');
-INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('lb', 24, '3151913', '女', 'F:');
-INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('ts', 25, '3151914', '女', 'D:');
-INSERT INTO user(username, age, idcard, sex, imgurl) VALUES('kn', 26, '3151915', '男', 'E:');
-
-
-
--- ----------------------------
--- Table structure for teacher
--- ----------------------------
-DROP TABLE IF EXISTS `teacher`;
-CREATE TABLE `teacher` (
-  `teacherid` int(11) AUTO_INCREMENT NOT NULL,
-  `idcard` varchar(18) NOT NULL,
-  `teachername` varchar(10) NOT NULL,
-  `sex` varchar(5) default NULL,
-  `age` int(11) default NULL,
-  `phone` varchar(13) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `imgurl` varchar(50) default NULL,
-  PRIMARY KEY  (`teacherid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-ALTER TABLE `teacher` AUTO_INCREMENT = 50000; 
-
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151911', 'T1', '男', 30, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151912', 'T2', '男', 37, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151913', 'T3', '女', 28, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151914', 'T4', '男', 26, '10086', '福建省', 'C://');
-INSERT INTO teacher(idcard, name, sex, age, phone, address, imgurl) VALUES('3151915', 'T5', '女', 35, '10086', '福建省', 'C://');
-
-
-
--- ----------------------------
--- Table structure for class
--- ----------------------------
 DROP TABLE IF EXISTS `engclass`;
+
 CREATE TABLE `engclass` (
-  `classid` int(11) AUTO_INCREMENT NOT NULL,
-  `teacherid` int(11) NOT NULL,
-  `courserecordid` int(11) NOT NULL,
-  `classname` varchar(50) default NULL,
-  `usercount` int(11) default NULL,
-  `classroom` varchar(50) default NULL,
-  PRIMARY KEY  (`classid`),
-  CONSTRAINT `fk_course_record_id` FOREIGN KEY (`courserecordid`) REFERENCES `course_record` (`courserecordid`),
-  CONSTRAINT `fk_teacher_id` FOREIGN KEY (`teacherid`) REFERENCES `teacher` (`teacherid`)
+  `ENGCLASSID` int(11) NOT NULL,
+  `ENGCLASSNAME` varchar(255) default NULL,
+  `USERCOUNT` int(11) default NULL,
+  `CLASSROOM` varchar(255) default NULL,
+  `DAY` int(11) default NULL,
+  `ATTENDTIME` int(11) default NULL,
+  `COURSERECORDID` int(11) default NULL,
+  `TEACHERID` int(11) default NULL,
+  PRIMARY KEY  (`ENGCLASSID`),
+  KEY `FKt6j10stw0uxo647xhn7xmobeg` (`COURSERECORDID`),
+  KEY `FK84tq6fha9lbdxrhvo1ufub783` (`TEACHERID`),
+  CONSTRAINT `FK84tq6fha9lbdxrhvo1ufub783` FOREIGN KEY (`TEACHERID`) REFERENCES `teacher` (`TEACHERID`),
+  CONSTRAINT `FKt6j10stw0uxo647xhn7xmobeg` FOREIGN KEY (`COURSERECORDID`) REFERENCES `courserecord` (`COURSERECORDID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `engclass` AUTO_INCREMENT = 60000; 
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30000, '初级', 35, '教1');
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30001, '中级', 50, '教2');
-INSERT INTO engclass(teacherid, courserecordid, classname, usercount, classroom) VALUES(50000, 30002, '高级', 60, '教3');
+/*Table structure for table `teacher` */
 
+DROP TABLE IF EXISTS `teacher`;
 
-
--- ----------------------------
--- Table structure for user_class
--- ----------------------------
-DROP TABLE IF EXISTS `user_class`;
-CREATE TABLE `user_class` (
-  `userid` int(11) NOT NULL,
-  `classid` int(11) NOT NULL,
-  `isassigned` int(2) NOT NULL,
-  PRIMARY KEY  (`userid`,`classid`),
-  CONSTRAINT `fk_user_id` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
-  CONSTRAINT `fk_class_id` FOREIGN KEY (`classid`) REFERENCES `engclass` (`classid`)
+CREATE TABLE `teacher` (
+  `TEACHERID` int(11) NOT NULL,
+  `TEACHERNAME` varchar(255) default NULL,
+  `IDCARD` varchar(255) default NULL,
+  `SEX` varchar(255) default NULL,
+  `AGE` int(11) default NULL,
+  `PHONE` varchar(255) default NULL,
+  `ADDRESS` varchar(255) default NULL,
+  `IMGURL` varchar(255) default NULL,
+  PRIMARY KEY  (`TEACHERID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60000, 1);
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40001, 60000, 0);
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40002, 60000, 1);
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40003, 60000, 0);
+/*Table structure for table `teacheraccount` */
 
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60001, 1);
-INSERT INTO user_class(userid, classid, isassigned) VALUES(40000, 60002, 1);
+DROP TABLE IF EXISTS `teacheraccount`;
 
--- ----------------------------
--- Table structure for teacher_back_info
--- ----------------------------
-DROP TABLE IF EXISTS `teacher_back_info`;
-CREATE TABLE `teacher_back_info` (
-  `teacherbackid` int(11) AUTO_INCREMENT NOT NULL,
+CREATE TABLE `teacheraccount` (
+  `ID` int(11) NOT NULL,
+  `PASSWORD` varchar(255) default NULL,
   `teacherid` int(11) default NULL,
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `UK_jhuf3jecu8v3r3xig56f9a7by` (`teacherid`),
+  CONSTRAINT `FKdl2g80lw52quimq7duh56dlx5` FOREIGN KEY (`teacherid`) REFERENCES `teacher` (`TEACHERID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `teacherbackinfo` */
+
+DROP TABLE IF EXISTS `teacherbackinfo`;
+
+CREATE TABLE `teacherbackinfo` (
+  `TEACHERBACKINFOID` int(11) NOT NULL,
+  `BACKTIME` datetime default NULL,
+  `BACKINFO` varchar(255) default NULL,
+  `USERID` int(11) default NULL,
+  `ENGCLASSID` int(11) default NULL,
+  `TEACHERID` int(11) default NULL,
+  PRIMARY KEY  (`TEACHERBACKINFOID`),
+  KEY `FKisgr3ucg3kg18iqhspm92s5gb` (`USERID`),
+  KEY `FKnh3vq5yoeby0kbld4wl37shn` (`ENGCLASSID`),
+  KEY `FKeeu40ugww91i3vl938n5h1xtw` (`TEACHERID`),
+  CONSTRAINT `FKeeu40ugww91i3vl938n5h1xtw` FOREIGN KEY (`TEACHERID`) REFERENCES `teacher` (`TEACHERID`),
+  CONSTRAINT `FKisgr3ucg3kg18iqhspm92s5gb` FOREIGN KEY (`USERID`) REFERENCES `user` (`USERID`),
+  CONSTRAINT `FKnh3vq5yoeby0kbld4wl37shn` FOREIGN KEY (`ENGCLASSID`) REFERENCES `engclass` (`ENGCLASSID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `timesheet` */
+
+DROP TABLE IF EXISTS `timesheet`;
+
+CREATE TABLE `timesheet` (
+  `TIMESHEETID` int(11) NOT NULL,
+  `RECORDTIME` datetime default NULL,
+  `SHEETINFO` varchar(255) default NULL,
+  `USERID` int(11) default NULL,
+  `ENGCLASSID` int(11) default NULL,
+  PRIMARY KEY  (`TIMESHEETID`),
+  KEY `FKjs9x5mujefwn5yqg2319dimrm` (`USERID`),
+  KEY `FKbck41kmt0u1871bj4e138jfv2` (`ENGCLASSID`),
+  CONSTRAINT `FKbck41kmt0u1871bj4e138jfv2` FOREIGN KEY (`ENGCLASSID`) REFERENCES `engclass` (`ENGCLASSID`),
+  CONSTRAINT `FKjs9x5mujefwn5yqg2319dimrm` FOREIGN KEY (`USERID`) REFERENCES `user` (`USERID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `user` */
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `USERID` int(11) NOT NULL,
+  `USERNAME` varchar(255) default NULL,
+  `IDCARD` varchar(255) default NULL,
+  `SEX` varchar(255) default NULL,
+  `AGE` varchar(255) default NULL,
+  `PHONE` varchar(255) default NULL,
+  `ADDRESS` varchar(255) default NULL,
+  `IMGURL` varchar(255) default NULL,
+  PRIMARY KEY  (`USERID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `useraccount` */
+
+DROP TABLE IF EXISTS `useraccount`;
+
+CREATE TABLE `useraccount` (
+  `ID` int(11) NOT NULL,
+  `PASSWORD` varchar(255) default NULL,
   `userid` int(11) default NULL,
-  `classid` int(11) default NULL,
-  `backtime` datetime default NULL,
-  `backinfo` varchar(50) default NULL,
-  PRIMARY KEY  (`teacherbackid`),
-  CONSTRAINT `fk1_class_id` FOREIGN KEY (`classid`) REFERENCES `engclass` (`classid`),
-  CONSTRAINT `fk1_teacher_id` FOREIGN KEY (`teacherid`) REFERENCES `teacher` (`teacherid`),
-  CONSTRAINT `fk1_user_id` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `UK_mvboc4p58q2yjk095tu0m17x` (`userid`),
+  CONSTRAINT `FKfoy3ybavhmj1glo370psttu0p` FOREIGN KEY (`userid`) REFERENCES `user` (`USERID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `teacher_back_info` AUTO_INCREMENT = 70000; 
+/*Table structure for table `userbackinfo` */
 
--- ----------------------------
--- Table structure for user_back_info
--- ----------------------------
-DROP TABLE IF EXISTS `user_back_info`;
-CREATE TABLE `user_back_info` (
-  `userbackid` int(11) AUTO_INCREMENT NOT NULL,
-  `teacherid` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
-  `classid` int(11) NOT NULL,
-  `backtime` datetime default NULL,
-  `backinfo` varchar(50) default NULL,
-  PRIMARY KEY  (`userbackid`),
-  CONSTRAINT `fk2_class_id` FOREIGN KEY (`classid`) REFERENCES `engclass` (`classid`),
-  CONSTRAINT `fk2_teacher_id` FOREIGN KEY (`teacherid`) REFERENCES `teacher` (`teacherid`),
-  CONSTRAINT `fk2_user_id` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+DROP TABLE IF EXISTS `userbackinfo`;
+
+CREATE TABLE `userbackinfo` (
+  `USERBACKINFOID` int(11) NOT NULL,
+  `BACKTIME` datetime default NULL,
+  `BACKINFO` varchar(255) default NULL,
+  `ENGCLASSID` int(11) default NULL,
+  `USERID` int(11) default NULL,
+  PRIMARY KEY  (`USERBACKINFOID`),
+  KEY `FKoykajf26f21slbbk284p2fbl6` (`ENGCLASSID`),
+  KEY `FKcksh7whtqht8u46ebsx75uk7v` (`USERID`),
+  CONSTRAINT `FKcksh7whtqht8u46ebsx75uk7v` FOREIGN KEY (`USERID`) REFERENCES `user` (`USERID`),
+  CONSTRAINT `FKoykajf26f21slbbk284p2fbl6` FOREIGN KEY (`ENGCLASSID`) REFERENCES `engclass` (`ENGCLASSID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `user_back_info` AUTO_INCREMENT = 80000; 
--- ----------------------------
--- Table structure for time_sheet
--- ----------------------------
-DROP TABLE IF EXISTS `time_sheet`;
-CREATE TABLE `time_sheet` (
-  `timesheetid` int(11) AUTO_INCREMENT NOT NULL,
-  `userid` int(11) default NULL,
-  `classid` int(11) default NULL,
-  `recordtime` datetime default NULL,
-  `sheetinfo` varchar(50) default NULL,
-  PRIMARY KEY  (`timesheetid`),
-  CONSTRAINT `fk3_user_id` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
-  CONSTRAINT `fk3_class_id` FOREIGN KEY (`classid`) REFERENCES `engclass` (`classid`)
+/*Table structure for table `userengclass` */
+
+DROP TABLE IF EXISTS `userengclass`;
+
+CREATE TABLE `userengclass` (
+  `ENGCLASSID` int(11) NOT NULL,
+  `USERID` int(11) NOT NULL,
+  PRIMARY KEY  (`USERID`,`ENGCLASSID`),
+  KEY `FKiimer1xie9q2h3x4rxo9yw9rr` (`ENGCLASSID`),
+  CONSTRAINT `FKiimer1xie9q2h3x4rxo9yw9rr` FOREIGN KEY (`ENGCLASSID`) REFERENCES `engclass` (`ENGCLASSID`),
+  CONSTRAINT `FKindt6b5sr7iplsikc28c1mf7x` FOREIGN KEY (`USERID`) REFERENCES `user` (`USERID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `time_sheet` AUTO_INCREMENT = 90000; 
-
-
-INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-18', '正常');
-INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-19', '缺席');
-INSERT INTO time_sheet(userid, classid, recordtime, sheetinfo) VALUES(40000, 60001, '2018-4-20', '请假');
-
-
-DROP DATABASE englishcourseonline;
-CREATE DATABASE englishcourseonline;
-USE englishcourseonline;
-
-
-
-SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount
-FROM course c, course_record cr, engclass e
-WHERE e.teacherid = 50000 AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid;
-
-
-SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount
-FROM course c, course_record cr, engclass e
-WHERE e.teacherid = 50000 AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND endtime < NOW();
-
-SELECT c.courseid, coursename, info, types, price, imgurl, cr.courserecordid, starttime, endtime, closetime, signcount
-FROM course c, course_record cr, engclass e
-WHERE e.teacherid = 50000 AND e.courserecordid = cr.courserecordid AND cr.courseid = c.courseid AND NOW() between starttime AND endtime;
-
-
-SELECT u.userid, username, e.classid, classname, t.teacherid, t.name, classroom, recordtime, sheetinfo
-FROM user u, teacher t, engclass e, user_class uc, time_sheet ts
-WHERE uc.classid = 60001 AND uc.classid = e.classid AND e.teacherid = t.teacherid
-
-SELECT u.userid, username, age, idcard, sex, imgurl
-FROM  user u, user_class uc
-WHERE classid = 60002 AND u.userid = uc.userid
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

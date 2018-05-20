@@ -142,7 +142,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 
 	@Override
 	public void updateEngclassUserCount(Integer engclassId, Integer userCount) {
-		String hql = "UPDATE Engclass e SET e.userCount += ? WHERE e.engclassId = ?";
+		String hql = "UPDATE Engclass e SET e.userCount = e.userCount + ? WHERE e.engclassId = ?";
 		this.executeHQLUpdate(hql,engclassId,engclassId);
 	}
 

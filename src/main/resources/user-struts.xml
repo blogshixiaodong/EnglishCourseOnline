@@ -110,11 +110,8 @@
 		</action>
 		
 		<action name = "enrollCourse" class = "com.eco.action.UserAction" method = "enrollCourse">
-			<result name = "success" type = "redirect">
-				<param name = "location">index.jsp</param>
-			</result>
-			<result name = "error" type = "redirect">
-				<param name="location">login.jsp</param>
+			<result name = "success" type = "json">
+				<param name="root">jsonResult</param>
 			</result>
 		</action>
 		

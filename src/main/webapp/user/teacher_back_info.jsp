@@ -230,7 +230,11 @@
         				btnGroup.append($("<button class='btn btn-default' pageNo='1'>上一页</button>"));
         			}
         			for(var i = 1; i <= pageCount; i++) {
-        				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+        				if(currentPageNo == i){
+        					btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + i  +"'>" + i + "</button>"));
+        					continue;
+        				}
+        				btnGroup.append($("<button class='btn btn-default' pageNo='" + i  +"'>" + i + "</button>"));
         			}
         			if(currentPageNo == pageCount) {
         				btnGroup.append($("<button class='btn btn-default disabled' pageNo='" + currentPageNo  +"'>下一页</button>"));
