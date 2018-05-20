@@ -133,8 +133,6 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 		return list(hql, courseId);
 	}
 
-	
-
 	@Override
 	public void updateEngclass(Engclass engclass) {
 		this.update(engclass);
@@ -143,7 +141,7 @@ public class EngclassDaoImpl extends AbstractBaseDao<Engclass> implements Engcla
 	@Override
 	public void updateEngclassUserCount(Integer engclassId, Integer userCount) {
 		String hql = "UPDATE Engclass e SET e.userCount = e.userCount + ? WHERE e.engclassId = ?";
-		this.executeHQLUpdate(hql,engclassId,engclassId);
+		this.executeHQLUpdate(hql, userCount, engclassId);
 	}
 
 	@Override
